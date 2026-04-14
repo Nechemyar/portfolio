@@ -1,0 +1,44 @@
+@use '../base/tokens' as *;
+.contact {
+  padding: $space-128 $page-padding;
+  text-align: center;
+}
+
+.contact__inner {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.contact__title {
+  font-family: $font-display;
+  font-size: $fs-2xl;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: $space-16;
+}
+
+.contact__sub {
+  font-size: $fs-base;
+  color: $c-text-secondary;
+  margin-bottom: $space-48;
+  line-height: 1.7;
+}
+
+.contact__buttons {
+  display: flex;
+  justify-content: center;
+  gap: $space-16;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 500px) {
+  .contact__buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  .contact__buttons .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,65 @@
+@use '../base/tokens' as *;
+.services {
+  padding: $space-128 $page-padding;
+  background-color: $c-soft;
+}
+
+.services__header {
+  max-width: 1200px;
+  margin: 0 auto $space-96;
+}
+
+.services__title {
+  font-family: $font-display;
+  font-size: $fs-2xl;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: $c-bg;
+}
+
+.services__grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-32;
+}
+
+.services__card {
+  background: rgba(255, 255, 255, 0.85);
+  padding: $space-48;
+  border-radius: $r-lg;
+  display: flex;
+  flex-direction: column;
+  gap: $space-16;
+}
+
+.services__card-label {
+  font-family: $font-body;
+  font-size: $fs-xs;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: $c-text-secondary;
+}
+
+.services__card-title {
+  font-family: $font-display;
+  font-size: $fs-xl;
+  font-weight: 600;
+  line-height: 1.2;
+  color: $c-bg;
+}
+
+.services__card-desc {
+  font-size: $fs-base;
+  color: $c-text-secondary;
+  line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+  .services__grid {
+    grid-template-columns: 1fr;
+  }
+}

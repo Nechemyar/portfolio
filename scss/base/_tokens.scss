@@ -1,0 +1,55 @@
+// Design System Tokens
+
+// Typography
+$fs-xs: clamp(0.64rem, 0.7vw, 0.7rem);
+$fs-sm: clamp(0.8rem, 0.85vw, 0.85rem);
+$fs-base: clamp(0.95rem, 1vw, 1.05rem);
+$fs-md: clamp(1.15rem, 1.3vw, 1.3rem);
+$fs-lg: clamp(1.45rem, 1.8vw, 1.75rem);
+$fs-xl: clamp(1.8rem, 2.5vw, 2.4rem);
+$fs-2xl: clamp(2.25rem, 3.5vw, 3.2rem);
+$fs-3xl: clamp(2.8rem, 5vw, 4.5rem);
+$fs-display: clamp(3.5rem, 8vw, 7rem);
+$fs-massive: clamp(4.5rem, 12vw, 11rem);
+
+// Font Families
+$font-display: 'ClashDisplay', Arial, sans-serif;
+$font-body: 'DM Sans', sans-serif;
+
+// Colors
+$c-bg: #1A1A19;
+$c-bg-elevated: #242423;
+$c-text: #F2F2F0;
+$c-text-secondary: #A0A09C;
+$c-text-tertiary: #6B6B67;
+$c-accent: #C3F832;
+$c-accent-hover: #D4FF50;
+$c-soft: #E6BBFF;
+$c-border: rgba(255, 255, 255, 0.06);
+$c-border-visible: rgba(255, 255, 255, 0.12);
+
+// Spacing (8px grid)
+$space-4: 0.25rem;
+$space-8: 0.5rem;
+$space-12: 0.75rem;
+$space-16: 1rem;
+$space-24: 1.5rem;
+$space-32: 2rem;
+$space-48: 3rem;
+$space-64: 4rem;
+$space-96: 6rem;
+$space-128: 8rem;
+$space-192: 12rem;
+$page-padding: clamp(1.25rem, 4vw, 4rem);
+
+// Radius
+$r-sm: 8px;
+$r-md: 12px;
+$r-lg: 16px;
+$r-xl: 24px;
+$r-full: 100px;
+
+// Transitions & Animation
+$ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+$duration-fast: 0.3s;
+$duration-med: 0.6s;

@@ -4,21 +4,18 @@
 // CDN globals: gsap, ScrollTrigger, Draggable, Lenis
 // ——————————————————————————————————————————————
 
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SmoothScroll from './modules/SmoothScroll.js';
 import Menu from './modules/Menu.js';
 import ScrollReveal from './modules/ScrollReveal.js';
 import HeroScroll from './modules/HeroScroll.js';
+import WorkHover from './modules/WorkHover.js';
 
-// ——————————————————————————————————————————————
-// SAFETY CHECK
-// ——————————————————————————————————————————————
-if (typeof gsap === 'undefined') {
-  console.error('GSAP not loaded. Check CDN script tags.');
-} else {
-  gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
-  // Signal to CSS that JS is working (enables reveal animations)
-  document.documentElement.classList.add('js-loaded');
+// Signal to CSS that JS is working (enables reveal animations)
+document.documentElement.classList.add('js-loaded');
 
   // ——————————————————————————————————————————
   // GLOBAL MODULES (persist across everything)
@@ -31,4 +28,4 @@ if (typeof gsap === 'undefined') {
   // ——————————————————————————————————————————
   const scrollReveal = new ScrollReveal();
   const heroScroll = new HeroScroll();
-}
+  const workHover = new WorkHover();

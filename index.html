@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="scss/main.scss" />
 </head>
 
 <body>
@@ -30,28 +30,30 @@
   <header class="nav" id="nav">
     <div class="nav__inner">
       <a href="/" class="nav__logo">nech<br />emya.</a>
-      <button class="nav__menu-btn" id="menu-toggle" aria-label="Open menu">
-        <span class="nav__menu-label">Menu</span>
-        <span class="nav__menu-icon">
-          <span class="nav__menu-plus"></span>
-        </span>
-      </button>
+      <div class="nav__desktop-wrapper">
+        <button class="nav__menu-btn" id="menu-toggle" aria-label="Open menu">
+          <span class="nav__menu-label">MENU</span>
+          <span class="nav__menu-icon">
+            <span class="nav__menu-plus"></span>
+          </span>
+        </button>
+        <div class="nav__desktop-links">
+          <a href="#work">Work</a>
+          <a href="#services">Services</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
     </div>
   </header>
 
   <!-- MOBILE MENU -->
   <div class="menu-overlay" id="menu-overlay"></div>
   <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
-    <div class="mobile-menu__grabber" id="menu-grabber">
-      <div class="mobile-menu__grabber-track">
-        <div class="mobile-menu__grabber-fill" id="grabber-fill"></div>
-      </div>
-    </div>
     <div class="mobile-menu__content">
       <a href="https://api.whatsapp.com/send/?phone=972585152321&text=Hi%20Nechemya%2C%20I%27d%20like%20to%20discuss%20a%20project.&type=phone_number" target="_blank" rel="noopener noreferrer" class="mobile-menu__whatsapp menu-item" aria-label="WhatsApp">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="#25D366"/>
-          <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.29-1.239l-.307-.184-2.866.852.852-2.866-.184-.307A8 8 0 1112 20z" fill="#25D366"/>
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1A1A19" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
         </svg>
       </a>
       <ul class="mobile-menu__nav">
@@ -60,10 +62,6 @@
         <li><a href="#pricing" class="mobile-menu__link menu-item">Pricing</a></li>
         <li><a href="#contact" class="mobile-menu__link menu-item">Contact</a></li>
       </ul>
-      <div class="mobile-menu__social">
-        <a href="#" target="_blank" rel="noopener noreferrer" class="mobile-menu__social-link menu-item">Instagram</a>
-        <a href="#" target="_blank" rel="noopener noreferrer" class="mobile-menu__social-link menu-item">LinkedIn</a>
-      </div>
     </div>
   </nav>
 
@@ -72,55 +70,59 @@
 
     <!-- HERO -->
     <section class="hero" id="hero">
-      <p class="hero__tagline" data-reveal>Premium web design for businesses that give a damn</p>
-
-      <div class="hero__title-row">
-        <span class="hero__title-turn" id="hero-turn" data-reveal>TURN</span>
-      </div>
-      <div class="hero__title-row">
-        <span class="hero__title-heads" id="hero-heads" data-reveal>HEADS</span>
-      </div>
-
-      <!-- O-Grid placeholder — we'll add your actual SVG grid later -->
-      <div class="hero__ogrid" id="hero-ogrid" data-reveal>
-        <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g fill="#c3f832">
-            <circle cx="20" cy="20" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="50" cy="20" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="80" cy="20" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="110" cy="20" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="140" cy="20" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="170" cy="20" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="20" cy="50" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="50" cy="50" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="80" cy="50" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="110" cy="50" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="140" cy="50" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="170" cy="50" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="20" cy="80" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="50" cy="80" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="80" cy="80" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="110" cy="80" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="140" cy="80" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="170" cy="80" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="20" cy="110" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="50" cy="110" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="80" cy="110" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="110" cy="110" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="140" cy="110" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="170" cy="110" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="20" cy="140" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="50" cy="140" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="80" cy="140" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="110" cy="140" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="140" cy="140" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-            <circle cx="170" cy="140" r="8" stroke="#292928" stroke-width="4" fill="#c3f832"/>
-          </g>
-        </svg>
+      <div class="hero__cat-wrapper">
+        <!-- Z-Index 0: Full scene background for ambience -->
+        <img class="hero__scene-bg" src="assets/images/catbckg.png" alt="" aria-hidden="true" />
+        <!-- Z-Index 1: The Looping Slideshow inside the mouth -->
+        <div class="hero__mouth-slider" id="mouth-slider">
+          <div class="hero__mouth-track" id="mouth-track">
+            <img class="hero__mouth-img" src="assets/images/project-choice.jpg" alt="Choice Inventory" />
+            <img class="hero__mouth-img" src="assets/images/project-clinical.jpg" alt="Clinical Assessments" />
+            <img class="hero__mouth-img" src="assets/images/project-choice.jpg" alt="" />
+            <img class="hero__mouth-img" src="assets/images/project-clinical.jpg" alt="" />
+          </div>
+          <!-- TV screen effect overlay -->
+          <div class="hero__tv-overlay"></div>
+        </div>
+        <!-- Z-Index 2: The Cat with the transparent mouth -->
+        <img class="hero__cat-img" src="assets/images/catnobckg.png" alt="Cat Background" />
       </div>
 
-      <a href="#contact" class="hero__curious" data-reveal>Curious?</a>
+      <!-- GIANT MARQUEE -->
+      <div class="marquee" id="marquee">
+        <div class="marquee__track">
+          <div class="marquee__content">
+            <div class="marquee__item">
+              <span class="marquee__text">WEB DESIGN</span>
+              <img src="assets/images/star.svg" alt="star" class="marquee__star-img" />
+            </div>
+            <div class="marquee__item">
+              <span class="marquee__text">WEB DESIGN</span>
+              <img src="assets/images/star.svg" alt="star" class="marquee__star-img" />
+            </div>
+          </div>
+          <div class="marquee__content" aria-hidden="true">
+            <div class="marquee__item">
+              <span class="marquee__text">WEB DESIGN</span>
+              <img src="assets/images/star.svg" alt="star" class="marquee__star-img" />
+            </div>
+            <div class="marquee__item">
+              <span class="marquee__text">WEB DESIGN</span>
+              <img src="assets/images/star.svg" alt="star" class="marquee__star-img" />
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <!-- HERO FOOTER -->
+      <div class="hero__footer">
+        <span class="hero__footer-link">EXPLORE</span>
+        <span class="hero__footer-tagline">PREMIUM WEB DESIGN FOR BUSINESSES THAT CARE</span>
+        <span class="hero__footer-link">EXPLORE</span>
+      </div>
+    </section>
+    
+    <section class="hero-teaser">
       <div class="hero__cards">
         <article class="hero__card" data-reveal>
           <div class="hero__card-image">
@@ -144,27 +146,7 @@
       </div>
     </section>
 
-    <!-- MARQUEE BANNER -->
-    <section class="marquee" id="marquee">
-      <div class="marquee__track" id="marquee-track">
-        <div class="marquee__item">
-          <span class="marquee__text">Web design done right.</span>
-          <span class="marquee__star">✱</span>
-        </div>
-        <div class="marquee__item">
-          <span class="marquee__text">Web design done right.</span>
-          <span class="marquee__star">✱</span>
-        </div>
-        <div class="marquee__item">
-          <span class="marquee__text">Web design done right.</span>
-          <span class="marquee__star">✱</span>
-        </div>
-        <div class="marquee__item">
-          <span class="marquee__text">Web design done right.</span>
-          <span class="marquee__star">✱</span>
-        </div>
-      </div>
-    </section>
+    <!-- MARQUEE MOVED TO HERO -->
 
     <!-- WORK -->
     <section class="work" id="work">
@@ -173,6 +155,7 @@
         <article class="work__item" data-reveal>
           <div class="work__image">
             <img src="assets/images/project-clinical.jpg" alt="Clinical Assessments Ltd" loading="lazy" />
+            <video class="work__video" src="" poster="assets/images/project-clinical.jpg" loop muted playsinline aria-hidden="true"></video>
           </div>
           <div class="work__info">
             <div class="work__meta">
@@ -185,6 +168,7 @@
         <article class="work__item" data-reveal>
           <div class="work__image">
             <img src="assets/images/project-choice.jpg" alt="Choice Inventory" loading="lazy" />
+            <video class="work__video" src="" poster="assets/images/project-choice.jpg" loop muted playsinline aria-hidden="true"></video>
           </div>
           <div class="work__info">
             <div class="work__meta">
@@ -283,11 +267,12 @@
     </div>
   </footer>
 
+  <!-- STICKY CTA -->
+  <a href="#contact" class="sticky-cta">
+    <span class="sticky-cta__icon">●</span> Start Project
+  </a>
+
   <!-- SCRIPTS -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Draggable.min.js"></script>
-  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 
   <script type="module" src="js/main.js"></script>
 

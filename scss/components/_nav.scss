@@ -1,0 +1,194 @@
+@use '../base/tokens' as *;
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 1000;
+  padding: $space-32 $page-padding;
+}
+
+.nav__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ——— Logo ——— */
+.nav__logo {
+  font-family: $font-display;
+  font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+  font-weight: 600;
+  color: $c-text;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+/* ——— Desktop Expanding Wrapper ——— */
+.nav__desktop-wrapper {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  background-color: $c-accent;
+  border-radius: 4px; /* Less rounded corners */
+  height: 48px; /* Slightly taller for bigger text */
+  overflow: hidden;
+  max-width: 140px; /* Base width matching the button */
+  transition: max-width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav__desktop-links {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $space-24;
+  padding-right: $space-24;
+  padding-left: $space-24; /* Prevents touching the left border */
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.nav__desktop-links a {
+  font-family: $font-display;
+  font-size: $fs-sm;
+  font-weight: 800; /* Heavier font requested */
+  color: $c-bg;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: opacity $duration-fast ease;
+}
+
+.nav__desktop-links a:hover {
+  opacity: 0.6;
+}
+
+/* Expanding Desktop Behavior */
+@media (min-width: 769px) {
+  .nav__desktop-wrapper:hover {
+    max-width: 600px;
+  }
+  
+  .nav__desktop-wrapper:hover .nav__desktop-links {
+    opacity: 1;
+    pointer-events: all;
+    transition-delay: 0.15s;
+  }
+}
+
+/* ——— Menu Button ——— */
+.nav__menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 140px;
+  gap: 0;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  padding: 0;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.nav__menu-label {
+  font-family: $font-display;
+  font-size: 1.1rem; /* Bigger menu word */
+  font-weight: 800;
+  color: $c-bg;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0 0 0 1.2em;
+  white-space: nowrap;
+}
+
+.nav__menu-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nav__menu-plus {
+  width: 18px;
+  height: 18px;
+  position: relative;
+  display: block;
+}
+
+.nav__menu-plus::before,
+.nav__menu-plus::after {
+  content: '';
+  position: absolute;
+  background-color: $c-bg;
+  border-radius: 2px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform $duration-fast $ease-out;
+}
+
+.nav__menu-plus::before {
+  width: 18px;
+  height: 2px;
+}
+
+.nav__menu-plus::after {
+  width: 2px;
+  height: 18px;
+}
+
+/* Plus hover: rotate 90deg */
+.nav__menu-btn:hover .nav__menu-plus::before,
+.nav__menu-btn:hover .nav__menu-plus::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+/* When open: plus becomes X */
+.nav__menu-btn.is-open .nav__menu-plus::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.nav__menu-btn.is-open .nav__menu-plus::after {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* ——— Sticky CTA ——— */
+.sticky-cta {
+  position: fixed;
+  bottom: $space-32;
+  right: $page-padding;
+  background-color: $c-bg-elevated;
+  color: $c-text;
+  font-family: $font-display;
+  font-size: $fs-xs;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 12px 24px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 999;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all $duration-fast ease;
+}
+
+.sticky-cta:hover {
+  background-color: $c-text;
+  color: $c-bg;
+}
+.sticky-cta:hover .sticky-cta__icon {
+  color: $c-soft;
+}
+.sticky-cta__icon {
+  color: $c-accent;
+  font-size: 1rem;
+  transition: color $duration-fast ease;
+}

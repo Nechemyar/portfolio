@@ -1,0 +1,123 @@
+@use '../base/tokens' as *;
+.pricing {
+  padding: $space-128 $page-padding;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pricing__header {
+  margin-bottom: $space-96;
+}
+
+.pricing__title {
+  font-family: $font-display;
+  font-size: $fs-2xl;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: $space-16;
+}
+
+.pricing__sub {
+  font-size: $fs-base;
+  color: $c-text-secondary;
+  max-width: 500px;
+}
+
+.pricing__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-32;
+  margin-bottom: $space-48;
+}
+
+.pricing__card {
+  background: $c-bg-elevated;
+  border: 1px solid $c-border-visible;
+  border-radius: $r-lg;
+  padding: $space-48;
+  display: flex;
+  flex-direction: column;
+  gap: $space-16;
+  position: relative;
+}
+
+.pricing__card--featured {
+  border-color: $c-accent;
+  box-shadow: 0 0 0 1px $c-accent;
+}
+
+.pricing__card-badge {
+  position: absolute;
+  top: calc($space-48 * -0.5);
+  left: $space-32;
+  background: $c-accent;
+  color: $c-bg;
+  font-size: $fs-xs;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.4em 1em;
+  border-radius: $r-full;
+}
+
+.pricing__card-label {
+  font-size: $fs-xs;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: $c-text-secondary;
+}
+
+.pricing__card-price {
+  font-family: $font-display;
+  font-size: $fs-2xl;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.pricing__card-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  padding: $space-16 0;
+  flex-grow: 1;
+}
+
+.pricing__card-features li {
+  font-size: $fs-base;
+  color: $c-text-secondary;
+  padding-left: 1.4em;
+  position: relative;
+}
+
+.pricing__card-features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: $c-accent;
+  font-weight: 700;
+}
+
+.pricing__footer {
+  font-size: $fs-base;
+  color: $c-text-secondary;
+  text-align: center;
+}
+
+.pricing__footer a {
+  color: $c-text;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.pricing__footer a:hover {
+  color: $c-accent;
+}
+
+@media (max-width: 700px) {
+  .pricing__grid {
+    grid-template-columns: 1fr;
+  }
+}

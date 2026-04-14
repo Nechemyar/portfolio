@@ -1,0 +1,54 @@
+@use '../base/tokens' as *;
+
+/* ——— Brutalist Marquee Banner ——— */
+.marquee {
+  position: absolute;
+  bottom: 8vh; /* Floating above footer */
+  left: 0;
+  width: 100%;
+  z-index: 10; /* Above the cat */
+  overflow: hidden;
+}
+
+.marquee__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  will-change: transform;
+  animation: scroll-marquee 10s linear infinite;
+}
+
+.marquee__content {
+  display: flex;
+  align-items: center;
+}
+
+@keyframes scroll-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4vw;
+  padding: 0 2vw;
+  flex-shrink: 0;
+}
+
+.marquee__text {
+  font-family: $font-display;
+  font-size: clamp(4rem, 12vw, 14rem); /* MASSIVE Brutalist scale */
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  line-height: 0.85;
+}
+
+.marquee__star-img {
+  height: clamp(3rem, 6vw, 7rem);
+  width: auto;
+  display: inline-block;
+}

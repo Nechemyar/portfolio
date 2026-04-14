@@ -1,3 +1,6 @@
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
 gsap.registerPlugin(ScrollTrigger);
 
 export default class HeroScroll {
@@ -6,39 +9,26 @@ export default class HeroScroll {
   }
 
   init() {
-    this.initTurnHeads();
+    this.initMouthSlider();
     this.initCardsFan();
     this.initMarquee();
+    this.initCTA();
   }
 
-  initTurnHeads() {
-    const turn = document.getElementById('hero-turn');
-    const heads = document.getElementById('hero-heads');
-    if (!turn || !heads) return;
+  initMouthSlider() {
+    const items = document.querySelectorAll('.hero__mouth-img');
+    if (items.length < 2) return;
 
-    // TURN slides left off-screen on scroll
-    gsap.to(turn, {
-      x: '-120vw',
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#hero',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1.2,
-      },
-    });
+    // Hard cut slideshow instead of sliding
+    gsap.set(items, { opacity: 0 });
+    gsap.set(items[0], { opacity: 1 });
 
-    // HEADS slides right off-screen on scroll
-    gsap.to(heads, {
-      x: '120vw',
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#hero',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1.2,
-      },
-    });
+    let currentIndex = 0;
+    setInterval(() => {
+      gsap.set(items[currentIndex], { opacity: 0 });
+      currentIndex = (currentIndex + 1) % items.length;
+      gsap.set(items[currentIndex], { opacity: 1 });
+    }, 1000); // 1-second cuts
   }
 
   initCardsFan() {
@@ -64,26 +54,34 @@ export default class HeroScroll {
   }
 
   initMarquee() {
-    const track = document.getElementById('marquee-track');
-    if (!track) return;
+    const stars = document.querySelectorAll('.marquee__star-img');
+    // Rotate stars strictly based on scroll position
+    if (stars.length) {
+      gsap.to(stars, {
+        rotation: 360,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: document.body,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 0.5,
+        }
+      });
+    }
+  }
 
-    const items = track.querySelectorAll('.marquee__item');
-    if (!items.length) return;
+  initCTA() {
+    const cta = document.querySelector('.sticky-cta');
+    if (!cta) return;
+    
+    // Hidden initially
+    gsap.set(cta, { autoAlpha: 0, x: 100 });
 
-    // Get width of one repeated block
-    const singleWidth = items[0].offsetWidth;
-
-    // Infinite horizontal scroll
-    gsap.to(track, {
-      x: -(singleWidth * 2),
-      ease: 'none',
-      duration: 20,
-      repeat: -1,
-      modifiers: {
-        x: gsap.utils.unitize((x) => {
-          return parseFloat(x) % (singleWidth * 2);
-        }),
-      },
+    ScrollTrigger.create({
+      trigger: '#hero',
+      start: 'bottom 50%', // Halfway past hero
+      onEnter: () => gsap.to(cta, { autoAlpha: 1, x: 0, duration: 0.5, ease: 'power3.out' }),
+      onLeaveBack: () => gsap.to(cta, { autoAlpha: 0, x: 100, duration: 0.5, ease: 'power3.in' })
     });
   }
 }

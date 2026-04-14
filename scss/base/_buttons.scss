@@ -1,0 +1,41 @@
+@use 'tokens' as *;
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.9em 2em;
+  font-family: $font-body;
+  font-size: $fs-sm;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border: none;
+  border-radius: $r-full;
+  cursor: pointer;
+  transition: transform $duration-fast $ease-out,
+              box-shadow $duration-fast $ease-out;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn--primary {
+  color: $c-bg;
+  background-color: $c-accent;
+}
+
+.btn--primary:hover {
+  background-color: $c-accent-hover;
+  box-shadow: 0 4px 24px rgba(195, 248, 50, 0.25);
+}
+
+.btn--secondary {
+  color: $c-text;
+  background-color: transparent;
+  border: 1.5px solid $c-border-visible;
+}
+
+.btn--secondary:hover {
+  border-color: $c-text;
+}

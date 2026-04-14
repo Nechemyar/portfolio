@@ -1,3 +1,7 @@
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Lenis from 'lenis';
+
 export default class SmoothScroll {
   constructor() {
     this.lenis = new Lenis({
@@ -16,6 +20,25 @@ export default class SmoothScroll {
       this.lenis.raf(time * 1000);
     });
     gsap.ticker.lagSmoothing(0);
+
+    // Hijack anchor links for smooth scrolling via Lenis
+    this.initAnchorLinks();
+  }
+
+  initAnchorLinks() {
+    const anchorLinks = document.querySelectorAll('a[href^="#"]');
+    anchorLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        if (targetId && targetId !== '#') {
+          this.lenis.scrollTo(targetId, {
+            offset: -100, // Offset for fixed nav header
+            duration: 1.2
+          });
+        }
+      });
+    });
   }
 
   stop() {

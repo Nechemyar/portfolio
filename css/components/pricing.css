@@ -1,0 +1,122 @@
+.pricing {
+  padding: var(--space-xl) var(--page-padding);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pricing__header {
+  margin-bottom: var(--space-lg);
+}
+
+.pricing__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-heading);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-xs);
+}
+
+.pricing__sub {
+  font-size: var(--fs-body);
+  color: var(--color-muted);
+  max-width: 500px;
+}
+
+.pricing__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.pricing__card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-solid);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  position: relative;
+}
+
+.pricing__card--featured {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+
+.pricing__card-badge {
+  position: absolute;
+  top: calc(var(--space-md) * -0.5);
+  left: var(--space-sm);
+  background: var(--color-accent);
+  color: var(--color-bg);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.4em 1em;
+  border-radius: var(--radius-full);
+}
+
+.pricing__card-label {
+  font-size: var(--fs-label);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-muted);
+}
+
+.pricing__card-price {
+  font-family: var(--font-display);
+  font-size: var(--fs-heading);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.pricing__card-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  padding: var(--space-xs) 0;
+  flex-grow: 1;
+}
+
+.pricing__card-features li {
+  font-size: var(--fs-body);
+  color: var(--color-muted);
+  padding-left: 1.4em;
+  position: relative;
+}
+
+.pricing__card-features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.pricing__footer {
+  font-size: var(--fs-body);
+  color: var(--color-muted);
+  text-align: center;
+}
+
+.pricing__footer a {
+  color: var(--color-text);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.pricing__footer a:hover {
+  color: var(--color-accent);
+}
+
+@media (max-width: 700px) {
+  .pricing__grid {
+    grid-template-columns: 1fr;
+  }
+}

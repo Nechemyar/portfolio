@@ -1,0 +1,45 @@
+:root {
+  /* Colors */
+  --color-bg:            #292928;
+  --color-surface:       #333332;
+  --color-text:          #F8F8F8;
+  --color-muted:         #999999;
+  --color-accent:        #c3f832;
+  --color-accent-hover:  #d4ff50;
+  --color-accent-soft:   #e6bbff;
+  --color-border:        rgba(255, 255, 255, 0.06);
+  --color-border-solid:  rgba(255, 255, 255, 0.1);
+
+  /* Typography */
+  --font-display:   'ClashDisplay', Arial, sans-serif;
+  --font-body:      'DM Sans', sans-serif;
+
+  --fs-massive:     clamp(4rem, 12vw, 12rem);
+  --fs-display:     clamp(3rem, 7vw, 7rem);
+  --fs-hero:        clamp(2.4rem, 5.5vw, 5.5rem);
+  --fs-heading:     clamp(1.8rem, 3.5vw, 3.2rem);
+  --fs-subheading:  clamp(1.2rem, 2vw, 1.6rem);
+  --fs-body:        clamp(0.95rem, 1.1vw, 1.1rem);
+  --fs-small:       clamp(0.8rem, 0.9vw, 0.9rem);
+  --fs-label:       clamp(0.7rem, 0.75vw, 0.78rem);
+  --fs-tagline:     clamp(0.85rem, 1vw, 1rem);
+
+  /* Spacing */
+  --space-xs:       clamp(0.5rem, 1vw, 1rem);
+  --space-sm:       clamp(1rem, 2vw, 2rem);
+  --space-md:       clamp(2rem, 4vw, 4rem);
+  --space-lg:       clamp(4rem, 8vw, 8rem);
+  --space-xl:       clamp(6rem, 12vw, 12rem);
+  --page-padding:   clamp(1.25rem, 4vw, 4rem);
+
+  /* Radius */
+  --radius-sm:      12px;
+  --radius-md:      16px;
+  --radius-lg:      24px;
+  --radius-full:    100px;
+
+  /* Transitions (NON-GSAP only) */
+  --ease-out:       cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast:  0.3s;
+  --duration-med:   0.6s;
+}

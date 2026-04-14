@@ -1,0 +1,110 @@
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-fast) ease;
+}
+
+.menu-overlay.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  max-height: 85vh;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  z-index: 1200;
+  transform: translateY(100%);
+  will-change: transform;
+  box-shadow: 0 -4px 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.mobile-menu__grabber {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 0 8px;
+  cursor: grab;
+  touch-action: none;
+}
+
+.mobile-menu__grabber:active {
+  cursor: grabbing;
+}
+
+.mobile-menu__grabber-track {
+  width: 40px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.mobile-menu__grabber-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: var(--color-text);
+  border-radius: var(--radius-full);
+}
+
+.mobile-menu__content {
+  padding: var(--space-sm) var(--page-padding) var(--space-lg);
+}
+
+.mobile-menu__whatsapp {
+  display: inline-block;
+  margin-bottom: var(--space-md);
+}
+
+.mobile-menu__nav {
+  margin-bottom: var(--space-md);
+}
+
+.mobile-menu__nav li {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.mobile-menu__link {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 700;
+  padding: 0.4em 0;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.mobile-menu__social {
+  display: flex;
+  gap: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-border);
+}
+
+.mobile-menu__social-link {
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+@media (min-width: 768px) {
+  .mobile-menu,
+  .menu-overlay {
+    display: none;
+  }
+}

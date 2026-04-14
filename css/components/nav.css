@@ -1,0 +1,103 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 1000;
+  padding: var(--space-sm) var(--page-padding);
+}
+
+.nav__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ——— Logo ——— */
+.nav__logo {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+/* ——— Menu Button (Green Pill) ——— */
+.nav__menu-btn {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background-color: var(--color-accent);
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  padding: 0;
+  height: 44px;
+  overflow: hidden;
+  position: relative;
+}
+
+.nav__menu-label {
+  font-family: var(--font-display);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--color-bg);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0 0 0 1.4em;
+  white-space: nowrap;
+}
+
+.nav__menu-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nav__menu-plus {
+  width: 18px;
+  height: 18px;
+  position: relative;
+  display: block;
+}
+
+.nav__menu-plus::before,
+.nav__menu-plus::after {
+  content: '';
+  position: absolute;
+  background-color: var(--color-bg);
+  border-radius: 2px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.nav__menu-plus::before {
+  width: 18px;
+  height: 2px;
+}
+
+.nav__menu-plus::after {
+  width: 2px;
+  height: 18px;
+}
+
+/* Plus hover: rotate 90deg */
+.nav__menu-btn:hover .nav__menu-plus::before,
+.nav__menu-btn:hover .nav__menu-plus::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+/* When open: plus becomes X */
+.nav__menu-btn.is-open .nav__menu-plus::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.nav__menu-btn.is-open .nav__menu-plus::after {
+  transform: translate(-50%, -50%) rotate(45deg);
+}

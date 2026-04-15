@@ -52,3 +52,9 @@
   width: auto;
   display: inline-block;
 }
+
+@media (max-width: 768px) {
+  .marquee {
+    bottom: 14vh; /* Clear the browser bottom bar on mobile */
+  }
+}

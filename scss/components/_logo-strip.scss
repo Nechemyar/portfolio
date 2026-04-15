@@ -1,0 +1,52 @@
+@use '../base/tokens' as *;
+
+.logo-strip {
+  padding: $space-48 $page-padding;
+  background: $c-bg;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.logo-strip__label {
+  font-family: $font-display;
+  font-size: $fs-xs;
+  font-weight: 500;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: $space-32;
+}
+
+.logo-strip__track {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+}
+
+.logo-strip__logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $space-32;
+  flex-wrap: wrap;
+}
+
+.logo-strip__logo {
+  font-family: $font-display;
+  font-size: clamp(0.85rem, 1.2vw, 1.1rem);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.25);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  transition: color $duration-fast ease;
+}
+
+.logo-strip__logo:hover {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.logo-strip__divider {
+  color: rgba(255, 255, 255, 0.12);
+  font-size: 1.5rem;
+}

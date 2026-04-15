@@ -22,10 +22,10 @@
   width: calc(100vw - 32px);
   height: auto;
   background: $c-soft;
-  border-radius: $r-md;
+  border-radius: 8px; /* Sharper corners */
   z-index: 950;
-  transform: translateY(calc(100% + 32px)); /* Fully off-screen including margin */
-  visibility: hidden; /* Double insurance: invisible until JS opens */
+  transform: translateY(calc(100% + 32px));
+  visibility: hidden;
   will-change: transform;
   box-shadow: 0 -4px 40px rgba(0, 0, 0, 0.2);
   overflow: hidden;
@@ -35,15 +35,33 @@
   visibility: visible;
 }
 
+/* ——— Close X Button ——— */
+.mobile-menu__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 10;
+  opacity: 0.6;
+  transition: opacity $duration-fast ease;
+}
+
+.mobile-menu__close:hover {
+  opacity: 1;
+}
+
 .mobile-menu__content {
-  padding: $space-24 $page-padding $space-32;
+  padding: $space-32 $page-padding $space-32;
 }
 
 .mobile-menu__whatsapp {
   display: inline-flex;
   align-items: center;
   gap: $space-8;
-  margin-bottom: $space-8; /* Tight: sits right on top of Work */
+  margin-bottom: $space-8;
 }
 
 .mobile-menu__nav {
@@ -59,7 +77,7 @@
 .mobile-menu__link {
   display: block;
   font-family: $font-display;
-  font-size: clamp(2.8rem, 9vw, 4rem); /* Even bigger */
+  font-size: clamp(2.8rem, 9vw, 4rem);
   font-weight: 800;
   padding: 0;
   line-height: 1.15;

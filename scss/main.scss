@@ -2,10 +2,14 @@
 @use 'base/typography';
 @use 'base/buttons';
 
+@use 'components/loader';
+
 @use 'components/nav';
 @use 'components/menu';
 @use 'components/hero';
 @use 'components/marquee';
+@use 'components/logo-strip';
+@use 'components/bento';
 @use 'components/work';
 @use 'components/services';
 @use 'components/pricing';

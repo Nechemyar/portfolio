@@ -1,0 +1,277 @@
+@use '../base/tokens' as *;
+
+.bento {
+  padding: $space-48 $page-padding;
+  background: $c-bg;
+}
+
+/* ——— Even Grid Layout ——— */
+.bento__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-16;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ——— Base Card ——— */
+.bento__card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  transition: transform $duration-fast ease, border-color $duration-fast ease;
+}
+
+.bento__card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ——— Card 1: Hero Project ——— */
+.bento__card--hero {
+  min-height: 400px;
+}
+
+.bento__card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+  transition: transform 0.6s ease;
+}
+
+.bento__card--hero:hover .bento__card-img {
+  transform: scale(1.05);
+}
+
+.bento__card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 60%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: $space-32;
+  z-index: 2;
+}
+
+.bento__card-tag {
+  font-family: $font-display;
+  font-size: $fs-xs;
+  font-weight: 600;
+  color: $c-accent;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: $space-8;
+}
+
+.bento__card-title {
+  font-family: $font-display;
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 0.95;
+  margin: 0;
+}
+
+.bento__card-desc {
+  font-size: $fs-sm;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: $space-8;
+  line-height: 1.5;
+}
+
+/* ——— Card 2: Stat ——— */
+.bento__card--stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: $space-48;
+  text-align: center;
+  min-height: 400px;
+}
+
+.bento__stat-number {
+  font-family: $font-display;
+  font-size: clamp(5rem, 10vw, 9rem);
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+}
+
+.bento__stat-label {
+  font-family: $font-display;
+  font-size: $fs-xs;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-top: $space-8;
+  line-height: 1.4;
+}
+
+/* ——— Card 3: Process ——— */
+.bento__card--process {
+  padding: $space-32;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.bento__process-title {
+  font-family: $font-display;
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+  text-transform: uppercase;
+  margin-bottom: $space-24;
+}
+
+.bento__process-list {
+  list-style: none;
+  counter-reset: steps;
+  padding: 0;
+  margin: 0;
+}
+
+.bento__process-list li {
+  counter-increment: steps;
+  font-family: $font-body;
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 2.2;
+  padding-left: 2em;
+  position: relative;
+}
+
+.bento__process-list li::before {
+  content: counter(steps);
+  position: absolute;
+  left: 0;
+  font-family: $font-display;
+  font-weight: 800;
+  color: $c-accent;
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
+}
+
+/* ——— Card 4: Testimonial (Accent, full width) ——— */
+.bento__card--testimonial {
+  grid-column: 1 / -1;
+  background: $c-accent;
+  border-color: $c-accent;
+  padding: $space-48;
+  display: flex;
+  align-items: center;
+  gap: $space-32;
+}
+
+.bento__card--testimonial:hover {
+  border-color: $c-accent;
+}
+
+.bento__testimonial-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.bento__testimonial-text {
+  flex: 1;
+}
+
+.bento__quote {
+  font-family: $font-body;
+  font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+  font-weight: 500;
+  color: $c-bg;
+  line-height: 1.6;
+  margin: 0;
+  font-style: italic;
+}
+
+.bento__cite {
+  font-family: $font-display;
+  font-size: $fs-xs;
+  font-weight: 700;
+  color: $c-bg;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: $space-16;
+  opacity: 0.7;
+  font-style: normal;
+  display: block;
+}
+
+/* ——— Card 5: Wide (Speed + Tech) ——— */
+.bento__card--wide {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp($space-32, 6vw, $space-48 * 2);
+  padding: $space-48 $space-32;
+}
+
+.bento__wide-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.bento__wide-divider {
+  width: 1px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.bento__wide-headline {
+  font-family: $font-display;
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1;
+  text-transform: uppercase;
+  margin-bottom: $space-8;
+}
+
+/* ——— Responsive ——— */
+@media (max-width: 768px) {
+  .bento__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bento__card--hero {
+    min-height: 300px;
+  }
+
+  .bento__card--stat {
+    min-height: auto;
+  }
+
+  .bento__card--testimonial {
+    grid-column: auto;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .bento__card--wide {
+    grid-column: auto;
+    flex-direction: column;
+    gap: $space-24;
+  }
+
+  .bento__wide-divider {
+    width: 60px;
+    height: 1px;
+  }
+}

@@ -29,9 +29,10 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
+  width: auto;
+  height: 75vh;
+  max-width: 95vw;
+  object-fit: contain;
   z-index: 2;
   pointer-events: none;
 }
@@ -39,16 +40,16 @@
 /* ——— Mouth Slider (Behind the Cat!) ——— */
 .hero__mouth-slider {
   position: absolute;
-  top: 45%; 
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* Fixed 300px width at all desktop/tablet sizes, fluid only on true mobile */
-  width: 340px; /* Slightly wider for large screens */
-  height: 370px;
-  z-index: 1; 
+  /* Desktop: 19:9 to fit billboard hole, slightly larger than before */
+  width: 480px;
+  height: 227px;
+  z-index: 1;
   overflow: hidden;
-  background: #000; 
-  
+  background: #000;
+
   box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9), 0 0 10px rgba(255, 255, 255, 0.05);
   border-radius: $r-xl;
 }

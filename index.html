@@ -90,10 +90,22 @@
         <!-- Z-Index 1: The Looping Slideshow inside the mouth -->
         <div class="hero__mouth-slider" id="mouth-slider">
           <div class="hero__mouth-track" id="mouth-track">
-            <img class="hero__mouth-img" src="assets/images/project-choice.jpg" alt="Choice Inventory" />
-            <img class="hero__mouth-img" src="assets/images/project-clinical.jpg" alt="Clinical Assessments" />
-            <img class="hero__mouth-img" src="assets/images/project-choice.jpg" alt="" />
-            <img class="hero__mouth-img" src="assets/images/project-clinical.jpg" alt="" />
+            <picture>
+              <source media="(max-width: 768px)" srcset="assets/images/choicemob.jpg" />
+              <img class="hero__mouth-img" src="assets/images/project-choice.jpg" alt="Choice Inventory" />
+            </picture>
+            <picture>
+              <source media="(max-width: 768px)" srcset="assets/images/clinmob.jpg" />
+              <img class="hero__mouth-img" src="assets/images/project-clinical.jpg" alt="Clinical Assessments" />
+            </picture>
+            <picture>
+              <source media="(max-width: 768px)" srcset="assets/images/choicemob.jpg" />
+              <img class="hero__mouth-img" src="assets/images/project-choice.jpg" alt="" />
+            </picture>
+            <picture>
+              <source media="(max-width: 768px)" srcset="assets/images/clinmob.jpg" />
+              <img class="hero__mouth-img" src="assets/images/project-clinical.jpg" alt="" />
+            </picture>
           </div>
           <!-- TV screen effect overlay -->
           <div class="hero__tv-overlay"></div>

@@ -19,7 +19,9 @@
   top: 47%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 80vh;
+  /* Fluid sizing: shrink on short or narrow viewports so the cat never crowds
+     the marquee. min() picks whichever is the more restrictive constraint. */
+  height: min(78vh, 65vw);
   aspect-ratio: 1448 / 1086;
   max-width: 95vw;
   z-index: 1;
@@ -41,12 +43,14 @@
   position: absolute;
   top: 28%;
   left: 12.5%;
-  width: 72%;
+  width: 76%;
   height: 64%;
   z-index: 1;
   overflow: hidden;
   background: #000;
-
+  /* Thin border matching the frame's ink so any sub-pixel mismatch with the
+     cat PNG's hole reads as a clean edge instead of a hairline gap. */
+  border: 2px solid #2c1d33;
   box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9), 0 0 10px rgba(255, 255, 255, 0.05);
   border-radius: $r-xl;
 }
@@ -156,7 +160,9 @@
 @media (max-width: 768px) {
   .hero__cat-wrapper {
     aspect-ratio: 941 / 1672;
-    height: 80vh;
+    /* Mobile is portrait — let height be whichever vh/vw constraint hits
+       first so the cat sits cleanly above the marquee on any device. */
+    height: min(75vh, 165vw);
     max-width: 90vw;
   }
 
@@ -164,7 +170,7 @@
     top: 19%;
     left: 16%;
     width: 68%;
-    height: 75%;
+    height: 71%;
   }
 
   .hero__footer {

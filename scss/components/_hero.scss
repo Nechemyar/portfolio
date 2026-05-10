@@ -41,12 +41,12 @@
 /* Positioned as % of the wrapper, sized to fit the billboard hole. */
 .hero__mouth-slider {
   position: absolute;
-  top: 55%;
+  top: 57%;
   left: 50%;
   transform: translate(-50%, -50%);
   /* Aspect-ratio matches the reel image's natural ratio (~16:9) so source
      stays uncropped and slider snaps to the cat's cutout. */
-  width: 80%;
+  width: 84%;
   aspect-ratio: 2368 / 1339;
   z-index: 1;
   overflow: hidden;
@@ -160,15 +160,15 @@
 @media (max-width: 768px) {
   .hero__cat-wrapper {
     aspect-ratio: 1024 / 1535;
-    /* Mobile is portrait — let height be whichever vh/vw constraint hits
-       first so the cat sits cleanly above the marquee on any device. */
-    height: min(75vh, 130vw);
-    max-width: 90vw;
+    /* Mobile cat scales up — fills viewport width with slight margin so the
+       slider can sit comfortably inside the (proportionally smaller) cutout. */
+    height: min(85vh, 145vw);
+    max-width: 96vw;
   }
 
   .hero__mouth-slider {
-    top: 53%;
-    width: 72%;
+    top: 52%;
+    width: 58%;
     aspect-ratio: 1272 / 2350;
   }
 

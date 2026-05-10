@@ -87,8 +87,6 @@
     <!-- HERO -->
     <section class="hero" id="hero">
       <div class="hero__cat-wrapper">
-        <!-- Z-Index 0: Full scene background for ambience -->
-        <img class="hero__scene-bg" src="assets/images/catbckg.png" alt="" aria-hidden="true" />
         <!-- Z-Index 1: The Looping Slideshow inside the mouth -->
         <div class="hero__mouth-slider" id="mouth-slider">
           <div class="hero__mouth-track" id="mouth-track">
@@ -101,7 +99,10 @@
           <div class="hero__tv-overlay"></div>
         </div>
         <!-- Z-Index 2: The Cat with the transparent mouth -->
-        <img class="hero__cat-img" src="assets/images/catnobckg.png" alt="Cat Background" />
+        <picture>
+          <source media="(max-width: 768px)" srcset="assets/images/newcatmob.png" />
+          <img class="hero__cat-img" src="assets/images/newcatdesk.png" alt="Cat Background" />
+        </picture>
       </div>
 
       <!-- GIANT MARQUEE -->

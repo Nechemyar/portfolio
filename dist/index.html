@@ -21,8 +21,8 @@
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css" />
 
   <!-- CSS -->
-  <script type="module" crossorigin src="./assets/index-Dj-LGT7q.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-ButrTZCE.css">
+  <script type="module" crossorigin src="./assets/index-CuRSlOXf.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CX2sm-cX.css">
 </head>
 
 <body>
@@ -88,8 +88,6 @@
     <!-- HERO -->
     <section class="hero" id="hero">
       <div class="hero__cat-wrapper">
-        <!-- Z-Index 0: Full scene background for ambience -->
-        <img class="hero__scene-bg" src="./assets/catbckg-CUcTjjCj.png" alt="" aria-hidden="true" />
         <!-- Z-Index 1: The Looping Slideshow inside the mouth -->
         <div class="hero__mouth-slider" id="mouth-slider">
           <div class="hero__mouth-track" id="mouth-track">
@@ -102,7 +100,10 @@
           <div class="hero__tv-overlay"></div>
         </div>
         <!-- Z-Index 2: The Cat with the transparent mouth -->
-        <img class="hero__cat-img" src="./assets/catnobckg-BusLpjbD.png" alt="Cat Background" />
+        <picture>
+          <source media="(max-width: 768px)" srcset="./assets/newcatmob-Ce5oOt7U.png" />
+          <img class="hero__cat-img" src="./assets/newcatdesk-D6V_BmaW.png" alt="Cat Background" />
+        </picture>
       </div>
 
       <!-- GIANT MARQUEE -->

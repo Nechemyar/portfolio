@@ -41,18 +41,18 @@
 /* Positioned as % of the wrapper, sized to fit the billboard hole. */
 .hero__mouth-slider {
   position: absolute;
-  top: 28%;
-  left: 12.5%;
-  width: 76%;
-  height: 64%;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* Aspect-ratio matches the reel image's natural ratio (~16:9) so source
+     stays uncropped and slider snaps to the cat's cutout. */
+  width: 80%;
+  aspect-ratio: 2368 / 1339;
   z-index: 1;
   overflow: hidden;
   background: #000;
-  /* Thin border matching the frame's ink so any sub-pixel mismatch with the
-     cat PNG's hole reads as a clean edge instead of a hairline gap. */
-  border: 2px solid #2c1d33;
   box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9), 0 0 10px rgba(255, 255, 255, 0.05);
-  border-radius: $r-xl;
+  border-radius: $r-lg;
 }
 
 .hero__mouth-track {
@@ -159,18 +159,17 @@
 /* ——— Responsive ——— */
 @media (max-width: 768px) {
   .hero__cat-wrapper {
-    aspect-ratio: 941 / 1672;
+    aspect-ratio: 1024 / 1535;
     /* Mobile is portrait — let height be whichever vh/vw constraint hits
        first so the cat sits cleanly above the marquee on any device. */
-    height: min(75vh, 165vw);
+    height: min(75vh, 130vw);
     max-width: 90vw;
   }
 
   .hero__mouth-slider {
-    top: 19%;
-    left: 16%;
-    width: 68%;
-    height: 71%;
+    top: 53%;
+    width: 72%;
+    aspect-ratio: 1272 / 2350;
   }
 
   .hero__footer {

@@ -99,13 +99,13 @@
   font-weight: 800;
   color: $c-bg;
   text-transform: uppercase;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.04em;
   white-space: nowrap;
 }
 
 .nav__menu-icon {
-  width: 28px;
-  height: 28px;
+  width: 22px;
+  height: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -113,8 +113,8 @@
 }
 
 .nav__menu-cross {
-  width: 20px;
-  height: 20px;
+  width: 14px;
+  height: 14px;
   display: block;
   transition: transform $duration-fast $ease-out;
 }

@@ -6,12 +6,10 @@
   position: relative;
   overflow: hidden;
   background-color: #ffffff;
-  background-image: radial-gradient(
-    ellipse 55% 50% at 50% 38%,
-    rgba(236, 95, 255, 0.81) 0%,
-    rgba(108, 20, 145, 0.81) 55%,
-    rgba(47, 0, 63, 0.81) 100%
-  );
+  background-image:
+    radial-gradient(ellipse 35% 28% at 50% 28%, rgba(255, 200, 255, 0.85) 0%, rgba(255, 200, 255, 0) 100%),
+    radial-gradient(ellipse 70% 60% at 50% 45%, rgba(236, 95, 255, 0.78) 0%, rgba(236, 95, 255, 0) 100%),
+    radial-gradient(ellipse 120% 100% at 50% 50%, rgba(108, 20, 145, 0.81) 35%, rgba(47, 0, 63, 0.85) 100%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,12 +20,11 @@
    positioned as % of it and always fall inside the billboard hole. */
 .hero__cat-wrapper {
   position: absolute;
-  top: 42%;
+  top: 58%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: min(110vh, 90vw);
-  aspect-ratio: 1448 / 1086;
-  max-width: 130vw;
+  width: min(135vh, 105vw);
+  aspect-ratio: 1920 / 1080;
   z-index: 1;
 }
 

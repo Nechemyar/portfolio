@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(cd \"C:\\\\Users\\\\neche\\\\Downloads\\\\portfolio\" && ls assets/images/ | grep -i -E \"desk|cross\")",
+      "Bash(cp \"C:\\\\Users\\\\neche\\\\Downloads\\\\portfolio\\\\assets\\\\images\\\\deskcat.png\" \"C:\\\\Users\\\\neche\\\\Downloads\\\\portfolio\\\\.claude\\\\worktrees\\\\lucid-montalcini-58fed4\\\\assets\\\\images\\\\deskcat.png\")",
+      "Bash(cp \"C:\\\\Users\\\\neche\\\\Downloads\\\\portfolio\\\\assets\\\\images\\\\deskframe.png\" \"C:\\\\Users\\\\neche\\\\Downloads\\\\portfolio\\\\.claude\\\\worktrees\\\\lucid-montalcini-58fed4\\\\assets\\\\images\\\\deskframe.png\")",
+      "Bash(cp \"C:\\\\Users\\\\neche\\\\Downloads\\\\portfolio\\\\assets\\\\images\\\\Cross.svg\" \"C:\\\\Users\\\\neche\\\\Downloads\\\\portfolio\\\\.claude\\\\worktrees\\\\lucid-montalcini-58fed4\\\\assets\\\\images\\\\Cross.svg\")"
+    ]
+  }
+}

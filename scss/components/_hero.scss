@@ -23,7 +23,7 @@
   top: 58%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: min(135vh, 105vw);
+  width: min(210vh, 163vw);
   aspect-ratio: 1920 / 1080;
   z-index: 1;
 }
@@ -36,8 +36,6 @@
   object-fit: contain;
   z-index: 3; /* In front of frame so teeth & paws overhang */
   pointer-events: none;
-  transform: scale(1.55);
-  transform-origin: 50% 27%; /* Anchor at chin/frame-top so teeth stay put as it grows */
 }
 
 .hero__frame-img {

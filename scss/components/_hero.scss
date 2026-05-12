@@ -52,18 +52,17 @@
 /* Positioned as % of the wrapper, sized to fit the billboard hole. */
 .hero__mouth-slider {
   position: absolute;
-  top: 57%;
+  top: 65%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* Aspect-ratio matches the reel image's natural ratio (~16:9) so source
-     stays uncropped and slider snaps to the cat's cutout. */
-  width: 84%;
-  aspect-ratio: 2368 / 1339;
+  /* Sized to fit inside the laptop screen cutout of deskframe.png. */
+  width: 58%;
+  aspect-ratio: 16 / 10;
   z-index: 1;
   overflow: hidden;
   background: #000;
   box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9), 0 0 10px rgba(255, 255, 255, 0.05);
-  border-radius: $r-lg;
+  border-radius: $r-md;
 }
 
 .hero__mouth-track {

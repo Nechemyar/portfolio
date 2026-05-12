@@ -86,15 +86,9 @@
   <!-- MAIN -->
   <main>
 
-    <!-- HERO + PROJECTS SEQUENCE (tall trigger, pinned sticky stage) -->
+    <!-- HERO (tall trigger, pinned sticky stage) -->
     <section class="hero" id="hero">
-      <!-- Anchor target for #projects nav link — sits ~40% into the hero scroll
-           so the link lands the user where the project cats are visible. -->
-      <span class="hero__anchor" id="projects" aria-hidden="true"></span>
       <div class="hero__stage">
-        <!-- Subtle bg color overlay that fades in for the projects phase -->
-        <div class="hero__bg-shift"></div>
-
         <!-- z=1: Looping reel, mask-clipped to the cat's screen interior -->
         <div class="hero__cat-wrapper">
           <div class="hero__mouth-slider" id="mouth-slider">
@@ -158,38 +152,24 @@
           <a href="#projects" class="hero__footer-link">EXPLORE <svg class="hero__footer-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
         </div>
 
-        <!-- PROJECTS OVERLAY: animates in during pin scrub -->
-        <h2 class="hero__projects-title">Projects</h2>
-        <div class="hero__projects-track">
-          <a class="hero__project-card" href="#contact" aria-label="Project case study">
-            <span class="hero__project-glow"></span>
-            <div class="hero__project-mask">
-              <div class="hero__project-screen">
-                <img src="assets/images/project-clinical.jpg" alt="Clinical Assessments" loading="lazy" />
-              </div>
-            </div>
-            <img class="hero__project-cat" src="assets/images/deskcatblack.png" alt="" />
-            <span class="hero__project-label">Clinical Assessments <span class="hero__project-arrow">→</span></span>
-          </a>
-          <a class="hero__project-card" href="#contact" aria-label="Project case study">
-            <span class="hero__project-glow"></span>
-            <div class="hero__project-mask">
-              <div class="hero__project-screen">
-                <img src="assets/images/project-choice.jpg" alt="Choice Inventory" loading="lazy" />
-              </div>
-            </div>
-            <img class="hero__project-cat" src="assets/images/deskcatwhite.png" alt="" />
-            <span class="hero__project-label">Choice Inventory <span class="hero__project-arrow">→</span></span>
-          </a>
-          <a class="hero__project-card" href="#contact" aria-label="Project case study">
-            <span class="hero__project-glow"></span>
-            <div class="hero__project-mask">
-              <div class="hero__project-screen"></div>
-            </div>
-            <img class="hero__project-cat" src="assets/images/deskcatgrey.png" alt="" />
-            <span class="hero__project-label">Coming soon</span>
-          </a>
+      </div>
+    </section>
+
+    <!-- FEATURED PROJECTS — pinned, cat-stack carousel -->
+    <section class="featured" id="projects">
+      <div class="featured__pin">
+        <div class="featured__bg" data-bg-idx="0"></div>
+        <div class="featured__bg" data-bg-idx="1"></div>
+        <span class="featured__eyebrow"><span class="featured__eyebrow-inner">Featured Projects</span></span>
+        <div class="featured__stack" id="featured-stack">
+          <!-- Cards injected by FeaturedProjects.js -->
         </div>
+        <h2 class="featured__title" id="featured-title">
+          <!-- Title spans injected by FeaturedProjects.js -->
+        </h2>
+        <a class="featured__cta" id="featured-cta" href="projects/clinical-assessments.html">
+          View Project <span class="featured__cta-arrow">→</span>
+        </a>
       </div>
     </section>
 

@@ -9,6 +9,7 @@ import Menu from './modules/Menu.js';
 import ScrollReveal from './modules/ScrollReveal.js';
 import HeroScroll from './modules/HeroScroll.js';
 import ProjectsScroll from './modules/ProjectsScroll.js';
+import FeaturedProjects from './modules/FeaturedProjects.js';
 import Faq from './modules/Faq.js';
 import Loader from './modules/Loader.js';
 
@@ -27,6 +28,7 @@ const menu = new Menu();
 const scrollReveal = new ScrollReveal();
 const heroScroll = new HeroScroll();
 const projectsScroll = new ProjectsScroll();
+const featuredProjects = new FeaturedProjects();
 const faq = new Faq();
 
 // Boot the loader, then reveal the hero

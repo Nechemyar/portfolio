@@ -1,0 +1,169 @@
+@use '../base/tokens' as *;
+
+.project-page {
+  background: #1A1A19;
+  color: #ffffff;
+  min-height: 100vh;
+}
+
+.project-page__main {
+  padding-top: clamp(8rem, 14vh, 12rem);
+  padding-bottom: clamp(4rem, 10vh, 8rem);
+}
+
+/* ——— Project hero ——— */
+.project-hero {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
+}
+
+.project-hero__back {
+  display: inline-block;
+  font-family: $font-display;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  margin-bottom: clamp(2rem, 6vh, 4rem);
+  transition: color $duration-fast $ease-out;
+}
+
+.project-hero__back:hover {
+  color: #ffffff;
+}
+
+.project-hero__eyebrow {
+  display: block;
+  font-family: $font-display;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: $c-accent;
+  margin-bottom: 1.5rem;
+}
+
+.project-hero__title {
+  font-family: $font-display;
+  font-size: clamp(3rem, 9vw, 8rem);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  line-height: 0.88;
+  text-transform: uppercase;
+  margin: 0 0 2rem;
+}
+
+.project-hero__sub {
+  font-size: clamp(1.05rem, 1.5vw, 1.4rem);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 65ch;
+  margin: 0 0 3rem;
+}
+
+.project-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  margin-bottom: 3rem;
+  font-size: 0.95rem;
+}
+
+.project-hero__meta > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.project-hero__meta span {
+  font-family: $font-display;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.project-hero__cta {
+  display: inline-block;
+}
+
+/* ——— Screenshot ——— */
+.project-shot {
+  max-width: 1400px;
+  margin: clamp(4rem, 10vh, 8rem) auto;
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
+}
+
+.project-shot img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: clamp(0.5rem, 1vw, 1rem);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+/* ——— Brief ——— */
+.project-brief {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
+}
+
+.project-brief h2 {
+  font-family: $font-display;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  margin: 0 0 1.5rem;
+}
+
+.project-brief p {
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0 0 1.5rem;
+}
+
+/* ——— Next project ——— */
+.project-next {
+  max-width: 1280px;
+  margin: clamp(5rem, 12vh, 10rem) auto 0;
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: clamp(3rem, 6vh, 5rem);
+}
+
+.project-next__link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.project-next__label {
+  font-family: $font-display;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.project-next__title {
+  font-family: $font-display;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+  transition: transform $duration-fast $ease-out;
+  display: inline-block;
+}
+
+.project-next__link:hover .project-next__title {
+  transform: translateX(12px);
+}

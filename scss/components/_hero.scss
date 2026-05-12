@@ -6,18 +6,7 @@
 .hero {
   position: relative;
   width: 100vw;
-  height: 500vh; /* 100vh visible + 400vh of scrub runway */
-}
-
-.hero__anchor {
-  position: absolute;
-  /* Lands ~40% into the hero scroll runway, where the cat has slid off and
-     the project cats are visible. SmoothScroll adds its own -100px offset. */
-  top: 200vh;
-  left: 0;
-  width: 1px;
-  height: 1px;
-  pointer-events: none;
+  height: 250vh; /* 100vh visible + 150vh of scrub runway (cat-to-center + slide-off-left) */
 }
 
 /* The .hero__stage is what the user actually sees — pinned 100vh viewport. */
@@ -35,17 +24,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-/* Background-color overlay that fades in during the projects phase to signal
-   a different section. Subtle desaturated deep-purple — not pure black. */
-.hero__bg-shift {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 80% 70% at 50% 50%, #2a0a3d 0%, #14001f 100%);
-  opacity: 0;
-  z-index: 0;
-  pointer-events: none;
 }
 
 /* ——— Cat Wrapper ——— */

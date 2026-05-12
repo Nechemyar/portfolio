@@ -1,0 +1,241 @@
+@use '../base/tokens' as *;
+
+/* ——— Featured Projects ———
+   Pinned section. The .featured__pin sticky stage is 100vh; the wrapper is
+   tall (driven by FeaturedProjects.js based on project count) so we have
+   scroll runway for the scrubbed timeline. */
+.featured {
+  position: relative;
+  width: 100vw;
+  /* height set inline via JS based on PROJECTS.length */
+}
+
+.featured__pin {
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #0a0a0a;
+}
+
+/* ——— Background tints (one per project, crossfaded) ——— */
+.featured__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+.featured__bg[data-bg-idx="0"] {
+  background: linear-gradient(180deg, #f5f5f3 0%, #d8d8d4 100%);
+}
+
+.featured__bg[data-bg-idx="1"] {
+  background: linear-gradient(180deg, #ff9a3d 0%, #d96400 100%);
+}
+
+/* ——— Eyebrow ("FEATURED PROJECTS") top-left ——— */
+.featured__eyebrow {
+  position: absolute;
+  top: clamp(6rem, 12vh, 10rem);
+  left: clamp(1.25rem, 4vw, 3rem);
+  z-index: 5;
+  font-family: $font-display;
+  font-size: clamp(0.75rem, 1.1vw, 1rem);
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #1A1A19;
+  overflow: hidden;
+  display: inline-block;
+  pointer-events: none;
+}
+
+.featured__eyebrow-inner {
+  display: inline-block;
+  transform: translateY(120%);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* ——— Stacked cat cards ——— */
+.featured__stack {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+
+.featured__card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(560px, 70vw, 920px);
+  aspect-ratio: 1920 / 1080;
+  transform: translate(-50%, -50%);
+  text-decoration: none;
+  cursor: pointer;
+  will-change: transform, filter, opacity;
+  /* Initial positioning is set by GSAP — declaring base transforms here
+     would compete with composed transforms. */
+}
+
+/* Soft pink glow behind the active cat */
+.featured__card-glow {
+  position: absolute;
+  inset: -15% -10%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(236, 95, 255, 0.5) 0%,
+    rgba(236, 95, 255, 0.2) 35%,
+    rgba(236, 95, 255, 0) 70%
+  );
+  filter: blur(40px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Mask the screenshot to the monitor interior using the same deskmask.png
+   as the hero — keeps the cat-frame illusion consistent. */
+.featured__card-mask {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+  -webkit-mask-image: url('../../assets/images/deskmask.png');
+  mask-image: url('../../assets/images/deskmask.png');
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background: #0a0a0a;
+}
+
+.featured__card-screen {
+  position: absolute;
+  top: 29.35%;
+  left: 17.71%;
+  width: 61.46%;
+  height: 60.93%;
+  overflow: hidden;
+}
+
+.featured__card-screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.featured__card-cat {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* ——— Big bottom-left project name (crossfades between projects) ——— */
+.featured__title {
+  position: absolute;
+  bottom: clamp(5rem, 11vh, 9rem);
+  left: clamp(1.25rem, 4vw, 3rem);
+  z-index: 4;
+  margin: 0;
+  font-family: $font-display;
+  font-size: clamp(2.5rem, 11vw, 11rem);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  line-height: 0.88;
+  text-transform: uppercase;
+  color: #ffffff;
+  pointer-events: none;
+  white-space: pre-line;
+}
+
+.featured__title-item {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  white-space: pre-line;
+  will-change: opacity;
+}
+
+.featured__title-item:first-child {
+  position: relative; /* first child establishes the box height */
+}
+
+/* ——— Bottom-right CTA pill ——— */
+.featured__cta {
+  position: absolute;
+  bottom: clamp(2rem, 5vh, 3.5rem);
+  right: clamp(1.25rem, 4vw, 3rem);
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.95em 1.6em;
+  background: #E0BFFF;
+  color: #1A1A19;
+  font-family: $font-display;
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 999px;
+  opacity: 0;
+  transform: translateY(20px);
+  will-change: transform, opacity;
+  transition: transform $duration-fast $ease-out;
+}
+
+.featured__cta:hover {
+  transform: translateY(-2px);
+}
+
+.featured__cta-arrow {
+  display: inline-block;
+  transition: transform $duration-fast $ease-out;
+}
+
+.featured__cta:hover .featured__cta-arrow {
+  transform: translateX(4px);
+}
+
+/* Hide global sticky-cta while the featured section owns the viewport. */
+body.featured-active .sticky-cta {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .featured__card {
+    width: 92vw;
+  }
+
+  .featured__title {
+    font-size: clamp(2.4rem, 13vw, 5rem);
+    bottom: clamp(6rem, 14vh, 8rem);
+  }
+
+  .featured__eyebrow {
+    top: clamp(5rem, 10vh, 7rem);
+    font-size: 0.7rem;
+  }
+
+  .featured__cta {
+    padding: 0.8em 1.3em;
+    font-size: 0.75rem;
+  }
+}

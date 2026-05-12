@@ -8,7 +8,7 @@
 @use 'components/menu';
 @use 'components/hero';
 @use 'components/marquee';
-@use 'components/projects';
+@use 'components/featured';
 @use 'components/logo-strip';
 @use 'components/bento';
 @use 'components/about';
@@ -17,3 +17,4 @@
 @use 'components/testimonials';
 @use 'components/faq';
 @use 'components/contact';
+@use 'components/project-page';

@@ -1,0 +1,173 @@
+@use '../base/tokens' as *;
+
+/* ——— Projects: pinned reveal + horizontal cat carousel ——— */
+.projects {
+  position: relative;
+  background: #000;
+  /* Runway for the pin scrub (handled by GSAP, but min-height keeps DOM tall) */
+  min-height: 100vh;
+}
+
+.projects__pin {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.projects__title {
+  position: absolute;
+  top: 8vh;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: $font-display;
+  font-size: clamp(4rem, 12vw, 14rem);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  line-height: 0.85;
+  white-space: nowrap;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.projects__track {
+  display: flex;
+  align-items: center;
+  gap: clamp(2vw, 4vw, 5vw);
+  height: 100%;
+  padding: 0 20vw;
+  will-change: transform;
+}
+
+.projects__card {
+  flex: 0 0 auto;
+  position: relative;
+  width: clamp(420px, 55vw, 720px);
+  aspect-ratio: 1920 / 1080;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform $duration-fast $ease-out;
+}
+
+.projects__card:hover {
+  transform: translateY(-8px);
+}
+
+.projects__card-cat-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.projects__card-mask {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+  -webkit-mask-image: url('../../assets/images/deskmask.png');
+  mask-image: url('../../assets/images/deskmask.png');
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background: #0a0a0a;
+}
+
+.projects__card-screen {
+  position: absolute;
+  top: 29.35%;
+  left: 17.71%;
+  width: 61.46%;
+  height: 60.93%;
+  overflow: hidden;
+}
+
+.projects__card-screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.projects__card-label {
+  position: absolute;
+  bottom: -3.5rem;
+  left: 1rem;
+  color: #ffffff;
+  font-family: $font-display;
+  font-size: $fs-md;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.projects__card-arrow {
+  font-size: 1.1em;
+  transition: transform $duration-fast $ease-out;
+}
+
+.projects__card:hover .projects__card-arrow {
+  transform: translateX(6px);
+}
+
+/* Placeholder cards — same cat shape, dimmer, no link behavior */
+.projects__card--placeholder {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.projects__card--placeholder .projects__card-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.projects__card--placeholder .projects__card-screen::after {
+  content: 'Coming soon';
+  color: #ffffff;
+  font-family: $font-display;
+  font-size: $fs-lg;
+  letter-spacing: 0.05em;
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .projects__title {
+    top: 10vh;
+  }
+
+  .projects__track {
+    padding: 0 10vw;
+    gap: 4vw;
+  }
+
+  .projects__card {
+    width: 80vw;
+  }
+
+  .projects__card-label {
+    bottom: -2.8rem;
+    font-size: $fs-base;
+  }
+}
+
+/* Hide the global sticky CTA while the pinned projects section owns the screen */
+body.projects-active .sticky-cta {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}

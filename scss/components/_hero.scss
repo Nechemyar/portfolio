@@ -167,7 +167,7 @@
   .hero__cat-wrapper {
     /* mobcat.png shares the 1920x1080 canvas — phone+cat sit ~20% wide in the
        middle, so we blow the wrapper way up to scale the visible content. */
-    top: 52%;
+    top: 42%;
     width: 290vw;
     height: auto;
     aspect-ratio: 1920 / 1080;

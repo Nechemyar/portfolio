@@ -48,9 +48,10 @@
           </span>
         </button>
         <div class="nav__desktop-links">
-          <a href="#work">Work</a>
+          <a href="#projects">Work</a>
           <a href="#services">Services</a>
           <a href="#pricing">Pricing</a>
+          <a href="#faq">FAQ</a>
           <a href="#contact">Contact</a>
         </div>
       </div>
@@ -73,9 +74,10 @@
         </svg>
       </a>
       <ul class="mobile-menu__nav">
-        <li><a href="#work" class="mobile-menu__link menu-item">Work</a></li>
+        <li><a href="#projects" class="mobile-menu__link menu-item">Work</a></li>
         <li><a href="#services" class="mobile-menu__link menu-item">Services</a></li>
         <li><a href="#pricing" class="mobile-menu__link menu-item">Pricing</a></li>
+        <li><a href="#faq" class="mobile-menu__link menu-item">FAQ</a></li>
         <li><a href="#contact" class="mobile-menu__link menu-item">Contact</a></li>
       </ul>
     </div>
@@ -147,7 +149,48 @@
       <div class="hero__footer">
         <a href="#contact" class="hero__footer-link">GET IN TOUCH</a>
         <span class="hero__footer-tagline">PREMIUM WEB DESIGN FOR BUSINESSES THAT CARE</span>
-        <a href="#work" class="hero__footer-link">EXPLORE <svg class="hero__footer-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+        <a href="#projects" class="hero__footer-link">EXPLORE <svg class="hero__footer-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+      </div>
+    </section>
+
+    <!-- PROJECTS — pinned reveal + horizontal cat carousel -->
+    <section class="projects" id="projects">
+      <div class="projects__pin">
+        <h2 class="projects__title">Projects</h2>
+        <div class="projects__track">
+          <a class="projects__card" href="#contact" aria-label="Clinical Assessments case study">
+            <div class="projects__card-mask">
+              <div class="projects__card-screen">
+                <img src="assets/images/project-clinical.jpg" alt="Clinical Assessments" loading="lazy" />
+              </div>
+            </div>
+            <img class="projects__card-cat-img" src="assets/images/deskcat.png" alt="" />
+            <span class="projects__card-label">Clinical Assessments <span class="projects__card-arrow">→</span></span>
+          </a>
+          <a class="projects__card" href="#contact" aria-label="Choice Inventory case study">
+            <div class="projects__card-mask">
+              <div class="projects__card-screen">
+                <img src="assets/images/project-choice.jpg" alt="Choice Inventory" loading="lazy" />
+              </div>
+            </div>
+            <img class="projects__card-cat-img" src="assets/images/deskcat.png" alt="" />
+            <span class="projects__card-label">Choice Inventory <span class="projects__card-arrow">→</span></span>
+          </a>
+          <div class="projects__card projects__card--placeholder" aria-hidden="true">
+            <div class="projects__card-mask">
+              <div class="projects__card-screen"></div>
+            </div>
+            <img class="projects__card-cat-img" src="assets/images/deskcat.png" alt="" />
+            <span class="projects__card-label">Coming soon</span>
+          </div>
+          <div class="projects__card projects__card--placeholder" aria-hidden="true">
+            <div class="projects__card-mask">
+              <div class="projects__card-screen"></div>
+            </div>
+            <img class="projects__card-cat-img" src="assets/images/deskcat.png" alt="" />
+            <span class="projects__card-label">Coming soon</span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -173,17 +216,7 @@
     <section class="bento" id="bento">
       <div class="bento__grid">
 
-        <!-- Card 1: Hero Project (large, spans 2 rows) -->
-        <article class="bento__card bento__card--hero" data-reveal>
-          <img class="bento__card-img" src="assets/images/clinic.webp" alt="Clinical Assessments" loading="lazy" />
-          <div class="bento__card-overlay">
-            <span class="bento__card-tag">Featured Project</span>
-            <h3 class="bento__card-title">Clinical<br/>Assessments</h3>
-            <p class="bento__card-desc">Full brand identity & bespoke website for a UK medical consultancy.</p>
-          </div>
-        </article>
-
-        <!-- Card 2: PageSpeed Stat -->
+        <!-- Card 1: PageSpeed Stat -->
         <article class="bento__card bento__card--stat" data-reveal>
           <span class="bento__stat-number">90+</span>
           <span class="bento__stat-label">PAGESPEED<br/>SCORE</span>
@@ -199,18 +232,7 @@
           </ol>
         </article>
 
-        <!-- Card 4: Testimonial (accent, wide) -->
-        <article class="bento__card bento__card--testimonial" data-reveal>
-          <img class="bento__testimonial-photo" src="assets/images/Yehuda.webp" alt="Dr Yehuda Marshall" loading="lazy" />
-          <div class="bento__testimonial-text">
-            <blockquote class="bento__quote">
-              "Nechemya understood exactly what I needed and translated it into a brand and website that elevated my entire practice."
-            </blockquote>
-            <cite class="bento__cite">— Dr Yehuda Marshall, Clinical Assessments Ltd</cite>
-          </div>
-        </article>
-
-        <!-- Card 5: Speed + Tech (wide) -->
+        <!-- Card: Speed + Tech (wide) -->
         <article class="bento__card bento__card--wide" data-reveal>
           <div class="bento__wide-item">
             <span class="bento__stat-number">2–4</span>
@@ -226,37 +248,21 @@
       </div>
     </section>
 
-
-    <!-- WORK -->
-    <section class="work" id="work">
-      <h2 class="section-label" data-reveal>Selected Work</h2>
-      <div class="work__grid">
-        <article class="work__item" data-reveal>
-          <div class="work__image">
-            <img src="assets/images/project-clinical.jpg" alt="Clinical Assessments Ltd" loading="lazy" />
-            <video class="work__video" src="" poster="assets/images/project-clinical.jpg" loop muted playsinline aria-hidden="true"></video>
+    <!-- ABOUT / FOUNDER -->
+    <section class="about" id="about">
+      <div class="about__inner" data-reveal>
+        <div class="about__photo">
+          <img src="assets/images/founder.webp" alt="Nechemya" loading="lazy" />
+        </div>
+        <div class="about__copy">
+          <span class="about__label">Hi, I'm Nechemya</span>
+          <h2 class="about__title">One person. Hand-coded.<br />No agency markup.</h2>
+          <div class="about__body">
+            <p>I started this because too many businesses get burned by templated websites that look like everyone else's and break the moment they need something custom. I design every site around the brand, then hand-code it so it loads fast, ranks well, and stays yours forever.</p>
+            <p>No account managers. No upsells. Just direct contact with the person actually building your site.</p>
           </div>
-          <div class="work__info">
-            <div class="work__meta">
-              <h3 class="work__title">Clinical Assessments</h3>
-              <p class="work__type">Web Design & Development</p>
-            </div>
-            <span class="work__arrow">→</span>
-          </div>
-        </article>
-        <article class="work__item" data-reveal>
-          <div class="work__image">
-            <img src="assets/images/project-choice.jpg" alt="Choice Inventory" loading="lazy" />
-            <video class="work__video" src="" poster="assets/images/project-choice.jpg" loop muted playsinline aria-hidden="true"></video>
-          </div>
-          <div class="work__info">
-            <div class="work__meta">
-              <h3 class="work__title">Choice Inventory</h3>
-              <p class="work__type">Brand Identity & Website</p>
-            </div>
-            <span class="work__arrow">→</span>
-          </div>
-        </article>
+          <div class="about__signature">Based in Jerusalem · Working worldwide</div>
+        </div>
       </div>
     </section>
 
@@ -319,6 +325,97 @@
         </article>
       </div>
       <p class="pricing__footer" data-reveal>Need something bigger? <a href="#contact">Let's talk about a custom project →</a></p>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials" id="testimonials">
+      <div class="testimonials__inner">
+        <div class="testimonials__header" data-reveal>
+          <span class="testimonials__label">Words from clients</span>
+          <h2 class="testimonials__title">Don't take my word for it.</h2>
+        </div>
+        <div class="testimonials__grid">
+          <article class="testimonials__card" data-reveal>
+            <p class="testimonials__quote">Nechemya understood exactly what I needed and translated it into a brand and website that elevated my entire practice.</p>
+            <div class="testimonials__author">
+              <img class="testimonials__photo" src="assets/images/Yehuda.webp" alt="Dr Yehuda Marshall" loading="lazy" />
+              <div>
+                <span class="testimonials__name">Dr Yehuda Marshall</span>
+                <span class="testimonials__role">Clinical Assessments Ltd</span>
+              </div>
+            </div>
+          </article>
+          <article class="testimonials__card" data-reveal>
+            <p class="testimonials__quote">Fast, responsive, and actually listened. The site he built has been pulling in leads from day one — exactly what I asked for.</p>
+            <div class="testimonials__author">
+              <img class="testimonials__photo" src="" alt="" loading="lazy" />
+              <div>
+                <span class="testimonials__name">Client name</span>
+                <span class="testimonials__role">Role · Company</span>
+              </div>
+            </div>
+          </article>
+          <article class="testimonials__card" data-reveal>
+            <p class="testimonials__quote">I'd worked with two agencies before. Nechemya delivered better work in less time, and I actually understood what I was paying for.</p>
+            <div class="testimonials__author">
+              <img class="testimonials__photo" src="" alt="" loading="lazy" />
+              <div>
+                <span class="testimonials__name">Client name</span>
+                <span class="testimonials__role">Role · Company</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+      <div class="faq__inner">
+        <div class="faq__header" data-reveal>
+          <span class="faq__label">Frequently asked</span>
+          <h2 class="faq__title">Answers before you ask.</h2>
+        </div>
+        <div class="faq__list" data-reveal>
+          <details class="faq__item">
+            <summary>Why not WordPress or a template?<span class="faq__icon"></span></summary>
+            <div class="faq__answer">
+              <p>Templates look like the next 10,000 sites built from the same template — fine if you don't mind being invisible. WordPress drags in plugin bloat, security headaches, and monthly maintenance for things that should just work. Hand-coded sites load faster, rank better, and cost less to keep running long-term.</p>
+            </div>
+          </details>
+          <details class="faq__item">
+            <summary>How long will my site take?<span class="faq__icon"></span></summary>
+            <div class="faq__answer">
+              <p>Most projects ship in 2–4 weeks from kick-off. Bigger scopes (custom CMS, multilingual, integrations) take 4–6. I'll give you a date in the proposal — and stick to it.</p>
+            </div>
+          </details>
+          <details class="faq__item">
+            <summary>What about hosting and maintenance?<span class="faq__icon"></span></summary>
+            <div class="faq__answer">
+              <p>Hosting on Vercel or Netlify is usually free or a few dollars a month — I'll set it up under your account so you own it. Maintenance is optional: most clients go months without needing anything. When they do, I'm a WhatsApp away.</p>
+            </div>
+          </details>
+          <details class="faq__item">
+            <summary>Can I edit content myself?<span class="faq__icon"></span></summary>
+            <div class="faq__answer">
+              <p>Yes — the Growth tier includes a lightweight CMS (Sanity or Decap) so you can edit copy, swap images, and add posts without touching code. Essential tier is best when you don't need ongoing edits.</p>
+            </div>
+          </details>
+          <details class="faq__item">
+            <summary>Do I own the code?<span class="faq__icon"></span></summary>
+            <div class="faq__answer">
+              <p>Completely. You get the full source on GitHub at handoff. No lock-in, no licensing fees, no "platform" you can't leave.</p>
+            </div>
+          </details>
+          <details class="faq__item">
+            <summary>What if I need changes after launch?<span class="faq__icon"></span></summary>
+            <div class="faq__answer">
+              <p>The Growth tier includes 1 month of post-launch tweaks. After that, changes are hourly or you can keep me on a small retainer. Either way: no surprise invoices.</p>
+            </div>
+          </details>
+        </div>
+        <p class="faq__cta">Still have a question? <a href="#contact">Just ask →</a></p>
+      </div>
     </section>
 
     <!-- CONTACT -->

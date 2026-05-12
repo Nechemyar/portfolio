@@ -8,7 +8,8 @@ import SmoothScroll from './modules/SmoothScroll.js';
 import Menu from './modules/Menu.js';
 import ScrollReveal from './modules/ScrollReveal.js';
 import HeroScroll from './modules/HeroScroll.js';
-import WorkHover from './modules/WorkHover.js';
+import ProjectsScroll from './modules/ProjectsScroll.js';
+import Faq from './modules/Faq.js';
 import Loader from './modules/Loader.js';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -25,7 +26,8 @@ const smoothScroll = new SmoothScroll();
 const menu = new Menu();
 const scrollReveal = new ScrollReveal();
 const heroScroll = new HeroScroll();
-const workHover = new WorkHover();
+const projectsScroll = new ProjectsScroll();
+const faq = new Faq();
 
 // Boot the loader, then reveal the hero
 new Loader(() => {

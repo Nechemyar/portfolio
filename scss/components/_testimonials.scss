@@ -1,0 +1,131 @@
+@use '../base/tokens' as *;
+
+.testimonials {
+  background: $c-bg;
+  padding: $space-128 $page-padding $space-96;
+}
+
+.testimonials__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.testimonials__header {
+  text-align: center;
+  margin-bottom: $space-64;
+}
+
+.testimonials__label {
+  display: inline-block;
+  font-family: $font-display;
+  font-size: $fs-xs;
+  font-weight: 700;
+  color: $c-accent;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: $space-16;
+}
+
+.testimonials__title {
+  font-family: $font-display;
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  font-weight: 900;
+  color: $c-text;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-24;
+}
+
+.testimonials__card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: $r-md;
+  padding: $space-32;
+  display: flex;
+  flex-direction: column;
+  gap: $space-24;
+  transition: border-color $duration-fast ease, transform $duration-fast ease;
+}
+
+.testimonials__card:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+  transform: translateY(-4px);
+}
+
+.testimonials__quote {
+  font-family: $font-body;
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  font-style: italic;
+  position: relative;
+  padding-top: $space-16;
+}
+
+.testimonials__quote::before {
+  content: '"';
+  position: absolute;
+  top: -0.6rem;
+  left: -0.2rem;
+  font-family: $font-display;
+  font-size: 4rem;
+  line-height: 1;
+  color: $c-accent;
+  font-style: normal;
+}
+
+.testimonials__author {
+  display: flex;
+  align-items: center;
+  gap: $space-16;
+  margin-top: auto;
+  padding-top: $space-16;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.testimonials__photo {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: $c-bg-elevated;
+}
+
+.testimonials__name {
+  font-family: $font-display;
+  font-size: $fs-sm;
+  font-weight: 700;
+  color: $c-text;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  display: block;
+}
+
+.testimonials__role {
+  font-family: $font-body;
+  font-size: $fs-xs;
+  color: rgba(255, 255, 255, 0.5);
+  display: block;
+  margin-top: 2px;
+}
+
+@media (max-width: 900px) {
+  .testimonials__grid {
+    grid-template-columns: 1fr;
+    gap: $space-16;
+  }
+}
+
+@media (max-width: 768px) {
+  .testimonials {
+    padding: $space-96 $page-padding $space-64;
+  }
+}

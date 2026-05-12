@@ -43,24 +43,15 @@ export default class ProjectsScroll {
         duration: 0.24,
         ease: 'power2.out',
       }, 0.02)
-      .to('.hero__halo', {
-        opacity: 0,
-        duration: 0.12,
-      }, 0.03)
-      .to('.hero__gradient', {
-        yPercent: 180,
-        opacity: 0,
-        duration: 0.18,
-      }, 0.04)
       .to('.marquee', {
         yPercent: 220,
         opacity: 0,
         duration: 0.18,
-      }, 0.08)
+        }, 0.08)
       .to('.hero__stage', {
         backgroundColor: '#ffffff',
         duration: 0.1,
-      }, 0.18)
+      }, 0.14)
       // The hero exit should be visually complete before the first full swipe
       // ends; this short hold preserves the finished state through the handoff.
       .to({}, { duration: 0.14 }, 0.3);

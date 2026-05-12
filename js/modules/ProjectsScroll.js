@@ -6,13 +6,9 @@ gsap.registerPlugin(ScrollTrigger);
 /**
  * Hero exit sequence.
  *
- * The .hero section is 250vh tall and contains a sticky .hero__stage (100vh).
- * As the user scrolls the 150vh of runway, this timeline scrubs in a single
- * phase: the cat slides UP off-screen while the marquee, footer, and bottom
- * gradient slide DOWN off-screen simultaneously. No zoom — both elements just
- * leave, exposing the pink stage colour beneath.
- *
- * After the hero releases, the next section (FeaturedProjects) takes over.
+ * The hero keeps its pink stage visible while the scroll transition clears in
+ * layers: footer first, marquee second, cat lifting quickly through the gap.
+ * That sets up a cleaner handoff into the featured-projects intro.
  */
 export default class ProjectsScroll {
   constructor() {
@@ -37,14 +33,33 @@ export default class ProjectsScroll {
       },
     });
 
-    // Cat slides UP off-screen (no scale). Text/gradient/footer slide DOWN.
-    // Halo fades. All in parallel — the user sees the cat lift and the bottom
-    // chrome drop, leaving the pink stage clean for the next section.
-    tl.to(wrapper, { y: '-110vh', duration: 1 }, 0)
-      .to('.marquee', { yPercent: 180, duration: 1 }, 0)
-      .to('.hero__footer', { yPercent: 200, opacity: 0, duration: 1 }, 0)
-      .to('.hero__gradient', { opacity: 0, duration: 1 }, 0)
-      .to('.hero__halo', { opacity: 0, duration: 1 }, 0);
+    tl.to('.hero__footer', {
+      yPercent: 220,
+      opacity: 0,
+      duration: 0.22,
+    }, 0)
+      .to(wrapper, {
+        y: '-112vh',
+        duration: 0.58,
+        ease: 'power2.out',
+      }, 0.06)
+      .to('.hero__gradient', {
+        opacity: 0,
+        duration: 0.3,
+      }, 0.08)
+      .to('.marquee', {
+        yPercent: 190,
+        opacity: 0,
+        duration: 0.4,
+      }, 0.18)
+      .to('.hero__halo', {
+        opacity: 0.24,
+        duration: 0.42,
+      }, 0.18)
+      .to('.hero__halo', {
+        opacity: 0,
+        duration: 0.2,
+      }, 0.48);
 
     ScrollTrigger.create({
       trigger: hero,

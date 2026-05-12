@@ -18,7 +18,7 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: #1A1A19;
+  background: #ec9fff;
 }
 
 /* ——— Per-project background layers (crossfaded) ——— */
@@ -32,7 +32,7 @@
 }
 
 .featured__bg[data-bg-idx="0"] {
-  background: #f4f3ef;
+  background: #ffffff;
 }
 
 .featured__bg[data-bg-idx="1"] {
@@ -44,18 +44,18 @@
    as a backdrop behind the cards. */
 .featured__eyebrow {
   position: absolute;
-  top: clamp(7rem, 14vh, 12rem);
+  top: 50%;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translate(-50%, -50%);
   z-index: 1;
+  width: min(92vw, 1200px);
   font-family: $font-display;
-  font-size: clamp(2.2rem, 7vw, 7rem);
+  font-size: clamp(4rem, 10vw, 9rem);
   font-weight: 900;
-  letter-spacing: -0.02em;
-  line-height: 0.85;
+  letter-spacing: 0;
+  line-height: 0.86;
   text-transform: uppercase;
-  color: rgba(26, 26, 25, 0.18); /* watermark feel on light bgs */
-  white-space: nowrap;
+  color: rgba(26, 26, 25, 0.96);
   pointer-events: none;
   overflow: hidden;
   display: block;
@@ -63,15 +63,14 @@
 }
 
 .featured__eyebrow-inner {
-  display: inline-block;
+  display: grid;
   transform: translateY(110%);
   opacity: 0;
   will-change: transform, opacity;
 }
 
-/* On the orange bg, the watermark colour shifts to read on the warm tone. */
-body.featured-state-1 .featured__eyebrow {
-  color: rgba(26, 26, 25, 0.22);
+.featured__eyebrow-line {
+  display: block;
 }
 
 /* ——— Stacked cat cards ——— */
@@ -91,7 +90,7 @@ body.featured-state-1 .featured__eyebrow {
   aspect-ratio: 1920 / 1080;
   text-decoration: none;
   cursor: pointer;
-  will-change: transform;
+  will-change: transform, filter, opacity;
   /* GSAP sets xPercent: -50, yPercent: -50 on init for centring. */
 }
 
@@ -217,7 +216,7 @@ body.featured-state-1 .featured__eyebrow {
   align-items: center;
   gap: 0.45em;
   padding: 0.9em 1.5em;
-  background: $c-accent;
+  background: $c-soft;
   color: $c-bg;
   font-family: $font-display;
   font-size: clamp(0.85rem, 1.05vw, 1rem);
@@ -233,7 +232,7 @@ body.featured-state-1 .featured__eyebrow {
 }
 
 .featured__cta:hover {
-  background: $c-accent-hover;
+  background: #f0d4ff;
   transform: translateY(-2px);
 }
 
@@ -248,8 +247,8 @@ body.featured-state-1 .featured__eyebrow {
 
 @media (max-width: 768px) {
   .featured__eyebrow {
-    font-size: clamp(1.6rem, 9vw, 3rem);
-    top: clamp(5rem, 11vh, 8rem);
+    width: calc(100vw - 32px);
+    font-size: clamp(3rem, 14vw, 5rem);
   }
 
   .featured__card {

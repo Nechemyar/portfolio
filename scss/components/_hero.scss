@@ -18,7 +18,7 @@
   overflow: hidden;
   /* Solid pink block colour. The halo behind the cat lives in its own layer
      (.hero__halo) so it doesn't read as a heavy gradient on its own. */
-  background-color: #f7b8d2;
+  background-color: #ec9fff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,14 +30,15 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 130vw;
-  height: 130vh;
+  width: 138vw;
+  height: 138vh;
   transform: translate(-50%, -50%);
   background: radial-gradient(
-    ellipse 38% 32% at 50% 45%,
-    rgba(255, 225, 240, 0.85) 0%,
-    rgba(255, 200, 224, 0.5) 30%,
-    rgba(247, 184, 210, 0) 65%
+    ellipse 40% 34% at 50% 45%,
+    rgba(255, 243, 252, 0.96) 0%,
+    rgba(255, 218, 245, 0.72) 26%,
+    rgba(236, 159, 255, 0.24) 52%,
+    rgba(236, 159, 255, 0) 72%
   );
   z-index: 2;
   pointer-events: none;

@@ -1,13 +1,15 @@
 @use '../base/tokens' as *;
 
 /* ——— Featured Projects ———
-   Pinned section. The .featured__pin sticky stage is 100vh; the wrapper is
-   tall (driven by FeaturedProjects.js based on project count) so we have
-   scroll runway for the scrubbed timeline. */
+   Pinned section: 100vh sticky stage + scroll runway per project.
+   Cards are the SAME composed size as the hero cat (cat + monitor frame fills
+   the viewport). The active card sits centred; the next project's card sits
+   physically offset behind-right with z-index below, so its silhouette peeks
+   out past the active card's right edge. Scroll swaps which card is in front. */
 .featured {
   position: relative;
   width: 100vw;
-  /* height set inline via JS based on PROJECTS.length */
+  /* Height is set inline by FeaturedProjects.js based on PROJECTS.length. */
 }
 
 .featured__pin {
@@ -16,49 +18,60 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: #0a0a0a;
+  background: #1A1A19;
 }
 
-/* ——— Background tints (one per project, crossfaded) ——— */
+/* ——— Per-project background layers (crossfaded) ——— */
 .featured__bg {
   position: absolute;
   inset: 0;
   z-index: 0;
   opacity: 0;
-  pointer-events: none;
   will-change: opacity;
+  pointer-events: none;
 }
 
 .featured__bg[data-bg-idx="0"] {
-  background: linear-gradient(180deg, #f5f5f3 0%, #d8d8d4 100%);
+  background: #f4f3ef;
 }
 
 .featured__bg[data-bg-idx="1"] {
-  background: linear-gradient(180deg, #ff9a3d 0%, #d96400 100%);
+  background: #ff8a2b;
 }
 
-/* ——— Eyebrow ("FEATURED PROJECTS") top-left ——— */
+/* ——— Big "FEATURED PROJECTS" section title ———
+   Animates up from below to top-centre when entering the section, then sits
+   as a backdrop behind the cards. */
 .featured__eyebrow {
   position: absolute;
-  top: clamp(6rem, 12vh, 10rem);
-  left: clamp(1.25rem, 4vw, 3rem);
-  z-index: 5;
+  top: clamp(7rem, 14vh, 12rem);
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 1;
   font-family: $font-display;
-  font-size: clamp(0.75rem, 1.1vw, 1rem);
-  font-weight: 700;
-  letter-spacing: 0.25em;
+  font-size: clamp(2.2rem, 7vw, 7rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 0.85;
   text-transform: uppercase;
-  color: #1A1A19;
-  overflow: hidden;
-  display: inline-block;
+  color: rgba(26, 26, 25, 0.18); /* watermark feel on light bgs */
+  white-space: nowrap;
   pointer-events: none;
+  overflow: hidden;
+  display: block;
+  text-align: center;
 }
 
 .featured__eyebrow-inner {
   display: inline-block;
-  transform: translateY(120%);
+  transform: translateY(110%);
   opacity: 0;
   will-change: transform, opacity;
+}
+
+/* On the orange bg, the watermark colour shifts to read on the warm tone. */
+body.featured-state-1 .featured__eyebrow {
+  color: rgba(26, 26, 25, 0.22);
 }
 
 /* ——— Stacked cat cards ——— */
@@ -68,38 +81,40 @@
   z-index: 3;
 }
 
+/* Each card matches the hero cat exactly — full bleed cat+monitor composition.
+   Positioned with top/left so GSAP owns transforms cleanly. */
 .featured__card {
+  position: absolute;
+  top: 64%;
+  left: 50%;
+  width: min(210vh, 163vw);
+  aspect-ratio: 1920 / 1080;
+  text-decoration: none;
+  cursor: pointer;
+  will-change: transform;
+  /* GSAP sets xPercent: -50, yPercent: -50 on init for centring. */
+}
+
+/* Soft pink halo behind each cat — matches the hero halo so the visual
+   language carries across. */
+.featured__card-halo {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: clamp(560px, 70vw, 920px);
-  aspect-ratio: 1920 / 1080;
+  width: 70%;
+  height: 70%;
   transform: translate(-50%, -50%);
-  text-decoration: none;
-  cursor: pointer;
-  will-change: transform, filter, opacity;
-  /* Initial positioning is set by GSAP — declaring base transforms here
-     would compete with composed transforms. */
-}
-
-/* Soft pink glow behind the active cat */
-.featured__card-glow {
-  position: absolute;
-  inset: -15% -10%;
-  border-radius: 50%;
   background: radial-gradient(
-    circle at 50% 50%,
-    rgba(236, 95, 255, 0.5) 0%,
-    rgba(236, 95, 255, 0.2) 35%,
-    rgba(236, 95, 255, 0) 70%
+    ellipse 50% 45% at 50% 50%,
+    rgba(255, 220, 235, 0.65) 0%,
+    rgba(255, 200, 220, 0.25) 35%,
+    rgba(255, 200, 220, 0) 70%
   );
-  filter: blur(40px);
+  filter: blur(20px);
   z-index: 0;
   pointer-events: none;
 }
 
-/* Mask the screenshot to the monitor interior using the same deskmask.png
-   as the hero — keeps the cat-frame illusion consistent. */
 .featured__card-mask {
   position: absolute;
   inset: 0;
@@ -142,22 +157,39 @@
   pointer-events: none;
 }
 
-/* ——— Big bottom-left project name (crossfades between projects) ——— */
+/* ——— Bottom gradient (carries over from hero) ——— */
+.featured__gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 42vh;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.45) 40%,
+    rgba(0, 0, 0, 0.88) 80%,
+    rgba(0, 0, 0, 0.95) 100%
+  );
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* ——— Bottom-left project name (crossfades) ——— */
 .featured__title {
   position: absolute;
-  bottom: clamp(5rem, 11vh, 9rem);
+  bottom: clamp(2rem, 5vh, 4rem);
   left: clamp(1.25rem, 4vw, 3rem);
-  z-index: 4;
+  z-index: 5;
   margin: 0;
   font-family: $font-display;
-  font-size: clamp(2.5rem, 11vw, 11rem);
+  font-size: clamp(2.5rem, 10vw, 10rem);
   font-weight: 900;
   letter-spacing: -0.025em;
   line-height: 0.88;
   text-transform: uppercase;
   color: #ffffff;
   pointer-events: none;
-  white-space: pre-line;
 }
 
 .featured__title-item {
@@ -165,41 +197,43 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  opacity: 0;
   white-space: pre-line;
-  will-change: opacity;
+  opacity: 0;
+  transform: translateY(40%);
+  will-change: transform, opacity;
 }
 
 .featured__title-item:first-child {
-  position: relative; /* first child establishes the box height */
+  position: relative; /* establishes box height */
 }
 
-/* ——— Bottom-right CTA pill ——— */
+/* ——— View Project pill (square-rounded, matches button language) ——— */
 .featured__cta {
   position: absolute;
   bottom: clamp(2rem, 5vh, 3.5rem);
   right: clamp(1.25rem, 4vw, 3rem);
-  z-index: 5;
+  z-index: 6;
   display: inline-flex;
   align-items: center;
-  gap: 0.5em;
-  padding: 0.95em 1.6em;
-  background: #E0BFFF;
-  color: #1A1A19;
+  gap: 0.45em;
+  padding: 0.9em 1.5em;
+  background: $c-accent;
+  color: $c-bg;
   font-family: $font-display;
-  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  font-size: clamp(0.85rem, 1.05vw, 1rem);
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
-  border-radius: 999px;
+  border-radius: 8px;
   opacity: 0;
   transform: translateY(20px);
   will-change: transform, opacity;
-  transition: transform $duration-fast $ease-out;
+  transition: transform $duration-fast $ease-out, background $duration-fast ease;
 }
 
 .featured__cta:hover {
+  background: $c-accent-hover;
   transform: translateY(-2px);
 }
 
@@ -212,30 +246,35 @@
   transform: translateX(4px);
 }
 
-/* Hide global sticky-cta while the featured section owns the viewport. */
-body.featured-active .sticky-cta {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
 @media (max-width: 768px) {
+  .featured__eyebrow {
+    font-size: clamp(1.6rem, 9vw, 3rem);
+    top: clamp(5rem, 11vh, 8rem);
+  }
+
   .featured__card {
-    width: 92vw;
+    top: 50%;
+    width: 290vw;
   }
 
   .featured__title {
-    font-size: clamp(2.4rem, 13vw, 5rem);
-    bottom: clamp(6rem, 14vh, 8rem);
-  }
-
-  .featured__eyebrow {
-    top: clamp(5rem, 10vh, 7rem);
-    font-size: 0.7rem;
+    font-size: clamp(2.2rem, 13vw, 5rem);
+    bottom: clamp(5rem, 11vh, 7rem);
   }
 
   .featured__cta {
-    padding: 0.8em 1.3em;
-    font-size: 0.75rem;
+    padding: 0.75em 1.2em;
+    font-size: 0.78rem;
+    bottom: clamp(1.25rem, 3.5vh, 2rem);
+  }
+
+  /* On mobile the heavy cat-stack with blur halos is expensive — disable the
+     halo and the back-card peek to keep the section smooth. */
+  .featured__card-halo {
+    display: none;
+  }
+
+  .featured__card[data-back="true"] {
+    display: none;
   }
 }

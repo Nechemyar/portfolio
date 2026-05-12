@@ -23,6 +23,13 @@
   color: $c-text;
   line-height: 0.9;
   letter-spacing: -0.02em;
+  transition: color 0.4s $ease-out;
+}
+
+/* Light-theme override: when scroll position is inside a light-bg section,
+   the logo flips to dark text. JS (NavTheme.js) toggles the body class. */
+body.nav-theme-light .nav__logo {
+  color: $c-bg;
 }
 
 /* ——— Desktop Expanding Wrapper ——— */
@@ -127,37 +134,3 @@
   transform: rotate(45deg);
 }
 
-/* ——— Sticky CTA ——— */
-.sticky-cta {
-  position: fixed;
-  bottom: $space-32;
-  right: $page-padding;
-  background-color: $c-bg-elevated;
-  color: $c-text;
-  font-family: $font-display;
-  font-size: $fs-xs;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  padding: 12px 24px;
-  border-radius: 100px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  z-index: 999;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all $duration-fast ease;
-}
-
-.sticky-cta:hover {
-  background-color: $c-text;
-  color: $c-bg;
-}
-.sticky-cta:hover .sticky-cta__icon {
-  color: $c-soft;
-}
-.sticky-cta__icon {
-  color: $c-accent;
-  font-size: 1rem;
-  transition: color $duration-fast ease;
-}

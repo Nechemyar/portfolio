@@ -10,6 +10,7 @@ import ScrollReveal from './modules/ScrollReveal.js';
 import HeroScroll from './modules/HeroScroll.js';
 import ProjectsScroll from './modules/ProjectsScroll.js';
 import FeaturedProjects from './modules/FeaturedProjects.js';
+import NavTheme from './modules/NavTheme.js';
 import Faq from './modules/Faq.js';
 import Loader from './modules/Loader.js';
 
@@ -20,7 +21,6 @@ gsap.set('.nav', { autoAlpha: 0, y: -30 });
 gsap.set('.marquee', { autoAlpha: 0, y: 60 });
 gsap.set('.hero__footer', { autoAlpha: 0, y: 40 });
 gsap.set('.hero__gradient', { autoAlpha: 0 });
-gsap.set('.sticky-cta', { autoAlpha: 0, x: 100 }); // Hide CTA before anything renders
 
 // Boot modules NOW (during loader) so content is ready
 const smoothScroll = new SmoothScroll();
@@ -29,6 +29,7 @@ const scrollReveal = new ScrollReveal();
 const heroScroll = new HeroScroll();
 const projectsScroll = new ProjectsScroll();
 const featuredProjects = new FeaturedProjects();
+const navTheme = new NavTheme();
 const faq = new Faq();
 
 // Boot the loader, then reveal the hero

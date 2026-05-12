@@ -1,9 +1,8 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// Bundle these via Vite so production paths resolve correctly. They're only
-// referenced from JS-injected markup, so Vite can't statically detect them
-// from the HTML or SCSS.
+// Bundle these via Vite so production paths resolve. They're referenced only
+// from JS-injected markup, so Vite can't statically detect them otherwise.
 import catGrey from '../../assets/images/deskcatgrey.png';
 import catBlack from '../../assets/images/deskcatblack.png';
 import screenClinical from '../../assets/images/project-clinical.jpg';
@@ -16,13 +15,18 @@ gsap.registerPlugin(ScrollTrigger);
 /**
  * Featured Projects — pinned cat-stack carousel.
  *
- * Each project = one cat card. The active card sits centred and sharp; the next
- * project's card is parked behind-right at smaller scale, blurred and dimmed.
- * As the user scrolls, the active card slides off (scaling down + blurring)
- * while the next card slides forward (sharpening), and the background tints
- * crossfade between the two projects.
+ * Both project cards are sized and positioned identically to the hero cat.
+ * They z-stack with a physical x-offset so the back card peeks out behind the
+ * front card (no blur, no opacity fade). Scrolling slides both cards left
+ * together, swapping which one is in front via z-index at the visual midpoint.
  *
- * Section height is set in JS: 100vh pin + 150vh per project of scroll runway.
+ * Sequence:
+ *   0.0 → 0.4   "FEATURED PROJECTS" rises up; bg[0] fades in
+ *   0.4 → 0.8   Cards rise up into position; title[0] + CTA fade in
+ *   0.8 → 1.5   HOLD (Clinical front, Choice peeking right-behind)
+ *   1.5 → 2.0   Cards slide left together; z-index swaps; bg + title crossfade
+ *   2.0 → 2.7   HOLD (Choice front, Clinical peeking left-behind)
+ *   2.7 → 3.0   Exit fade for clean handoff to logo-strip
  */
 
 const PROJECTS = [
@@ -44,11 +48,10 @@ const PROJECTS = [
   },
 ];
 
-// Tunables
-const BACK_SCALE = 0.78;
-const BACK_BLUR = 14;
-const BACK_OPACITY = 0.45;
-const BACK_X = '28vw';
+// Tunables — how far the back card peeks out, and the slight scale-down that
+// adds depth perception without violating the "real overlap, no blur" rule.
+const PEEK_X = '30vw';
+const BACK_SCALE = 0.92;
 
 export default class FeaturedProjects {
   constructor() {
@@ -64,8 +67,8 @@ export default class FeaturedProjects {
     const bgs = document.querySelectorAll('.featured__bg');
     if (!section || !stack || !titleEl || !cta) return;
 
-    // Section height: 100vh pin + 150vh of runway per project.
-    section.style.height = `${100 + PROJECTS.length * 150}vh`;
+    // Section runway: 100vh pin + 150vh of scroll per project + a tail.
+    section.style.height = `${100 + PROJECTS.length * 150 + 50}vh`;
 
     // ——— Render cards + title spans from data ———
     PROJECTS.forEach((p, i) => {
@@ -73,9 +76,10 @@ export default class FeaturedProjects {
       card.className = 'featured__card';
       card.href = p.href;
       card.dataset.idx = String(i);
+      card.dataset.back = i === 0 ? 'false' : 'true';
       card.setAttribute('aria-label', `${p.name.replace('\n', ' ')} — view project`);
       card.innerHTML = `
-        <span class="featured__card-glow"></span>
+        <span class="featured__card-halo"></span>
         <div class="featured__card-mask">
           <div class="featured__card-screen">
             <picture>
@@ -99,25 +103,27 @@ export default class FeaturedProjects {
     const titles = titleEl.querySelectorAll('.featured__title-item');
 
     // ——— Base state ———
-    // GSAP owns transforms so timeline tweens compose cleanly.
-    gsap.set(cards, { xPercent: -50, yPercent: -50, top: '50%', left: '50%' });
-    // First card: off-left, invisible (slides in during entry)
-    gsap.set(cards[0], { x: '-120vw', scale: 1, filter: 'blur(0px)', opacity: 0 });
-    // Subsequent cards: parked back-right, blurred, dimmed
+    // Centre transform via GSAP so timeline tweens compose cleanly.
+    gsap.set(cards, { xPercent: -50, yPercent: -50 });
+
+    // Card 0: starts below viewport (slides up); ends at centre, front.
+    gsap.set(cards[0], { x: 0, y: '60vh', scale: 1, zIndex: 2, opacity: 1 });
+    // Card 1+: starts below + offset right; ends back-right peeking.
     cards.forEach((c, i) => {
       if (i === 0) return;
       gsap.set(c, {
-        x: BACK_X,
+        x: PEEK_X,
+        y: '60vh',
         scale: BACK_SCALE,
-        filter: `blur(${BACK_BLUR}px)`,
-        opacity: 0,
+        zIndex: 1,
+        opacity: 1,
       });
     });
 
-    gsap.set(titles, { opacity: 0 });
+    gsap.set(titles, { opacity: 0, y: '40%' });
     gsap.set(bgs, { opacity: 0 });
     gsap.set(cta, { opacity: 0, y: 20 });
-    if (eyebrowInner) gsap.set(eyebrowInner, { y: '120%', opacity: 0 });
+    if (eyebrowInner) gsap.set(eyebrowInner, { y: '110%', opacity: 0 });
 
     // ——— Master timeline ———
     const tl = gsap.timeline({
@@ -131,57 +137,68 @@ export default class FeaturedProjects {
       },
     });
 
-    // Phase 0: entry (0 → 0.5)
-    tl.to(bgs[0], { opacity: 1, duration: 0.5 }, 0)
-      .to(eyebrowInner, { y: '0%', opacity: 1, duration: 0.5, ease: 'power3.out' }, 0)
-      .to(cards[0], { x: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, 0)
-      .to(cards[1], { opacity: BACK_OPACITY, duration: 0.5 }, 0)
-      .to(titles[0], { opacity: 1, duration: 0.3 }, 0.2)
-      .to(cta, { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' }, 0.1);
+    // Phase 0: bg + "FEATURED PROJECTS" title rises up (0 → 0.4)
+    tl.to(bgs[0], { opacity: 1, duration: 0.4 }, 0)
+      .to(eyebrowInner, {
+        y: '0%',
+        opacity: 1,
+        duration: 0.4,
+        ease: 'power3.out',
+      }, 0);
 
-    // Phase 1: hold #1 (0.5 → 1.5) — empty hold zone keeps card[0] locked
-    tl.to({}, { duration: 1 }, 0.5);
+    // Phase 1: cards rise into position; first project title + CTA appear
+    // (0.4 → 0.8)
+    tl.to(cards[0], { y: 0, duration: 0.4, ease: 'power3.out' }, 0.4)
+      .to(cards[1], { y: 0, duration: 0.4, ease: 'power3.out' }, 0.4)
+      .to(titles[0], { opacity: 1, y: '0%', duration: 0.4, ease: 'power3.out' }, 0.5)
+      .to(cta, { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' }, 0.55);
 
-    // Phase 2: swap (1.5 → 2.0)
+    // Phase 2: HOLD #1 (0.8 → 1.5)
+    tl.to({}, { duration: 0.7 }, 0.8);
+
+    // Phase 3: swap — both cards slide LEFT; z-index flips at midpoint;
+    // bg + title crossfade (1.5 → 2.0)
     if (cards.length > 1) {
       tl.to(cards[0], {
-        x: BACK_X,
+        x: `-${PEEK_X}`,
         scale: BACK_SCALE,
-        filter: `blur(${BACK_BLUR}px)`,
-        opacity: 0,
         duration: 0.5,
       }, 1.5)
         .to(cards[1], {
           x: 0,
           scale: 1,
-          filter: 'blur(0px)',
-          opacity: 1,
           duration: 0.5,
         }, 1.5)
-        .to(bgs[0], { opacity: 0, duration: 0.5 }, 1.5)
-        .to(bgs[1], { opacity: 1, duration: 0.5 }, 1.5)
-        .to(titles[0], { opacity: 0, duration: 0.3 }, 1.5)
-        .to(titles[1], { opacity: 1, duration: 0.3 }, 1.7);
+        // Z-index swap at the visual midpoint so the previously-back card
+        // becomes the top one.
+        .set(cards[0], { zIndex: 1 }, 1.75)
+        .set(cards[1], { zIndex: 2 }, 1.75)
+        .to(bgs[0], { opacity: 0, duration: 0.4 }, 1.55)
+        .to(bgs[1], { opacity: 1, duration: 0.4 }, 1.55)
+        .to(titles[0], { opacity: 0, y: '-30%', duration: 0.3 }, 1.5)
+        .to(titles[1], { opacity: 1, y: '0%', duration: 0.4, ease: 'power3.out' }, 1.7);
 
-      // Phase 3: hold #2 (2.0 → 3.0)
-      tl.to({}, { duration: 1 }, 2.0);
+      // Phase 4: HOLD #2 (2.0 → 2.7)
+      tl.to({}, { duration: 0.7 }, 2.0);
 
-      // Phase 4: release (3.0 → 3.5) — fade everything out so logo-strip
-      // can take over cleanly as the pin releases.
-      tl.to([cards[cards.length - 1], titles[cards.length - 1], cta, bgs[1]], {
+      // Phase 5: exit fade so the next section can take over cleanly
+      // (2.7 → 3.0)
+      tl.to([cards[cards.length - 1], titles[cards.length - 1], cta, bgs[1], eyebrowInner], {
         opacity: 0,
-        duration: 0.5,
-      }, 3.0)
-        .to(eyebrowInner, { opacity: 0, duration: 0.5 }, 3.0);
+        duration: 0.3,
+      }, 2.7);
     }
 
-    // ——— Active project tracking: swap CTA href based on scroll position ———
+    // ——— Active-state tracking: swap CTA href + body class as the user
+    // scrolls through. The body class drives the eyebrow watermark colour
+    // (light bg vs orange bg). ———
     let activeIdx = 0;
     const setActive = (idx) => {
       if (idx === activeIdx) return;
       activeIdx = idx;
       cta.href = PROJECTS[idx].href;
       cta.setAttribute('aria-label', `View ${PROJECTS[idx].name.replace('\n', ' ')}`);
+      document.body.classList.toggle('featured-state-1', idx === 1);
     };
 
     ScrollTrigger.create({
@@ -189,25 +206,14 @@ export default class FeaturedProjects {
       start: 'top top',
       end: 'bottom bottom',
       onUpdate: (self) => {
-        // Timeline runs from 0 to 3.5; swap point is at 1.75 → progress 0.5.
-        // Cleaner: split the runway evenly across projects.
         const idx = Math.min(
           PROJECTS.length - 1,
-          Math.floor(self.progress * PROJECTS.length)
+          Math.floor(self.progress * PROJECTS.length),
         );
         setActive(idx);
       },
-    });
-
-    // Body class for sticky-cta hide
-    ScrollTrigger.create({
-      trigger: section,
-      start: 'top top',
-      end: 'bottom bottom',
-      onEnter: () => document.body.classList.add('featured-active'),
-      onLeave: () => document.body.classList.remove('featured-active'),
-      onEnterBack: () => document.body.classList.add('featured-active'),
-      onLeaveBack: () => document.body.classList.remove('featured-active'),
+      onLeave: () => document.body.classList.remove('featured-state-1'),
+      onLeaveBack: () => document.body.classList.remove('featured-state-1'),
     });
   }
 }

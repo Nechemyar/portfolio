@@ -87,8 +87,11 @@
   <main>
 
     <!-- HERO (tall trigger, pinned sticky stage) -->
-    <section class="hero" id="hero">
+    <section class="hero" id="hero" data-nav-theme="light">
       <div class="hero__stage">
+        <!-- Soft pink halo behind the cat -->
+        <div class="hero__halo"></div>
+
         <!-- z=1: Looping reel, mask-clipped to the cat's screen interior -->
         <div class="hero__cat-wrapper">
           <div class="hero__mouth-slider" id="mouth-slider">
@@ -156,7 +159,7 @@
     </section>
 
     <!-- FEATURED PROJECTS — pinned, cat-stack carousel -->
-    <section class="featured" id="projects">
+    <section class="featured" id="projects" data-nav-theme="light">
       <div class="featured__pin">
         <div class="featured__bg" data-bg-idx="0"></div>
         <div class="featured__bg" data-bg-idx="1"></div>
@@ -164,6 +167,7 @@
         <div class="featured__stack" id="featured-stack">
           <!-- Cards injected by FeaturedProjects.js -->
         </div>
+        <div class="featured__gradient"></div>
         <h2 class="featured__title" id="featured-title">
           <!-- Title spans injected by FeaturedProjects.js -->
         </h2>
@@ -421,11 +425,6 @@
       </div>
     </div>
   </footer>
-
-  <!-- STICKY CTA -->
-  <a href="#contact" class="sticky-cta">
-    <span class="sticky-cta__icon">●</span> Start Project
-  </a>
 
   <!-- SCRIPTS -->
 

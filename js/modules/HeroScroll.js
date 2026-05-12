@@ -12,7 +12,6 @@ export default class HeroScroll {
     this.initMouthSlider();
     this.initCardsFan();
     this.initMarquee();
-    this.initCTA();
   }
 
   initMouthSlider() {
@@ -70,18 +69,4 @@ export default class HeroScroll {
     }
   }
 
-  initCTA() {
-    const cta = document.querySelector('.sticky-cta');
-    if (!cta) return;
-    
-    // Hidden initially
-    gsap.set(cta, { autoAlpha: 0, x: 100 });
-
-    ScrollTrigger.create({
-      trigger: '#hero',
-      start: 'bottom 50%', // Halfway past hero
-      onEnter: () => gsap.to(cta, { autoAlpha: 1, x: 0, duration: 0.5, ease: 'power3.out' }),
-      onLeaveBack: () => gsap.to(cta, { autoAlpha: 0, x: 100, duration: 0.5, ease: 'power3.in' })
-    });
-  }
 }

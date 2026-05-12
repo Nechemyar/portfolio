@@ -112,48 +112,19 @@
   flex-shrink: 0;
 }
 
-.nav__menu-plus {
+.nav__menu-cross {
   width: 20px;
   height: 20px;
-  position: relative;
   display: block;
-}
-
-.nav__menu-plus::before,
-.nav__menu-plus::after {
-  content: '';
-  position: absolute;
-  background-color: $c-bg;
-  border-radius: 1px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   transition: transform $duration-fast $ease-out;
 }
 
-.nav__menu-plus::before {
-  width: 20px;
-  height: 3.5px;
+.nav__menu-btn:hover .nav__menu-cross {
+  transform: rotate(90deg);
 }
 
-.nav__menu-plus::after {
-  width: 3.5px;
-  height: 20px;
-}
-
-/* Plus hover: rotate 90deg */
-.nav__menu-btn:hover .nav__menu-plus::before,
-.nav__menu-btn:hover .nav__menu-plus::after {
-  transform: translate(-50%, -50%) rotate(90deg);
-}
-
-/* When open: plus becomes X */
-.nav__menu-btn.is-open .nav__menu-plus::before {
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.nav__menu-btn.is-open .nav__menu-plus::after {
-  transform: translate(-50%, -50%) rotate(45deg);
+.nav__menu-btn.is-open .nav__menu-cross {
+  transform: rotate(45deg);
 }
 
 /* ——— Sticky CTA ——— */

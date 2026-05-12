@@ -53,13 +53,9 @@ export default class ProjectsScroll {
         duration: 0.4,
       }, 0.18)
       .to('.hero__halo', {
-        opacity: 0.24,
-        duration: 0.42,
-      }, 0.18)
-      .to('.hero__halo', {
         opacity: 0,
-        duration: 0.2,
-      }, 0.48);
+        duration: 0.28,
+      }, 0.18);
 
     ScrollTrigger.create({
       trigger: hero,

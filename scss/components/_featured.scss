@@ -9,7 +9,7 @@
 .featured {
   position: relative;
   width: 100vw;
-  margin-top: -72vh;
+  margin-top: -92vh;
   /* Height is set inline by FeaturedProjects.js based on PROJECTS.length. */
 }
 
@@ -85,9 +85,9 @@
    Positioned with top/left so GSAP owns transforms cleanly. */
 .featured__card {
   position: absolute;
-  top: 64%;
+  top: 56%;
   left: 50%;
-  width: min(210vh, 163vw);
+  width: min(184vh, 144vw);
   aspect-ratio: 1920 / 1080;
   text-decoration: none;
   cursor: pointer;
@@ -173,12 +173,13 @@
   );
   z-index: 4;
   pointer-events: none;
+  opacity: 0;
 }
 
 /* ——— Bottom-left project name (crossfades) ——— */
 .featured__title {
   position: absolute;
-  bottom: clamp(2rem, 5vh, 4rem);
+  bottom: clamp(2.25rem, 5vh, 4rem);
   left: clamp(1.25rem, 4vw, 3rem);
   z-index: 5;
   margin: 0;
@@ -186,7 +187,7 @@
   font-size: clamp(2.5rem, 10vw, 10rem);
   font-weight: 900;
   letter-spacing: -0.025em;
-  line-height: 0.88;
+  line-height: 0.78;
   text-transform: uppercase;
   color: #ffffff;
   pointer-events: none;
@@ -210,17 +211,17 @@
 /* ——— View Project pill (square-rounded, matches button language) ——— */
 .featured__cta {
   position: absolute;
-  bottom: clamp(2rem, 5vh, 3.5rem);
+  bottom: clamp(2.25rem, 5vh, 4rem);
   right: clamp(1.25rem, 4vw, 3rem);
   z-index: 6;
   display: inline-flex;
   align-items: center;
-  gap: 0.45em;
-  padding: 0.9em 1.5em;
+  gap: 0.35em;
+  padding: 0.95em 1.65em;
   background: $c-soft;
   color: $c-bg;
   font-family: $font-display;
-  font-size: clamp(0.85rem, 1.05vw, 1rem);
+  font-size: clamp(1rem, 1.25vw, 1.2rem);
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -239,6 +240,8 @@
 
 .featured__cta-arrow {
   display: inline-block;
+  font-size: 1.2em;
+  font-weight: 900;
   transition: transform $duration-fast $ease-out;
 }
 
@@ -260,6 +263,7 @@
   .featured__title {
     font-size: clamp(2.2rem, 13vw, 5rem);
     bottom: clamp(5rem, 11vh, 7rem);
+    line-height: 0.8;
   }
 
   .featured__cta {

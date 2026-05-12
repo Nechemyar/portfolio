@@ -120,11 +120,11 @@ export default class FeaturedProjects {
       },
     });
 
-    tl.to(bgs[0], { opacity: 1, duration: 0.4 }, 0)
+    tl.to(bgs[0], { opacity: 1, duration: 0.26 }, 0)
       .to(eyebrowInner, {
         y: '0%',
         opacity: 1,
-        duration: 0.4,
+        duration: 0.32,
         ease: 'power3.out',
       }, 0)
       .to(cards[0], {
@@ -133,33 +133,33 @@ export default class FeaturedProjects {
         opacity: 1,
         duration: 0.48,
         ease: 'power3.out',
-      }, 0.42)
+      }, 0.28)
       .to(cards[1], {
         x: PEEK_X,
         y: 0,
         opacity: 0.92,
         duration: 0.52,
         ease: 'power3.out',
-      }, 0.46)
+      }, 0.32)
       .to(titles[0], {
         opacity: 1,
         y: '0%',
         duration: 0.4,
         ease: 'power3.out',
-      }, 0.52)
+      }, 0.4)
       .to(cta, {
         opacity: 1,
         y: 0,
         duration: 0.4,
         ease: 'power3.out',
-      }, 0.58)
+      }, 0.46)
       .to(eyebrowInner, {
         opacity: 0,
         y: '-18%',
         duration: 0.22,
         ease: 'power2.out',
-      }, 0.82)
-      .to({}, { duration: 0.66 }, 0.9);
+      }, 0.7)
+      .to({}, { duration: 0.54 }, 0.78);
 
     if (cards.length > 1) {
       tl.to(cards[0], {

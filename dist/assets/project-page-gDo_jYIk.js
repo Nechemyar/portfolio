@@ -1,0 +1,1 @@
+import{n as e,s as t,t as n}from"./SmoothScroll-Dg1NOLQ1.js";var r=t((()=>{e(),new n}));export{r as t};

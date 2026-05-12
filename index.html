@@ -87,7 +87,7 @@
     <!-- HERO -->
     <section class="hero" id="hero">
       <div class="hero__cat-wrapper">
-        <!-- Z-Index 1: The Looping Slideshow inside the frame -->
+        <!-- z=1: Looping reel, mask-clipped to the cat's screen interior -->
         <div class="hero__mouth-slider" id="mouth-slider">
           <div class="hero__mouth-track" id="mouth-track">
             <picture>
@@ -107,16 +107,13 @@
               <img class="hero__mouth-img" src="assets/images/project-clinical.jpg" alt="" />
             </picture>
           </div>
-          <!-- TV screen effect overlay -->
           <div class="hero__tv-overlay"></div>
         </div>
-        <!-- Z-Index 2: The Cat (body + paws) -->
+        <!-- z=3: Cat + frame, single combined image — teeth hang over the reel -->
         <picture>
-          <source media="(max-width: 768px)" srcset="assets/images/newcatmob.png" />
+          <source media="(max-width: 768px)" srcset="assets/images/mobcat.png" />
           <img class="hero__cat-img" src="assets/images/deskcat.png" alt="Cat" />
         </picture>
-        <!-- Z-Index 3: The Frame (clipping mask over slider) -->
-        <img class="hero__frame-img" src="assets/images/deskframe.png" alt="" />
       </div>
 
       <!-- GIANT MARQUEE -->

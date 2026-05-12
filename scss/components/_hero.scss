@@ -34,8 +34,10 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  z-index: 2;
+  z-index: 3; /* In front of frame so teeth & paws overhang */
   pointer-events: none;
+  transform: scale(1.55);
+  transform-origin: 50% 27%; /* Anchor at chin/frame-top so teeth stay put as it grows */
 }
 
 .hero__frame-img {
@@ -44,7 +46,7 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  z-index: 3;
+  z-index: 2;
   pointer-events: none;
 }
 
@@ -52,17 +54,17 @@
 /* Positioned as % of the wrapper, sized to fit the billboard hole. */
 .hero__mouth-slider {
   position: absolute;
-  top: 65%;
-  left: 50%;
+  /* Coords measured from deskframe.png inner rectangle (1920x1080 canvas) */
+  top: 57.9%;
+  left: 49.75%;
   transform: translate(-50%, -50%);
-  /* Sized to fit inside the laptop screen cutout of deskframe.png. */
-  width: 58%;
-  aspect-ratio: 16 / 10;
+  width: 58.9%;
+  aspect-ratio: 1130 / 680;
   z-index: 1;
   overflow: hidden;
   background: #000;
-  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9), 0 0 10px rgba(255, 255, 255, 0.05);
-  border-radius: $r-md;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9);
+  border-radius: 1.2vw;
 }
 
 .hero__mouth-track {

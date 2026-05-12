@@ -24,6 +24,15 @@
   align-items: center;
 }
 
+.hero__scene-wash {
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  opacity: 0;
+  z-index: 12;
+  pointer-events: none;
+}
+
 /* Soft halo glow positioned behind the cat. Sits below the cat in z-order so
    it bleeds out around the cat silhouette. */
 .hero__halo {
@@ -143,6 +152,7 @@
   );
   z-index: 8;
   pointer-events: none;
+  will-change: opacity;
 }
 
 /* ——— Hero Footer ——— */

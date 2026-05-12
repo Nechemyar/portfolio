@@ -36,26 +36,27 @@ export default class ProjectsScroll {
     tl.to('.hero__footer', {
       yPercent: 220,
       opacity: 0,
-      duration: 0.22,
+      duration: 0.16,
     }, 0)
       .to(wrapper, {
-        y: '-112vh',
-        duration: 0.58,
+        y: '-124vh',
+        duration: 0.42,
         ease: 'power2.out',
-      }, 0.06)
+      }, 0.03)
       .to('.hero__gradient', {
+        yPercent: 120,
         opacity: 0,
-        duration: 0.3,
-      }, 0.08)
+        duration: 0.28,
+      }, 0.04)
       .to('.marquee', {
         yPercent: 190,
         opacity: 0,
-        duration: 0.4,
-      }, 0.18)
+        duration: 0.28,
+      }, 0.12)
       .to('.hero__halo', {
         opacity: 0,
-        duration: 0.28,
-      }, 0.18);
+        duration: 0.16,
+      }, 0.08);
 
     ScrollTrigger.create({
       trigger: hero,

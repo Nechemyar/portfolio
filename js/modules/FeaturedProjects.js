@@ -121,51 +121,51 @@ export default class FeaturedProjects {
       },
     });
 
-    tl.to(bgs[0], { opacity: 1, duration: 0.18 }, 0)
+    tl.to(bgs[0], { opacity: 1, duration: 0.14 }, 0)
       .to(eyebrowInner, {
         y: '0%',
         opacity: 1,
-        duration: 0.28,
+        duration: 0.24,
         ease: 'power3.out',
-      }, 0)
-      .to({}, { duration: 0.5 }, 0.22)
+      }, 0.04)
+      .to({}, { duration: 0.6 }, 0.22)
       .to(cards[0], {
         x: 0,
         y: 0,
         opacity: 1,
         duration: 0.48,
         ease: 'power3.out',
-      }, 0.8)
+      }, 0.96)
       .to(cards[1], {
         x: PEEK_X,
         y: 0,
         opacity: 0.92,
         duration: 0.52,
         ease: 'power3.out',
-      }, 0.84)
+      }, 1)
       .to('.featured__gradient', {
         opacity: 1,
         duration: 0.42,
-      }, 0.82)
+      }, 0.98)
       .to(titles[0], {
         opacity: 1,
         y: '0%',
         duration: 0.4,
         ease: 'power3.out',
-      }, 0.92)
+      }, 1.08)
       .to(cta, {
         opacity: 1,
         y: 0,
         duration: 0.4,
         ease: 'power3.out',
-      }, 0.98)
+      }, 1.14)
       .to(eyebrowInner, {
         opacity: 0,
         y: '-18%',
         duration: 0.22,
         ease: 'power2.out',
-      }, 0.78)
-      .to({}, { duration: 0.44 }, 1.04);
+      }, 0.72)
+      .to({}, { duration: 0.52 }, 1.2);
 
     if (cards.length > 1) {
       tl.to(cards[0], {
@@ -174,26 +174,26 @@ export default class FeaturedProjects {
         opacity: 0.92,
         filter: BACK_BLUR,
         duration: 0.5,
-      }, 1.62)
+      }, 1.82)
         .to(cards[1], {
           x: 0,
           scale: 1,
           opacity: 1,
           filter: 'blur(0px)',
           duration: 0.5,
-        }, 1.62)
-        .set(cards[0], { zIndex: 1 }, 1.87)
-        .set(cards[1], { zIndex: 2 }, 1.87)
-        .to(bgs[0], { opacity: 0, duration: 0.4 }, 1.67)
-        .to(bgs[1], { opacity: 1, duration: 0.4 }, 1.67)
-        .to(titles[0], { opacity: 0, y: '-30%', duration: 0.3 }, 1.62)
+        }, 1.82)
+        .set(cards[0], { zIndex: 1 }, 2.07)
+        .set(cards[1], { zIndex: 2 }, 2.07)
+        .to(bgs[0], { opacity: 0, duration: 0.4 }, 1.87)
+        .to(bgs[1], { opacity: 1, duration: 0.4 }, 1.87)
+        .to(titles[0], { opacity: 0, y: '-30%', duration: 0.3 }, 1.82)
         .to(titles[1], {
           opacity: 1,
           y: '0%',
           duration: 0.4,
           ease: 'power3.out',
-        }, 1.82)
-        .to({}, { duration: 0.7 }, 2.12)
+        }, 2.02)
+        .to({}, { duration: 0.7 }, 2.32)
         .to([cards[cards.length - 1], titles[cards.length - 1], cta, bgs[1]], {
           opacity: 0,
           duration: 0.3,

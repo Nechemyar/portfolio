@@ -258,4 +258,10 @@
   .hero__footer {
     display: none;
   }
+
+  .hero__intro-eyebrow {
+    width: calc(100vw - 32px);
+    font-size: clamp(2rem, 11vw, 4rem);
+    line-height: 0.92;
+  }
 }

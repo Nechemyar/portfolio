@@ -5,6 +5,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 // from JS-injected markup, so Vite can't statically detect them otherwise.
 import catGrey from '../../assets/images/deskcatgrey.png';
 import catBlack from '../../assets/images/deskcatblack.png';
+import catGreyMob from '../../assets/images/mobcatgrey.png';
+import catBlackMob from '../../assets/images/mobcatblack.png';
 import screenClinical from '../../assets/images/project-clinical.jpg';
 import screenChoice from '../../assets/images/project-choice.jpg';
 import screenClinicalMob from '../../assets/images/clinmob.jpg';
@@ -17,6 +19,7 @@ const PROJECTS = [
     slug: 'clinical-assessments',
     name: 'Clinical\nAssessments',
     cat: catGrey,
+    catMob: catGreyMob,
     screen: screenClinical,
     screenMob: screenClinicalMob,
     href: 'projects/clinical-assessments.html',
@@ -25,6 +28,7 @@ const PROJECTS = [
     slug: 'choice-inventory',
     name: 'Choice\nInventory',
     cat: catBlack,
+    catMob: catBlackMob,
     screen: screenChoice,
     screenMob: screenChoiceMob,
     href: 'projects/choice-inventory.html',
@@ -70,7 +74,10 @@ export default class FeaturedProjects {
             </picture>
           </div>
         </div>
-        <img class="featured__card-cat" src="${project.cat}" alt="" />
+        <picture class="featured__card-cat">
+          <source media="(max-width: 768px)" srcset="${project.catMob}" />
+          <img src="${project.cat}" alt="" />
+        </picture>
       `;
       stack.appendChild(card);
 

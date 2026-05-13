@@ -159,9 +159,16 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
   z-index: 3;
   pointer-events: none;
+  display: block;
+}
+
+.featured__card-cat img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 /* ——— Bottom gradient (carries over from hero) ——— */
@@ -259,7 +266,7 @@
 @media (max-width: 768px) {
   .featured__eyebrow {
     width: calc(100vw - 32px);
-    font-size: clamp(3rem, 14vw, 5rem);
+    font-size: clamp(2rem, 11vw, 4rem);
   }
 
   .featured__card {
@@ -267,25 +274,42 @@
     width: 290vw;
   }
 
-  .featured__title {
-    font-size: clamp(2.2rem, 13vw, 5rem);
-    bottom: clamp(5rem, 11vh, 7rem);
-    line-height: 0.8;
+  /* Swap to the mobile-specific cat + mask composition. The mob assets are
+     designed around a portrait-cropped framing, so the screen window sits
+     in a different region than the desktop comp. */
+  .featured__card-mask {
+    -webkit-mask-image: url('../../assets/images/mobmask.png');
+    mask-image: url('../../assets/images/mobmask.png');
   }
 
+  .featured__card-screen {
+    top: 23.70%;
+    left: 39.79%;
+    width: 20.31%;
+    height: 67.13%;
+  }
+
+  .featured__title {
+    font-size: clamp(1.6rem, 9vw, 3.2rem);
+    bottom: clamp(5.5rem, 13vh, 8rem);
+    line-height: 0.85;
+  }
+
+  /* CTA tucks under the title (bottom-left) so it never collides with the
+     project name and stays in view even on short screens. */
   .featured__cta {
-    padding: 0.75em 1.2em;
-    font-size: 0.78rem;
-    bottom: clamp(1.25rem, 3.5vh, 2rem);
+    padding: 0.7em 1.1em;
+    font-size: 0.72rem;
+    bottom: clamp(1.5rem, 4vh, 2.5rem);
+    left: clamp(1.25rem, 4vw, 3rem);
+    right: auto;
   }
 
   /* On mobile the heavy cat-stack with blur halos is expensive — disable the
-     halo and the back-card peek to keep the section smooth. */
+     halo to keep the section smooth. The back card still participates in the
+     swap (so Choice Inventory is visible) but the peek-behind is suppressed
+     by the GSAP timeline on small screens. */
   .featured__card-halo {
-    display: none;
-  }
-
-  .featured__card[data-back="true"] {
     display: none;
   }
 }

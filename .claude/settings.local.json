@@ -17,7 +17,10 @@
       "Bash(cd /c/Users/neche/Downloads/portfolio/assets/images && cp deskcatblack.png deskcatwhite.png deskcatgrey.png /c/Users/neche/Downloads/portfolio/.claude/worktrees/lucid-montalcini-58fed4/assets/images/ && ls /c/Users/neche/Downloads/portfolio/.claude/worktrees/lucid-montalcini-58fed4/assets/images/ | grep -i deskcat)",
       "Bash(npm run *)",
       "Bash(git fetch *)",
-      "Bash(git restore *)"
+      "Bash(git restore *)",
+      "Bash(ls \"C:/Users/neche/Downloads/\" 2>/dev/null | grep -i mob)",
+      "Bash(cp \"C:/Users/neche/Downloads/portfolio/assets/images/mobcatblack.png\" \"assets/images/mobcatblack.png\")",
+      "Bash(cp \"C:/Users/neche/Downloads/portfolio/assets/images/mobcatgrey.png\" \"assets/images/mobcatgrey.png\")"
     ]
   }
 }

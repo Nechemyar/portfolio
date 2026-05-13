@@ -52,7 +52,7 @@ export default class ProjectsScroll {
 
     // Beat 1: hero exit (cat up, footer/gradient/marquee down, bg pink → white)
     tl.to(stage, {
-      backgroundColor: '#ffffff',
+      backgroundColor: '#F6F2EB',
       duration: 0.6,
       ease: 'power1.inOut',
     }, 0)

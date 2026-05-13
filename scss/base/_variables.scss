@@ -1,13 +1,13 @@
 @use 'tokens' as *;
 :root {
   /* Colors */
-  --color-bg:            #292928;
-  --color-surface:       #333332;
-  --color-text:          #F8F8F8;
-  --color-muted:         #999999;
-  --color-accent:        #c3f832;
-  --color-accent-hover:  #d4ff50;
-  --color-accent-soft:   #e6bbff;
+  --color-bg:            #1A1A1A;
+  --color-surface:       #24211F;
+  --color-text:          #F6F2EB;
+  --color-muted:         #B8ADA2;
+  --color-accent:        #C7512D;
+  --color-accent-hover:  #D7653D;
+  --color-accent-soft:   #F6F2EB;
   --color-border:        rgba(255, 255, 255, 0.06);
   --color-border-solid:  rgba(255, 255, 255, 0.1);
 

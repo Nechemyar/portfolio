@@ -1,8 +1,8 @@
 @use '../base/tokens' as *;
 
 .project-page {
-  background: #1A1A19;
-  color: #ffffff;
+  background: $c-bg;
+  color: $c-text;
   min-height: 100vh;
 }
 
@@ -32,7 +32,7 @@
 }
 
 .project-hero__back:hover {
-  color: #ffffff;
+  color: $c-text;
 }
 
 .project-hero__eyebrow {
@@ -141,7 +141,7 @@
   flex-direction: column;
   gap: 0.5rem;
   text-decoration: none;
-  color: #ffffff;
+  color: $c-text;
 }
 
 .project-next__label {

@@ -25,7 +25,7 @@
   /* White so it hands off seamlessly when the hero unpins. z-index sits
      below the hero stage so the featured pin can't paint over the hero
      during the scroll overlap. */
-  background: #ffffff;
+  background: $c-soft;
   z-index: 1;
 }
 
@@ -40,11 +40,11 @@
 }
 
 .featured__bg[data-bg-idx="0"] {
-  background: #ffffff;
+  background: $c-soft;
 }
 
 .featured__bg[data-bg-idx="1"] {
-  background: #ff8a2b;
+  background: $c-rust;
 }
 
 /* ——— Big "FEATURED PROJECTS" section title ———
@@ -63,7 +63,7 @@
   letter-spacing: 0;
   line-height: 0.86;
   text-transform: uppercase;
-  color: rgba(26, 26, 25, 0.96);
+  color: rgba(26, 26, 26, 0.96);
   pointer-events: none;
   overflow: hidden;
   display: block;
@@ -113,9 +113,9 @@
   transform: translate(-50%, -50%);
   background: radial-gradient(
     ellipse 50% 45% at 50% 50%,
-    rgba(255, 220, 235, 0.65) 0%,
-    rgba(255, 200, 220, 0.25) 35%,
-    rgba(255, 200, 220, 0) 70%
+    rgba(199, 81, 45, 0.22) 0%,
+    rgba(25, 66, 61, 0.16) 42%,
+    rgba(246, 242, 235, 0) 70%
   );
   filter: blur(20px);
   z-index: 0;
@@ -203,7 +203,7 @@
   letter-spacing: -0.025em;
   line-height: 0.78;
   text-transform: uppercase;
-  color: #ffffff;
+  color: $c-soft;
   pointer-events: none;
 }
 
@@ -248,7 +248,7 @@
 }
 
 .featured__cta:hover {
-  background: #f0d4ff;
+  background: #F9EEE0;
   transform: translateY(-2px);
 }
 

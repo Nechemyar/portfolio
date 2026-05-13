@@ -17,14 +17,19 @@ $font-display: 'ClashDisplay', Arial, sans-serif;
 $font-body: 'DM Sans', sans-serif;
 
 // Colors
-$c-bg: #1A1A19;
-$c-bg-elevated: #242423;
-$c-text: #F2F2F0;
-$c-text-secondary: #A0A09C;
-$c-text-tertiary: #6B6B67;
-$c-accent: #C3F832;
-$c-accent-hover: #D4FF50;
-$c-soft: #E6BBFF;
+$c-cream: #F6F2EB;
+$c-rust: #C7512D;
+$c-charcoal: #1A1A1A;
+$c-forest: #19423D;
+
+$c-bg: $c-charcoal;
+$c-bg-elevated: #24211F;
+$c-text: $c-cream;
+$c-text-secondary: #B8ADA2;
+$c-text-tertiary: #7F766E;
+$c-accent: $c-rust;
+$c-accent-hover: #D7653D;
+$c-soft: $c-cream;
 $c-border: rgba(255, 255, 255, 0.06);
 $c-border-visible: rgba(255, 255, 255, 0.12);
 

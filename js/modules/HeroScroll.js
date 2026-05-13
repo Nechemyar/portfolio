@@ -18,9 +18,10 @@ export default class HeroScroll {
     const items = document.querySelectorAll('.hero__mouth-img');
     if (items.length < 2) return;
 
-    // Hard cut slideshow instead of sliding
-    gsap.set(items, { opacity: 0 });
-    gsap.set(items[0], { opacity: 1 });
+    // Hard cut slideshow. items[0] is already opacity:1 from CSS (so it
+    // can serve as the LCP element without waiting for JS). Only hide the
+    // others — never touch items[0] here, to avoid a one-frame flash.
+    for (let i = 1; i < items.length; i++) gsap.set(items[i], { opacity: 0 });
 
     let currentIndex = 0;
     setInterval(() => {

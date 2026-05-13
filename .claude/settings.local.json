@@ -24,7 +24,8 @@
       "Bash(node -e \"try{require\\('sharp'\\);console.log\\('sharp ok'\\)}catch\\(e\\){console.log\\('no sharp'\\)}\")",
       "Bash(ffmpeg -version)",
       "Bash(node -e ' *)",
-      "Bash(xargs -I{} cat {})"
+      "Bash(xargs -I{} cat {})",
+      "Bash(findstr /i \"\\\\.css\")"
     ]
   }
 }

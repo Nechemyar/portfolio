@@ -25,9 +25,13 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" /></noscript>
   <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/ClashDisplay-Variable.woff2" />
 
-  <!-- LCP image preload — the hero cat is the largest paint on first view. -->
+  <!-- LCP image preload — Lighthouse identifies the first project image
+       (visible through the cat's screen) as the LCP element on mobile, with
+       the cat itself as LCP on desktop. Preload both so neither blocks. -->
   <link rel="preload" as="image" href="assets/images/deskcat.webp" media="(min-width: 769px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/images/project-choice.webp" media="(min-width: 769px)" fetchpriority="high" />
   <link rel="preload" as="image" href="assets/images/mobcat.webp" media="(max-width: 768px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/images/choicemob.webp" media="(max-width: 768px)" fetchpriority="high" />
 
   <!-- CSS -->
   <link rel="stylesheet" href="scss/main.scss" />
@@ -105,11 +109,11 @@
             <div class="hero__mouth-track" id="mouth-track">
               <picture>
                 <source media="(max-width: 768px)" srcset="assets/images/choicemob.webp" />
-                <img class="hero__mouth-img" src="assets/images/project-choice.webp" alt="Choice Inventory" />
+                <img class="hero__mouth-img hero__mouth-img--first" src="assets/images/project-choice.webp" alt="Choice Inventory" fetchpriority="high" decoding="async" />
               </picture>
               <picture>
                 <source media="(max-width: 768px)" srcset="assets/images/clinmob.webp" />
-                <img class="hero__mouth-img" src="assets/images/project-clinical.webp" alt="Clinical Assessments" />
+                <img class="hero__mouth-img" src="assets/images/project-clinical.webp" alt="Clinical Assessments" decoding="async" />
               </picture>
               <picture>
                 <source media="(max-width: 768px)" srcset="assets/images/choicemob.webp" />

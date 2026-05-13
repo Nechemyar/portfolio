@@ -25,14 +25,18 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" /></noscript>
   <link rel="preload" as="font" type="font/woff2" crossorigin href="./assets/ClashDisplay-Variable-Buk7cB_f.woff2" />
 
-  <!-- LCP image preload — the hero cat is the largest paint on first view. -->
+  <!-- LCP image preload — Lighthouse identifies the first project image
+       (visible through the cat's screen) as the LCP element on mobile, with
+       the cat itself as LCP on desktop. Preload both so neither blocks. -->
   <link rel="preload" as="image" href="./assets/deskcat-CUP1YQFE.webp" media="(min-width: 769px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="./assets/project-choice-CCiiNZL8.webp" media="(min-width: 769px)" fetchpriority="high" />
   <link rel="preload" as="image" href="./assets/mobcat-DXRYO3tx.webp" media="(max-width: 768px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="./assets/choicemob-mQBf7N4X.webp" media="(max-width: 768px)" fetchpriority="high" />
 
   <!-- CSS -->
-  <script type="module" crossorigin src="./assets/main-CCW-ymTO.js"></script>
-  <link rel="modulepreload" crossorigin href="./assets/SmoothScroll-oEP4NION.js">
-  <link rel="stylesheet" crossorigin href="./assets/SmoothScroll-CNnTNtfh.css">
+  <script type="module" crossorigin src="./assets/main-CN6cw3RN.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/SmoothScroll-CICXzMqZ.js">
+  <link rel="stylesheet" crossorigin href="./assets/SmoothScroll-B4Lkk-LT.css">
 </head>
 
 <body>
@@ -107,11 +111,11 @@
             <div class="hero__mouth-track" id="mouth-track">
               <picture>
                 <source media="(max-width: 768px)" srcset="./assets/choicemob-mQBf7N4X.webp" />
-                <img class="hero__mouth-img" src="./assets/project-choice-CCiiNZL8.webp" alt="Choice Inventory" />
+                <img class="hero__mouth-img hero__mouth-img--first" src="./assets/project-choice-CCiiNZL8.webp" alt="Choice Inventory" fetchpriority="high" decoding="async" />
               </picture>
               <picture>
                 <source media="(max-width: 768px)" srcset="./assets/clinmob-DzRInEg5.webp" />
-                <img class="hero__mouth-img" src="./assets/project-clinical-BsWLTy-l.webp" alt="Clinical Assessments" />
+                <img class="hero__mouth-img" src="./assets/project-clinical-BsWLTy-l.webp" alt="Clinical Assessments" decoding="async" />
               </picture>
               <picture>
                 <source media="(max-width: 768px)" srcset="./assets/choicemob-mQBf7N4X.webp" />

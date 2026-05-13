@@ -109,6 +109,13 @@
   opacity: 0;
 }
 
+/* Render the first frame at full opacity from CSS so the LCP image is
+   paintable without waiting for JS — Lighthouse otherwise can't detect
+   it as a real LCP candidate (opacity:0 elements are excluded). */
+.hero__mouth-img--first {
+  opacity: 1;
+}
+
 /* ——— TV Screen Effect ——— */
 .hero__tv-overlay {
   position: absolute;

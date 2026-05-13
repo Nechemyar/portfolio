@@ -19,7 +19,9 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: #ec9fff;
+  /* White so it hands off seamlessly from the hero's white wash — no pink
+     seam appears behind the hero as the stage unpinns. */
+  background: #ffffff;
 }
 
 /* ——— Per-project background layers (crossfaded) ——— */

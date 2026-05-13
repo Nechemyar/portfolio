@@ -20,7 +20,9 @@
       "Bash(git restore *)",
       "Bash(ls \"C:/Users/neche/Downloads/\" 2>/dev/null | grep -i mob)",
       "Bash(cp \"C:/Users/neche/Downloads/portfolio/assets/images/mobcatblack.png\" \"assets/images/mobcatblack.png\")",
-      "Bash(cp \"C:/Users/neche/Downloads/portfolio/assets/images/mobcatgrey.png\" \"assets/images/mobcatgrey.png\")"
+      "Bash(cp \"C:/Users/neche/Downloads/portfolio/assets/images/mobcatgrey.png\" \"assets/images/mobcatgrey.png\")",
+      "Bash(node -e \"try{require\\('sharp'\\);console.log\\('sharp ok'\\)}catch\\(e\\){console.log\\('no sharp'\\)}\")",
+      "Bash(ffmpeg -version)"
     ]
   }
 }

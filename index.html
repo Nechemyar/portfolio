@@ -17,6 +17,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet" />
 
+  <!-- LCP image preload — the hero cat is the largest paint on first view. -->
+  <link rel="preload" as="image" href="assets/images/deskcat.webp" media="(min-width: 769px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/images/mobcat.webp" media="(max-width: 768px)" fetchpriority="high" />
+
   <!-- Lenis CSS -->
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css" />
 
@@ -95,27 +99,27 @@
           <div class="hero__mouth-slider" id="mouth-slider">
             <div class="hero__mouth-track" id="mouth-track">
               <picture>
-                <source media="(max-width: 768px)" srcset="assets/images/choicemob.jpg" />
-                <img class="hero__mouth-img" src="assets/images/project-choice.jpg" alt="Choice Inventory" />
+                <source media="(max-width: 768px)" srcset="assets/images/choicemob.webp" />
+                <img class="hero__mouth-img" src="assets/images/project-choice.webp" alt="Choice Inventory" />
               </picture>
               <picture>
-                <source media="(max-width: 768px)" srcset="assets/images/clinmob.jpg" />
-                <img class="hero__mouth-img" src="assets/images/project-clinical.jpg" alt="Clinical Assessments" />
+                <source media="(max-width: 768px)" srcset="assets/images/clinmob.webp" />
+                <img class="hero__mouth-img" src="assets/images/project-clinical.webp" alt="Clinical Assessments" />
               </picture>
               <picture>
-                <source media="(max-width: 768px)" srcset="assets/images/choicemob.jpg" />
-                <img class="hero__mouth-img" src="assets/images/project-choice.jpg" alt="" />
+                <source media="(max-width: 768px)" srcset="assets/images/choicemob.webp" />
+                <img class="hero__mouth-img" src="assets/images/project-choice.webp" alt="" />
               </picture>
               <picture>
-                <source media="(max-width: 768px)" srcset="assets/images/clinmob.jpg" />
-                <img class="hero__mouth-img" src="assets/images/project-clinical.jpg" alt="" />
+                <source media="(max-width: 768px)" srcset="assets/images/clinmob.webp" />
+                <img class="hero__mouth-img" src="assets/images/project-clinical.webp" alt="" />
               </picture>
             </div>
             <div class="hero__tv-overlay"></div>
           </div>
           <picture>
-            <source media="(max-width: 768px)" srcset="assets/images/mobcat.png" />
-            <img class="hero__cat-img" src="assets/images/deskcat.png" alt="Cat" />
+            <source media="(max-width: 768px)" srcset="assets/images/mobcat.webp" />
+            <img class="hero__cat-img" src="assets/images/deskcat.webp" alt="Cat" fetchpriority="high" decoding="async" />
           </picture>
         </div>
 

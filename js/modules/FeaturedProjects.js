@@ -3,14 +3,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // Bundle these via Vite so production paths resolve. They're referenced only
 // from JS-injected markup, so Vite can't statically detect them otherwise.
-import catGrey from '../../assets/images/deskcatgrey.png';
-import catBlack from '../../assets/images/deskcatblack.png';
-import catGreyMob from '../../assets/images/mobcatgrey.png';
-import catBlackMob from '../../assets/images/mobcatblack.png';
-import screenClinical from '../../assets/images/project-clinical.jpg';
-import screenChoice from '../../assets/images/project-choice.jpg';
-import screenClinicalMob from '../../assets/images/clinmob.jpg';
-import screenChoiceMob from '../../assets/images/choicemob.jpg';
+import catGrey from '../../assets/images/deskcatgrey.webp';
+import catBlack from '../../assets/images/deskcatblack.webp';
+import catGreyMob from '../../assets/images/mobcatgrey.webp';
+import catBlackMob from '../../assets/images/mobcatblack.webp';
+import screenClinical from '../../assets/images/project-clinical.webp';
+import screenChoice from '../../assets/images/project-choice.webp';
+import screenClinicalMob from '../../assets/images/clinmob.webp';
+import screenChoiceMob from '../../assets/images/choicemob.webp';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -37,7 +37,10 @@ const PROJECTS = [
 
 const PEEK_X = '24vw';
 const BACK_SCALE = 0.86;
-const BACK_BLUR = 'blur(10px)';
+// Blur is expensive on mobile GPUs (especially across a 290vw card). 4px keeps
+// the depth read without melting the framerate; desktop keeps the richer 10px.
+const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches;
+const BACK_BLUR = isMobile ? 'blur(4px)' : 'blur(10px)';
 
 export default class FeaturedProjects {
   constructor() {

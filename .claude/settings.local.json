@@ -22,7 +22,9 @@
       "Bash(cp \"C:/Users/neche/Downloads/portfolio/assets/images/mobcatblack.png\" \"assets/images/mobcatblack.png\")",
       "Bash(cp \"C:/Users/neche/Downloads/portfolio/assets/images/mobcatgrey.png\" \"assets/images/mobcatgrey.png\")",
       "Bash(node -e \"try{require\\('sharp'\\);console.log\\('sharp ok'\\)}catch\\(e\\){console.log\\('no sharp'\\)}\")",
-      "Bash(ffmpeg -version)"
+      "Bash(ffmpeg -version)",
+      "Bash(node -e ' *)",
+      "Bash(xargs -I{} cat {})"
     ]
   }
 }

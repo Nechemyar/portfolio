@@ -12,17 +12,22 @@
   <meta property="og:description" content="Premium websites for businesses that give a damn. Starting from £3,000." />
   <meta property="og:type" content="website" />
 
-  <!-- Fonts -->
+  <!-- Fonts —
+       Google Fonts CSS is loaded async (the `media=print` swap trick) so it
+       no longer blocks first paint. DM Sans renders with the system font
+       until the woff2 arrives, then swaps in via font-display: swap. The
+       display-font (ClashDisplay) is preloaded so the headline doesn't
+       reflow when the variable woff2 lands. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" /></noscript>
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/ClashDisplay-Variable.woff2" />
 
   <!-- LCP image preload — the hero cat is the largest paint on first view. -->
   <link rel="preload" as="image" href="assets/images/deskcat.webp" media="(min-width: 769px)" fetchpriority="high" />
   <link rel="preload" as="image" href="assets/images/mobcat.webp" media="(max-width: 768px)" fetchpriority="high" />
-
-  <!-- Lenis CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css" />
 
   <!-- CSS -->
   <link rel="stylesheet" href="scss/main.scss" />

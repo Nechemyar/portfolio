@@ -18,3 +18,12 @@
 @use 'components/faq';
 @use 'components/contact';
 @use 'components/project-page';
+
+/* Lenis (smooth scroll) — inlined from lenis/dist/lenis.css. Inlining
+   eliminates a render-blocking unpkg request that was costing ~750ms. */
+html.lenis,
+html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-scrolling iframe { pointer-events: none; }

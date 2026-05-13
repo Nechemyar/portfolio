@@ -9,6 +9,9 @@
 .featured {
   position: relative;
   width: 100vw;
+  /* Slight overlap with the hero's runway so the featured pin is already
+     in place (white, behind the hero) the moment the hero unpinns —
+     keeps the handoff seamless. */
   margin-top: -150vh;
   /* Height is set inline by FeaturedProjects.js based on PROJECTS.length. */
 }

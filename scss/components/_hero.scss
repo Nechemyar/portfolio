@@ -6,7 +6,9 @@
 .hero {
   position: relative;
   width: 100vw;
-  height: 250vh; /* 100vh visible + 150vh of scrub runway (cat-to-center + slide-off-left) */
+  /* 100vh visible + runway for: hero exit (~60vh) + "Featured Projects"
+     hold (~120vh) + handoff to featured cards (~70vh) = 350vh total. */
+  height: 350vh;
 }
 
 /* The .hero__stage is what the user actually sees — pinned 100vh viewport.
@@ -148,6 +150,41 @@
   z-index: 8;
   pointer-events: none;
   will-change: transform;
+}
+
+/* ——— Featured Projects intro eyebrow ———
+   Lives inside the hero stage so it can rise into view as the stage turns
+   white. Stays visible until the hero unpinns and scrolls away (which the
+   user reads as "Featured Projects → first project card"). */
+.hero__intro-eyebrow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  width: min(92vw, 1200px);
+  font-family: $font-display;
+  font-size: clamp(4rem, 10vw, 9rem);
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 0.86;
+  text-transform: uppercase;
+  color: rgba(26, 26, 25, 0.96);
+  pointer-events: none;
+  overflow: hidden;
+  display: block;
+  text-align: center;
+}
+
+.hero__intro-eyebrow-inner {
+  display: grid;
+  transform: translateY(110%);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.hero__intro-eyebrow-line {
+  display: block;
 }
 
 /* ——— Hero Footer ——— */

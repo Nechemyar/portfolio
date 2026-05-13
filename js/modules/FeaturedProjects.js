@@ -45,13 +45,12 @@ export default class FeaturedProjects {
     const stack = document.querySelector('#featured-stack');
     const titleEl = document.querySelector('#featured-title');
     const cta = document.querySelector('#featured-cta');
-    const eyebrowInner = document.querySelector('.featured__eyebrow-inner');
     const bgs = document.querySelectorAll('.featured__bg');
     if (!section || !stack || !titleEl || !cta) return;
 
-    // Generous height so each "beat" of the scrub timeline (hero overlap,
-    // eyebrow rise, eyebrow hold, swap, etc.) gets roughly one swipe of
-    // scroll. ~100vh per timeline unit (timeline total is 5).
+    // Generous height so each beat of the scrub timeline (hero overlap,
+    // card 0 enter, card 0 hold, swap, card 1 hold, fade) gets roughly one
+    // swipe of scroll.
     section.style.height = `${100 + PROJECTS.length * 220 + 100}vh`;
 
     PROJECTS.forEach((project, index) => {
@@ -111,7 +110,6 @@ export default class FeaturedProjects {
     gsap.set(bgs, { opacity: 0 });
     gsap.set(cta, { opacity: 0, y: 20 });
     gsap.set('.featured__gradient', { opacity: 0 });
-    if (eyebrowInner) gsap.set(eyebrowInner, { y: '110%', opacity: 0 });
 
     const tl = gsap.timeline({
       defaults: { ease: 'none' },
@@ -124,111 +122,93 @@ export default class FeaturedProjects {
       },
     });
 
-    // Beats are laid out so each one is roughly one swipe of scroll. The
-    // 0 → 0.7 region holds while the hero stage (which is z-indexed above
-    // the featured pin) is still covering, so the eyebrow only starts
-    // rising once the hero has fully unpinned.
+    // The eyebrow ("Featured Projects") lives in the hero stage now and is
+    // driven by ProjectsScroll — it fades out as the hero stage fades out.
+    // This timeline starts the first card fading in at the same moment so
+    // the user reads it as a crossfade between the title and the card.
     //
-    //  0   – 0.7  hold during hero overlap
-    //  0.7 – 1.3  "Featured Projects" rises up
-    //  1.3 – 2.5  "Featured Projects" holds (lands the first swipe)
-    //  2.5 – 3.1  eyebrow leaves, card 0 + title 0 + gradient enter
-    //  3.1 – 3.7  card 0 holds
-    //  3.7 – 4.3  card 0 → card 1 swap (bg crossfades, title crossfades)
-    //  4.3 – 4.8  card 1 holds
-    //  4.8 – 5.0  everything fades out before the next section
+    // Featured trigger ranges scroll 200vh → ~740vh (with 350vh hero and
+    // -150vh margin overlap).  In timeline units (total ~5):
+    //   0    – 0.5  card 0 + title + gradient + cta fade in
+    //                (concurrent with hero stage fading out)
+    //   0.5  – 1.5  card 0 holds
+    //   1.5  – 2.3  swap to card 1 (bg + title crossfade)
+    //   2.3  – 3.3  card 1 holds
+    //   3.3  – 3.7  final fade out
 
     tl
-      // Beat 1: hero overlap hold
-      .to({}, { duration: 0.7 }, 0)
-
-      // Beat 2: eyebrow rises
-      .to(bgs[0], { opacity: 1, duration: 0.3 }, 0.7)
-      .to(eyebrowInner, {
-        y: '0%',
-        opacity: 1,
-        duration: 0.55,
-        ease: 'power3.out',
-      }, 0.75)
-
-      // Beat 3: eyebrow holds — a full swipe of "Featured Projects" on screen
-      .to({}, { duration: 1.2 }, 1.3)
-
-      // Beat 4: eyebrow leaves while card 0 + title + gradient + cta enter
-      .to(eyebrowInner, {
-        opacity: 0,
-        y: '-22%',
-        duration: 0.45,
-        ease: 'power2.in',
-      }, 2.5)
+      // Beat: card 0 + title + gradient + cta enter (crossfade with hero out)
+      .to(bgs[0], { opacity: 1, duration: 0.4 }, 0)
       .to(cards[0], {
         x: 0,
         y: 0,
         opacity: 1,
-        duration: 0.6,
+        duration: 0.5,
         ease: 'power3.out',
-      }, 2.5)
-      .to(cards[1] || {}, {
+      }, 0)
+      .to('.featured__gradient', { opacity: 1, duration: 0.45 }, 0.05);
+
+    if (cards.length > 1) {
+      tl.to(cards[1], {
         x: PEEK_X,
         y: 0,
         opacity: 0.92,
-        duration: 0.6,
+        duration: 0.5,
         ease: 'power3.out',
-      }, 2.5)
-      .to('.featured__gradient', { opacity: 1, duration: 0.5 }, 2.55)
+      }, 0);
+    }
+
+    tl
       .to(titles[0], {
         opacity: 1,
         y: '0%',
-        duration: 0.5,
+        duration: 0.4,
         ease: 'power3.out',
-      }, 2.6)
+      }, 0.1)
       .to(cta, {
         opacity: 1,
         y: 0,
-        duration: 0.5,
+        duration: 0.4,
         ease: 'power3.out',
-      }, 2.65)
-
-      // Beat 5: card 0 holds
-      .to({}, { duration: 0.6 }, 3.1);
+      }, 0.15)
+      // card 0 holds for ~one swipe
+      .to({}, { duration: 1 }, 0.5);
 
     if (cards.length > 1) {
       tl
-        // Beat 6: swap card 0 → card 1 (bg + title crossfade together)
+        // swap to card 1
         .to(cards[0], {
           x: `-${PEEK_X}`,
           scale: BACK_SCALE,
           opacity: 0.92,
           filter: BACK_BLUR,
           duration: 0.5,
-        }, 3.7)
+        }, 1.5)
         .to(cards[1], {
           x: 0,
           scale: 1,
           opacity: 1,
           filter: 'blur(0px)',
           duration: 0.5,
-        }, 3.7)
-        .set(cards[0], { zIndex: 1 }, 3.95)
-        .set(cards[1], { zIndex: 2 }, 3.95)
-        .to(bgs[0], { opacity: 0, duration: 0.4 }, 3.75)
-        .to(bgs[1], { opacity: 1, duration: 0.4 }, 3.75)
-        .to(titles[0], { opacity: 0, y: '-30%', duration: 0.35 }, 3.7)
+        }, 1.5)
+        .set(cards[0], { zIndex: 1 }, 1.75)
+        .set(cards[1], { zIndex: 2 }, 1.75)
+        .to(bgs[0], { opacity: 0, duration: 0.4 }, 1.55)
+        .to(bgs[1], { opacity: 1, duration: 0.4 }, 1.55)
+        .to(titles[0], { opacity: 0, y: '-30%', duration: 0.3 }, 1.5)
         .to(titles[1], {
           opacity: 1,
           y: '0%',
           duration: 0.4,
           ease: 'power3.out',
-        }, 3.9)
-
-        // Beat 7: card 1 holds
-        .to({}, { duration: 0.5 }, 4.3)
-
-        // Beat 8: final fade out
+        }, 1.7)
+        // card 1 holds
+        .to({}, { duration: 1 }, 2.3)
+        // final fade
         .to(
           [cards[cards.length - 1], titles[cards.length - 1], cta, bgs[1]],
-          { opacity: 0, duration: 0.3 },
-          4.8,
+          { opacity: 0, duration: 0.4 },
+          3.3,
         );
     }
 

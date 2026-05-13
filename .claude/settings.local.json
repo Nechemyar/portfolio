@@ -15,7 +15,9 @@
       "Bash(cp \"C:\\\\Users\\\\neche\\\\Downloads\\\\portfolio\\\\assets\\\\images\\\\deskcatblack.png\" \"C:\\\\Users\\\\neche\\\\Downloads\\\\portfolio\\\\.claude\\\\worktrees\\\\lucid-montalcini-58fed4\\\\assets\\\\images\\\\\" && cp \"C:\\\\Users\\\\neche\\\\Downloads\\\\portfolio\\\\assets\\\\images\\\\deskcatwhite.png\" \"C:\\\\Users\\\\neche\\\\Downloads\\\\portfolio\\\\.claude\\\\worktrees\\\\lucid-montalcini-58fed4\\\\assets\\\\images\\\\\")",
       "Bash(cp \"C:\\\\Users\\\\neche\\\\Downloads\\\\portfolio\\\\assets\\\\images\\\\deskcatgrey.png\" \"C:\\\\Users\\\\neche\\\\Downloads\\\\portfolio\\\\.claude\\\\worktrees\\\\lucid-montalcini-58fed4\\\\assets\\\\images\\\\\" && ls /c/Users/neche/Downloads/portfolio/.claude/worktrees/lucid-montalcini-58fed4/assets/images/ | grep -i deskcat)",
       "Bash(cd /c/Users/neche/Downloads/portfolio/assets/images && cp deskcatblack.png deskcatwhite.png deskcatgrey.png /c/Users/neche/Downloads/portfolio/.claude/worktrees/lucid-montalcini-58fed4/assets/images/ && ls /c/Users/neche/Downloads/portfolio/.claude/worktrees/lucid-montalcini-58fed4/assets/images/ | grep -i deskcat)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(git fetch *)",
+      "Bash(git restore *)"
     ]
   }
 }

@@ -6,9 +6,14 @@ gsap.registerPlugin(ScrollTrigger);
 /**
  * Hero exit sequence.
  *
- * The hero resolves into a single white scene on the first scroll beat:
- * footer and marquee clear, the cat/halo leave together, the dark veil fades,
- * and a white wash takes over before the featured intro arrives.
+ * On the first scroll beat, everything in the hero leaves at once:
+ *   - cat + halo float up and away
+ *   - footer text slides DOWN off the bottom edge
+ *   - bottom gradient slides DOWN off the bottom edge
+ *   - marquee slides DOWN off the bottom edge
+ *   - the pink stage is wiped to white by a fading wash
+ *
+ * Scroll-back reverses every step so the hero rebuilds cleanly.
  */
 export default class ProjectsScroll {
   constructor() {
@@ -23,42 +28,45 @@ export default class ProjectsScroll {
     gsap.set(wrapper, { xPercent: -50, yPercent: -50 });
 
     const tl = gsap.timeline({
-      defaults: { ease: 'none' },
+      defaults: { ease: 'power2.inOut' },
       scrollTrigger: {
         trigger: hero,
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 1,
+        scrub: true,
         invalidateOnRefresh: true,
       },
     });
 
-    tl.to('.hero__footer', {
-      yPercent: 220,
-      opacity: 0,
-      duration: 0.12,
+    // All exits happen together in the first beat — cat up, everything else
+    // down, pink → white. After this the timeline simply holds the cleared
+    // state until the featured pin takes over.
+    tl.to(wrapper, {
+      y: '-130vh',
+      duration: 0.34,
+      ease: 'power2.in',
     }, 0)
-      .to(wrapper, {
-        y: '-165vh',
-        duration: 0.22,
-        ease: 'power2.out',
-      }, 0.02)
-      .to('.marquee', {
-        yPercent: 220,
-        opacity: 0,
-        duration: 0.18,
-      }, 0.08)
       .to('.hero__gradient', {
-        opacity: 0,
-        duration: 0.14,
-      }, 0.08)
+        yPercent: 110,
+        duration: 0.32,
+        ease: 'power2.in',
+      }, 0)
+      .to('.hero__footer', {
+        yPercent: 260,
+        duration: 0.32,
+        ease: 'power2.in',
+      }, 0)
+      .to('.marquee', {
+        yPercent: 260,
+        duration: 0.32,
+        ease: 'power2.in',
+      }, 0)
       .to('.hero__scene-wash', {
         opacity: 1,
-        duration: 0.18,
-      }, 0.12)
-      // The hero exit should be visually complete before the first full swipe
-      // ends; this short hold preserves the finished state through the handoff.
-      .to({}, { duration: 0.14 }, 0.3);
+        duration: 0.26,
+        ease: 'power1.out',
+      }, 0.06)
+      .to({}, { duration: 0.34 }, 0.34);
 
     ScrollTrigger.create({
       trigger: hero,

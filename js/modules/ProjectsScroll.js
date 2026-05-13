@@ -6,13 +6,12 @@ gsap.registerPlugin(ScrollTrigger);
 /**
  * Hero exit sequence.
  *
- * On the first scroll beat, everything in the hero leaves at once:
- *   - cat + halo float up and away
- *   - footer text slides DOWN off the bottom edge
- *   - bottom gradient slides DOWN off the bottom edge
- *   - marquee slides DOWN off the bottom edge
- *   - the pink stage is wiped to white by a fading wash
- *
+ * On the first scroll beat the hero stage's own background colour transitions
+ * pink → white while every element on it leaves at once:
+ *   - cat (with halo) floats up off the top
+ *   - footer text, marquee, and bottom gradient slide DOWN off the bottom
+ * The stage stays pinned (and on top of the featured pin via z-index) while
+ * this plays so nothing from the next section can slide in over the exit.
  * Scroll-back reverses every step so the hero rebuilds cleanly.
  */
 export default class ProjectsScroll {
@@ -22,8 +21,9 @@ export default class ProjectsScroll {
 
   init() {
     const hero = document.querySelector('.hero');
+    const stage = document.querySelector('.hero__stage');
     const wrapper = document.querySelector('.hero__cat-wrapper');
-    if (!hero || !wrapper) return;
+    if (!hero || !stage || !wrapper) return;
 
     gsap.set(wrapper, { xPercent: -50, yPercent: -50 });
 
@@ -38,14 +38,18 @@ export default class ProjectsScroll {
       },
     });
 
-    // All exits happen together in the first beat — cat up, everything else
-    // down, pink → white. After this the timeline simply holds the cleared
-    // state until the featured pin takes over.
-    tl.to(wrapper, {
-      y: '-130vh',
-      duration: 0.34,
-      ease: 'power2.in',
+    // All exits + the stage colour shift happen together within the first
+    // beat of the scrub so it reads as one continuous flow.
+    tl.to(stage, {
+      backgroundColor: '#ffffff',
+      duration: 0.32,
+      ease: 'power1.inOut',
     }, 0)
+      .to(wrapper, {
+        y: '-130vh',
+        duration: 0.34,
+        ease: 'power2.in',
+      }, 0)
       .to('.hero__gradient', {
         yPercent: 110,
         duration: 0.32,
@@ -61,11 +65,8 @@ export default class ProjectsScroll {
         duration: 0.32,
         ease: 'power2.in',
       }, 0)
-      .to('.hero__scene-wash', {
-        opacity: 1,
-        duration: 0.26,
-        ease: 'power1.out',
-      }, 0.06)
+      // Hold the cleared white state through the rest of the runway so the
+      // featured pin underneath is only revealed once the hero unpinns.
       .to({}, { duration: 0.34 }, 0.34);
 
     ScrollTrigger.create({

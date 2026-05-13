@@ -9,28 +9,23 @@
   height: 250vh; /* 100vh visible + 150vh of scrub runway (cat-to-center + slide-off-left) */
 }
 
-/* The .hero__stage is what the user actually sees — pinned 100vh viewport. */
+/* The .hero__stage is what the user actually sees — pinned 100vh viewport.
+   z-index keeps the stage painting OVER the featured pin during the scroll
+   overlap, so the next section can't slide up over the hero exit. The hero
+   only reveals the featured pin once it unpinns and scrolls away. */
 .hero__stage {
   position: sticky;
   top: 0;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  /* Solid pink block colour. The halo behind the cat lives in its own layer
-     (.hero__halo) so it doesn't read as a heavy gradient on its own. */
+  /* Bg colour is animated pink → white by ProjectsScroll on the first scroll
+     beat, so the whole stage transitions colour as one continuous flow. */
   background-color: #ec9fff;
+  z-index: 2;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.hero__scene-wash {
-  position: absolute;
-  inset: 0;
-  background: #ffffff;
-  opacity: 0;
-  z-index: 12;
-  pointer-events: none;
 }
 
 /* Soft halo glow positioned behind the cat. Sits below the cat in z-order so

@@ -19,9 +19,11 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  /* White so it hands off seamlessly from the hero's white wash — no pink
-     seam appears behind the hero as the stage unpinns. */
+  /* White so it hands off seamlessly when the hero unpins. z-index sits
+     below the hero stage so the featured pin can't paint over the hero
+     during the scroll overlap. */
   background: #ffffff;
+  z-index: 1;
 }
 
 /* ——— Per-project background layers (crossfaded) ——— */

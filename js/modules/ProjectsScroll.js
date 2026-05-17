@@ -66,13 +66,20 @@ export default class ProjectsScroll {
         duration: 0.6,
         ease: 'power2.in',
       }, 0)
+      // y in vh keeps the slide consistent across breakpoints — yPercent
+      // alone underflowed on mobile where the footer sat at bottom: 24vh
+      // (CTA above the marquee) and 260% of its own height wasn't enough
+      // to clear the viewport. autoAlpha pairs with it so the element is
+      // hidden once it's offscreen rather than just translated away.
       .to('.hero__footer', {
-        yPercent: 260,
+        y: '50vh',
+        autoAlpha: 0,
         duration: 0.6,
         ease: 'power2.in',
       }, 0)
       .to('.marquee', {
-        yPercent: 260,
+        y: '50vh',
+        autoAlpha: 0,
         duration: 0.6,
         ease: 'power2.in',
       }, 0);

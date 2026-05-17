@@ -262,9 +262,9 @@
 /* ——— Responsive ——— */
 @media (max-width: 768px) {
   .hero__cat-wrapper {
-    /* Anchored higher so the screen window sits in the upper third —
-       leaves the lower viewport free for the CTA + marquee. */
-    top: 38%;
+    /* Anchor wrapper top at viewport top — wrapper is exactly 100vh tall,
+       so the hero composition fills top-to-bottom with no overflow above. */
+    top: 50%;
     width: auto;
     height: 100vh;
     aspect-ratio: 941 / 1672;

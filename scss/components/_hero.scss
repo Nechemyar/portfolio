@@ -95,12 +95,15 @@
   background: #000;
 }
 
-/* Track fills the slider so the mask alone defines where the reel shows —
-   the mask cutout matches the hero's screen window, so the reel is only
-   visible inside that shape. */
+/* Track is sized to the screen cutout in deskmask.webp (measured from the
+   alpha channel), so the reel image fills the screen window 1:1 rather
+   than being a tiny zoomed crop of a wrapper-sized image. */
 .hero__mouth-track {
   position: absolute;
-  inset: 0;
+  top: 23.70%;
+  left: 33.54%;
+  width: 32.92%;
+  height: 40.56%;
 }
 
 .hero__mouth-img {
@@ -143,7 +146,9 @@
   100% { opacity: 1; }
 }
 
-/* ——— Bottom Gradient ——— */
+/* ——— Bottom Gradient ———
+   Softer rust-orange wash instead of opaque black so the hero scene below
+   stays readable and the brand colour carries through into the gradient. */
 .hero__gradient {
   position: absolute;
   bottom: 0;
@@ -152,10 +157,10 @@
   height: 48vh;
   background: linear-gradient(
     to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, 0.55) 35%,
-    rgba(0, 0, 0, 0.95) 75%,
-    #000 100%
+    rgba(199, 81, 45, 0) 0%,
+    rgba(199, 81, 45, 0.25) 45%,
+    rgba(174, 64, 32, 0.6) 80%,
+    rgba(158, 56, 24, 0.78) 100%
   );
   z-index: 8;
   pointer-events: none;
@@ -214,12 +219,27 @@
   font-family: $font-display;
   font-size: $fs-base;
   font-weight: 700;
-  color: #ffffff;
+  color: $c-soft;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   display: flex;
   align-items: center;
   gap: 0.4em;
+}
+
+/* "Book a free call" CTA pill — sits on the rust button colour so it pops
+   against the softer orange-tinted gradient. */
+.hero__footer-link--cta {
+  background: $c-accent;
+  color: $c-soft;
+  padding: 0.6em 1.1em;
+  border-radius: 6px;
+  transition: transform $duration-fast $ease-out, background $duration-fast ease;
+}
+
+.hero__footer-link--cta:hover {
+  transform: translateY(-2px);
+  background: #D85E36;
 }
 
 .hero__footer-chevron {
@@ -242,7 +262,7 @@
 /* ——— Responsive ——— */
 @media (max-width: 768px) {
   .hero__cat-wrapper {
-    top: 42%;
+    top: 50%;
     width: auto;
     height: 100vh;
     aspect-ratio: 941 / 1672;
@@ -252,6 +272,14 @@
   .hero__mouth-slider {
     -webkit-mask-image: url('../../assets/images/mobmask.webp');
     mask-image: url('../../assets/images/mobmask.webp');
+  }
+
+  /* Mobile screen cutout in mobmask.webp (alpha-channel measurement). */
+  .hero__mouth-track {
+    top: 41.67%;
+    left: 24.81%;
+    width: 52.22%;
+    height: 22.40%;
   }
 
   .hero__gradient {

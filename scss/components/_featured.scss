@@ -140,7 +140,10 @@
 
 .featured__card-screen {
   position: absolute;
-  inset: 0;
+  top: 23.70%;
+  left: 33.54%;
+  width: 32.92%;
+  height: 40.56%;
   overflow: hidden;
 }
 
@@ -279,6 +282,13 @@
   .featured__card-mask {
     -webkit-mask-image: url('../../assets/images/mobmask.webp');
     mask-image: url('../../assets/images/mobmask.webp');
+  }
+
+  .featured__card-screen {
+    top: 41.67%;
+    left: 24.81%;
+    width: 52.22%;
+    height: 22.40%;
   }
 
   .featured__title {

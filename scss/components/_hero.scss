@@ -147,20 +147,20 @@
 }
 
 /* ——— Bottom Gradient ———
-   Whisper-light grey wash on PC — just enough to seat the CTA pill, not
-   a heavy overlay. Mobile overrides this with its own (still subtle)
-   wash, since the marquee box already provides the visual base. */
+   Subtle rust-tinted wash on PC — soft enough not to obscure the
+   illustration, but present so the footer links + CTA have a
+   consistent backdrop instead of fighting the floor of the scene. */
 .hero__gradient {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 28vh;
+  height: 32vh;
   background: linear-gradient(
     to bottom,
-    rgba(26, 26, 25, 0) 0%,
-    rgba(26, 26, 25, 0.04) 60%,
-    rgba(26, 26, 25, 0.08) 100%
+    rgba(199, 81, 45, 0) 0%,
+    rgba(199, 81, 45, 0.08) 50%,
+    rgba(199, 81, 45, 0.22) 100%
   );
   z-index: 8;
   pointer-events: none;
@@ -202,68 +202,137 @@
   display: block;
 }
 
-/* ——— Hero CTA pill ———
-   Single rust button centered above the marquee on every breakpoint —
-   primary action with no surrounding copy so it doesn't fight the
-   illustration. */
-.hero__cta {
+/* ——— Hero headline ———
+   Mobile-only black all-caps value prop, sits between the cat
+   composition and the CTA. Hidden on desktop where the illustration +
+   marquee carry the message. */
+.hero__headline {
   position: absolute;
   z-index: 12;
   left: 50%;
-  bottom: clamp(7rem, 17vh, 12rem);
   transform: translateX(-50%);
+  bottom: clamp(15rem, 30vh, 18rem);
+  width: min(420px, 86vw);
+  margin: 0;
+  font-family: $font-display;
+  font-weight: 900;
+  font-size: clamp(1.65rem, 7.2vw, 2.4rem);
+  letter-spacing: -0.01em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  text-align: center;
+  color: $c-bg;
+  pointer-events: none;
+  display: none;
+}
+
+/* ——— Hero sticker ———
+   Retro 70s-style star badge using the existing star.svg as the shape.
+   Slight tilt for that hand-applied sticker feel. */
+.hero__sticker {
+  position: absolute;
+  z-index: 13;
+  top: clamp(5.5rem, 11vw, 9rem);
+  right: clamp(1rem, 4vw, 3rem);
+  width: clamp(82px, 11vw, 142px);
+  aspect-ratio: 1;
+  transform: rotate(-14deg);
+  pointer-events: none;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.18));
+}
+
+.hero__sticker-shape {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.hero__sticker-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: $font-display;
+  font-weight: 900;
+  font-size: clamp(0.7rem, 1.05vw, 0.95rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: $c-soft;
+}
+
+/* ——— Hero CTA pill ———
+   Sits centred inside the hero footer below the marquee — primary
+   action, no surrounding copy. On desktop the side links flank it;
+   on mobile the links hide and only the pill shows. */
+.hero__cta {
   display: inline-flex;
   align-items: center;
-  gap: 0.4em;
   background: $c-accent;
   color: $c-soft;
   font-family: $font-display;
   font-weight: 800;
-  font-size: clamp(0.85rem, 1.15vw, 1.05rem);
-  letter-spacing: 0.06em;
+  font-size: clamp(0.85rem, 1.1vw, 1.05rem);
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   text-decoration: none;
-  padding: clamp(0.75em, 1.1vw, 1em) clamp(1.2em, 1.8vw, 1.6em);
+  padding: clamp(0.7em, 1vw, 0.95em) clamp(1.15em, 1.7vw, 1.55em);
   border-radius: 6px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
   white-space: nowrap;
   transition: transform $duration-fast $ease-out, background $duration-fast ease;
 }
 
 .hero__cta:hover {
-  transform: translateX(-50%) translateY(-2px);
+  transform: translateY(-2px);
   background: #D85E36;
 }
 
-/* ——— Hero Footer ——— */
+/* ——— Hero Footer ———
+   Three-column grid so the CTA pill stays dead-centre regardless of the
+   side links' length. Side links flank it on desktop; on mobile only
+   the centre column is visible. */
 .hero__footer {
   position: absolute;
-  bottom: $space-32;
+  bottom: clamp(1.75rem, 4vh, 3rem);
   left: 0;
   width: 100%;
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
+  column-gap: clamp(1rem, 3vw, 2.5rem);
   padding: 0 $page-padding;
   z-index: 15;
 }
 
 .hero__footer-link {
   font-family: $font-display;
-  font-size: clamp(0.72rem, 1vw, 0.95rem);
+  font-size: clamp(0.72rem, 0.95vw, 0.92rem);
   font-weight: 700;
   color: $c-soft;
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  display: flex;
+  text-decoration: none;
+  display: inline-flex;
   align-items: center;
   gap: 0.4em;
   opacity: 0.85;
   transition: opacity $duration-fast ease;
+  white-space: nowrap;
 }
 
 .hero__footer-link:hover {
   opacity: 1;
+}
+
+.hero__footer-link--left {
+  justify-self: start;
+}
+
+.hero__footer-link--right {
+  justify-self: end;
 }
 
 .hero__footer-chevron {
@@ -317,15 +386,36 @@
   }
 
   .hero__cta {
-    bottom: clamp(11rem, 21vh, 14rem);
     font-size: clamp(0.8rem, 3.6vw, 0.95rem);
     padding: clamp(0.7em, 2.8vw, 0.9em) clamp(1.1em, 4.2vw, 1.4em);
   }
 
-  /* Footer collapses to just the EXPLORE chevron, tucked between the
-     marquee strip and the page edge. */
+  .hero__headline {
+    display: block;
+  }
+
+  /* Smaller sticker on mobile so it doesn't crowd the cat — pinned
+     above the monitor on the right. */
+  .hero__sticker {
+    top: clamp(4.5rem, 13vw, 7rem);
+    right: clamp(0.6rem, 3vw, 1.4rem);
+    width: clamp(72px, 22vw, 110px);
+  }
+
+  .hero__sticker-text {
+    font-size: clamp(0.65rem, 3.2vw, 0.85rem);
+  }
+
+  /* On mobile the side links collapse — only the centre CTA remains —
+     and the footer sits above the marquee strip. */
   .hero__footer {
-    bottom: $space-16;
+    bottom: clamp(11rem, 21vh, 14rem);
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .hero__footer-link {
+    display: none;
   }
 
   .hero__footer-tagline {

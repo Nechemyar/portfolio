@@ -168,8 +168,11 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
 }
 
 .nav__menu-icon {
-  width: clamp(14px, 1.4vw, 18px);
-  height: clamp(14px, 1.4vw, 18px);
+  /* Cross sits inside the icon box. The icon box itself is sized to the
+     label cap-height so the plus reads as part of the word, not a giant
+     glyph next to it. */
+  width: clamp(9px, 0.9vw, 12px);
+  height: clamp(9px, 0.9vw, 12px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -181,6 +184,14 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   height: 100%;
   display: block;
   transition: transform $duration-fast $ease-out;
+}
+
+/* Hide the CTA pill from the bar on mobile — it lives inside the menu
+   overlay instead, so the bar reads as just logo + MENU. */
+@media (max-width: 768px) {
+  .nav__cta {
+    display: none;
+  }
 }
 
 .nav__menu-btn:hover .nav__menu-cross {

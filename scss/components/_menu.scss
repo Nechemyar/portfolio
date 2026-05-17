@@ -86,6 +86,31 @@
   text-transform: uppercase;
 }
 
+/* Book-a-call CTA inside the mobile menu overlay — primary action,
+   sits below the nav list so it's the last thing the user sees. */
+.mobile-menu__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: clamp(1.5rem, 5vw, 2.5rem);
+  padding: clamp(0.95em, 3vw, 1.15em) clamp(1.4em, 5vw, 1.8em);
+  background: $c-accent;
+  color: $c-soft;
+  font-family: $font-display;
+  font-weight: 800;
+  font-size: clamp(1rem, 4vw, 1.2rem);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: transform $duration-fast $ease-out, background $duration-fast ease;
+}
+
+.mobile-menu__cta:hover {
+  transform: translateY(-2px);
+  background: #D85E36;
+}
+
 @media (min-width: 768px) {
   .mobile-menu,
   .menu-overlay {

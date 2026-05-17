@@ -262,7 +262,9 @@
 /* ——— Responsive ——— */
 @media (max-width: 768px) {
   .hero__cat-wrapper {
-    top: 50%;
+    /* Anchored higher so the screen window sits in the upper third —
+       leaves the lower viewport free for the CTA + marquee. */
+    top: 38%;
     width: auto;
     height: 100vh;
     aspect-ratio: 941 / 1672;
@@ -274,19 +276,30 @@
     mask-image: url('../../assets/images/mobmask.webp');
   }
 
-  /* Mobile screen cutout in mobmask.webp (alpha-channel measurement). */
+  /* Screen cutout measured from the updated mobmask.webp alpha channel.
+     The cutout is landscape-shaped, so the desktop project images fit
+     it 1:1 — no mobile srcset needed on the reel. */
   .hero__mouth-track {
-    top: 41.67%;
-    left: 24.81%;
-    width: 52.22%;
-    height: 22.40%;
+    top: 22.92%;
+    left: 19.44%;
+    width: 60.93%;
+    height: 25.83%;
   }
 
   .hero__gradient {
     height: 38vh;
   }
 
+  /* CTA sits above the marquee — visible on the hero frame without
+     needing to scroll. The tagline + EXPLORE chevron stay hidden so
+     the row reads as a single primary button. */
   .hero__footer {
+    bottom: 24vh;
+    justify-content: center;
+  }
+
+  .hero__footer-tagline,
+  .hero__footer-link:not(.hero__footer-link--cta) {
     display: none;
   }
 

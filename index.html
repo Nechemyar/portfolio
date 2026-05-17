@@ -29,9 +29,8 @@
        has both the screen content (visible through the mask window) and the
        hero foreground. -->
   <link rel="preload" as="image" href="assets/images/web-hero.webp" media="(min-width: 769px)" fetchpriority="high" />
-  <link rel="preload" as="image" href="assets/images/project-choice.webp" media="(min-width: 769px)" fetchpriority="high" />
   <link rel="preload" as="image" href="assets/images/mobile-hero.webp" media="(max-width: 768px)" fetchpriority="high" />
-  <link rel="preload" as="image" href="assets/images/choicemob.webp" media="(max-width: 768px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/images/project-choice.webp" fetchpriority="high" />
 
   <!-- CSS -->
   <link rel="stylesheet" href="scss/main.scss" />
@@ -111,22 +110,10 @@
           <div class="hero__halo"></div>
           <div class="hero__mouth-slider" id="mouth-slider">
             <div class="hero__mouth-track" id="mouth-track">
-              <picture>
-                <source media="(max-width: 768px)" srcset="assets/images/choicemob.webp" />
-                <img class="hero__mouth-img hero__mouth-img--first" src="assets/images/project-choice.webp" alt="Choice Inventory" fetchpriority="high" decoding="async" />
-              </picture>
-              <picture>
-                <source media="(max-width: 768px)" srcset="assets/images/clinmob.webp" />
-                <img class="hero__mouth-img" src="assets/images/project-clinical.webp" alt="Clinical Assessments" decoding="async" />
-              </picture>
-              <picture>
-                <source media="(max-width: 768px)" srcset="assets/images/choicemob.webp" />
-                <img class="hero__mouth-img" src="assets/images/project-choice.webp" alt="" />
-              </picture>
-              <picture>
-                <source media="(max-width: 768px)" srcset="assets/images/clinmob.webp" />
-                <img class="hero__mouth-img" src="assets/images/project-clinical.webp" alt="" />
-              </picture>
+              <img class="hero__mouth-img hero__mouth-img--first" src="assets/images/project-choice.webp" alt="Choice Inventory" fetchpriority="high" decoding="async" />
+              <img class="hero__mouth-img" src="assets/images/project-clinical.webp" alt="Clinical Assessments" decoding="async" />
+              <img class="hero__mouth-img" src="assets/images/project-choice.webp" alt="" />
+              <img class="hero__mouth-img" src="assets/images/project-clinical.webp" alt="" />
             </div>
             <div class="hero__tv-overlay"></div>
           </div>

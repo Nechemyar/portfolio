@@ -5,8 +5,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 // from JS-injected markup, so Vite can't statically detect them otherwise.
 import screenClinical from '../../assets/images/project-clinical.webp';
 import screenChoice from '../../assets/images/project-choice.webp';
-import screenClinicalMob from '../../assets/images/clinmob.webp';
-import screenChoiceMob from '../../assets/images/choicemob.webp';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,14 +13,12 @@ const PROJECTS = [
     slug: 'clinical-assessments',
     name: 'Clinical\nAssessments',
     screen: screenClinical,
-    screenMob: screenClinicalMob,
     href: 'projects/clinical-assessments.html',
   },
   {
     slug: 'choice-inventory',
     name: 'Choice\nInventory',
     screen: screenChoice,
-    screenMob: screenChoiceMob,
     href: 'projects/choice-inventory.html',
   },
 ];
@@ -63,10 +59,7 @@ export default class FeaturedProjects {
         <span class="featured__card-halo"></span>
         <div class="featured__card-mask">
           <div class="featured__card-screen">
-            <picture>
-              <source media="(max-width: 768px)" srcset="${project.screenMob}" />
-              <img src="${project.screen}" alt="${project.name.replace('\n', ' ')}" loading="lazy" />
-            </picture>
+            <img src="${project.screen}" alt="${project.name.replace('\n', ' ')}" loading="lazy" />
           </div>
         </div>
       `;

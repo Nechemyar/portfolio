@@ -147,20 +147,20 @@
 }
 
 /* ——— Bottom Gradient ———
-   Softer rust-orange wash instead of opaque black so the hero scene below
-   stays readable and the brand colour carries through into the gradient. */
+   Whisper-light grey wash on PC — just enough to seat the CTA pill, not
+   a heavy overlay. Mobile overrides this with its own (still subtle)
+   wash, since the marquee box already provides the visual base. */
 .hero__gradient {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 48vh;
+  height: 28vh;
   background: linear-gradient(
     to bottom,
-    rgba(199, 81, 45, 0) 0%,
-    rgba(199, 81, 45, 0.25) 45%,
-    rgba(174, 64, 32, 0.6) 80%,
-    rgba(158, 56, 24, 0.78) 100%
+    rgba(26, 26, 25, 0) 0%,
+    rgba(26, 26, 25, 0.04) 60%,
+    rgba(26, 26, 25, 0.08) 100%
   );
   z-index: 8;
   pointer-events: none;
@@ -202,44 +202,37 @@
   display: block;
 }
 
-/* ——— Hero Lead ———
-   Headline + sub-copy so the value prop is legible at first glance — the
-   visual alone (a cat staring at a CRT) doesn't communicate "premium
-   web design for businesses". Sits centered in the lower-middle of the
-   stage; on desktop the wrapper is positioned to the right of the cat
-   so it doesn't overlap the screen reel. */
-.hero__lead {
+/* ——— Hero CTA pill ———
+   Single rust button centered above the marquee on every breakpoint —
+   primary action with no surrounding copy so it doesn't fight the
+   illustration. */
+.hero__cta {
   position: absolute;
   z-index: 12;
-  bottom: clamp(8rem, 18vh, 13rem);
   left: 50%;
+  bottom: clamp(7rem, 17vh, 12rem);
   transform: translateX(-50%);
-  width: min(640px, 88vw);
-  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  background: $c-accent;
   color: $c-soft;
-  pointer-events: none;
+  font-family: $font-display;
+  font-weight: 800;
+  font-size: clamp(0.85rem, 1.15vw, 1.05rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: clamp(0.75em, 1.1vw, 1em) clamp(1.2em, 1.8vw, 1.6em);
+  border-radius: 6px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+  white-space: nowrap;
+  transition: transform $duration-fast $ease-out, background $duration-fast ease;
 }
 
-.hero__lead-title {
-  font-family: $font-display;
-  font-weight: 900;
-  font-size: clamp(1.6rem, 4.5vw, 3.6rem);
-  letter-spacing: -0.02em;
-  line-height: 0.92;
-  margin: 0 0 clamp(0.55rem, 1.1vw, 0.9rem);
-  text-transform: none;
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
-}
-
-.hero__lead-sub {
-  font-family: $font-display;
-  font-weight: 500;
-  font-size: clamp(0.78rem, 1.05vw, 1.05rem);
-  letter-spacing: 0.02em;
-  line-height: 1.35;
-  margin: 0;
-  color: rgba(246, 242, 235, 0.85);
-  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.3);
+.hero__cta:hover {
+  transform: translateX(-50%) translateY(-2px);
+  background: #D85E36;
 }
 
 /* ——— Hero Footer ——— */
@@ -317,30 +310,16 @@
     height: 25.83%;
   }
 
-  /* Shorter, gentler wash on mobile — the marquee has its own dark
-     box below, so the gradient only needs to fade the hero scene into
-     the rust band, not also serve as a footer plate. */
+  /* The marquee panel sits at bottom 8vh and is fully opaque, so the
+     gradient is doing nothing useful on mobile — hide it. */
   .hero__gradient {
-    height: 30vh;
-    background: linear-gradient(
-      to bottom,
-      rgba(199, 81, 45, 0) 0%,
-      rgba(199, 81, 45, 0.18) 55%,
-      rgba(174, 64, 32, 0.45) 100%
-    );
+    display: none;
   }
 
-  .hero__lead {
-    bottom: clamp(7.5rem, 21vh, 11rem);
-    width: min(420px, 86vw);
-  }
-
-  .hero__lead-title {
-    font-size: clamp(1.65rem, 7vw, 2.4rem);
-  }
-
-  .hero__lead-sub {
-    font-size: clamp(0.78rem, 3.4vw, 0.95rem);
+  .hero__cta {
+    bottom: clamp(11rem, 21vh, 14rem);
+    font-size: clamp(0.8rem, 3.6vw, 0.95rem);
+    padding: clamp(0.7em, 2.8vw, 0.9em) clamp(1.1em, 4.2vw, 1.4em);
   }
 
   /* Footer collapses to just the EXPLORE chevron, tucked between the

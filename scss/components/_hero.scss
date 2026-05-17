@@ -56,11 +56,12 @@
    GSAP can compose scale/translate without fighting a CSS transform. */
 .hero__cat-wrapper {
   position: absolute;
-  top: 64%;
+  top: 50%;
   left: 50%;
   /* GSAP sets xPercent: -50, yPercent: -50 on init for centering */
-  width: min(210vh, 163vw);
-  aspect-ratio: 1920 / 1080;
+  width: auto;
+  height: 100vh;
+  aspect-ratio: 1672 / 941;
   z-index: 4;
   will-change: transform, top, width;
 }
@@ -71,17 +72,19 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  z-index: 3;
+  z-index: 1;
   pointer-events: none;
 }
 
 /* ——— Mouth Slider ——— */
+/* Sits ABOVE the hero image so its mask-clipped reel shows through the
+   screen window cut into the mask. The hero image is just the backdrop. */
 .hero__mouth-slider {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 3;
   overflow: hidden;
   -webkit-mask-image: url('../../assets/images/deskmask.webp');
   mask-image: url('../../assets/images/deskmask.webp');
@@ -92,12 +95,12 @@
   background: #000;
 }
 
+/* Track fills the slider so the mask alone defines where the reel shows —
+   the mask cutout matches the hero's screen window, so the reel is only
+   visible inside that shape. */
 .hero__mouth-track {
   position: absolute;
-  top: 29.35%;
-  left: 17.71%;
-  width: 61.46%;
-  height: 60.93%;
+  inset: 0;
 }
 
 .hero__mouth-img {
@@ -249,13 +252,6 @@
   .hero__mouth-slider {
     -webkit-mask-image: url('../../assets/images/mobmask.webp');
     mask-image: url('../../assets/images/mobmask.webp');
-  }
-
-  .hero__mouth-track {
-    top: 23.70%;
-    left: 39.79%;
-    width: 20.31%;
-    height: 67.13%;
   }
 
   .hero__gradient {

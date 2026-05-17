@@ -3,10 +3,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // Bundle these via Vite so production paths resolve. They're referenced only
 // from JS-injected markup, so Vite can't statically detect them otherwise.
-import catGrey from '../../assets/images/deskcatgrey.webp';
-import catBlack from '../../assets/images/deskcatblack.webp';
-import catGreyMob from '../../assets/images/mobcatgrey.webp';
-import catBlackMob from '../../assets/images/mobcatblack.webp';
 import screenClinical from '../../assets/images/project-clinical.webp';
 import screenChoice from '../../assets/images/project-choice.webp';
 import screenClinicalMob from '../../assets/images/clinmob.webp';
@@ -18,8 +14,6 @@ const PROJECTS = [
   {
     slug: 'clinical-assessments',
     name: 'Clinical\nAssessments',
-    cat: catGrey,
-    catMob: catGreyMob,
     screen: screenClinical,
     screenMob: screenClinicalMob,
     href: 'projects/clinical-assessments.html',
@@ -27,8 +21,6 @@ const PROJECTS = [
   {
     slug: 'choice-inventory',
     name: 'Choice\nInventory',
-    cat: catBlack,
-    catMob: catBlackMob,
     screen: screenChoice,
     screenMob: screenChoiceMob,
     href: 'projects/choice-inventory.html',
@@ -77,10 +69,6 @@ export default class FeaturedProjects {
             </picture>
           </div>
         </div>
-        <picture class="featured__card-cat">
-          <source media="(max-width: 768px)" srcset="${project.catMob}" />
-          <img src="${project.cat}" alt="" />
-        </picture>
       `;
       stack.appendChild(card);
 

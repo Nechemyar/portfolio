@@ -129,8 +129,8 @@
   height: 100%;
   z-index: 1;
   overflow: hidden;
-  -webkit-mask-image: url('../../assets/images/deskmask.png');
-  mask-image: url('../../assets/images/deskmask.png');
+  -webkit-mask-image: url('../../assets/images/deskmask.webp');
+  mask-image: url('../../assets/images/deskmask.webp');
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
@@ -271,15 +271,17 @@
 
   .featured__card {
     top: 44%;
-    width: 290vw;
+    width: auto;
+    height: 100vh;
+    aspect-ratio: 941 / 1672;
   }
 
   /* Swap to the mobile-specific cat + mask composition. The mob assets are
      designed around a portrait-cropped framing, so the screen window sits
      in a different region than the desktop comp. */
   .featured__card-mask {
-    -webkit-mask-image: url('../../assets/images/mobmask.png');
-    mask-image: url('../../assets/images/mobmask.png');
+    -webkit-mask-image: url('../../assets/images/mobmask.webp');
+    mask-image: url('../../assets/images/mobmask.webp');
   }
 
   .featured__card-screen {

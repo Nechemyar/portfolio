@@ -202,6 +202,46 @@
   display: block;
 }
 
+/* ——— Hero Lead ———
+   Headline + sub-copy so the value prop is legible at first glance — the
+   visual alone (a cat staring at a CRT) doesn't communicate "premium
+   web design for businesses". Sits centered in the lower-middle of the
+   stage; on desktop the wrapper is positioned to the right of the cat
+   so it doesn't overlap the screen reel. */
+.hero__lead {
+  position: absolute;
+  z-index: 12;
+  bottom: clamp(8rem, 18vh, 13rem);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(640px, 88vw);
+  text-align: center;
+  color: $c-soft;
+  pointer-events: none;
+}
+
+.hero__lead-title {
+  font-family: $font-display;
+  font-weight: 900;
+  font-size: clamp(1.6rem, 4.5vw, 3.6rem);
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+  margin: 0 0 clamp(0.55rem, 1.1vw, 0.9rem);
+  text-transform: none;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+}
+
+.hero__lead-sub {
+  font-family: $font-display;
+  font-weight: 500;
+  font-size: clamp(0.78rem, 1.05vw, 1.05rem);
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  margin: 0;
+  color: rgba(246, 242, 235, 0.85);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.3);
+}
+
 /* ——— Hero Footer ——— */
 .hero__footer {
   position: absolute;
@@ -209,7 +249,7 @@
   left: 0;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 0 $page-padding;
   z-index: 15;
@@ -217,29 +257,20 @@
 
 .hero__footer-link {
   font-family: $font-display;
-  font-size: $fs-base;
+  font-size: clamp(0.72rem, 1vw, 0.95rem);
   font-weight: 700;
   color: $c-soft;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.18em;
   display: flex;
   align-items: center;
   gap: 0.4em;
+  opacity: 0.85;
+  transition: opacity $duration-fast ease;
 }
 
-/* "Book a free call" CTA pill — sits on the rust button colour so it pops
-   against the softer orange-tinted gradient. */
-.hero__footer-link--cta {
-  background: $c-accent;
-  color: $c-soft;
-  padding: 0.6em 1.1em;
-  border-radius: 6px;
-  transition: transform $duration-fast $ease-out, background $duration-fast ease;
-}
-
-.hero__footer-link--cta:hover {
-  transform: translateY(-2px);
-  background: #D85E36;
+.hero__footer-link:hover {
+  opacity: 1;
 }
 
 .hero__footer-chevron {
@@ -286,20 +317,39 @@
     height: 25.83%;
   }
 
+  /* Shorter, gentler wash on mobile — the marquee has its own dark
+     box below, so the gradient only needs to fade the hero scene into
+     the rust band, not also serve as a footer plate. */
   .hero__gradient {
-    height: 38vh;
+    height: 30vh;
+    background: linear-gradient(
+      to bottom,
+      rgba(199, 81, 45, 0) 0%,
+      rgba(199, 81, 45, 0.18) 55%,
+      rgba(174, 64, 32, 0.45) 100%
+    );
   }
 
-  /* CTA sits above the marquee — visible on the hero frame without
-     needing to scroll. The tagline + EXPLORE chevron stay hidden so
-     the row reads as a single primary button. */
+  .hero__lead {
+    bottom: clamp(7.5rem, 21vh, 11rem);
+    width: min(420px, 86vw);
+  }
+
+  .hero__lead-title {
+    font-size: clamp(1.65rem, 7vw, 2.4rem);
+  }
+
+  .hero__lead-sub {
+    font-size: clamp(0.78rem, 3.4vw, 0.95rem);
+  }
+
+  /* Footer collapses to just the EXPLORE chevron, tucked between the
+     marquee strip and the page edge. */
   .hero__footer {
-    bottom: 24vh;
-    justify-content: center;
+    bottom: $space-16;
   }
 
-  .hero__footer-tagline,
-  .hero__footer-link:not(.hero__footer-link--cta) {
+  .hero__footer-tagline {
     display: none;
   }
 

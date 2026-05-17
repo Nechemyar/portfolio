@@ -1,24 +1,27 @@
 @use '../base/tokens' as *;
 
+/* Nav padding scales fluidly (16→32) so the bar sits tight on mobile and
+   breathes on wide displays without two discrete media-query jumps. */
 .nav {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   z-index: 1000;
-  padding: $space-32 $page-padding;
+  padding: clamp(0.85rem, 2.2vw, 2rem) clamp(1rem, 3.5vw, 2.5rem);
 }
 
 .nav__inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: clamp(0.5rem, 2vw, 1.25rem);
 }
 
 /* ——— Logo ——— */
 .nav__logo {
   display: block;
-  width: clamp(3rem, 4.2vw, 4.4rem);
+  width: clamp(2.1rem, 3.6vw, 3.4rem);
   aspect-ratio: 1;
   transition: transform $duration-fast $ease-out;
 }
@@ -33,16 +36,46 @@
   object-fit: contain;
 }
 
+/* ——— Right-side cluster: CTA pill + menu wrapper ——— */
+.nav__actions {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.4rem, 1.2vw, 0.9rem);
+}
+
+/* ——— Always-visible "Book a free call" CTA ———
+   Lives in the nav so it survives the hero exit and stays reachable on
+   every breakpoint. Sized fluidly to match the rest of the bar. */
+.nav__cta {
+  background: $c-accent;
+  color: $c-soft;
+  font-family: $font-display;
+  font-weight: 800;
+  font-size: clamp(0.7rem, 1vw, 0.95rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: clamp(0.55em, 0.9vw, 0.75em) clamp(0.85em, 1.4vw, 1.2em);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: transform $duration-fast $ease-out, background $duration-fast ease;
+}
+
+.nav__cta:hover {
+  transform: translateY(-1px);
+  background: #D85E36;
+}
+
 /* ——— Desktop Expanding Wrapper ——— */
 .nav__desktop-wrapper {
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
   background-color: $c-accent;
-  border-radius: 4px;
-  height: 40px; /* Reduced vertical padding */
+  border-radius: 6px;
+  height: clamp(34px, 3.4vw, 44px);
   overflow: hidden;
-  max-width: 130px;
+  max-width: clamp(96px, 11vw, 145px);
   transition: max-width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -63,14 +96,14 @@
   font-family: $font-display;
   font-size: $fs-base; /* Bigger expanded links */
   font-weight: 800;
-  color: $c-bg;
+  color: $c-soft;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   transition: opacity $duration-fast ease;
 }
 
 .nav__desktop-links a:hover {
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
 /* Expanding Desktop Behavior */
@@ -78,7 +111,7 @@
   .nav__desktop-wrapper:hover {
     max-width: 600px;
   }
-  
+
   .nav__desktop-wrapper:hover .nav__desktop-links {
     opacity: 1;
     pointer-events: all;
@@ -96,14 +129,14 @@
   border: none;
   border-radius: 0;
   cursor: pointer;
-  padding: 0 0.7em;
-  height: 40px;
+  padding: 0 clamp(0.55em, 1vw, 0.75em);
+  height: 100%;
   flex-shrink: 0;
 }
 
 .nav__menu-label {
   font-family: $font-display;
-  font-size: 1.45rem;
+  font-size: clamp(0.8rem, 1.05vw, 1.1rem);
   font-weight: 800;
   color: $c-soft;
   text-transform: uppercase;
@@ -112,8 +145,8 @@
 }
 
 .nav__menu-icon {
-  width: 22px;
-  height: 22px;
+  width: clamp(16px, 1.7vw, 22px);
+  height: clamp(16px, 1.7vw, 22px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -121,8 +154,8 @@
 }
 
 .nav__menu-cross {
-  width: 14px;
-  height: 14px;
+  width: clamp(10px, 1.1vw, 14px);
+  height: clamp(10px, 1.1vw, 14px);
   display: block;
   transition: transform $duration-fast $ease-out;
 }

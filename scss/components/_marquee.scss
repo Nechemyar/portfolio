@@ -54,7 +54,21 @@
 }
 
 @media (max-width: 768px) {
+  /* On mobile the marquee gets its own dark band so it reads as a
+     deliberate strip rather than smearing into the rust gradient. */
   .marquee {
-    bottom: 14vh; /* Clear the browser bottom bar on mobile */
+    bottom: 8vh;
+    background: $c-bg;
+    padding: clamp(0.6rem, 2vw, 1rem) 0;
+    border-top: 1px solid rgba(246, 242, 235, 0.08);
+    border-bottom: 1px solid rgba(246, 242, 235, 0.08);
+  }
+
+  .marquee__text {
+    font-size: clamp(2.4rem, 11vw, 4.5rem);
+  }
+
+  .marquee__star-img {
+    height: clamp(1.6rem, 5vw, 3rem);
   }
 }

@@ -409,7 +409,7 @@
   /* On mobile the side links collapse — only the centre CTA remains —
      and the footer sits above the marquee strip. */
   .hero__footer {
-    bottom: clamp(11rem, 21vh, 14rem);
+    bottom: clamp(16rem, 33vh, 20rem);
     grid-template-columns: 1fr;
     justify-items: center;
   }

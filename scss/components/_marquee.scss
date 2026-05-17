@@ -3,7 +3,7 @@
 /* ——— Brutalist Marquee Banner ——— */
 .marquee {
   position: absolute;
-  bottom: 8vh; /* Floating above footer */
+  bottom: 14vh; /* Sits above the footer row, lower-third of the stage */
   left: 0;
   width: 100%;
   z-index: 10; /* Above the cat */
@@ -57,7 +57,7 @@
   /* On mobile the marquee gets its own dark band so it reads as a
      deliberate strip rather than smearing into the rust gradient. */
   .marquee {
-    bottom: 8vh;
+    bottom: 16vh;
     background: $c-bg;
     padding: clamp(0.6rem, 2vw, 1rem) 0;
     border-top: 1px solid rgba(246, 242, 235, 0.08);

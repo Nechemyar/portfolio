@@ -55,9 +55,10 @@
 
 @media (max-width: 768px) {
   /* On mobile the marquee gets its own dark band so it reads as a
-     deliberate strip rather than smearing into the rust gradient. */
+     deliberate strip rather than smearing into the rust gradient.
+     Sits low so the CTA above it can clear the monitor body. */
   .marquee {
-    bottom: 16vh;
+    bottom: 6vh;
     background: $c-bg;
     padding: clamp(0.6rem, 2vw, 1rem) 0;
     border-top: 1px solid rgba(246, 242, 235, 0.08);

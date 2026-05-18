@@ -407,9 +407,10 @@
   }
 
   /* On mobile the side links collapse — only the centre CTA remains —
-     and the footer sits above the marquee strip. */
+     and the footer sits in the cream gap between the monitor base and
+     the marquee strip, so the pill doesn't paint over the illustration. */
   .hero__footer {
-    bottom: clamp(16rem, 33vh, 20rem);
+    bottom: clamp(8rem, 17vh, 10rem);
     grid-template-columns: 1fr;
     justify-items: center;
   }

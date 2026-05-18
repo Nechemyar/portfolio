@@ -20,9 +20,9 @@
        reflow when the variable woff2 lands. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" media="print" onload="this.media='all'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" /></noscript>
+  <link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" />
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" /></noscript>
   <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/ClashDisplay-Variable.woff2" />
 
   <!-- LCP image preload — preload the hero composition so the first paint
@@ -163,11 +163,15 @@
           </span>
         </span>
 
-        <!-- HERO FOOTER — three columns on PC (side links flank the
+        <!-- HERO FOOTER — three columns on PC (eyebrow flanks the
              CTA), CTA-only centered on mobile -->
         <div class="hero__gradient"></div>
+        <hr class="hero__divider" aria-hidden="true" />
         <div class="hero__footer">
-          <a href="#services" class="hero__footer-link hero__footer-link--left">VIEW SERVICES</a>
+          <span class="hero__eyebrow">
+            <img class="hero__eyebrow-star" src="assets/images/star.svg" alt="" />
+            I make websites for businesses that give a damn
+          </span>
           <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="hero__cta">Book a free call</a>
           <a href="#projects" class="hero__footer-link hero__footer-link--right">EXPLORE WORK <svg class="hero__footer-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
         </div>

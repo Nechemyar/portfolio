@@ -61,11 +61,9 @@ export default class ProjectsScroll {
         duration: 0.65,
         ease: 'power2.in',
       }, 0)
-      .to('.hero__gradient', {
-        yPercent: 110,
-        duration: 0.6,
-        ease: 'power2.in',
-      }, 0)
+      /* Gradient stays put as the cat exits — its solid-rust bottom
+         lines up with the featured section underneath, so the seam
+         between hero and the next section is invisible. */
       // y in vh keeps the slide consistent across breakpoints — yPercent
       // alone underflowed on mobile where the footer sat at bottom: 24vh
       // (CTA above the marquee) and 260% of its own height wasn't enough

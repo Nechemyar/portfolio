@@ -56,7 +56,9 @@
    GSAP can compose scale/translate without fighting a CSS transform. */
 .hero__cat-wrapper {
   position: absolute;
-  top: 50%;
+  /* Pulled up slightly so the cat sits higher in the frame and the
+     gradient band below has more breathing room. */
+  top: 45%;
   left: 50%;
   /* GSAP sets xPercent: -50, yPercent: -50 on init for centering */
   width: auto;
@@ -150,18 +152,23 @@
    Rust wash anchored at the bottom — strong enough to be a band the
    footer row sits on (matches the SUMI mockup), soft enough to fade
    into the cream floor of the scene without a hard edge. */
+/* Rust wash that ends fully opaque at the bottom — the bottom edge is
+   solid $c-accent so the next section can begin on the same colour and
+   the boundary disappears. The body is tinted to match underneath, so
+   even during scroll/overscroll the seam never shows. */
 .hero__gradient {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 36vh;
+  height: 40vh;
   background: linear-gradient(
     to bottom,
     rgba(199, 81, 45, 0) 0%,
-    rgba(199, 81, 45, 0.18) 35%,
-    rgba(199, 81, 45, 0.55) 75%,
-    rgba(199, 81, 45, 0.78) 100%
+    rgba(199, 81, 45, 0.25) 25%,
+    rgba(199, 81, 45, 0.65) 55%,
+    rgba(199, 81, 45, 0.92) 82%,
+    #C7512D 100%
   );
   z-index: 8;
   pointer-events: none;

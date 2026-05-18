@@ -22,10 +22,11 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  /* White so it hands off seamlessly when the hero unpins. z-index sits
-     below the hero stage so the featured pin can't paint over the hero
-     during the scroll overlap. */
-  background: $c-soft;
+  /* Rust base so the seam where the hero's gradient ends and the
+     featured section begins is invisible — both surfaces are
+     $c-rust at the boundary. z-index sits below the hero stage so
+     the featured pin can't paint over the hero during scroll overlap. */
+  background: $c-accent;
   z-index: 1;
 }
 
@@ -39,12 +40,16 @@
   pointer-events: none;
 }
 
+/* First project background: rust (matches the hero-gradient seam, so
+   the section reads as one continuous wash with the hero). */
 .featured__bg[data-bg-idx="0"] {
-  background: $c-soft;
+  background: $c-accent;
 }
 
+/* Second project background: deeper charcoal/rust for contrast on the
+   swap. */
 .featured__bg[data-bg-idx="1"] {
-  background: $c-rust;
+  background: $c-bg;
 }
 
 /* ——— Big "FEATURED PROJECTS" section title ———

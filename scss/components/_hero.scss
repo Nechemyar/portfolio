@@ -171,11 +171,10 @@
   gap: clamp(1rem, 3vh, 1.8rem);
   text-align: left;
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: clamp(3rem, 8vh, 6rem);
+  left: clamp(1rem, 4vw, 3rem);
+  bottom: clamp(1.5rem, 4vh, 3rem);
   z-index: 3;
-  width: calc(100vw - clamp(3rem, 8vw, 6rem));
+  width: calc(100vw - clamp(2rem, 8vw, 6rem));
   max-width: 36rem;
   padding: 0;
   pointer-events: auto;
@@ -270,14 +269,15 @@
 
   /* Bigger TV on desktop */
   .hero__cat-wrapper {
-    width: clamp(28rem, 38vw, 48rem);
-    transform: translate(-50%, -62%);
+    width: clamp(34rem, 48vw, 62rem);
+    transform: translate(-50%, -68%);
   }
 
   .hero__mobile-pitch {
     max-width: 42rem;
-    width: calc(100vw - 10rem);
-    bottom: clamp(3.5rem, 8vh, 6.5rem);
+    width: auto;
+    left: clamp(2rem, 5vw, 4rem);
+    bottom: clamp(2rem, 5vh, 4rem);
     gap: clamp(1.2rem, 3vh, 2rem);
   }
 
@@ -311,8 +311,8 @@
 
   /* TV: big enough to anchor the hero, but leave room for text */
   .hero__cat-wrapper {
-    width: clamp(20rem, 78vw, 28rem);
-    transform: translate(-50%, -60%);
+    width: clamp(22rem, 90vw, 36rem);
+    transform: translate(-50%, -70%);
   }
 
   .hero__platform {
@@ -324,15 +324,16 @@
   }
 
   .hero__mobile-pitch {
-    bottom: clamp(3rem, 7vh, 5.5rem);
-    width: calc(100vw - clamp(2.5rem, 6vw, 3.5rem));
+    bottom: clamp(1.5rem, 4vh, 3rem);
+    left: clamp(1.25rem, 4vw, 2rem);
+    width: calc(100vw - 2.5rem);
     max-width: 26rem;
-    gap: clamp(1rem, 3.5vh, 1.6rem);
+    gap: clamp(0.8rem, 2.5vh, 1.2rem);
   }
 
   .hero__pitch-text {
-    font-size: clamp(1.35rem, 5.8vw, 1.85rem);
-    line-height: 1.12;
+    font-size: clamp(1.1rem, 4.5vw, 1.4rem);
+    line-height: 1.15;
     color: #8C857C;
     width: 100%;
     max-width: none;
@@ -389,13 +390,14 @@
 /* ——— Small phones (SE, 5S) ——— */
 @media (max-width: 380px) {
   .hero__cat-wrapper {
-    width: clamp(18rem, 76vw, 24rem);
-    transform: translate(-50%, -56%);
+    width: clamp(18rem, 88vw, 26rem);
+    transform: translate(-50%, -65%);
   }
 
   .hero__mobile-pitch {
-    bottom: clamp(2.5rem, 6vh, 4rem);
+    bottom: clamp(1rem, 4vh, 2rem);
     width: calc(100vw - 2rem);
+    left: 1rem;
   }
 
   .hero__pitch-text {
@@ -410,13 +412,13 @@
   }
 
   .hero__cat-wrapper {
-    width: clamp(16rem, 68vw, 22rem);
-    transform: translate(-50%, -55%);
+    width: clamp(16rem, 78vw, 24rem);
+    transform: translate(-50%, -60%);
   }
 
   .hero__mobile-pitch {
-    bottom: clamp(1.5rem, 4vh, 3rem);
-    gap: clamp(0.6rem, 2vh, 1rem);
+    bottom: clamp(1rem, 3vh, 2rem);
+    gap: clamp(0.5rem, 1.5vh, 0.8rem);
   }
 
   .hero__pitch-text {

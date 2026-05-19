@@ -11,6 +11,7 @@
      hamburger / X is always reachable while the menu is open. */
   z-index: 1100;
   padding: clamp(0.85rem, 2.2vw, 2rem) clamp(1rem, 3.5vw, 2.5rem);
+  mix-blend-mode: difference;
 }
 
 /* Three-column grid: CTA (left) · logo (centre) · MENU (right).
@@ -58,6 +59,7 @@
   opacity: 0;
   transform: translateY(-6px);
   transition: opacity 0.7s $ease-out 0.1s, transform 0.7s $ease-out 0.1s;
+  filter: invert(1);
 }
 
 .nav.is-ready .nav__logo-svg {
@@ -207,6 +209,7 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   border-radius: 0;
   cursor: pointer;
   flex-shrink: 0;
+  color: white;
 }
 
 .nav__menu-btn:focus {
@@ -222,7 +225,7 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   font-family: $font-body; /* Satoshi — matches the CTA pill */
   font-size: clamp(0.78rem, 1vw, 0.95rem);
   font-weight: 700;
-  color: $c-soft;
+  color: white;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   white-space: nowrap;
@@ -263,7 +266,7 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   left: 0;
   width: 100%;
   height: 2px;
-  background: $c-bg;
+  background: white;
   border-radius: 2px;
   transform-origin: 50% 50%;
   /* Translate is animated by .nav.is-ready for the entrance; the
@@ -435,7 +438,7 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
 
 .nav__menu-line {
   height: 2.5px;
-  background: $c-bg;
+  background: white;
 }
 
 .nav__menu-line--top {

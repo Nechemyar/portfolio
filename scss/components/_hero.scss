@@ -23,7 +23,7 @@
   overflow: hidden;
   /* Bg colour is animated pink → white by ProjectsScroll on the first scroll
      beat, so the whole stage transitions colour as one continuous flow. */
-  background-color: $c-soft;
+  background-color: $c-peach;
   z-index: 2;
   display: flex;
   justify-content: center;
@@ -56,15 +56,14 @@
    GSAP can compose scale/translate without fighting a CSS transform. */
 .hero__cat-wrapper {
   position: absolute;
-  /* Pulled up slightly so the cat sits higher in the frame and the
-     gradient band below has more breathing room. */
-  top: 45%;
+  top: 34%;
   left: 50%;
   /* GSAP sets xPercent: -50, yPercent: -50 on init for centering */
-  width: auto;
-  height: 100vh;
-  aspect-ratio: 1672 / 941;
+  width: min(64vh, 46vw, 760px);
+  height: auto;
+  aspect-ratio: 1 / 1;
   z-index: 4;
+  mix-blend-mode: darken;
   will-change: transform, top, width;
 }
 
@@ -88,8 +87,8 @@
   height: 100%;
   z-index: 3;
   overflow: hidden;
-  -webkit-mask-image: url('../../assets/images/deskmask.webp');
-  mask-image: url('../../assets/images/deskmask.webp');
+  -webkit-mask-image: url('../../assets/images/mobmask.webp');
+  mask-image: url('../../assets/images/mobmask.webp');
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
@@ -97,15 +96,13 @@
   background: #000;
 }
 
-/* Track is sized to the screen cutout in deskmask.webp (measured from the
-   alpha channel), so the reel image fills the screen window 1:1 rather
-   than being a tiny zoomed crop of a wrapper-sized image. */
+/* Track is sized to the screen cutout in the square TV mask. */
 .hero__mouth-track {
   position: absolute;
-  top: 23.70%;
-  left: 33.54%;
-  width: 32.92%;
-  height: 40.56%;
+  top: 33.33%;
+  left: 26.76%;
+  width: 47.5%;
+  height: 33.15%;
 }
 
 .hero__mouth-img {
@@ -389,12 +386,84 @@
 /* ——— Mobile-only platform + pitch ———
    Hidden on desktop. Lives in the hero stage so the existing scroll
    pin/featured handoff is undisturbed. */
-.hero__platform {
+.hero__gradient,
+.hero__footer,
+.marquee {
   display: none;
 }
 
+.hero__platform {
+  display: block;
+  position: absolute;
+  left: -12vw;
+  right: -12vw;
+  bottom: 0;
+  height: 42vh;
+  background: #ffffff;
+  border-radius: 50% 50% 0 0 / 7vh 7vh 0 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
 .hero__mobile-pitch {
-  display: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(1.1rem, 3vh, 2rem);
+  text-align: left;
+  position: absolute;
+  left: 50%;
+  top: 62%;
+  z-index: 12;
+  width: min(620px, 44vw);
+  transform: translateX(-50%);
+  pointer-events: auto;
+}
+
+.hero__pitch-text {
+  font-family: $font-body;
+  font-size: clamp(2rem, 2.65vw, 3.2rem);
+  font-weight: 500;
+  line-height: 1.08;
+  color: #5c5853;
+  margin: 0;
+  letter-spacing: 0;
+  display: block;
+}
+
+.hero__pitch-text strong {
+  font-weight: 900;
+  color: #0d0d0d;
+}
+
+.hero__pitch-line {
+  display: block;
+}
+
+.hero__pitch-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(48px, 4vw, 62px);
+  padding: 0.74em clamp(1.45em, 2.2vw, 2em);
+  border: 2px solid $c-accent;
+  border-radius: 100px;
+  background: transparent;
+  color: $c-accent;
+  font-family: $font-body;
+  font-weight: 800;
+  font-size: clamp(0.9rem, 1.15vw, 1.1rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.25s ease, color 0.25s ease, transform $duration-fast $ease-out;
+}
+
+.hero__pitch-cta:hover {
+  background: $c-accent;
+  color: #ffffff;
+  transform: translateY(-2px);
 }
 
 /* ——— Responsive ——— */
@@ -412,9 +481,9 @@
     align-items: stretch;
     justify-content: flex-start;
     flex-direction: column;
-    padding-top: clamp(3.5rem, 11vw, 5rem);
-    padding-bottom: clamp(1.25rem, 4vw, 2rem);
-    gap: clamp(0.5rem, 2vw, 1.25rem);
+    padding-top: clamp(2.25rem, 7vw, 3.4rem);
+    padding-bottom: clamp(0.8rem, 2.5vw, 1.25rem);
+    gap: 0;
   }
 
   /* Lighter peach disc behind the TV's base. Wide rounded top, flat
@@ -426,9 +495,9 @@
     left: -8vw;
     right: -8vw;
     bottom: 0;
-    height: 62vh;
-    background: $c-peach-soft;
-    border-radius: 50% 50% 0 0 / 22vh 22vh 0 0;
+    height: 48vh;
+    background: #ffffff;
+    border-radius: 50% 50% 0 0 / 10vh 10vh 0 0;
     z-index: 0;
     pointer-events: none;
   }
@@ -442,7 +511,9 @@
     top: auto;
     left: auto;
     margin: 0 auto;
-    width: min(100vw, 560px);
+    align-self: center;
+    width: min(104vw, 600px);
+    transform: none;
     height: auto;
     aspect-ratio: 1 / 1;
     max-width: none;
@@ -466,6 +537,8 @@
   .hero__mouth-slider {
     -webkit-mask-image: url('../../assets/images/mobmask.webp');
     mask-image: url('../../assets/images/mobmask.webp');
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
   }
 
   /* Screen cutout measured directly from the new square mobmask.webp
@@ -473,7 +546,7 @@
   .hero__mouth-track {
     top: 33.33%;
     left: 26.76%;
-    width: 47.50%;
+    width: 47.5%;
     height: 33.15%;
   }
 
@@ -495,24 +568,30 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    gap: clamp(1.2rem, 4.2vw, 1.8rem);
     text-align: left;
     position: relative;
+    left: auto;
+    top: auto;
     z-index: 3;
-    padding: 0 clamp(1.25rem, 5vw, 1.75rem);
+    width: min(100%, 430px);
+    margin: 0 auto;
+    padding: 0 clamp(1.25rem, 5vw, 1.65rem);
     flex-shrink: 0;
+    transform: none;
   }
 
   .hero__pitch-text {
     font-family: $font-body;
-    font-size: clamp(1.55rem, 6.8vw, 2.1rem);
+    font-size: clamp(1.78rem, 7.6vw, 2.35rem);
     font-weight: 500;
-    line-height: 1.15;
+    line-height: 1.08;
     /* Light warm grey for body — bold runs darken to charcoal so the
        "fast," / "mobile-ready" pull-quotes pop editorially against
        the lighter body text. */
     color: #8C857C;
-    margin: 0 0 clamp(1.25rem, 4.5vw, 1.75rem);
-    letter-spacing: -0.015em;
+    margin: 0;
+    letter-spacing: 0;
     display: block;
   }
 
@@ -555,15 +634,16 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.95em 2.6em;
+    min-height: 48px;
+    padding: 0.72em 1.65em;
     border: 2px solid $c-accent;
     border-radius: 100px;
     background: transparent;
     color: $c-accent;
     font-family: $font-body;
     font-weight: 700;
-    font-size: clamp(0.9rem, 3.6vw, 1rem);
-    letter-spacing: 0.12em;
+    font-size: clamp(0.9rem, 3.45vw, 1rem);
+    letter-spacing: 0.09em;
     text-transform: uppercase;
     text-decoration: none;
     -webkit-tap-highlight-color: transparent;

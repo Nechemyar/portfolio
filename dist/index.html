@@ -20,23 +20,21 @@
        reflow when the variable woff2 lands. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" media="print" onload="this.media='all'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" /></noscript>
+  <link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" />
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" /></noscript>
   <link rel="preload" as="font" type="font/woff2" crossorigin href="./assets/ClashDisplay-Variable-Buk7cB_f.woff2" />
 
-  <!-- LCP image preload — Lighthouse identifies the first project image
-       (visible through the cat's screen) as the LCP element on mobile, with
-       the cat itself as LCP on desktop. Preload both so neither blocks. -->
-  <link rel="preload" as="image" href="./assets/deskcat-CUP1YQFE.webp" media="(min-width: 769px)" fetchpriority="high" />
-  <link rel="preload" as="image" href="./assets/project-choice-CCiiNZL8.webp" media="(min-width: 769px)" fetchpriority="high" />
-  <link rel="preload" as="image" href="./assets/mobcat-DXRYO3tx.webp" media="(max-width: 768px)" fetchpriority="high" />
-  <link rel="preload" as="image" href="./assets/choicemob-mQBf7N4X.webp" media="(max-width: 768px)" fetchpriority="high" />
+  <!-- LCP image preload — preload the hero composition so the first paint
+       has both the screen content (visible through the mask window) and the
+       hero foreground. -->
+  <link rel="preload" as="image" href="./assets/tvonwhite-pFr5_Kus.webp" fetchpriority="high" />
+  <link rel="preload" as="image" href="./assets/project-choice-CCiiNZL8.webp" fetchpriority="high" />
 
   <!-- CSS -->
-  <script type="module" crossorigin src="./assets/main-C4bgx1T4.js"></script>
-  <link rel="modulepreload" crossorigin href="./assets/SmoothScroll-BrjNLJ0j.js">
-  <link rel="stylesheet" crossorigin href="./assets/SmoothScroll-DHSKNbVf.css">
+  <script type="module" crossorigin src="./assets/main-BDyMm7I3.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/SmoothScroll-JUqBuQcG.js">
+  <link rel="stylesheet" crossorigin href="./assets/SmoothScroll-QE5GRphe.css">
 </head>
 
 <body>
@@ -45,25 +43,38 @@
   <div class="loader" id="loader">
     <div class="loader__inner">
       <div class="loader__mark-wrap">
-        <img class="loader__mark" id="loader-mark" src="./assets/colbbord-DKmnEjyL.svg" alt="" />
+        <img class="loader__mark" id="loader-mark" src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'?%3e%3csvg%20id='b'%20xmlns='http://www.w3.org/2000/svg'%20width='137.41'%20height='80.18'%20viewBox='0%200%20137.41%2080.18'%3e%3cg%20id='c'%3e%3cpath%20d='M73.39,49.43c6.88-.93,14.19,1.35,14.63,9.32.43,7.83-6.9,11.23-13.66,11.51-3.71.16-3.42-.92-3.72-4.43-.26-3.01-.54-6.22-.71-9.22-.21-3.82-.91-6.59,3.46-7.18ZM76.67,63.18c6.4.15,6.17-8.46-.36-7.45l.36,7.45Z'/%3e%3cpath%20d='M101.98,66.6c-5.55-5.08-3.41-18.04,4.71-19,14.77-1.75,14.57,23.74-1.3,20.74-1.05-.2-2.62-1.02-3.41-1.74ZM108.42,54.1c-3.84-.14-4.03,7.08-1.05,7.65,4.72.9,4.79-7.52,1.05-7.65Z'/%3e%3cpath%20d='M66.64,51.56c1.8,1.7,1.69,12.3.99,14.82-1.72,6.26-11.19,8.78-14.68,3.3-1.79-2.81-2.44-9.68-2.56-13.06-.14-4.02,3.71-4.38,6.59-3.03.82,2.26-.11,9.33,1.74,10.67,3.22,2.33,2.81-3.8,2.68-5.52-.12-1.61-1.21-4.45-.53-5.86.55-1.13,4.68-2.35,5.76-1.32Z'/%3e%3cpath%20d='M118.64,68.03c-1.66-1.44.8-4.09,1.19-5.95,1.14-1.08,6.85,3.65,7.56,1.26.46-1.55-4.82-3.08-6.14-4.13-3.58-2.85-2.69-8.41,1.35-10.24,2.96-1.34,4.94-1.21,7.91-.09,3.68,1.39,4.19,2.45,2.28,6.02-1.53,2.85-3.04-.35-4.89-.6-.68-.09-2.14.08-2.2.87-.09,1.17,5,3.13,6.14,4.09,5.22,4.4,1.4,10.94-4.97,11.03-1.75.02-6.94-1.16-8.22-2.27Z'/%3e%3cpath%20d='M17.85,78.71c-.43-.75.54-5.18,1.22-5.63,1.8-.86,3.35.72,5.26.77,1.48.03,2.68-.43,1.6-1.99-4.52-.99-10.78-1.86-8.68-8.31,1.16-3.57,10.27-6.81,12.19-4.07.41.59.15,4.74-.13,5.14-.68.98-6.12-1.33-5.47,1.17.31,1.18,5.02,1.18,6.59,1.93,1.46.7,3.16,3.3,3.28,4.91.5,7-11.18,9.4-15.87,6.1Z'/%3e%3cpath%20d='M48.2,60.25l-4.19,1.38c-.43,2.41,2.58,11.31,1.62,12.9-.48.8-6.01,2.52-6.55.15-.83-3.66-.82-8.11-1.44-11.86l-4.82.03c-.51-1.59-1.88-4.84-.33-6.08.67-.54,5.24-1.44,6.48-1.68,1.15-.23,7.42-1.28,8.07-1.16.29.05.56.08.73.36.16,1.97,1.52,4.03.43,5.96Z'/%3e%3cpath%20d='M96.45,48l.37,19.18c-.51,1.68-4.67,1.54-5.99,1.15-.99-.29-.98-1.59-1.05-2.49-.42-5.44.28-11.47.08-16.97.46-1.53,5.29-1.68,6.59-.87Z'/%3e%3cpath%20d='M79.05.11c1.79-.36,5.15.17,6.32,1.67,1.73,2.22,3.42,8.15,4.93,11.03.45.87,2.01,3.92,2.86,3.91.87-.45,1.64-1.61,2.24-2.39,2.97-3.87,5.22-8.88,8.07-12.51,1.49-1.9,3.64-1.72,5.98-1.41,2.53.33,3.42,1.22,4.38,3.43,3.77,8.62,7.1,28.05,5.4,37.16-.14.74-1.06,1.59-1.75,1.81-1.28.4-8.51-.8-9.84-1.55-2.36-1.32-1.31-4.01-1.53-6.28-.31-3.24-.47-7.59-1.07-10.63-.52-2.61-2.53,1.76-3.01,2.64-1.32,2.4-3.55,8.79-5.71,9.9-5.54,2.84-7.76-6.77-10.95-9.53-.55.34-.46.7-.54,1.23-.23,1.64-.53,3.35-.7,4.98-.23,2.19.12,7.21-1.06,8.87-.95,1.32-6.95,2.47-8.74,2.61-4.07.32-3.83-1.21-3.7-4.76.33-8.9,2.27-30.02,5.88-37.76.58-1.25,1.04-2.11,2.56-2.41Z'/%3e%3cpath%20d='M23.73,2.26c4.74-.42,11.89-.56,12.16,5.74.16,3.78-5.22,14.75-9.95,11.35-1.21-.87-.86-2.68-1.65-2.96-5.16-1.08-14.85,7.68-6.17,10.07,6.5,1.79,15.14.07,19.24,7.37,8.44,15.03-18.97,28.06-30.24,24.56-9.93-3.09-2.02-17.46,4.79-16.14,3.16.61.29,5.65,5.25,4.87,2.67-.42,7.77-2.83,7.35-6.09-.55-4.24-9.38-3.9-12.5-4.55C-1.14,33.75-3.34,21.68,4.66,11.92,9.19,6.38,16.66,2.89,23.73,2.26Z'/%3e%3cpath%20d='M63.8,4.71c3.64-.74,4.15,4.63,4.62,7.29,2.37,13.41,3.08,40.25-17.67,36.47-12.35-2.25-14.19-25.52-10.89-34.69.65-1.79,1.98-2.23,3.73-2.66,9.99-2.44,6.15,5.23,6.45,11.45.13,2.72.98,11.27,5.35,9.95,3.53-1.07,2.8-9.16,2.43-12.05-.44-3.46-2.74-8.37-.67-11.4.86-1.26,5.19-4.06,6.65-4.36Z'/%3e%3cpath%20d='M122.17,43.22c-.33-.3-.8-1.7-.81-2.2,1.03-5.65,1.8-11.38,2.45-17.09s.56-11.91,1.55-17.26c.72-3.86,8.35-2.36,10.01-.6,2.16,2.3,2.16,16.48,1.96,20.03-.15,2.74-2.17,16.91-3.52,18.47-1.44,1.65-10.33-.15-11.64-1.35Z'/%3e%3c/g%3e%3c/svg%3e" alt="SUMI Studios" />
       </div>
-      <p class="loader__text" id="loader-text" aria-label="Loading">
-        <span>L</span><span>O</span><span>A</span><span>D</span><span>I</span><span>N</span><span>G</span>
-      </p>
     </div>
   </div>
 
   <!-- NAV -->
   <header class="nav" id="nav">
     <div class="nav__inner">
-      <a href="/" class="nav__logo" aria-label="Nechemya home">
+      <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="nav__cta nav__cta--left">Book a free call</a>
+      <a href="/" class="nav__logo" aria-label="Sumi Studios home">
         <img class="nav__logo-mark" src="./assets/colbbord-DKmnEjyL.svg" alt="" />
+        <span class="nav__logo-wordmark">
+          <span class="nav__logo-wordmark-line">SUMI</span>
+          <span class="nav__logo-wordmark-sub">STUDIOS</span>
+        </span>
+        <!-- Mobile-only wordmark — the inked SVG matches the hero
+             illustration's brushwork better than the system-styled
+             text wordmark used on desktop. -->
+        <img class="nav__logo-svg" src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'?%3e%3csvg%20id='b'%20xmlns='http://www.w3.org/2000/svg'%20width='137.41'%20height='80.18'%20viewBox='0%200%20137.41%2080.18'%3e%3cg%20id='c'%3e%3cpath%20d='M73.39,49.43c6.88-.93,14.19,1.35,14.63,9.32.43,7.83-6.9,11.23-13.66,11.51-3.71.16-3.42-.92-3.72-4.43-.26-3.01-.54-6.22-.71-9.22-.21-3.82-.91-6.59,3.46-7.18ZM76.67,63.18c6.4.15,6.17-8.46-.36-7.45l.36,7.45Z'/%3e%3cpath%20d='M101.98,66.6c-5.55-5.08-3.41-18.04,4.71-19,14.77-1.75,14.57,23.74-1.3,20.74-1.05-.2-2.62-1.02-3.41-1.74ZM108.42,54.1c-3.84-.14-4.03,7.08-1.05,7.65,4.72.9,4.79-7.52,1.05-7.65Z'/%3e%3cpath%20d='M66.64,51.56c1.8,1.7,1.69,12.3.99,14.82-1.72,6.26-11.19,8.78-14.68,3.3-1.79-2.81-2.44-9.68-2.56-13.06-.14-4.02,3.71-4.38,6.59-3.03.82,2.26-.11,9.33,1.74,10.67,3.22,2.33,2.81-3.8,2.68-5.52-.12-1.61-1.21-4.45-.53-5.86.55-1.13,4.68-2.35,5.76-1.32Z'/%3e%3cpath%20d='M118.64,68.03c-1.66-1.44.8-4.09,1.19-5.95,1.14-1.08,6.85,3.65,7.56,1.26.46-1.55-4.82-3.08-6.14-4.13-3.58-2.85-2.69-8.41,1.35-10.24,2.96-1.34,4.94-1.21,7.91-.09,3.68,1.39,4.19,2.45,2.28,6.02-1.53,2.85-3.04-.35-4.89-.6-.68-.09-2.14.08-2.2.87-.09,1.17,5,3.13,6.14,4.09,5.22,4.4,1.4,10.94-4.97,11.03-1.75.02-6.94-1.16-8.22-2.27Z'/%3e%3cpath%20d='M17.85,78.71c-.43-.75.54-5.18,1.22-5.63,1.8-.86,3.35.72,5.26.77,1.48.03,2.68-.43,1.6-1.99-4.52-.99-10.78-1.86-8.68-8.31,1.16-3.57,10.27-6.81,12.19-4.07.41.59.15,4.74-.13,5.14-.68.98-6.12-1.33-5.47,1.17.31,1.18,5.02,1.18,6.59,1.93,1.46.7,3.16,3.3,3.28,4.91.5,7-11.18,9.4-15.87,6.1Z'/%3e%3cpath%20d='M48.2,60.25l-4.19,1.38c-.43,2.41,2.58,11.31,1.62,12.9-.48.8-6.01,2.52-6.55.15-.83-3.66-.82-8.11-1.44-11.86l-4.82.03c-.51-1.59-1.88-4.84-.33-6.08.67-.54,5.24-1.44,6.48-1.68,1.15-.23,7.42-1.28,8.07-1.16.29.05.56.08.73.36.16,1.97,1.52,4.03.43,5.96Z'/%3e%3cpath%20d='M96.45,48l.37,19.18c-.51,1.68-4.67,1.54-5.99,1.15-.99-.29-.98-1.59-1.05-2.49-.42-5.44.28-11.47.08-16.97.46-1.53,5.29-1.68,6.59-.87Z'/%3e%3cpath%20d='M79.05.11c1.79-.36,5.15.17,6.32,1.67,1.73,2.22,3.42,8.15,4.93,11.03.45.87,2.01,3.92,2.86,3.91.87-.45,1.64-1.61,2.24-2.39,2.97-3.87,5.22-8.88,8.07-12.51,1.49-1.9,3.64-1.72,5.98-1.41,2.53.33,3.42,1.22,4.38,3.43,3.77,8.62,7.1,28.05,5.4,37.16-.14.74-1.06,1.59-1.75,1.81-1.28.4-8.51-.8-9.84-1.55-2.36-1.32-1.31-4.01-1.53-6.28-.31-3.24-.47-7.59-1.07-10.63-.52-2.61-2.53,1.76-3.01,2.64-1.32,2.4-3.55,8.79-5.71,9.9-5.54,2.84-7.76-6.77-10.95-9.53-.55.34-.46.7-.54,1.23-.23,1.64-.53,3.35-.7,4.98-.23,2.19.12,7.21-1.06,8.87-.95,1.32-6.95,2.47-8.74,2.61-4.07.32-3.83-1.21-3.7-4.76.33-8.9,2.27-30.02,5.88-37.76.58-1.25,1.04-2.11,2.56-2.41Z'/%3e%3cpath%20d='M23.73,2.26c4.74-.42,11.89-.56,12.16,5.74.16,3.78-5.22,14.75-9.95,11.35-1.21-.87-.86-2.68-1.65-2.96-5.16-1.08-14.85,7.68-6.17,10.07,6.5,1.79,15.14.07,19.24,7.37,8.44,15.03-18.97,28.06-30.24,24.56-9.93-3.09-2.02-17.46,4.79-16.14,3.16.61.29,5.65,5.25,4.87,2.67-.42,7.77-2.83,7.35-6.09-.55-4.24-9.38-3.9-12.5-4.55C-1.14,33.75-3.34,21.68,4.66,11.92,9.19,6.38,16.66,2.89,23.73,2.26Z'/%3e%3cpath%20d='M63.8,4.71c3.64-.74,4.15,4.63,4.62,7.29,2.37,13.41,3.08,40.25-17.67,36.47-12.35-2.25-14.19-25.52-10.89-34.69.65-1.79,1.98-2.23,3.73-2.66,9.99-2.44,6.15,5.23,6.45,11.45.13,2.72.98,11.27,5.35,9.95,3.53-1.07,2.8-9.16,2.43-12.05-.44-3.46-2.74-8.37-.67-11.4.86-1.26,5.19-4.06,6.65-4.36Z'/%3e%3cpath%20d='M122.17,43.22c-.33-.3-.8-1.7-.81-2.2,1.03-5.65,1.8-11.38,2.45-17.09s.56-11.91,1.55-17.26c.72-3.86,8.35-2.36,10.01-.6,2.16,2.3,2.16,16.48,1.96,20.03-.15,2.74-2.17,16.91-3.52,18.47-1.44,1.65-10.33-.15-11.64-1.35Z'/%3e%3c/g%3e%3c/svg%3e" alt="SUMI Studios" />
       </a>
       <div class="nav__desktop-wrapper">
         <button class="nav__menu-btn" id="menu-toggle" aria-label="Open menu">
           <span class="nav__menu-label">MENU</span>
           <span class="nav__menu-icon">
-            <img class="nav__menu-cross" src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'?%3e%3csvg%20id='b'%20xmlns='http://www.w3.org/2000/svg'%20width='25.12'%20height='25.12'%20viewBox='0%200%2025.12%2025.12'%3e%3cg%20id='c'%3e%3cpath%20d='M25.12,16.64H0v-8.16h25.12v8.16ZM16.8,25.12h-8.48V0h8.48v25.12Z'/%3e%3c/g%3e%3c/svg%3e" alt="" />
+            <img class="nav__menu-cross" src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'?%3e%3csvg%20id='b'%20xmlns='http://www.w3.org/2000/svg'%20width='25.12'%20height='25.12'%20viewBox='0%200%2025.12%2025.12'%3e%3cg%20id='c'%3e%3cpath%20fill='%23F6F2EB'%20d='M25.12,16.64H0v-8.16h25.12v8.16ZM16.8,25.12h-8.48V0h8.48v25.12Z'/%3e%3c/g%3e%3c/svg%3e" alt="" />
+            <!-- Mobile-only 2-line hamburger that morphs to an X via
+                 .is-open. Lives alongside the desktop Cross so the
+                 desktop pill stays unchanged. -->
+            <span class="nav__menu-lines" aria-hidden="true">
+              <span class="nav__menu-line nav__menu-line--top"></span>
+              <span class="nav__menu-line nav__menu-line--bottom"></span>
+            </span>
           </span>
         </button>
         <div class="nav__desktop-links">
@@ -80,12 +91,6 @@
   <!-- MOBILE MENU -->
   <div class="menu-overlay" id="menu-overlay"></div>
   <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
-    <button class="mobile-menu__close" id="mobile-menu-close" aria-label="Close menu">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A1A19" stroke-width="2.5" stroke-linecap="round">
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
-    </button>
     <div class="mobile-menu__content">
       <a href="https://api.whatsapp.com/send/?phone=972585152321&text=Hi%20Nechemya%2C%20I%27d%20like%20to%20discuss%20a%20project.&type=phone_number" target="_blank" rel="noopener noreferrer" class="mobile-menu__whatsapp menu-item" aria-label="WhatsApp">
         <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24">
@@ -99,6 +104,7 @@
         <li><a href="#faq" class="mobile-menu__link menu-item">FAQ</a></li>
         <li><a href="#contact" class="mobile-menu__link menu-item">Contact</a></li>
       </ul>
+      <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="mobile-menu__cta menu-item">Book a free call</a>
     </div>
   </nav>
 
@@ -108,34 +114,37 @@
     <!-- HERO (tall trigger, pinned sticky stage) -->
     <section class="hero" id="hero" data-nav-theme="light">
       <div class="hero__stage">
+        <!-- Rounded peach platform — sits behind the TV on mobile so
+             the TV reads as resting on a softer disc. Desktop hides
+             it; the scroll/pin sequence is untouched. -->
+        <div class="hero__platform" aria-hidden="true"></div>
         <!-- z=1: Looping reel, mask-clipped to the cat's screen interior -->
         <div class="hero__cat-wrapper">
           <div class="hero__halo"></div>
           <div class="hero__mouth-slider" id="mouth-slider">
             <div class="hero__mouth-track" id="mouth-track">
-              <picture>
-                <source media="(max-width: 768px)" srcset="./assets/choicemob-mQBf7N4X.webp" />
-                <img class="hero__mouth-img hero__mouth-img--first" src="./assets/project-choice-CCiiNZL8.webp" alt="Choice Inventory" fetchpriority="high" decoding="async" />
-              </picture>
-              <picture>
-                <source media="(max-width: 768px)" srcset="./assets/clinmob-DzRInEg5.webp" />
-                <img class="hero__mouth-img" src="./assets/project-clinical-BsWLTy-l.webp" alt="Clinical Assessments" decoding="async" />
-              </picture>
-              <picture>
-                <source media="(max-width: 768px)" srcset="./assets/choicemob-mQBf7N4X.webp" />
-                <img class="hero__mouth-img" src="./assets/project-choice-CCiiNZL8.webp" alt="" />
-              </picture>
-              <picture>
-                <source media="(max-width: 768px)" srcset="./assets/clinmob-DzRInEg5.webp" />
-                <img class="hero__mouth-img" src="./assets/project-clinical-BsWLTy-l.webp" alt="" />
-              </picture>
+              <img class="hero__mouth-img hero__mouth-img--first" src="./assets/project-choice-CCiiNZL8.webp" alt="Choice Inventory" fetchpriority="high" decoding="async" />
+              <img class="hero__mouth-img" src="./assets/project-clinical-BsWLTy-l.webp" alt="Clinical Assessments" decoding="async" />
+              <img class="hero__mouth-img" src="./assets/project-choice-CCiiNZL8.webp" alt="" />
+              <img class="hero__mouth-img" src="./assets/project-clinical-BsWLTy-l.webp" alt="" />
             </div>
             <div class="hero__tv-overlay"></div>
           </div>
-          <picture>
-            <source media="(max-width: 768px)" srcset="./assets/mobcat-DXRYO3tx.webp" />
-            <img class="hero__cat-img" src="./assets/deskcat-CUP1YQFE.webp" alt="Cat" fetchpriority="high" decoding="async" />
-          </picture>
+          <img class="hero__cat-img" src="./assets/tvonwhite-pFr5_Kus.webp" alt="" fetchpriority="high" decoding="async" />
+        </div>
+
+        <!-- Mobile-only headline + CTA. Sits over the peach platform
+             below the TV, hidden on desktop where the marquee +
+             footer do the talking. -->
+        <div class="hero__mobile-pitch" aria-hidden="false">
+          <h1 class="hero__pitch-text">
+            <span class="hero__pitch-line">We design and build <strong>fast,</strong></span>
+            <span class="hero__pitch-line">stunning, <strong>mobile-ready</strong></span>
+            <span class="hero__pitch-line">websites for service</span>
+            <span class="hero__pitch-line">businesses that want to</span>
+            <span class="hero__pitch-line">stand out</span>
+          </h1>
+          <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="hero__pitch-cta">Book a free call</a>
         </div>
 
         <!-- GIANT MARQUEE -->
@@ -174,12 +183,16 @@
           </span>
         </span>
 
-        <!-- HERO FOOTER -->
+        <!-- HERO FOOTER — three columns on PC (eyebrow flanks the
+             CTA), CTA-only centered on mobile -->
         <div class="hero__gradient"></div>
         <div class="hero__footer">
-          <a href="#contact" class="hero__footer-link">GET IN TOUCH</a>
-          <span class="hero__footer-tagline">PREMIUM WEB DESIGN FOR BUSINESSES THAT CARE</span>
-          <a href="#projects" class="hero__footer-link">EXPLORE <svg class="hero__footer-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+          <span class="hero__eyebrow">
+            <img class="hero__eyebrow-star" src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'?%3e%3csvg%20id='b'%20xmlns='http://www.w3.org/2000/svg'%20width='78.5'%20height='75.16'%20viewBox='0%200%2078.5%2075.16'%3e%3cg%20id='c'%3e%3cpath%20fill='%23C7512D'%20d='M52.67,0l-2.13,20.34c-.48,4.57,2.96,8.62,7.55,8.89l20.41,1.18-18.68,8.33c-4.2,1.87-5.99,6.87-3.92,10.98l9.18,18.27-16.55-12.01c-3.72-2.7-8.94-1.75-11.47,2.1l-11.23,17.09,2.13-20.34c.48-4.57-2.96-8.62-7.55-8.89l-20.41-1.18,18.68-8.33c4.2-1.87,5.99-6.87,3.92-10.98L13.42,7.17l16.55,12.01c3.72,2.7,8.94,1.75,11.47-2.1L52.67,0Z'/%3e%3c/g%3e%3c/svg%3e" alt="" />
+            I make websites for businesses that give a damn
+          </span>
+          <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="hero__cta">Book a free call</a>
+          <a href="#projects" class="hero__footer-link hero__footer-link--right">EXPLORE WORK <svg class="hero__footer-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
         </div>
 
       </div>
@@ -433,8 +446,9 @@
         <h2 class="contact__title">Ready to stop losing<br />customers to a bad website?</h2>
         <p class="contact__sub">Drop me an email or send a WhatsApp.<br />Let's get your brand online properly.</p>
         <div class="contact__buttons">
-          <a href="mailto:nechemyar@gmail.com" class="btn btn--primary">nechemyar@gmail.com →</a>
-          <a href="https://api.whatsapp.com/send/?phone=972585152321&text=Hi%20Nechemya%2C%20I%27d%20like%20to%20discuss%20a%20project.&type=phone_number" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">WhatsApp →</a>
+          <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Book a free call</a>
+          <a href="mailto:nechemyar@gmail.com" class="btn btn--secondary">nechemyar@gmail.com</a>
+          <a href="https://api.whatsapp.com/send/?phone=972585152321&text=Hi%20Nechemya%2C%20I%27d%20like%20to%20discuss%20a%20project.&type=phone_number" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">WhatsApp</a>
         </div>
       </div>
     </section>

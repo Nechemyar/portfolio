@@ -28,8 +28,7 @@
   <!-- LCP image preload — preload the hero composition so the first paint
        has both the screen content (visible through the mask window) and the
        hero foreground. -->
-  <link rel="preload" as="image" href="assets/images/web-hero.webp" media="(min-width: 769px)" fetchpriority="high" />
-  <link rel="preload" as="image" href="assets/images/tvonwhite.webp" media="(max-width: 768px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/images/tvonwhite.webp" fetchpriority="high" />
   <link rel="preload" as="image" href="assets/images/project-choice.webp" fetchpriority="high" />
 
   <!-- CSS -->
@@ -42,11 +41,8 @@
   <div class="loader" id="loader">
     <div class="loader__inner">
       <div class="loader__mark-wrap">
-        <img class="loader__mark" id="loader-mark" src="assets/images/colbbord.svg" alt="" />
+        <img class="loader__mark" id="loader-mark" src="assets/images/Wordmark.svg" alt="SUMI Studios" />
       </div>
-      <p class="loader__text" id="loader-text" aria-label="Loading">
-        <span>L</span><span>O</span><span>A</span><span>D</span><span>I</span><span>N</span><span>G</span>
-      </p>
     </div>
   </div>
 
@@ -132,10 +128,7 @@
             </div>
             <div class="hero__tv-overlay"></div>
           </div>
-          <picture>
-            <source media="(max-width: 768px)" srcset="assets/images/tvonwhite.webp" />
-            <img class="hero__cat-img" src="assets/images/web-hero.webp" alt="" fetchpriority="high" decoding="async" />
-          </picture>
+          <img class="hero__cat-img" src="assets/images/tvonwhite.webp" alt="" fetchpriority="high" decoding="async" />
         </div>
 
         <!-- Mobile-only headline + CTA. Sits over the peach platform

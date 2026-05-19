@@ -209,6 +209,15 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   flex-shrink: 0;
 }
 
+.nav__menu-btn:focus {
+  outline: none;
+}
+
+.nav__menu-btn:focus-visible {
+  outline: 2px solid $c-accent;
+  outline-offset: 4px;
+}
+
 .nav__menu-label {
   font-family: $font-body; /* Satoshi — matches the CTA pill */
   font-size: clamp(0.78rem, 1vw, 0.95rem);
@@ -327,6 +336,7 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
 
   .nav__menu-btn {
     padding: 8px;
+    border-radius: 999px;
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -347,6 +357,7 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
     width: 28px;
     height: 16px;
   }
+
 }
 
 .nav__menu-btn:hover .nav__menu-cross {

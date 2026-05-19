@@ -11,14 +11,14 @@
 .hero {
   position: relative;
   width: 100vw;
-  height: 100vh;
+  height: 100svh;
   min-height: 600px;
 }
 
 .hero__stage {
   position: relative;
   width: 100vw;
-  height: 100vh;
+  height: 100svh;
   min-height: inherit;
   overflow: hidden;
   background-color: $c-peach;
@@ -76,7 +76,6 @@
   height: auto;
   aspect-ratio: 1 / 1;
   z-index: 2;
-  mix-blend-mode: darken;
   will-change: transform;
 }
 
@@ -109,10 +108,10 @@
 
 .hero__mouth-track {
   position: absolute;
-  top: 33.33%;
-  left: 26.76%;
-  width: 47.5%;
-  height: 33.15%;
+  top: 32.5%;
+  left: 26.2%;
+  width: 48.5%;
+  height: 34.5%;
 }
 
 .hero__mouth-img {
@@ -122,6 +121,7 @@
   height: 100%;
   object-fit: cover;
   opacity: 0;
+  transform: scale(1.05);
 }
 
 .hero__mouth-img--first {
@@ -311,7 +311,7 @@
 
   /* TV: big enough to anchor the hero, but leave room for text */
   .hero__cat-wrapper {
-    width: clamp(22rem, 90vw, 36rem);
+    width: clamp(24rem, 100vw, 38rem);
     transform: translate(-50%, -70%);
   }
 
@@ -390,8 +390,8 @@
 /* ——— Small phones (SE, 5S) ——— */
 @media (max-width: 380px) {
   .hero__cat-wrapper {
-    width: clamp(18rem, 88vw, 26rem);
-    transform: translate(-50%, -65%);
+    width: clamp(18rem, 100vw, 26rem);
+    transform: translate(-50%, -66%);
   }
 
   .hero__mobile-pitch {
@@ -412,8 +412,8 @@
   }
 
   .hero__cat-wrapper {
-    width: clamp(16rem, 78vw, 24rem);
-    transform: translate(-50%, -60%);
+    width: clamp(16rem, 90vw, 24rem);
+    transform: translate(-50%, -62%);
   }
 
   .hero__mobile-pitch {

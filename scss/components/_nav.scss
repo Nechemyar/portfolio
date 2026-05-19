@@ -14,6 +14,10 @@
   mix-blend-mode: difference;
 }
 
+body.menu-open .nav {
+  mix-blend-mode: normal;
+}
+
 /* Three-column grid: CTA (left) · logo (centre) · MENU (right).
    Equal flanking columns keep the logo dead-centre regardless of
    pill content widths. */

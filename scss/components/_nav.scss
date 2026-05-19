@@ -381,3 +381,88 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   transform: rotate(-45deg);
 }
 
+/* Screenshot-matched nav: SVG wordmark on every viewport, simple hamburger
+   on the right, no desktop text fallback or extra CTA competing with hero. */
+.nav {
+  padding: clamp(1.1rem, 3vw, 2rem) clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.nav__inner {
+  grid-template-columns: 1fr auto;
+}
+
+.nav__cta,
+.nav__logo-mark,
+.nav__logo-wordmark,
+.nav__desktop-links,
+.nav__menu-label,
+.nav__menu-cross {
+  display: none;
+}
+
+.nav__logo {
+  grid-column: 1;
+  justify-self: start;
+}
+
+.nav__logo-svg {
+  display: block;
+  height: clamp(3rem, 7vw, 4.6rem);
+}
+
+.nav__desktop-wrapper {
+  grid-column: 2;
+  background: transparent;
+  height: auto;
+  overflow: visible;
+}
+
+.nav__menu-btn {
+  height: auto;
+  padding: 0.5rem;
+}
+
+.nav__menu-icon {
+  width: clamp(1.75rem, 4.8vw, 3.25rem);
+  height: clamp(1rem, 2.4vw, 1.65rem);
+}
+
+.nav__menu-lines {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.nav__menu-line {
+  height: 2.5px;
+  background: $c-bg;
+}
+
+.nav__menu-line--top {
+  top: 0.1rem;
+}
+
+.nav__menu-line--bottom {
+  top: calc(100% - 0.25rem);
+}
+
+.nav__menu-btn.is-open .nav__menu-line--top,
+.nav__menu-btn.is-open .nav__menu-line--bottom {
+  top: 50%;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    padding: 1.1rem 1.25rem;
+  }
+
+  .nav__logo-svg {
+    height: clamp(2.35rem, 11vw, 3.5rem);
+  }
+
+  .nav__menu-icon {
+    width: 28px;
+    height: 16px;
+  }
+}
+

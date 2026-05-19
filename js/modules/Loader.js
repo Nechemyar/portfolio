@@ -13,6 +13,11 @@ export default class Loader {
     // Lock scroll during load
     document.body.style.overflow = 'hidden';
 
+    gsap.set(this.loader, {
+      yPercent: 0,
+      borderRadius: 0,
+    });
+
     const tl = gsap.timeline({
       onComplete: () => this.dismiss(),
     });

@@ -12,18 +12,13 @@
   <meta property="og:description" content="Premium websites for businesses that give a damn. Starting from £3,000." />
   <meta property="og:type" content="website" />
 
-  <!-- Fonts —
-       Google Fonts CSS is loaded async (the `media=print` swap trick) so it
-       no longer blocks first paint. DM Sans renders with the system font
-       until the woff2 arrives, then swaps in via font-display: swap. The
-       display-font (ClashDisplay) is preloaded so the headline doesn't
-       reflow when the variable woff2 lands. -->
+  <!-- Fonts — Satoshi is the site font. The async stylesheet keeps first
+       paint unblocked while the browser swaps the family in when ready. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" />
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" /></noscript>
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/ClashDisplay-Variable.woff2" />
 
   <!-- LCP image preload — preload the hero composition so the first paint
        has both the screen content (visible through the mask window) and the
@@ -56,9 +51,6 @@
           <span class="nav__logo-wordmark-line">SUMI</span>
           <span class="nav__logo-wordmark-sub">STUDIOS</span>
         </span>
-        <!-- Mobile-only wordmark — the inked SVG matches the hero
-             illustration's brushwork better than the system-styled
-             text wordmark used on desktop. -->
         <img class="nav__logo-svg" src="assets/images/Wordmark.svg" alt="SUMI Studios" />
       </a>
       <div class="nav__desktop-wrapper">
@@ -138,9 +130,8 @@
           <h1 class="hero__pitch-text">
             <span class="hero__pitch-line">We design and build <strong>fast,</strong></span>
             <span class="hero__pitch-line">stunning, <strong>mobile-ready</strong></span>
-            <span class="hero__pitch-line">websites for service</span>
-            <span class="hero__pitch-line">businesses that want to</span>
-            <span class="hero__pitch-line">stand out</span>
+            <span class="hero__pitch-line">websites for service businesses</span>
+            <span class="hero__pitch-line">that want to stand out</span>
           </h1>
           <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="hero__pitch-cta">Book a free call</a>
         </div>

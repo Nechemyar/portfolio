@@ -109,8 +109,11 @@
              it; the scroll/pin sequence is untouched. -->
         <div class="hero__platform" aria-hidden="true"></div>
         <!-- z=1: Looping reel, mask-clipped to the cat's screen interior -->
-        <div class="hero__cat-wrapper">
+        <div class="hero__cat-wrapper hero__cat-wrapper--base">
           <div class="hero__halo"></div>
+          <img class="hero__cat-img" src="assets/images/tvonwhite.webp" alt="" fetchpriority="high" decoding="async" />
+        </div>
+        <div class="hero__cat-wrapper hero__cat-wrapper--screen">
           <div class="hero__mouth-slider" id="mouth-slider">
             <div class="hero__mouth-track" id="mouth-track">
               <img class="hero__mouth-img hero__mouth-img--first" src="assets/images/project-choice.webp" alt="Choice Inventory" fetchpriority="high" decoding="async" />
@@ -120,7 +123,6 @@
             </div>
             <div class="hero__tv-overlay"></div>
           </div>
-          <img class="hero__cat-img" src="assets/images/tvonwhite.webp" alt="" fetchpriority="high" decoding="async" />
         </div>
 
         <!-- Mobile-only headline + CTA. Sits over the peach platform

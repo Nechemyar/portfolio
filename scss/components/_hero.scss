@@ -75,8 +75,18 @@
   width: clamp(22rem, 36vw, 42rem);
   height: auto;
   aspect-ratio: 1 / 1;
-  z-index: 2;
   will-change: transform;
+}
+
+.hero__cat-wrapper--base {
+  z-index: 2;
+  mix-blend-mode: darken;
+}
+
+.hero__cat-wrapper--screen {
+  z-index: 3;
+  mix-blend-mode: normal;
+  pointer-events: none;
 }
 
 .hero__cat-img {
@@ -87,7 +97,6 @@
   object-fit: contain;
   z-index: 1;
   pointer-events: none;
-  mix-blend-mode: darken;
 }
 
 /* ——— Mouth Slider (project reel inside TV screen) ——— */
@@ -205,8 +214,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: clamp(2.8rem, 4vw, 3.5rem);
-  padding: 0.6em clamp(1.4em, 2vw, 2em);
+  min-height: auto;
+  padding: 0.4em clamp(1.4em, 2vw, 2em);
   border: 2px solid $c-accent;
   border-radius: 100px;
   background: transparent;

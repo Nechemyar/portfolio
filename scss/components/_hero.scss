@@ -410,10 +410,11 @@
     position: relative;
     background-color: $c-peach;
     align-items: stretch;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-direction: column;
-    padding-top: clamp(4rem, 15vw, 6rem);
-    padding-bottom: clamp(1.5rem, 5vw, 2.5rem);
+    padding-top: clamp(3.5rem, 11vw, 5rem);
+    padding-bottom: clamp(1.25rem, 4vw, 2rem);
+    gap: clamp(0.5rem, 2vw, 1.25rem);
   }
 
   /* Lighter peach disc behind the TV's base. Wide rounded top, flat
@@ -441,7 +442,7 @@
     top: auto;
     left: auto;
     margin: 0 auto;
-    width: min(78vw, 420px);
+    width: min(100vw, 560px);
     height: auto;
     aspect-ratio: 1 / 1;
     max-width: none;
@@ -467,12 +468,13 @@
     mask-image: url('../../assets/images/mobmask.webp');
   }
 
-  /* Screen cutout measured from the new square mobmask.webp. */
+  /* Screen cutout measured directly from the new square mobmask.webp
+     alpha channel (bbox of opaque pixels = 1080² source canvas). */
   .hero__mouth-track {
-    top: 33.5%;
-    left: 24%;
-    width: 52%;
-    height: 28.5%;
+    top: 33.33%;
+    left: 26.76%;
+    width: 47.50%;
+    height: 33.15%;
   }
 
   /* The desktop gradient + marquee + footer + intro eyebrow don't
@@ -492,22 +494,25 @@
   .hero__mobile-pitch {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    align-items: flex-start;
+    text-align: left;
     position: relative;
     z-index: 3;
-    padding: 0 clamp(1.5rem, 6vw, 2rem);
+    padding: 0 clamp(1.25rem, 5vw, 1.75rem);
     flex-shrink: 0;
   }
 
   .hero__pitch-text {
     font-family: $font-body;
-    font-size: clamp(1.45rem, 6.2vw, 2rem);
+    font-size: clamp(1.55rem, 6.8vw, 2.1rem);
     font-weight: 500;
-    line-height: 1.2;
-    color: #2A2826;
-    margin: 0 0 clamp(1.5rem, 6vw, 2rem);
-    letter-spacing: -0.01em;
+    line-height: 1.15;
+    /* Light warm grey for body — bold runs darken to charcoal so the
+       "fast," / "mobile-ready" pull-quotes pop editorially against
+       the lighter body text. */
+    color: #8C857C;
+    margin: 0 0 clamp(1.25rem, 4.5vw, 1.75rem);
+    letter-spacing: -0.015em;
     display: block;
   }
 

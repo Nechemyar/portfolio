@@ -1,37 +1,35 @@
 @use '../base/tokens' as *;
 
-/* The .hero section is the SCROLL TRIGGER — tall, so the user has runway
-   for the pinned sequence (hero exit → cat-to-center → cat-off-left →
-   projects title in → horizontal cat carousel). */
+/* ═══════════════════════════════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════════════════════════════
+   Full-viewport hero. TV centered with cat on top, white platform
+   disc behind, pitch text + CTA below. Same visual language across
+   all breakpoints, scaled proportionally.
+   ═══════════════════════════════════════════════════════════════════ */
+
 .hero {
   position: relative;
   width: 100vw;
-  /* 100vh visible + runway for: hero exit (~60vh) + "Featured Projects"
-     hold (~120vh) + handoff to featured cards (~70vh) = 350vh total. */
-  height: 350vh;
+  height: 100vh;
+  min-height: 600px;
 }
 
-/* The .hero__stage is what the user actually sees — pinned 100vh viewport.
-   z-index keeps the stage painting OVER the featured pin during the scroll
-   overlap, so the next section can't slide up over the hero exit. The hero
-   only reveals the featured pin once it unpinns and scrolls away. */
 .hero__stage {
-  position: sticky;
-  top: 0;
+  position: relative;
   width: 100vw;
   height: 100vh;
+  min-height: inherit;
   overflow: hidden;
-  /* Bg colour is animated pink → white by ProjectsScroll on the first scroll
-     beat, so the whole stage transitions colour as one continuous flow. */
   background-color: $c-peach;
   z-index: 2;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
-/* Soft halo glow positioned behind the cat. Sits below the cat in z-order so
-   it bleeds out around the cat silhouette. */
+/* ——— Halo (desktop glow behind TV) ——— */
 .hero__halo {
   position: absolute;
   top: 50%;
@@ -48,23 +46,38 @@
   );
   z-index: 0;
   pointer-events: none;
-  will-change: transform;
 }
 
-/* ——— Cat Wrapper ——— */
-/* Positioning is via top/left + xPercent/yPercent (set by GSAP) so that
-   GSAP can compose scale/translate without fighting a CSS transform. */
+/* ——— Platform / Circle ———
+   White rounded disc behind the TV. z-index layering:
+   peach bg (0) → platform (1) → TV (2) → pitch text (3). */
+.hero__platform {
+  display: block;
+  position: absolute;
+  left: -10vw;
+  right: -10vw;
+  bottom: 0;
+  height: clamp(18rem, 44vh, 28rem);
+  background: #ffffff;
+  border-radius: 50% 50% 0 0 / clamp(3rem, 8vh, 5.5rem) clamp(3rem, 8vh, 5.5rem) 0 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ——— Cat / TV Wrapper ———
+   Absolutely positioned, centered horizontally and vertically.
+   Straddles the platform arc so the TV appears to sit ON the circle. */
 .hero__cat-wrapper {
   position: absolute;
-  top: 34%;
+  top: 50%;
   left: 50%;
-  /* GSAP sets xPercent: -50, yPercent: -50 on init for centering */
-  width: min(64vh, 46vw, 760px);
+  transform: translate(-50%, -65%);
+  width: clamp(22rem, 36vw, 42rem);
   height: auto;
   aspect-ratio: 1 / 1;
-  z-index: 4;
+  z-index: 2;
   mix-blend-mode: darken;
-  will-change: transform, top, width;
+  will-change: transform;
 }
 
 .hero__cat-img {
@@ -77,9 +90,7 @@
   pointer-events: none;
 }
 
-/* ——— Mouth Slider ——— */
-/* Sits ABOVE the hero image so its mask-clipped reel shows through the
-   screen window cut into the mask. The hero image is just the backdrop. */
+/* ——— Mouth Slider (project reel inside TV screen) ——— */
 .hero__mouth-slider {
   position: absolute;
   inset: 0;
@@ -96,7 +107,6 @@
   background: #000;
 }
 
-/* Track is sized to the screen cutout in the square TV mask. */
 .hero__mouth-track {
   position: absolute;
   top: 33.33%;
@@ -114,9 +124,6 @@
   opacity: 0;
 }
 
-/* Render the first frame at full opacity from CSS so the LCP image is
-   paintable without waiting for JS — Lighthouse otherwise can't detect
-   it as a real LCP candidate (opacity:0 elements are excluded). */
 .hero__mouth-img--first {
   opacity: 1;
 }
@@ -145,289 +152,43 @@
   100% { opacity: 1; }
 }
 
-/* ——— Bottom Gradient ———
-   Rust wash anchored at the bottom — strong enough to be a band the
-   footer row sits on (matches the SUMI mockup), soft enough to fade
-   into the cream floor of the scene without a hard edge. */
-/* Rust wash that ends fully opaque at the bottom — the bottom edge is
-   solid $c-accent so the next section can begin on the same colour and
-   the boundary disappears. The body is tinted to match underneath, so
-   even during scroll/overscroll the seam never shows. */
-.hero__gradient {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 40vh;
-  background: linear-gradient(
-    to bottom,
-    rgba(199, 81, 45, 0) 0%,
-    rgba(199, 81, 45, 0.25) 25%,
-    rgba(199, 81, 45, 0.65) 55%,
-    rgba(199, 81, 45, 0.92) 82%,
-    #C7512D 100%
-  );
-  z-index: 8;
-  pointer-events: none;
-  will-change: transform;
-}
-
-/* ——— Featured Projects intro eyebrow ———
-   Lives inside the hero stage so it can rise into view as the stage turns
-   white. Stays visible until the hero unpinns and scrolls away (which the
-   user reads as "Featured Projects → first project card"). */
-.hero__intro-eyebrow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 20;
-  width: min(92vw, 1200px);
-  font-family: $font-display;
-  font-size: clamp(4rem, 10vw, 9rem);
-  font-weight: 900;
-  letter-spacing: 0;
-  line-height: 0.86;
-  text-transform: uppercase;
-  color: rgba(26, 26, 26, 0.96);
-  pointer-events: none;
-  overflow: hidden;
-  display: block;
-  text-align: center;
-}
-
-.hero__intro-eyebrow-inner {
-  display: grid;
-  transform: translateY(110%);
-  opacity: 0;
-  will-change: transform, opacity;
-}
-
-.hero__intro-eyebrow-line {
-  display: block;
-}
-
-/* ——— Hero headline ———
-   Mobile-only black all-caps value prop, sits between the cat
-   composition and the CTA. Hidden on desktop where the illustration +
-   marquee carry the message. */
-.hero__headline {
-  position: absolute;
-  z-index: 12;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: clamp(15rem, 30vh, 18rem);
-  width: min(420px, 86vw);
-  margin: 0;
-  font-family: $font-display;
-  font-weight: 900;
-  font-size: clamp(1.65rem, 7.2vw, 2.4rem);
-  letter-spacing: -0.01em;
-  line-height: 0.95;
-  text-transform: uppercase;
-  text-align: center;
-  color: $c-bg;
-  pointer-events: none;
-  display: none;
-}
-
-/* ——— Hero sticker ———
-   Retro 70s-style star badge using the existing star.svg as the shape.
-   Slight tilt for that hand-applied sticker feel. */
-.hero__sticker {
-  position: absolute;
-  z-index: 13;
-  top: clamp(5.5rem, 11vw, 9rem);
-  right: clamp(1rem, 4vw, 3rem);
-  width: clamp(82px, 11vw, 142px);
-  aspect-ratio: 1;
-  transform: rotate(-14deg);
-  pointer-events: none;
-  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.18));
-}
-
-.hero__sticker-shape {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-.hero__sticker-text {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-family: $font-display;
-  font-weight: 900;
-  font-size: clamp(0.7rem, 1.05vw, 0.95rem);
-  line-height: 0.95;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: $c-soft;
-}
-
-/* ——— Hero CTA pill ———
-   Sits centred inside the hero footer below the marquee — primary
-   action, no surrounding copy. On desktop the side links flank it;
-   on mobile the links hide and only the pill shows. */
-.hero__cta {
-  display: inline-flex;
-  align-items: center;
-  background: $c-accent;
-  color: $c-soft;
-  font-family: $font-body; /* Satoshi — readable as a button label */
-  font-weight: 700;
-  font-size: clamp(0.85rem, 1.1vw, 1.05rem);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: clamp(0.7em, 1vw, 0.95em) clamp(1.15em, 1.7vw, 1.55em);
-  border-radius: 6px;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
-  white-space: nowrap;
-  transition: transform $duration-fast $ease-out, background $duration-fast ease;
-}
-
-.hero__cta:hover {
-  transform: translateY(-2px);
-  background: #D85E36;
-}
-
-/* ——— Hero Footer ———
-   Three-column grid so the CTA pill stays dead-centre regardless of the
-   side links' length. Side links flank it on desktop; on mobile only
-   the centre column is visible. */
-.hero__footer {
-  position: absolute;
-  bottom: clamp(1.75rem, 4vh, 3rem);
-  left: 0;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  column-gap: clamp(1rem, 3vw, 2.5rem);
-  padding: 0 $page-padding;
-  z-index: 15;
-}
-
-.hero__footer-link {
-  font-family: $font-display;
-  font-size: clamp(0.72rem, 0.95vw, 0.92rem);
-  font-weight: 700;
-  color: $c-soft;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4em;
-  opacity: 0.85;
-  transition: opacity $duration-fast ease;
-  white-space: nowrap;
-}
-
-.hero__footer-link:hover {
-  opacity: 1;
-}
-
-.hero__footer-link--left {
-  justify-self: start;
-}
-
-.hero__footer-link--right {
-  justify-self: end;
-}
-
-/* "I make websites for…" eyebrow — left column of the footer row.
-   Star icon + small caps tagline so the value prop reads at first
-   glance, matches the mockup's bottom-left treatment. */
-.hero__eyebrow {
-  justify-self: start;
-  display: inline-flex;
-  align-items: center;
-  gap: clamp(0.55rem, 1vw, 0.9rem);
-  font-family: $font-display;
-  font-size: clamp(0.72rem, 0.95vw, 0.92rem);
-  font-weight: 700;
-  color: $c-soft;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  white-space: nowrap;
-  opacity: 0.92;
-}
-
-.hero__eyebrow-star {
-  width: clamp(14px, 1.5vw, 22px);
-  height: clamp(14px, 1.5vw, 22px);
-  display: block;
-  filter: brightness(0) invert(1);
-  flex-shrink: 0;
-}
-
-.hero__footer-chevron {
-  vertical-align: middle;
-  margin-left: 0.2em;
-}
-
-.hero__footer-tagline {
-  font-family: $font-display;
-  font-size: clamp(0.65rem, 1.2vw, 1rem);
-  font-weight: 500;
-  color: #ffffff;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  text-align: center;
-  flex: 1;
-  padding: 0 $space-16;
-}
-
-/* ——— Mobile-only platform + pitch ———
-   Hidden on desktop. Lives in the hero stage so the existing scroll
-   pin/featured handoff is undisturbed. */
+/* ——— Desktop-only elements (hidden by default, shown >768px) ——— */
 .hero__gradient,
 .hero__footer,
-.marquee {
+.marquee,
+.hero__intro-eyebrow,
+.hero__headline,
+.hero__sticker {
   display: none;
 }
 
-.hero__platform {
-  display: block;
-  position: absolute;
-  left: -12vw;
-  right: -12vw;
-  bottom: 0;
-  height: 42vh;
-  background: #ffffff;
-  border-radius: 50% 50% 0 0 / 7vh 7vh 0 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
+/* ——— Mobile pitch text + CTA ———
+   Positioned below the TV, over the white platform. */
 .hero__mobile-pitch {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: clamp(1.1rem, 3vh, 2rem);
+  gap: clamp(1rem, 3vh, 1.8rem);
   text-align: left;
   position: absolute;
   left: 50%;
-  top: 62%;
-  z-index: 12;
-  width: min(620px, 44vw);
   transform: translateX(-50%);
+  bottom: clamp(3rem, 8vh, 6rem);
+  z-index: 3;
+  width: calc(100vw - clamp(3rem, 8vw, 6rem));
+  max-width: 36rem;
+  padding: 0;
   pointer-events: auto;
 }
 
 .hero__pitch-text {
   font-family: $font-body;
-  font-size: clamp(2rem, 2.65vw, 3.2rem);
+  font-size: clamp(1.6rem, 2.8vw, 2.6rem);
   font-weight: 500;
-  line-height: 1.08;
-  color: #5c5853;
+  line-height: 1.1;
+  color: #706963;
   margin: 0;
-  letter-spacing: 0;
+  letter-spacing: -0.005em;
   display: block;
 }
 
@@ -444,15 +205,15 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: clamp(48px, 4vw, 62px);
-  padding: 0.74em clamp(1.45em, 2.2vw, 2em);
+  min-height: clamp(2.8rem, 4vw, 3.5rem);
+  padding: 0.6em clamp(1.4em, 2vw, 2em);
   border: 2px solid $c-accent;
   border-radius: 100px;
   background: transparent;
   color: $c-accent;
   font-family: $font-body;
   font-weight: 800;
-  font-size: clamp(0.9rem, 1.15vw, 1.1rem);
+  font-size: clamp(0.82rem, 1.05vw, 1rem);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
@@ -466,152 +227,128 @@
   transform: translateY(-2px);
 }
 
-/* ——— Responsive ——— */
-@media (max-width: 768px) {
-  /* Mobile hero is a regular full-viewport intro — the desktop
-     350vh pinned-stage choreography (which is desktop-only) gets
-     short-circuited here so the section reads as a single still. */
+/* Elements for the old scroll sequence — hidden / unused */
+.hero__intro-eyebrow-inner {
+  display: none;
+}
+
+.hero__intro-eyebrow-line {
+  display: none;
+}
+
+/* Legacy footer/eyebrow elements (kept for HTML compat) */
+.hero__cta,
+.hero__eyebrow,
+.hero__eyebrow-star,
+.hero__footer-link,
+.hero__footer-chevron,
+.hero__footer-tagline {
+  display: none;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   DESKTOP (> 768px)
+   ═══════════════════════════════════════════════════════════════════
+   Larger TV, wider text area, more breathing room.
+   ═══════════════════════════════════════════════════════════════════ */
+
+@media (min-width: 769px) {
   .hero {
-    height: 100vh;
+    min-height: 700px;
   }
 
-  .hero__stage {
-    position: relative;
-    background-color: $c-peach;
-    align-items: stretch;
-    justify-content: flex-start;
-    flex-direction: column;
-    padding-top: clamp(2.25rem, 7vw, 3.4rem);
-    padding-bottom: clamp(0.8rem, 2.5vw, 1.25rem);
-    gap: 0;
-  }
-
-  /* Lighter peach disc behind the TV's base. Wide rounded top, flat
-     bottom — reads as a soft "platform" the monitor sits on. The
-     "circle part under it" the user described. */
-  .hero__platform {
+  .hero__halo {
     display: block;
-    position: absolute;
+  }
+
+  .hero__platform {
+    height: clamp(20rem, 46vh, 30rem);
     left: -8vw;
     right: -8vw;
-    bottom: 0;
-    height: 48vh;
-    background: #ffffff;
-    border-radius: 50% 50% 0 0 / 10vh 10vh 0 0;
-    z-index: 0;
-    pointer-events: none;
   }
 
-  /* TV illustration — square art (tvonwhite.webp) sized to a clean
-     column. mix-blend-mode: darken merges the white card around the
-     TV with the peach background so the asset feels embedded rather
-     than pasted on. */
+  /* Bigger TV on desktop */
   .hero__cat-wrapper {
-    position: relative;
-    top: auto;
-    left: auto;
-    margin: 0 auto;
-    align-self: center;
-    width: min(104vw, 600px);
-    transform: none;
-    height: auto;
-    aspect-ratio: 1 / 1;
-    max-width: none;
-    z-index: 2;
-    mix-blend-mode: darken;
-    flex-shrink: 0;
+    width: clamp(28rem, 38vw, 48rem);
+    transform: translate(-50%, -62%);
   }
 
-  /* The halo glow is a desktop effect — hide on mobile so it can't
-     bleed warm tones into the peach. */
+  .hero__mobile-pitch {
+    max-width: 42rem;
+    width: calc(100vw - 10rem);
+    bottom: clamp(3.5rem, 8vh, 6.5rem);
+    gap: clamp(1.2rem, 3vh, 2rem);
+  }
+
+  .hero__pitch-text {
+    font-size: clamp(1.85rem, 2.6vw, 2.8rem);
+    line-height: 1.08;
+    color: #5c5853;
+  }
+
+  .hero__pitch-cta {
+    min-height: clamp(3rem, 4vw, 3.75rem);
+    padding: 0.72em clamp(1.65em, 2.4vw, 2.1em);
+    font-size: clamp(0.85rem, 1vw, 1.05rem);
+    font-weight: 900;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   MOBILE REFINEMENTS (max-width: 768px)
+   ═══════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .hero {
+    max-height: 950px;
+  }
+
   .hero__halo {
     display: none;
   }
 
-  .hero__cat-img {
-    position: absolute;
-    inset: 0;
-    object-fit: contain;
+  /* TV: big enough to anchor the hero, but leave room for text */
+  .hero__cat-wrapper {
+    width: clamp(20rem, 78vw, 28rem);
+    transform: translate(-50%, -60%);
   }
 
-  .hero__mouth-slider {
-    -webkit-mask-image: url('../../assets/images/mobmask.webp');
-    mask-image: url('../../assets/images/mobmask.webp');
-    -webkit-mask-size: 100% 100%;
-    mask-size: 100% 100%;
+  .hero__platform {
+    left: -10vw;
+    right: -10vw;
+    height: clamp(17rem, 48vh, 24rem);
+    background: #ffffff;
+    border-radius: 50% 50% 0 0 / clamp(2.5rem, 8vh, 4.5rem) clamp(2.5rem, 8vh, 4.5rem) 0 0;
   }
 
-  /* Screen cutout measured directly from the new square mobmask.webp
-     alpha channel (bbox of opaque pixels = 1080² source canvas). */
-  .hero__mouth-track {
-    top: 33.33%;
-    left: 26.76%;
-    width: 47.5%;
-    height: 33.15%;
-  }
-
-  /* The desktop gradient + marquee + footer + intro eyebrow don't
-     apply to the mobile hero — hide cleanly so the pitch + CTA
-     stand alone. */
-  .hero__gradient,
-  .marquee,
-  .hero__footer,
-  .hero__intro-eyebrow,
-  .hero__headline,
-  .hero__sticker {
-    display: none;
-  }
-
-  /* Pitch block — Satoshi headline + outlined rust CTA. Sits over
-     the peach platform; lines animate up into view on entrance. */
   .hero__mobile-pitch {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: clamp(1.2rem, 4.2vw, 1.8rem);
-    text-align: left;
-    position: relative;
-    left: auto;
-    top: auto;
-    z-index: 3;
-    width: min(100%, 430px);
-    margin: 0 auto;
-    padding: 0 clamp(1.25rem, 5vw, 1.65rem);
-    flex-shrink: 0;
-    transform: none;
+    bottom: clamp(3rem, 7vh, 5.5rem);
+    width: calc(100vw - clamp(2.5rem, 6vw, 3.5rem));
+    max-width: 26rem;
+    gap: clamp(1rem, 3.5vh, 1.6rem);
   }
 
   .hero__pitch-text {
-    font-family: $font-body;
-    font-size: clamp(1.78rem, 7.6vw, 2.35rem);
-    font-weight: 500;
-    line-height: 1.08;
-    /* Light warm grey for body — bold runs darken to charcoal so the
-       "fast," / "mobile-ready" pull-quotes pop editorially against
-       the lighter body text. */
+    font-size: clamp(1.35rem, 5.8vw, 1.85rem);
+    line-height: 1.12;
     color: #8C857C;
-    margin: 0;
-    letter-spacing: 0;
-    display: block;
+    width: 100%;
+    max-width: none;
   }
 
   .hero__pitch-text strong {
-    font-weight: 900;
     color: #1A1A1A;
   }
 
-  /* Each line is a flex row so the entrance animation can stagger
-     translateY/opacity per line without breaking text flow. */
+  /* Staggered entrance animation per text line */
   .hero__pitch-line {
-    display: block;
     opacity: 0;
     transform: translateY(14px);
     transition: opacity 0.7s $ease-out, transform 0.7s $ease-out;
   }
 
-  /* Cascade after load — staggered via per-line delays. The
-     entrance fires once .js-loaded is on the html root (set by
-     Loader's onComplete callback). */
   html.js-loaded {
     .hero__pitch-line {
       opacity: 1;
@@ -631,25 +368,15 @@
   }
 
   .hero__pitch-cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 48px;
-    padding: 0.72em 1.65em;
-    border: 2px solid $c-accent;
-    border-radius: 100px;
-    background: transparent;
-    color: $c-accent;
-    font-family: $font-body;
+    min-height: clamp(2.6rem, 7vh, 3.2rem);
+    padding: 0.55em clamp(1.4em, 5vw, 1.8em);
+    font-size: clamp(0.82rem, 3.2vw, 0.95rem);
     font-weight: 700;
-    font-size: clamp(0.9rem, 3.45vw, 1rem);
     letter-spacing: 0.09em;
-    text-transform: uppercase;
-    text-decoration: none;
-    -webkit-tap-highlight-color: transparent;
     opacity: 0;
     transform: translateY(14px);
-    transition: opacity 0.7s $ease-out, transform 0.7s $ease-out, background 0.25s ease, color 0.25s ease;
+    transition: opacity 0.7s $ease-out, transform 0.7s $ease-out,
+                background 0.25s ease, color 0.25s ease;
   }
 
   .hero__pitch-cta:active {
@@ -658,185 +385,41 @@
   }
 }
 
-/* Final responsive hero composition. The reel overfills the TV screen cutout
-   while the shared mask keeps the rounded glass edge at every size. */
-.hero {
-  height: 350vh;
+
+/* ——— Small phones (SE, 5S) ——— */
+@media (max-width: 380px) {
+  .hero__cat-wrapper {
+    width: clamp(18rem, 76vw, 24rem);
+    transform: translate(-50%, -56%);
+  }
+
+  .hero__mobile-pitch {
+    bottom: clamp(2.5rem, 6vh, 4rem);
+    width: calc(100vw - 2rem);
+  }
+
+  .hero__pitch-text {
+    font-size: clamp(1.2rem, 5.2vw, 1.5rem);
+  }
 }
 
-.hero__stage {
-  background: $c-peach;
-}
-
-.hero__platform {
-  left: max(-12vw, -180px);
-  right: max(-12vw, -180px);
-  height: clamp(18rem, 42vh, 27rem);
-  background: $c-peach-soft;
-  border-radius: 50% 50% 0 0 / clamp(3.25rem, 8vh, 5.5rem) clamp(3.25rem, 8vh, 5.5rem) 0 0;
-}
-
-.hero__cat-wrapper {
-  top: clamp(18rem, 35vh, 22rem);
-  left: 50%;
-  width: clamp(23.5rem, min(46vw, 68vh), 43rem);
-  height: auto;
-  aspect-ratio: 1 / 1;
-  transform: translate(-50%, -50%);
-  mix-blend-mode: darken;
-}
-
-.hero__mouth-slider {
-  -webkit-mask-image: url('../../assets/images/mobmask.webp');
-  mask-image: url('../../assets/images/mobmask.webp');
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  background: transparent;
-}
-
-.hero__mouth-track {
-  inset: auto;
-  top: 32.65%;
-  left: 25.85%;
-  width: 49.35%;
-  height: 34.3%;
-}
-
-.hero__mouth-img {
-  object-fit: cover;
-}
-
-.hero__tv-overlay {
-  -webkit-mask-image: url('../../assets/images/mobmask.webp');
-  mask-image: url('../../assets/images/mobmask.webp');
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  box-shadow: none;
-}
-
-.hero__mobile-pitch {
-  top: clamp(31rem, 62vh, 38rem);
-  width: min(42rem, 46vw);
-  gap: clamp(1.5rem, 3.8vh, 2.35rem);
-}
-
-.hero__pitch-text {
-  font-size: clamp(1.9rem, 2.15vw, 2.72rem);
-  line-height: 1.1;
-  color: #5d5853;
-  max-width: 24ch;
-}
-
-.hero__pitch-text strong {
-  color: #050505;
-}
-
-.hero__pitch-cta {
-  min-height: clamp(3rem, 4vw, 3.75rem);
-  padding: 0.72em clamp(1.65em, 2.4vw, 2.1em);
-  border-color: $c-accent;
-  color: $c-accent;
-  font-size: clamp(0.82rem, 1vw, 1rem);
-  font-weight: 900;
-  letter-spacing: 0;
-}
-
-@media (max-width: 768px) {
+/* ——— Short phones ——— */
+@media (max-width: 768px) and (max-height: 680px) {
   .hero {
-    height: 100vh;
-    min-height: 620px;
-  }
-
-  .hero__stage {
-    position: relative;
-    height: 100vh;
-    min-height: 620px;
-    padding: 0;
-    overflow: hidden;
-  }
-
-  .hero__platform {
-    left: -8vw;
-    right: -8vw;
-    height: clamp(18rem, 49vh, 22.5rem);
-    background: $c-peach-soft;
-    border-radius: 50% 50% 0 0 / clamp(2.25rem, 7vh, 3.75rem) clamp(2.25rem, 7vh, 3.75rem) 0 0;
+    min-height: 560px;
   }
 
   .hero__cat-wrapper {
-    position: absolute;
-    top: clamp(14.7rem, 37vh, 16.9rem);
-    left: 50%;
-    width: min(98vw, 26rem);
-    transform: translate(-50%, -50%);
-    z-index: 2;
+    width: clamp(16rem, 68vw, 22rem);
+    transform: translate(-50%, -55%);
   }
 
   .hero__mobile-pitch {
-    position: absolute;
-    left: 50%;
-    top: clamp(26rem, 64.25vh, 28.7rem);
-    width: min(92vw, 24.5rem);
-    padding: 0;
-    gap: clamp(1rem, 3.6vh, 1.45rem);
-    align-items: flex-start;
-    transform: translateX(-50%);
+    bottom: clamp(1.5rem, 4vh, 3rem);
+    gap: clamp(0.6rem, 2vh, 1rem);
   }
 
   .hero__pitch-text {
-    width: 100%;
-    max-width: none;
-    font-size: clamp(1.28rem, 5.35vw, 1.64rem);
-    line-height: 1.12;
-  }
-
-  .hero__pitch-line {
-    opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 0.7s $ease-out, transform 0.7s $ease-out;
-  }
-
-  html.js-loaded {
-    .hero__pitch-line {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .hero__pitch-line:nth-child(1) { transition-delay: 0.10s; }
-    .hero__pitch-line:nth-child(2) { transition-delay: 0.18s; }
-    .hero__pitch-line:nth-child(3) { transition-delay: 0.26s; }
-    .hero__pitch-line:nth-child(4) { transition-delay: 0.34s; }
-    .hero__pitch-line:nth-child(5) { transition-delay: 0.42s; }
-
-    .hero__pitch-cta {
-      opacity: 1;
-      transform: translateY(0);
-      transition-delay: 0.55s;
-    }
-  }
-
-  .hero__pitch-cta {
-    min-height: clamp(2.55rem, 6.5vh, 2.85rem);
-    padding: 0.42em clamp(1.35em, 5vw, 1.65em);
-    font-size: clamp(0.76rem, 3vw, 0.88rem);
-    opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 0.7s $ease-out, transform 0.7s $ease-out, background 0.25s ease, color 0.25s ease;
-  }
-}
-
-@media (max-width: 380px) and (max-height: 700px) {
-  .hero__cat-wrapper {
-    top: 14.15rem;
-    width: min(96vw, 24.6rem);
-  }
-
-  .hero__mobile-pitch {
-    top: 25.65rem;
-  }
-
-  .hero__pitch-text {
-    font-size: clamp(1.2rem, 5.15vw, 1.48rem);
+    font-size: clamp(1.1rem, 4.8vw, 1.35rem);
   }
 }

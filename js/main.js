@@ -8,8 +8,6 @@ import SmoothScroll from './modules/SmoothScroll.js';
 import Menu from './modules/Menu.js';
 import ScrollReveal from './modules/ScrollReveal.js';
 import HeroScroll from './modules/HeroScroll.js';
-import ProjectsScroll from './modules/ProjectsScroll.js';
-import FeaturedProjects from './modules/FeaturedProjects.js';
 import NavTheme from './modules/NavTheme.js';
 import Faq from './modules/Faq.js';
 import Loader from './modules/Loader.js';
@@ -21,8 +19,6 @@ const smoothScroll = new SmoothScroll();
 const menu = new Menu();
 const scrollReveal = new ScrollReveal();
 const heroScroll = new HeroScroll();
-const projectsScroll = new ProjectsScroll();
-const featuredProjects = new FeaturedProjects();
 const navTheme = new NavTheme();
 const faq = new Faq();
 

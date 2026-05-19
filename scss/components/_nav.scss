@@ -464,5 +464,9 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
     width: 28px;
     height: 16px;
   }
+
+  .nav__menu-btn.is-open .nav__menu-line {
+    background: #ffffff;
+  }
 }
 

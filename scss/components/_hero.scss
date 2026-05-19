@@ -175,21 +175,6 @@
   will-change: transform;
 }
 
-/* Hairline cream divider above the footer row — separates the rust
-   gradient band from the footer eyebrow / CTA / link cluster. */
-.hero__divider {
-  position: absolute;
-  left: clamp(1.25rem, 4vw, 3rem);
-  right: clamp(1.25rem, 4vw, 3rem);
-  bottom: calc(clamp(1.75rem, 4vh, 3rem) + clamp(2.25rem, 4vh, 3.25rem));
-  height: 1px;
-  margin: 0;
-  border: 0;
-  background: rgba(246, 242, 235, 0.4);
-  z-index: 14;
-  pointer-events: none;
-}
-
 /* ——— Featured Projects intro eyebrow ———
    Lives inside the hero stage so it can rise into view as the stage turns
    white. Stays visible until the hero unpinns and scrolls away (which the
@@ -295,10 +280,10 @@
   align-items: center;
   background: $c-accent;
   color: $c-soft;
-  font-family: $font-display;
-  font-weight: 800;
+  font-family: $font-body; /* Satoshi — readable as a button label */
+  font-weight: 700;
   font-size: clamp(0.85rem, 1.1vw, 1.05rem);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   text-decoration: none;
   padding: clamp(0.7em, 1vw, 0.95em) clamp(1.15em, 1.7vw, 1.55em);
@@ -465,8 +450,7 @@
   }
 
   .hero__footer-link,
-  .hero__eyebrow,
-  .hero__divider {
+  .hero__eyebrow {
     display: none;
   }
 

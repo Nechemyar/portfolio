@@ -16,13 +16,7 @@ import Loader from './modules/Loader.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Hide hero elements until loader finishes
-gsap.set('.nav', { autoAlpha: 0, y: -30 });
-gsap.set('.marquee', { autoAlpha: 0, y: 60 });
-gsap.set('.hero__footer', { autoAlpha: 0, y: 40 });
-gsap.set('.hero__gradient', { autoAlpha: 0 });
-
-// Boot modules NOW (during loader) so content is ready
+// Boot modules during loader so content is ready
 const smoothScroll = new SmoothScroll();
 const menu = new Menu();
 const scrollReveal = new ScrollReveal();
@@ -32,37 +26,11 @@ const featuredProjects = new FeaturedProjects();
 const navTheme = new NavTheme();
 const faq = new Faq();
 
-// Boot the loader, then reveal the hero
+/* Hero paints in its final state — no fade-in choreography. The previous
+   entrance animated nav / marquee / gradient / footer in from offset
+   positions, but the stage colour underneath those elements isn't an
+   exact match for the page, so the staged fade revealed colour seams.
+   Showing the hero immediately at full opacity sidesteps the issue. */
 new Loader(() => {
   document.documentElement.classList.add('js-loaded');
-
-  // ——— Awwwards-level entrance choreography ———
-  const entrance = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-  // Nav slides down from above
-  entrance.to('.nav', {
-    autoAlpha: 1,
-    y: 0,
-    duration: 0.8,
-  });
-
-  // Marquee text rises from below
-  entrance.to('.marquee', {
-    autoAlpha: 1,
-    y: 0,
-    duration: 1,
-  }, '-=0.5');
-
-  // Bottom gradient fades in
-  entrance.to('.hero__gradient', {
-    autoAlpha: 1,
-    duration: 0.8,
-  }, '-=0.6');
-
-  // Footer bar rises in
-  entrance.to('.hero__footer', {
-    autoAlpha: 1,
-    y: 0,
-    duration: 0.8,
-  }, '-=0.6');
 });

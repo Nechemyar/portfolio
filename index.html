@@ -20,9 +20,10 @@
        reflow when the variable woff2 lands. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&f[]=bonny@400,700,900&display=swap" />
-  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&f[]=bonny@400,700,900&display=swap" media="print" onload="this.media='all'" />
-  <noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&f[]=bonny@400,700,900&display=swap" /></noscript>
+  <link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" />
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" /></noscript>
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/ClashDisplay-Variable.woff2" />
 
   <!-- LCP image preload — preload the hero composition so the first paint
        has both the screen content (visible through the mask window) and the
@@ -167,7 +168,6 @@
         <!-- HERO FOOTER — three columns on PC (eyebrow flanks the
              CTA), CTA-only centered on mobile -->
         <div class="hero__gradient"></div>
-        <hr class="hero__divider" aria-hidden="true" />
         <div class="hero__footer">
           <span class="hero__eyebrow">
             <img class="hero__eyebrow-star" src="assets/images/star.svg" alt="" />

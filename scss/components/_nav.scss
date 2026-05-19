@@ -23,6 +23,7 @@
 
 /* ——— Logo ——— */
 .nav__logo {
+  grid-column: 2;
   justify-self: center;
   display: inline-flex;
   align-items: center;
@@ -81,10 +82,10 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   padding: 0 $nav-pill-padding-x;
   background: $c-accent;
   color: $c-soft;
-  font-family: $font-display;
-  font-weight: 800;
+  font-family: $font-body; /* Satoshi for buttons — Clash too display-y here */
+  font-weight: 700;
   font-size: clamp(0.78rem, 1vw, 0.95rem);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   white-space: nowrap;
   border-radius: 6px;
@@ -93,6 +94,7 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
 }
 
 .nav__cta--left {
+  grid-column: 1;
   justify-self: start;
 }
 
@@ -101,17 +103,14 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   background: #D85E36;
 }
 
-/* MENU wrapper sits in the right column. */
-.nav__desktop-wrapper {
-  justify-self: end;
-}
-
 /* ——— Desktop Expanding Wrapper ———
    Outlined charcoal pill, not a second rust block — gives a clear
    primary/secondary read against the CTA next to it. Width is exactly
    the menu button's content; on hover it grows to reveal the inline
    links list. */
 .nav__desktop-wrapper {
+  grid-column: 3;
+  justify-self: end;
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
@@ -190,12 +189,12 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
 }
 
 .nav__menu-label {
-  font-family: $font-display;
+  font-family: $font-body; /* Satoshi — matches the CTA pill */
   font-size: clamp(0.78rem, 1vw, 0.95rem);
-  font-weight: 800;
+  font-weight: 700;
   color: $c-soft;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   white-space: nowrap;
   line-height: 1;
 }

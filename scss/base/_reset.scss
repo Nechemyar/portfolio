@@ -34,6 +34,18 @@ a, button, .btn {
   color: inherit;
   text-decoration: none;
   cursor: url('/assets/images/cursor-pointer.svg') 12 12, pointer !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Kill the default flash that Android/iOS paint on any tapped
+   element. The cursors above already handle the desktop affordance;
+   on mobile the buttons just shouldn't flash blue. */
+@media (max-width: 768px) {
+  *,
+  *::before,
+  *::after {
+    -webkit-tap-highlight-color: transparent;
+  }
 }
 
 h1, h2, h3, h4, h5, p, span {

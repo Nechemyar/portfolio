@@ -33,4 +33,7 @@ const faq = new Faq();
    Showing the hero immediately at full opacity sidesteps the issue. */
 new Loader(() => {
   document.documentElement.classList.add('js-loaded');
+  /* Nav entrance — flips on the wordmark fade and the hamburger
+     line slide-in once the loader has cleared. */
+  document.getElementById('nav')?.classList.add('is-ready');
 });

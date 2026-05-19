@@ -29,7 +29,7 @@
        has both the screen content (visible through the mask window) and the
        hero foreground. -->
   <link rel="preload" as="image" href="assets/images/web-hero.webp" media="(min-width: 769px)" fetchpriority="high" />
-  <link rel="preload" as="image" href="assets/images/mobile-hero.webp" media="(max-width: 768px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/images/tvonwhite.webp" media="(max-width: 768px)" fetchpriority="high" />
   <link rel="preload" as="image" href="assets/images/project-choice.webp" fetchpriority="high" />
 
   <!-- CSS -->
@@ -60,12 +60,23 @@
           <span class="nav__logo-wordmark-line">SUMI</span>
           <span class="nav__logo-wordmark-sub">STUDIOS</span>
         </span>
+        <!-- Mobile-only wordmark — the inked SVG matches the hero
+             illustration's brushwork better than the system-styled
+             text wordmark used on desktop. -->
+        <img class="nav__logo-svg" src="assets/images/Wordmark.svg" alt="SUMI Studios" />
       </a>
       <div class="nav__desktop-wrapper">
         <button class="nav__menu-btn" id="menu-toggle" aria-label="Open menu">
           <span class="nav__menu-label">MENU</span>
           <span class="nav__menu-icon">
             <img class="nav__menu-cross" src="assets/images/Cross.svg" alt="" />
+            <!-- Mobile-only 2-line hamburger that morphs to an X via
+                 .is-open. Lives alongside the desktop Cross so the
+                 desktop pill stays unchanged. -->
+            <span class="nav__menu-lines" aria-hidden="true">
+              <span class="nav__menu-line nav__menu-line--top"></span>
+              <span class="nav__menu-line nav__menu-line--bottom"></span>
+            </span>
           </span>
         </button>
         <div class="nav__desktop-links">
@@ -82,12 +93,6 @@
   <!-- MOBILE MENU -->
   <div class="menu-overlay" id="menu-overlay"></div>
   <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
-    <button class="mobile-menu__close" id="mobile-menu-close" aria-label="Close menu">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A1A19" stroke-width="2.5" stroke-linecap="round">
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
-    </button>
     <div class="mobile-menu__content">
       <a href="https://api.whatsapp.com/send/?phone=972585152321&text=Hi%20Nechemya%2C%20I%27d%20like%20to%20discuss%20a%20project.&type=phone_number" target="_blank" rel="noopener noreferrer" class="mobile-menu__whatsapp menu-item" aria-label="WhatsApp">
         <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24">
@@ -111,6 +116,10 @@
     <!-- HERO (tall trigger, pinned sticky stage) -->
     <section class="hero" id="hero" data-nav-theme="light">
       <div class="hero__stage">
+        <!-- Rounded peach platform — sits behind the TV on mobile so
+             the TV reads as resting on a softer disc. Desktop hides
+             it; the scroll/pin sequence is untouched. -->
+        <div class="hero__platform" aria-hidden="true"></div>
         <!-- z=1: Looping reel, mask-clipped to the cat's screen interior -->
         <div class="hero__cat-wrapper">
           <div class="hero__halo"></div>
@@ -124,9 +133,23 @@
             <div class="hero__tv-overlay"></div>
           </div>
           <picture>
-            <source media="(max-width: 768px)" srcset="assets/images/mobile-hero.webp" />
+            <source media="(max-width: 768px)" srcset="assets/images/tvonwhite.webp" />
             <img class="hero__cat-img" src="assets/images/web-hero.webp" alt="" fetchpriority="high" decoding="async" />
           </picture>
+        </div>
+
+        <!-- Mobile-only headline + CTA. Sits over the peach platform
+             below the TV, hidden on desktop where the marquee +
+             footer do the talking. -->
+        <div class="hero__mobile-pitch" aria-hidden="false">
+          <h1 class="hero__pitch-text">
+            <span class="hero__pitch-line">We design and build <strong>fast,</strong></span>
+            <span class="hero__pitch-line">stunning, <strong>mobile-ready</strong></span>
+            <span class="hero__pitch-line">websites for service</span>
+            <span class="hero__pitch-line">businesses that want to</span>
+            <span class="hero__pitch-line">stand out</span>
+          </h1>
+          <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="hero__pitch-cta">Book a free call</a>
         </div>
 
         <!-- GIANT MARQUEE -->

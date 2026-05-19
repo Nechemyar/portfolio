@@ -44,6 +44,25 @@
   flex-shrink: 0;
 }
 
+/* Mobile-only SVG wordmark — hidden on desktop so the existing
+   icon + text combo continues to drive the centred logo there. */
+.nav__logo-svg {
+  display: none;
+  height: clamp(38px, 11vw, 56px);
+  width: auto;
+  object-fit: contain;
+  /* Fade/lift in from a slight offset — drives the entrance
+     animation when the Loader removes its initial state. */
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.7s $ease-out 0.1s, transform 0.7s $ease-out 0.1s;
+}
+
+.nav.is-ready .nav__logo-svg {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .nav__logo-wordmark {
   display: inline-flex;
   flex-direction: column;
@@ -218,11 +237,113 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   transition: transform $duration-fast $ease-out;
 }
 
+/* Two-line hamburger — mobile only. Lines start hidden and slide in
+   from a slight offset when .nav.is-ready is set, then snap into an
+   X on .is-open. */
+.nav__menu-lines {
+  display: none;
+  position: relative;
+  width: 22px;
+  height: 14px;
+}
+
+.nav__menu-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: $c-bg;
+  border-radius: 2px;
+  transform-origin: 50% 50%;
+  /* Translate is animated by .nav.is-ready for the entrance; the
+     X morph is driven by .is-open. Keep the two on separate
+     properties so they don't fight. */
+  opacity: 0;
+  transition:
+    opacity 0.55s $ease-out,
+    top 0.35s $ease-out,
+    transform 0.35s $ease-out,
+    width 0.35s $ease-out;
+}
+
+.nav__menu-line--top    { top: 4px;  transform: translateX(-14px); }
+.nav__menu-line--bottom { top: 11px; transform: translateX(14px); }
+
+.nav.is-ready {
+  .nav__menu-line--top,
+  .nav__menu-line--bottom {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 /* Hide the CTA pill from the bar on mobile — it lives inside the menu
-   overlay instead, so the bar reads as just logo + MENU. */
+   overlay instead, so the bar reads as just logo + hamburger. */
 @media (max-width: 768px) {
+  .nav {
+    padding: 1.1rem 1.25rem;
+  }
+
   .nav__cta {
     display: none;
+  }
+
+  /* On mobile the grid collapses to two columns: logo on the left,
+     menu button on the right. */
+  .nav__inner {
+    grid-template-columns: 1fr auto;
+  }
+
+  /* Hide the text wordmark + icon-mark combo; the SVG wordmark
+     takes over so the brushwork mark matches the hero illustration. */
+  .nav__logo {
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  .nav__logo-mark,
+  .nav__logo-wordmark {
+    display: none;
+  }
+
+  .nav__logo-svg {
+    display: block;
+  }
+
+  /* Right column hosts only the hamburger — the desktop expanding
+     wrapper UX has no role here. */
+  .nav__desktop-wrapper {
+    grid-column: 2;
+    background: transparent;
+    height: auto;
+    overflow: visible;
+  }
+
+  .nav__desktop-links {
+    display: none;
+  }
+
+  .nav__menu-btn {
+    padding: 8px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .nav__menu-label,
+  .nav__menu-cross {
+    display: none;
+  }
+
+  /* Override the desktop icon-box constraint — on mobile the icon
+     IS the hamburger, so it needs to grow to host the lines. */
+  .nav__menu-icon {
+    width: 28px;
+    height: 16px;
+  }
+
+  .nav__menu-lines {
+    display: block;
+    width: 28px;
+    height: 16px;
   }
 }
 
@@ -232,5 +353,18 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
 
 .nav__menu-btn.is-open .nav__menu-cross {
   transform: rotate(45deg);
+}
+
+/* Two-line → X morph. Both lines slide to vertical centre then rotate
+   into an X. Keep the rotations equal-and-opposite so the cross sits
+   true. */
+.nav__menu-btn.is-open .nav__menu-line--top {
+  top: 7px;
+  transform: rotate(45deg);
+}
+
+.nav__menu-btn.is-open .nav__menu-line--bottom {
+  top: 7px;
+  transform: rotate(-45deg);
 }
 

@@ -30,6 +30,11 @@ export default class ProjectsScroll {
   }
 
   init() {
+    /* Mobile uses a still hero — no pinning, no exit choreography —
+       so the desktop scroll/transform stack would only shove the TV
+       off-canvas. Bail before it touches the wrapper. */
+    if (window.matchMedia('(max-width: 768px)').matches) return;
+
     const hero = document.querySelector('.hero');
     const stage = document.querySelector('.hero__stage');
     const wrapper = document.querySelector('.hero__cat-wrapper');

@@ -22,6 +22,12 @@ $c-rust: #C7512D;
 $c-charcoal: #1A1A1A;
 $c-forest: #19423D;
 
+// Mobile hero palette — peach pair used as the section bg + the
+// rounded "platform" the TV sits on. Kept as separate tokens so the
+// hero is the only thing that owns this colour relationship.
+$c-peach: #F4DFD0;
+$c-peach-soft: #F9ECE8;
+
 $c-bg: $c-charcoal;
 $c-bg-elevated: #24211F;
 $c-text: $c-cream;

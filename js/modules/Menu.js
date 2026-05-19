@@ -5,7 +5,6 @@ export default class Menu {
     this.toggle = document.getElementById('menu-toggle');
     this.menu = document.getElementById('mobile-menu');
     this.overlay = document.getElementById('menu-overlay');
-    this.closeBtn = document.getElementById('mobile-menu-close');
     this.menuLinks = this.menu.querySelectorAll('.menu-item');
     this.isOpen = false;
 
@@ -18,7 +17,6 @@ export default class Menu {
     });
 
     this.overlay.addEventListener('click', () => this.close());
-    this.closeBtn.addEventListener('click', () => this.close());
 
     this.menuLinks.forEach((link) => {
       link.addEventListener('click', () => this.close());

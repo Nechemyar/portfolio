@@ -15,13 +15,14 @@
   overflow: hidden;
   background: #faf9f7;
   isolation: isolate;
-  padding: clamp(6.75rem, 13vh, 8.5rem) clamp(1.5rem, 3.4vw, 4.25rem) clamp(1.5rem, 3vw, 2.75rem);
+  padding: clamp(6.75rem, 13vh, 8.5rem) clamp(0.75rem, 1.2vw, 1.25rem) clamp(1rem, 2vw, 1.5rem);
 }
 
 .hero__layout {
   display: grid;
   grid-template-columns: minmax(27rem, 0.9fr) minmax(32rem, 1.1fr);
-  gap: clamp(1rem, 1.6vw, 1.75rem);
+  grid-template-rows: 1fr auto;
+  gap: clamp(0.5rem, 0.8vw, 0.75rem);
   width: 100%;
   max-width: 96rem;
   margin: 0 auto;
@@ -35,7 +36,7 @@
   min-width: 0;
   overflow: hidden;
   border: clamp(2px, 0.22vw, 4px) solid #0b0b0b;
-  border-radius: clamp(1rem, 1.8vw, 1.6rem);
+  border-radius: 14px;
   background: #faf9f7;
 }
 
@@ -43,17 +44,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(1.8rem, 3vw, 3.75rem) clamp(1.9rem, 3.2vw, 4rem);
+  padding: clamp(1.2rem, 2vw, 2rem) clamp(1.25rem, 2.2vw, 2.25rem);
 }
 
 .hero__brand-title {
-  margin: 0 0 clamp(1rem, 2.5vh, 2rem);
-  color: #050505;
-  font-family: $font-body;
-  font-size: clamp(3.45rem, 5.6vw, 6.6rem);
-  font-weight: 900;
-  letter-spacing: 0;
-  line-height: 0.9;
+  display: none;
 }
 
 .hero__mobile-pitch {
@@ -69,14 +64,15 @@
 }
 
 .hero__kicker {
-  margin: 0 0 clamp(0.35rem, 0.8vw, 0.65rem);
+  margin: 0 0 clamp(0.25rem, 0.6vw, 0.45rem);
   color: #050505;
   font-family: $font-body;
   font-size: clamp(0.78rem, 1.08vw, 1.18rem);
-  font-weight: 900;
+  font-weight: 500;
   letter-spacing: 0;
   line-height: 1;
   text-transform: uppercase;
+  width: 100%;
 }
 
 .hero__pitch-text {
@@ -90,8 +86,8 @@
   color: #050505;
   font-family: $font-body;
   font-size: clamp(2.1rem, 3.18vw, 4.15rem);
-  font-weight: 900;
-  line-height: 0.94;
+  font-weight: 700;
+  line-height: 1.1;
   letter-spacing: 0;
 }
 
@@ -118,7 +114,7 @@
   max-width: 100%;
   overflow: hidden;
   border: 2px solid #0b0b0b;
-  border-radius: 999px;
+  border-radius: 8px;
   background: #f5e4de;
   transform: translateY(0.02em);
 }
@@ -165,15 +161,15 @@
   justify-content: center;
   width: 100%;
   min-height: clamp(2.85rem, 3.8vw, 4.35rem);
-  margin-top: clamp(0.85rem, 1.75vw, 1.55rem);
+  margin-top: clamp(0.5rem, 1vw, 0.85rem);
   padding: 0.65em 1.5em;
-  border: clamp(2px, 0.2vw, 3px) solid #0b0b0b;
-  border-radius: clamp(0.75rem, 1.1vw, 1rem);
-  background: #ff9a7e;
+  border: 3px solid #0b0b0b;
+  border-radius: 8px;
+  background: #FF9C7D;
   color: #050505;
   font-family: $font-body;
   font-size: clamp(0.92rem, 1.3vw, 1.45rem);
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 0;
   line-height: 1;
   text-transform: uppercase;
@@ -182,7 +178,7 @@
 }
 
 .hero__pitch-cta:hover {
-  background: #ff8766;
+  background: #f08a68;
   transform: translateY(-2px);
 }
 
@@ -191,6 +187,61 @@
   flex-direction: column;
   justify-content: flex-end;
   background: #f8ebe7;
+  grid-column: 2;
+  grid-row: 1 / -1;
+}
+
+/* ── "Say hello" card — sits below the copy-card on the left ── */
+.hero__hello-card {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border: clamp(2px, 0.22vw, 4px) solid #0b0b0b;
+  border-radius: 14px;
+  background: #faf9f7;
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(1rem, 1.6vw, 1.5rem) clamp(1.25rem, 2.2vw, 2.25rem);
+  gap: 1rem;
+}
+
+.hero__hello-title {
+  margin: 0;
+  color: #050505;
+  font-family: $font-body;
+  font-size: clamp(1.6rem, 2.4vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.hero__hello-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6em 1.2em;
+  border: 3px solid #0b0b0b;
+  border-radius: 8px;
+  background: #FF9C7D;
+  color: #050505;
+  font-family: $font-body;
+  font-size: clamp(0.8rem, 1.1vw, 1.05rem);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.25s ease, transform $duration-fast $ease-out;
+}
+
+.hero__hello-cta:hover {
+  background: #f08a68;
+  transform: translateY(-2px);
 }
 
 .hero__tv-scene {
@@ -378,9 +429,10 @@ html.js-loaded {
 
   .hero__layout {
     grid-template-columns: 1fr;
+    grid-template-rows: auto;
     height: auto;
     min-height: auto;
-    gap: clamp(1rem, 4vw, 1.5rem);
+    gap: clamp(0.6rem, 2.5vw, 1rem);
   }
 
   .hero__copy-card {
@@ -436,6 +488,8 @@ html.js-loaded {
   }
 
   .hero__work-card {
+    grid-column: 1;
+    grid-row: auto;
     min-height: clamp(28rem, 82vh, 40rem);
   }
 
@@ -447,5 +501,19 @@ html.js-loaded {
   .hero__work-title {
     font-size: clamp(2.9rem, 16vw, 5.5rem);
     white-space: normal;
+  }
+
+  .hero__hello-card {
+    grid-column: 1;
+    grid-row: auto;
+    padding: clamp(1rem, 4vw, 1.25rem) clamp(1.25rem, 5vw, 1.5rem);
+  }
+
+  .hero__hello-title {
+    font-size: clamp(1.4rem, 6vw, 1.8rem);
+  }
+
+  .hero__hello-cta {
+    font-size: clamp(0.75rem, 3vw, 0.9rem);
   }
 }

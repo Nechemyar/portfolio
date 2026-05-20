@@ -37,8 +37,29 @@
   visibility: visible;
 }
 
+.mobile-menu__close-pill {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 42px;
+  height: 12px;
+  background: #919191;
+  border: 2px solid #000;
+  border-radius: 99px;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+  transition: transform $duration-fast ease, background $duration-fast ease;
+}
+
+.mobile-menu__close-pill:hover {
+  transform: translateY(-2px);
+  background: #7a7a7a;
+}
+
 .mobile-menu__content {
   padding: 1.25rem;
+  padding-top: 2rem; /* Add some padding so the content doesn't overlap the absolute positioned pill */
 }
 
 /* ── Nav links ─────────────────────────────────── */
@@ -55,10 +76,10 @@
 .mobile-menu__link {
   display: block;
   font-family: $font-body;
-  font-size: clamp(2rem, 8.5vw, 3rem);
+  font-size: clamp(2.25rem, 9vw, 3.5rem);
   font-weight: 700;
   padding: 0.05em 0;
-  line-height: 1.5;
+  line-height: 1.15;
   letter-spacing: -0.01em;
   color: #000;
   text-transform: uppercase;
@@ -68,9 +89,12 @@
 
 /* ── Divider line under Contact ────────────────── */
 .mobile-menu__nav li:last-child {
+  margin-bottom: 1rem;
+}
+
+.mobile-menu__nav li:last-child .mobile-menu__link {
   border-bottom: 1px solid #000;
   padding-bottom: 0.15em;
-  margin-bottom: 1rem;
 }
 
 /* ── Action buttons row ────────────────────────── */
@@ -94,7 +118,7 @@
   font-size: clamp(0.85rem, 3.2vw, 1rem);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  border: 3px solid #000;
+  border: 2px solid #000;
   border-radius: 8px;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
@@ -114,7 +138,7 @@
   width: clamp(56px, 14vw, 64px);
   flex-shrink: 0;
   background: #80FF80;
-  border: 3px solid #000;
+  border: 2px solid #000;
   border-radius: 8px;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;

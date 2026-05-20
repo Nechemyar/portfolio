@@ -32,4 +32,5 @@ new Loader(() => {
   /* Nav entrance — flips on the wordmark fade and the hamburger
      line slide-in once the loader has cleared. */
   document.getElementById('nav')?.classList.add('is-ready');
+  document.dispatchEvent(new CustomEvent('hero:ready'));
 });

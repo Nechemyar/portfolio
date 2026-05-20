@@ -10,6 +10,7 @@ export default class HeroScroll {
 
   init() {
     this.initMouthSlider();
+    this.initPillReveal();
     this.initCardsFan();
     this.initMarquee();
   }
@@ -29,6 +30,60 @@ export default class HeroScroll {
       currentIndex = (currentIndex + 1) % items.length;
       gsap.set(items[currentIndex], { opacity: 1 });
     }, 1000); // 1-second cuts
+  }
+
+  initPillReveal() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const pills = document.querySelectorAll('.hero__media-pill');
+    if (!pills.length) return;
+
+    gsap.registerEase('pillExpand', (progress) => 1 - Math.pow(1 - progress, 4));
+
+    pills.forEach((pill) => {
+      const finalWidth = pill.getBoundingClientRect().width;
+      pill.style.setProperty('--pill-target-width', `${finalWidth}px`);
+      gsap.set(pill, { width: 0 });
+    });
+
+    let hasPlayed = false;
+
+    const play = () => {
+      if (hasPlayed) return;
+      hasPlayed = true;
+
+      gsap.to(pills, {
+        width: (index, pill) => pill.style.getPropertyValue('--pill-target-width'),
+        duration: 0.82,
+        stagger: 0.075,
+        ease: 'pillExpand',
+        delay: 0.08,
+        onComplete: () => {
+          pills.forEach((pill) => {
+            pill.style.width = '';
+          });
+        },
+      });
+    };
+
+    if (document.documentElement.classList.contains('js-loaded')) {
+      play();
+      return;
+    }
+
+    document.addEventListener('hero:ready', play, { once: true });
+    window.setTimeout(play, 2600);
+
+    const observer = new MutationObserver(() => {
+      if (!document.documentElement.classList.contains('js-loaded')) return;
+      observer.disconnect();
+      play();
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
   }
 
   initCardsFan() {

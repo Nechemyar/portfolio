@@ -18,15 +18,19 @@
        paint unblocked while the browser swaps the family in when ready. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" />
-  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" media="print" onload="this.media='all'" />
-  <noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" /></noscript>
+  <link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&f[]=clash-display@500,600,700&display=swap" />
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&f[]=clash-display@500,600,700&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&f[]=clash-display@500,600,700&display=swap" /></noscript>
 
   <!-- LCP image preload — preload the hero composition so the first paint
        has both the screen content (visible through the mask window) and the
        hero foreground. -->
   <link rel="preload" as="image" href="assets/images/tvonwhite.webp" fetchpriority="high" />
   <link rel="preload" as="image" href="assets/images/project-choice.webp" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/images/fast.webp" />
+  <link rel="preload" as="image" href="assets/images/stunning.webp" />
+  <link rel="preload" as="image" href="assets/images/mobile.webp" />
+  <link rel="preload" as="image" href="assets/images/websites.webp" />
 
   <!-- CSS -->
   <link rel="stylesheet" href="scss/main.scss" />
@@ -106,38 +110,64 @@
     <!-- HERO (tall trigger, pinned sticky stage) -->
     <section class="hero" id="hero" data-nav-theme="light">
       <div class="hero__stage">
-        <!-- Rounded peach platform — sits behind the TV on mobile so
-             the TV reads as resting on a softer disc. Desktop hides
-             it; the scroll/pin sequence is untouched. -->
-        <div class="hero__platform" aria-hidden="true"></div>
-        <!-- z=1: Looping reel, mask-clipped to the cat's screen interior -->
-        <div class="hero__cat-wrapper hero__cat-wrapper--base">
-          <div class="hero__halo"></div>
-          <img class="hero__cat-img" src="assets/images/tvonwhite.webp" alt="" fetchpriority="high" decoding="async" />
-        </div>
-        <div class="hero__cat-wrapper hero__cat-wrapper--screen">
-          <div class="hero__mouth-slider" id="mouth-slider">
-            <div class="hero__mouth-track" id="mouth-track">
-              <img class="hero__mouth-img hero__mouth-img--first" src="assets/images/project-choice.webp" alt="Choice Inventory" fetchpriority="high" decoding="async" />
-              <img class="hero__mouth-img" src="assets/images/project-clinical.webp" alt="Clinical Assessments" decoding="async" />
-              <img class="hero__mouth-img" src="assets/images/project-choice.webp" alt="" />
-              <img class="hero__mouth-img" src="assets/images/project-clinical.webp" alt="" />
+        <div class="hero__layout">
+          <article class="hero__copy-card">
+            <h1 class="hero__brand-title">SUMI?</h1>
+            <div class="hero__mobile-pitch" aria-hidden="false">
+              <p class="hero__kicker">Trusted by service businesses worldwide</p>
+              <div class="hero__pitch-text" role="heading" aria-level="2" aria-label="We build fast, stunning, mobile-ready websites for service businesses">
+                <span class="hero__pitch-line hero__pitch-line--one">
+                  <span>We build</span>
+                  <span class="hero__media-pill hero__media-pill--fast" aria-hidden="true">
+                    <img class="hero__media-pill-img" src="assets/images/fast.webp" alt="" decoding="async" />
+                  </span>
+                  <span>fast,</span>
+                </span>
+                <span class="hero__pitch-line hero__pitch-line--two">
+                  <span class="hero__media-pill hero__media-pill--stunning" aria-hidden="true">
+                    <img class="hero__media-pill-img" src="assets/images/stunning.webp" alt="" decoding="async" />
+                  </span>
+                  <span>stunning,</span>
+                </span>
+                <span class="hero__pitch-line hero__pitch-line--three">
+                  <span>mobile-ready</span>
+                  <span class="hero__media-pill hero__media-pill--mobile" aria-hidden="true">
+                    <img class="hero__media-pill-img" src="assets/images/mobile.webp" alt="" decoding="async" />
+                  </span>
+                </span>
+                <span class="hero__pitch-line hero__pitch-line--four">
+                  <span>websites</span>
+                  <span class="hero__media-pill hero__media-pill--websites" aria-hidden="true">
+                    <img class="hero__media-pill-img" src="assets/images/websites.webp" alt="" decoding="async" />
+                  </span>
+                  <span>for</span>
+                </span>
+                <span class="hero__pitch-line hero__pitch-line--five">service businesses</span>
+              </div>
+              <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="hero__pitch-cta">Book a free call</a>
             </div>
-            <div class="hero__tv-overlay"></div>
-          </div>
-        </div>
+          </article>
 
-        <!-- Mobile-only headline + CTA. Sits over the peach platform
-             below the TV, hidden on desktop where the marquee +
-             footer do the talking. -->
-        <div class="hero__mobile-pitch" aria-hidden="false">
-          <h1 class="hero__pitch-text">
-            <span class="hero__pitch-line">We design and build <strong>fast,</strong></span>
-            <span class="hero__pitch-line">stunning, <strong>mobile-ready</strong></span>
-            <span class="hero__pitch-line">websites for service businesses</span>
-            <span class="hero__pitch-line">that want to stand out</span>
-          </h1>
-          <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="hero__pitch-cta">Book a free call</a>
+          <article class="hero__work-card" aria-label="Featured work preview">
+            <div class="hero__tv-scene">
+              <div class="hero__cat-wrapper hero__cat-wrapper--base">
+                <div class="hero__halo"></div>
+                <img class="hero__cat-img" src="assets/images/tvonwhite.webp" alt="" fetchpriority="high" decoding="async" />
+              </div>
+              <div class="hero__cat-wrapper hero__cat-wrapper--screen">
+                <div class="hero__mouth-slider" id="mouth-slider">
+                  <div class="hero__mouth-track" id="mouth-track">
+                    <img class="hero__mouth-img hero__mouth-img--first" src="assets/images/project-choice.webp" alt="Choice Inventory" fetchpriority="high" decoding="async" />
+                    <img class="hero__mouth-img" src="assets/images/project-clinical.webp" alt="Clinical Assessments" decoding="async" />
+                    <img class="hero__mouth-img" src="assets/images/project-choice.webp" alt="" />
+                    <img class="hero__mouth-img" src="assets/images/project-clinical.webp" alt="" />
+                  </div>
+                  <div class="hero__tv-overlay"></div>
+                </div>
+              </div>
+            </div>
+            <h2 class="hero__work-title">Featured Work</h2>
+          </article>
         </div>
 
         <!-- GIANT MARQUEE -->
@@ -412,7 +442,7 @@
         <p class="contact__sub">Drop me an email or send a WhatsApp.<br />Let's get your brand online properly.</p>
         <div class="contact__buttons">
           <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Book a free call</a>
-          <a href="mailto:nechemyar@gmail.com" class="btn btn--secondary">nechemyar@gmail.com</a>
+          <a href="mailto:hello@sumistudios.com" class="btn btn--secondary">hello@sumistudios.com</a>
           <a href="https://api.whatsapp.com/send/?phone=972585152321&text=Hi%20Nechemya%2C%20I%27d%20like%20to%20discuss%20a%20project.&type=phone_number" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">WhatsApp</a>
         </div>
       </div>

@@ -4,11 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Nechemya — Premium Web Design for Businesses That Give a Damn</title>
+  <title>Sumi Studios</title>
   <meta name="description" content="Premium websites, hand-coded and designed to convert. No templates. No AI slop. Starting from £3,000." />
   <link rel="canonical" href="https://nechemya.com/" />
+  
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon-fq8mulc8.svg" />
 
-  <meta property="og:title" content="Nechemya — Premium Web Design" />
+  <meta property="og:title" content="Sumi Studios" />
   <meta property="og:description" content="Premium websites for businesses that give a damn. Starting from £3,000." />
   <meta property="og:type" content="website" />
 
@@ -16,20 +18,24 @@
        paint unblocked while the browser swaps the family in when ready. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" />
-  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" media="print" onload="this.media='all'" />
-  <noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" /></noscript>
+  <link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&f[]=clash-display@500,600,700&display=swap" />
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&f[]=clash-display@500,600,700&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&f[]=clash-display@500,600,700&display=swap" /></noscript>
 
   <!-- LCP image preload — preload the hero composition so the first paint
        has both the screen content (visible through the mask window) and the
        hero foreground. -->
   <link rel="preload" as="image" href="./assets/tvonwhite-pFr5_Kus.webp" fetchpriority="high" />
   <link rel="preload" as="image" href="./assets/project-choice-CCiiNZL8.webp" fetchpriority="high" />
+  <link rel="preload" as="image" href="./assets/fast-BrPiDcRV.webp" />
+  <link rel="preload" as="image" href="./assets/stunning-CwRXTGhw.webp" />
+  <link rel="preload" as="image" href="./assets/mobile-DyR6o6Us.webp" />
+  <link rel="preload" as="image" href="./assets/websites-B04F8_vw.webp" />
 
   <!-- CSS -->
-  <script type="module" crossorigin src="./assets/main-C-haOqLj.js"></script>
-  <link rel="modulepreload" crossorigin href="./assets/SmoothScroll-CMMnCfNS.js">
-  <link rel="stylesheet" crossorigin href="./assets/SmoothScroll-DsikqT0l.css">
+  <script type="module" crossorigin src="./assets/main-erBvy7i5.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/SmoothScroll-TZDNfnql.js">
+  <link rel="stylesheet" crossorigin href="./assets/SmoothScroll-DTx2jCRW.css">
 </head>
 
 <body>
@@ -70,7 +76,7 @@
           </span>
         </button>
         <div class="nav__desktop-links">
-          <a href="#projects">Work</a>
+          <a href="#bento">Work</a>
           <a href="#services">Services</a>
           <a href="#pricing">Pricing</a>
           <a href="#faq">FAQ</a>
@@ -90,7 +96,7 @@
         </svg>
       </a>
       <ul class="mobile-menu__nav">
-        <li><a href="#projects" class="mobile-menu__link menu-item">Work</a></li>
+        <li><a href="#bento" class="mobile-menu__link menu-item">Work</a></li>
         <li><a href="#services" class="mobile-menu__link menu-item">Services</a></li>
         <li><a href="#pricing" class="mobile-menu__link menu-item">Pricing</a></li>
         <li><a href="#faq" class="mobile-menu__link menu-item">FAQ</a></li>
@@ -106,36 +112,64 @@
     <!-- HERO (tall trigger, pinned sticky stage) -->
     <section class="hero" id="hero" data-nav-theme="light">
       <div class="hero__stage">
-        <!-- Rounded peach platform — sits behind the TV on mobile so
-             the TV reads as resting on a softer disc. Desktop hides
-             it; the scroll/pin sequence is untouched. -->
-        <div class="hero__platform" aria-hidden="true"></div>
-        <!-- z=1: Looping reel, mask-clipped to the cat's screen interior -->
-        <div class="hero__cat-wrapper">
-          <div class="hero__halo"></div>
-          <div class="hero__mouth-slider" id="mouth-slider">
-            <div class="hero__mouth-track" id="mouth-track">
-              <img class="hero__mouth-img hero__mouth-img--first" src="./assets/project-choice-CCiiNZL8.webp" alt="Choice Inventory" fetchpriority="high" decoding="async" />
-              <img class="hero__mouth-img" src="./assets/project-clinical-BsWLTy-l.webp" alt="Clinical Assessments" decoding="async" />
-              <img class="hero__mouth-img" src="./assets/project-choice-CCiiNZL8.webp" alt="" />
-              <img class="hero__mouth-img" src="./assets/project-clinical-BsWLTy-l.webp" alt="" />
+        <div class="hero__layout">
+          <article class="hero__copy-card">
+            <h1 class="hero__brand-title">SUMI?</h1>
+            <div class="hero__mobile-pitch" aria-hidden="false">
+              <p class="hero__kicker">Trusted by service businesses worldwide</p>
+              <div class="hero__pitch-text" role="heading" aria-level="2" aria-label="We build fast, stunning, mobile-ready websites for service businesses">
+                <span class="hero__pitch-line hero__pitch-line--one">
+                  <span>We build</span>
+                  <span class="hero__media-pill hero__media-pill--fast" aria-hidden="true">
+                    <img class="hero__media-pill-img" src="./assets/fast-BrPiDcRV.webp" alt="" decoding="async" />
+                  </span>
+                  <span>fast,</span>
+                </span>
+                <span class="hero__pitch-line hero__pitch-line--two">
+                  <span class="hero__media-pill hero__media-pill--stunning" aria-hidden="true">
+                    <img class="hero__media-pill-img" src="./assets/stunning-CwRXTGhw.webp" alt="" decoding="async" />
+                  </span>
+                  <span>stunning,</span>
+                </span>
+                <span class="hero__pitch-line hero__pitch-line--three">
+                  <span>mobile-ready</span>
+                  <span class="hero__media-pill hero__media-pill--mobile" aria-hidden="true">
+                    <img class="hero__media-pill-img" src="./assets/mobile-DyR6o6Us.webp" alt="" decoding="async" />
+                  </span>
+                </span>
+                <span class="hero__pitch-line hero__pitch-line--four">
+                  <span>websites</span>
+                  <span class="hero__media-pill hero__media-pill--websites" aria-hidden="true">
+                    <img class="hero__media-pill-img" src="./assets/websites-B04F8_vw.webp" alt="" decoding="async" />
+                  </span>
+                  <span>for</span>
+                </span>
+                <span class="hero__pitch-line hero__pitch-line--five">service businesses</span>
+              </div>
+              <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="hero__pitch-cta">Book a free call</a>
             </div>
-            <div class="hero__tv-overlay"></div>
-          </div>
-          <img class="hero__cat-img" src="./assets/tvonwhite-pFr5_Kus.webp" alt="" fetchpriority="high" decoding="async" />
-        </div>
+          </article>
 
-        <!-- Mobile-only headline + CTA. Sits over the peach platform
-             below the TV, hidden on desktop where the marquee +
-             footer do the talking. -->
-        <div class="hero__mobile-pitch" aria-hidden="false">
-          <h1 class="hero__pitch-text">
-            <span class="hero__pitch-line">We design and build <strong>fast,</strong></span>
-            <span class="hero__pitch-line">stunning, <strong>mobile-ready</strong></span>
-            <span class="hero__pitch-line">websites for service businesses</span>
-            <span class="hero__pitch-line">that want to stand out</span>
-          </h1>
-          <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="hero__pitch-cta">Book a free call</a>
+          <article class="hero__work-card" aria-label="Featured work preview">
+            <div class="hero__tv-scene">
+              <div class="hero__cat-wrapper hero__cat-wrapper--base">
+                <div class="hero__halo"></div>
+                <img class="hero__cat-img" src="./assets/tvonwhite-pFr5_Kus.webp" alt="" fetchpriority="high" decoding="async" />
+              </div>
+              <div class="hero__cat-wrapper hero__cat-wrapper--screen">
+                <div class="hero__mouth-slider" id="mouth-slider">
+                  <div class="hero__mouth-track" id="mouth-track">
+                    <img class="hero__mouth-img hero__mouth-img--first" src="./assets/project-choice-CCiiNZL8.webp" alt="Choice Inventory" fetchpriority="high" decoding="async" />
+                    <img class="hero__mouth-img" src="./assets/project-clinical-BsWLTy-l.webp" alt="Clinical Assessments" decoding="async" />
+                    <img class="hero__mouth-img" src="./assets/project-choice-CCiiNZL8.webp" alt="" />
+                    <img class="hero__mouth-img" src="./assets/project-clinical-BsWLTy-l.webp" alt="" />
+                  </div>
+                  <div class="hero__tv-overlay"></div>
+                </div>
+              </div>
+            </div>
+            <h2 class="hero__work-title">Featured Work</h2>
+          </article>
         </div>
 
         <!-- GIANT MARQUEE -->
@@ -163,17 +197,6 @@
             </div>
           </div>
         </div>
-
-        <!-- FEATURED PROJECTS EYEBROW (rises into view as hero exits, so the
-             title appears as part of the first swipe rather than after a
-             blank white pause). Sits above the hero gradient/footer. -->
-        <span class="hero__intro-eyebrow" aria-hidden="true">
-          <span class="hero__intro-eyebrow-inner">
-            <span class="hero__intro-eyebrow-line">Featured</span>
-            <span class="hero__intro-eyebrow-line">Projects</span>
-          </span>
-        </span>
-
         <!-- HERO FOOTER — three columns on PC (eyebrow flanks the
              CTA), CTA-only centered on mobile -->
         <div class="hero__gradient"></div>
@@ -183,30 +206,13 @@
             I make websites for businesses that give a damn
           </span>
           <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="hero__cta">Book a free call</a>
-          <a href="#projects" class="hero__footer-link hero__footer-link--right">EXPLORE WORK <svg class="hero__footer-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+          <a href="#bento" class="hero__footer-link hero__footer-link--right">EXPLORE WORK <svg class="hero__footer-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
         </div>
 
       </div>
     </section>
 
-    <!-- FEATURED PROJECTS — pinned, cat-stack carousel -->
-    <section class="featured" id="projects" data-nav-theme="light">
-      <div class="featured__pin">
-        <div class="featured__bg" data-bg-idx="0"></div>
-        <div class="featured__bg" data-bg-idx="1"></div>
-        <div class="featured__stack" id="featured-stack">
-          <!-- Cards injected by FeaturedProjects.js -->
-        </div>
-        <div class="featured__gradient"></div>
-        <h2 class="featured__title" id="featured-title">
-          <!-- Title spans injected by FeaturedProjects.js -->
-        </h2>
-        <a class="featured__cta" id="featured-cta" href="projects/clinical-assessments.html">
-          View Project <span class="featured__cta-arrow">&gt;</span>
-        </a>
-      </div>
-    </section>
-
+    
     <!-- LOGO TRUST STRIP -->
     <section class="logo-strip" id="logos">
       <p class="logo-strip__label" data-reveal>TRUSTED BY BUSINESSES THAT CARE ABOUT THEIR BRAND</p>
@@ -438,7 +444,7 @@
         <p class="contact__sub">Drop me an email or send a WhatsApp.<br />Let's get your brand online properly.</p>
         <div class="contact__buttons">
           <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Book a free call</a>
-          <a href="mailto:nechemyar@gmail.com" class="btn btn--secondary">nechemyar@gmail.com</a>
+          <a href="mailto:hello@sumistudios.com" class="btn btn--secondary">hello@sumistudios.com</a>
           <a href="https://api.whatsapp.com/send/?phone=972585152321&text=Hi%20Nechemya%2C%20I%27d%20like%20to%20discuss%20a%20project.&type=phone_number" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">WhatsApp</a>
         </div>
       </div>

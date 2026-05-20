@@ -97,6 +97,19 @@ $r-sm (8px), $r-md (12px), $r-lg (16px), $r-xl (24px), $r-full (100px)
 - USE: generous whitespace, type scale contrast, intentional asymmetry
 - USE: one accent color boldly, real content, motion to reveal not decorate
 
+## Hero Layout Rules
+- The hero headline should read as a deliberate studio-style editorial lockup, not a loose stack.
+- Align the hero text block with the visible nav/logo rhythm on desktop; do not let the logo sit meaningfully farther left than the headline.
+- Maintain generous vertical space between the nav, kicker, headline, CTA, and peeking TV. If an element feels crowded, fix spacing proactively.
+- Pill media should be tall enough to feel premium and inspectable, with slim strokes. Avoid compressed letterbox strips on mobile.
+- Crop pill images intentionally per breakpoint; zoom into the cat in the `fast` and `mobile-ready` pills so the subject stays clear on phones.
+- On desktop, keep the TV/work proof visible to the right of the headline in the first viewport; do not bury it below the fold.
+- In justified hero rows, pill widths must stay fluid and roomy enough that text never kisses the pill edge or collapses the media crop.
+- On mobile, avoid relying on pure `space-between` for mixed text/media rows; use controlled fluid gaps so rows feel even and never push pills off-screen.
+- Keep hero row rhythm unified across desktop and mobile: explicit fluid row min-height plus controlled gaps, not breakpoint-specific alignment behavior that changes the feel.
+- Hero pill media reveals by expanding from width 0 after the loader dispatches `hero:ready`; do not add scroll parallax back unless there is a clear interaction reason.
+- Verify desktop and mobile viewports after hero edits, including horizontal overflow and visual spacing.
+
 ## CURRENT STATE
 - [x] Hero: TURN HEADS with scroll parallax, O-grid, cards
 - [x] Marquee: pink banner with scrolling text

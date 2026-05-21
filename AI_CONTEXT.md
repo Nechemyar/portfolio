@@ -1,5 +1,8 @@
 # Project: Nechemya Portfolio Website
 
+## Current Design Direction
+Use `DESIGN_BIBLE.md` as the source of truth for the Sumi Studios redesign. The current hero defines the visual system for the rest of the build: yellow proof-led stage, black nav on light/yellow sections, warm paper cards, boxy controls, matched CTA borders/radii, and explicit mobile overflow checks.
+
 ## What This Is
 A premium web design portfolio for a freelance designer/developer.
 The goal is to win clients, build trust, and showcase work.

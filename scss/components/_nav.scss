@@ -36,6 +36,23 @@
   color: #faf9f7;
 }
 
+body.menu-open.nav-theme-light {
+  .nav__logo-svg {
+    filter: invert(1);
+  }
+
+  .nav__logo-wordmark-line,
+  .nav__logo-wordmark-sub,
+  .nav__menu-label,
+  .nav__desktop-links a {
+    color: #faf9f7;
+  }
+
+  .nav__menu-line {
+    background: #faf9f7;
+  }
+}
+
 /* Light theme Nav colors (toggled by NavTheme.js when over light sections) */
 body.nav-theme-light {
   .nav__logo-svg {

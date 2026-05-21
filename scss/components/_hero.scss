@@ -84,6 +84,8 @@
 }
 
 .hero__cta-row {
+  --hero-cta-border: 2px;
+  --hero-cta-radius: 8px;
   display: flex;
   align-items: center;
   gap: clamp(0.5rem, 1vw, 0.75rem);
@@ -95,13 +97,18 @@
   justify-content: center;
   width: clamp(2.6rem, 3.8vw, 4rem);
   height: clamp(2.6rem, 3.8vw, 4rem);
-  border: 2px solid #0b0b0b;
-  border-radius: 8px;
+  border: var(--hero-cta-border) solid #0b0b0b;
+  border-radius: var(--hero-cta-radius);
   background: #faf9f7;
   color: #050505;
   text-decoration: none;
   flex-shrink: 0;
   transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.hero__cta-icon svg {
+  width: 28px;
+  height: 28px;
 }
 
 .hero__cta-icon:hover {
@@ -116,8 +123,8 @@
   flex: 1;
   min-height: clamp(2.6rem, 3.8vw, 4rem);
   padding: 0.65em 1.5em;
-  border: 3px solid #0b0b0b;
-  border-radius: 8px;
+  border: var(--hero-cta-border) solid #0b0b0b;
+  border-radius: var(--hero-cta-radius);
   background: #FF9C7D;
   color: #050505;
   font-family: $font-body;

@@ -36,7 +36,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
+  background: #FFB93E;
   border: none;
   border-radius: 0;
 }
@@ -46,7 +46,7 @@
   bottom: 0;
   left: 0;
   z-index: 10;
-  width: min(100%, 26rem);
+  width: min(100%, 34rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -228,16 +228,7 @@
 }
 
 .hero__work-title {
-  margin: 0;
-  padding: 0 clamp(1rem, 2vw, 2rem) clamp(0.55rem, 1vw, 1rem);
-  color: #050505;
-  font-family: $font-body;
-  font-size: clamp(3rem, 5.25vw, 7.2rem);
-  font-weight: 900;
-  letter-spacing: 0;
-  line-height: 0.85;
-  text-transform: uppercase;
-  white-space: nowrap;
+  display: none;
 }
 
 @keyframes tv-flicker {
@@ -314,7 +305,7 @@
   .hero__cat-wrapper {
     position: absolute;
     left: 50%;
-    top: 54%; /* Brought down a little more */
+    top: 62%; /* Brought down a lot more */
     bottom: auto;
     transform: translate(-50%, -50%);
     width: min(110vw, 34rem);

@@ -293,11 +293,11 @@
     height: 100%;
   }
 
-  /* Make the TV bigger and positioned higher up */
+  /* Make the TV bigger and sit lower in the mobile proof area. */
   .hero__cat-wrapper {
     position: absolute;
     left: 50%;
-    top: 62%; /* Brought down a lot more */
+    top: 70%;
     bottom: auto;
     transform: translate(-50%, -50%);
     width: min(110vw, 34rem);

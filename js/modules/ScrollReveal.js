@@ -10,25 +10,27 @@ export default class ScrollReveal {
   init() {
     const reveals = document.querySelectorAll('[data-reveal]');
 
-    // Hide hero elements immediately so they're ready for animation
+    // Hide hero copy immediately so it's ready for animation. Do not animate
+    // opacity or transform on .hero__work-card: that parent stacking context
+    // prevents the TV image's multiply blend from rendering until clearProps.
     const copyCard = document.querySelector('.hero__copy-card');
-    const workCard = document.querySelector('.hero__work-card');
+    const tvWrappers = document.querySelectorAll('.hero__cat-wrapper');
 
-    if (workCard) gsap.set(workCard, { opacity: 0, y: 30 });
+    if (tvWrappers.length) gsap.set(tvWrappers, { y: 34 });
     if (copyCard) gsap.set(copyCard, { opacity: 0, y: 40 });
 
     // Wait for the loader to finish before animating the hero
     document.addEventListener('hero:ready', () => {
       const tl = gsap.timeline();
 
-      // Animate work card (TV) in first
-      if (workCard) {
-        tl.to(workCard, {
-          opacity: 1,
+      // Animate the TV itself, not its parent card, so mix-blend-mode stays live
+      // throughout the entrance instead of popping on at the end.
+      if (tvWrappers.length) {
+        tl.to(tvWrappers, {
           y: 0,
           duration: 1,
           ease: 'power4.out',
-          clearProps: 'all',
+          clearProps: 'y',
         });
       }
 

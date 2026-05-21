@@ -1,123 +1,146 @@
 @use '../base/tokens' as *;
+
 .pricing {
-  padding: $space-128 $page-padding;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: clamp(3rem, 8vw, 8rem) $page-padding;
+  background: $c-cream;
+  color: #0b0b0b;
+}
+
+.pricing__header,
+.pricing__grid,
+.pricing__footer {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .pricing__header {
-  margin-bottom: $space-96;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(18rem, 0.55fr);
+  gap: clamp(1rem, 3vw, 3rem);
+  align-items: end;
+  margin-bottom: clamp(1.5rem, 4vw, 4rem);
 }
 
 .pricing__title {
   font-family: $font-display;
-  font-size: $fs-2xl;
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  margin-bottom: $space-16;
+  font-size: clamp(3rem, 7vw, 7rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  margin: 0;
 }
 
 .pricing__sub {
-  font-size: $fs-base;
-  color: $c-text-secondary;
-  max-width: 500px;
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  color: #2b2b2b;
+  line-height: 1.55;
 }
 
 .pricing__grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: $space-32;
-  margin-bottom: $space-48;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.9rem, 1.8vw, 1.5rem);
+  margin-bottom: $space-32;
 }
 
 .pricing__card {
-  background: $c-bg-elevated;
-  border: 1px solid $c-border-visible;
-  border-radius: $r-lg;
-  padding: $space-48;
+  position: relative;
+  min-height: clamp(28rem, 42vw, 39rem);
+  background: $c-blush;
+  border: 2px solid #0b0b0b;
+  border-radius: 10px;
+  padding: clamp(1.5rem, 3.5vw, 3rem);
   display: flex;
   flex-direction: column;
-  gap: $space-16;
-  position: relative;
+  gap: $space-24;
 }
 
 .pricing__card--featured {
-  border-color: $c-accent;
-  box-shadow: 0 0 0 1px $c-accent;
+  background: $c-accent;
+  box-shadow: 8px 8px 0 #0b0b0b;
 }
 
 .pricing__card-badge {
-  position: absolute;
-  top: calc($space-48 * -0.5);
-  left: $space-32;
-  background: $c-accent;
-  color: $c-bg;
-  font-size: $fs-xs;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  align-self: flex-start;
+  background: $c-yellow;
+  color: #0b0b0b;
+  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+  font-weight: 800;
+  letter-spacing: 0;
   text-transform: uppercase;
-  padding: 0.4em 1em;
-  border-radius: $r-full;
+  padding: 0.45rem 0.7rem;
+  border: 2px solid #0b0b0b;
+  border-radius: 8px;
 }
 
 .pricing__card-label {
-  font-size: $fs-xs;
-  font-weight: 600;
+  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: $c-text-secondary;
+  letter-spacing: 0;
+  color: #0b0b0b;
 }
 
 .pricing__card-price {
   font-family: $font-display;
-  font-size: $fs-2xl;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-size: clamp(2.5rem, 5vw, 5.5rem);
+  font-weight: 900;
+  color: #0b0b0b;
+  letter-spacing: -0.01em;
+  line-height: 0.9;
 }
 
 .pricing__card-features {
   display: flex;
   flex-direction: column;
-  gap: 0.6em;
+  gap: 0.7rem;
   padding: $space-16 0;
   flex-grow: 1;
 }
 
 .pricing__card-features li {
-  font-size: $fs-base;
-  color: $c-text-secondary;
-  padding-left: 1.4em;
   position: relative;
+  padding-left: 1.7em;
+  font-size: clamp(0.98rem, 1.1vw, 1.08rem);
+  color: #202020;
+  line-height: 1.45;
 }
 
 .pricing__card-features li::before {
   content: '✓';
   position: absolute;
   left: 0;
-  color: $c-accent;
-  font-weight: 700;
+  top: 0;
+  font-weight: 900;
+  color: #0b0b0b;
 }
 
 .pricing__footer {
-  font-size: $fs-base;
-  color: $c-text-secondary;
+  display: block;
+  padding: $space-24;
+  font-size: clamp(1rem, 1.2vw, 1.1rem);
+  color: #0b0b0b;
   text-align: center;
+  background: $c-yellow;
+  border: 2px solid #0b0b0b;
+  border-radius: 10px;
 }
 
 .pricing__footer a {
-  color: $c-text;
-  font-weight: 600;
+  color: #0b0b0b;
+  font-weight: 800;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.pricing__footer a:hover {
-  color: $c-accent;
-}
-
-@media (max-width: 700px) {
+@media (max-width: 800px) {
+  .pricing__header,
   .pricing__grid {
     grid-template-columns: 1fr;
+  }
+
+  .pricing__card {
+    min-height: auto;
   }
 }

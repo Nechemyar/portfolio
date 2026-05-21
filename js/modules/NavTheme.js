@@ -25,9 +25,9 @@ export default class NavTheme {
         trigger: section,
         start: 'top 60px',
         end: 'bottom 60px',
-        onEnter: () => this.setTheme(theme),
+        onEnter: () => this.setTheme(theme, section.id),
         onLeave: () => this.setTheme('dark'),
-        onEnterBack: () => this.setTheme(theme),
+        onEnterBack: () => this.setTheme(theme, section.id),
         onLeaveBack: () => this.setTheme('dark'),
       });
     });
@@ -37,12 +37,13 @@ export default class NavTheme {
     if (first) {
       const rect = first.getBoundingClientRect();
       if (rect.top <= 60 && rect.bottom > 60) {
-        this.setTheme(first.dataset.navTheme);
+        this.setTheme(first.dataset.navTheme, first.id);
       }
     }
   }
 
-  setTheme(theme) {
+  setTheme(theme, sectionId = '') {
     document.body.classList.toggle('nav-theme-light', theme === 'light');
+    document.body.dataset.navSection = sectionId;
   }
 }

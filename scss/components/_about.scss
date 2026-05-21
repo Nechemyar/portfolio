@@ -1,63 +1,94 @@
 @use '../base/tokens' as *;
 
 .about {
-  background: $c-bg;
-  padding: $space-128 $page-padding;
+  background: $c-cream;
+  padding: clamp(3rem, 8vw, 8rem) $page-padding;
+  color: #0b0b0b;
 }
 
 .about__inner {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: clamp($space-32, 6vw, $space-96);
-  align-items: center;
+  grid-template-columns: minmax(18rem, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(1rem, 2vw, 1.5rem);
+  align-items: stretch;
+}
+
+.about__photo,
+.about__copy {
+  border: 2px solid #0b0b0b;
+  border-radius: 10px;
 }
 
 .about__photo {
   position: relative;
-  aspect-ratio: 4 / 5;
+  min-height: clamp(24rem, 46vw, 42rem);
   overflow: hidden;
-  border-radius: $r-md;
-  background: $c-bg-elevated;
+  background: $c-blush;
+  padding: clamp(0.75rem, 1.5vw, 1rem);
+}
+
+.about__photo::before {
+  content: '';
+  position: absolute;
+  inset: clamp(0.75rem, 1.5vw, 1rem);
+  border: 2px solid #0b0b0b;
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 2;
 }
 
 .about__photo img {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 50% 45%;
   display: block;
+  border-radius: 8px;
 }
 
 .about__copy {
-  color: $c-text;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(1.5rem, 4vw, 4rem);
+  background: $c-blush;
 }
 
 .about__label {
-  display: inline-block;
-  font-family: $font-display;
-  font-size: $fs-xs;
-  font-weight: 700;
-  color: $c-accent;
+  display: inline-flex;
+  width: fit-content;
+  font-family: $font-body;
+  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+  font-weight: 800;
+  color: #0b0b0b;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
-  margin-bottom: $space-16;
+  letter-spacing: 0;
+  margin-bottom: $space-24;
+  padding: 0.5rem 0.75rem;
+  background: $c-cream;
+  border: 2px solid #0b0b0b;
+  border-radius: 8px;
 }
 
 .about__title {
   font-family: $font-display;
-  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  font-size: clamp(2.4rem, 5vw, 5.4rem);
   font-weight: 900;
-  line-height: 1;
-  letter-spacing: -0.02em;
+  line-height: 0.94;
+  letter-spacing: -0.01em;
   margin: 0 0 $space-24;
 }
 
 .about__body {
   font-family: $font-body;
-  font-size: clamp(1.05rem, 1.3vw, 1.2rem);
-  line-height: 1.65;
-  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  line-height: 1.55;
+  color: #252525;
+  max-width: 62ch;
 }
 
 .about__body p + p {
@@ -66,35 +97,31 @@
 
 .about__signature {
   margin-top: $space-32;
-  display: flex;
+  display: inline-flex;
+  width: fit-content;
   align-items: center;
-  gap: $space-16;
-  font-family: $font-display;
-  font-size: $fs-sm;
+  gap: $space-12;
+  font-family: $font-body;
+  font-size: clamp(0.78rem, 0.9vw, 0.92rem);
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0;
+  color: #0b0b0b;
 }
 
 .about__signature::before {
   content: '';
-  width: 40px;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.3);
+  width: 44px;
+  height: 2px;
+  background: #0b0b0b;
 }
 
 @media (max-width: 768px) {
-  .about {
-    padding: $space-96 $page-padding;
-  }
-
   .about__inner {
     grid-template-columns: 1fr;
-    gap: $space-48;
   }
 
   .about__photo {
-    max-width: 360px;
-    margin: 0 auto;
+    min-height: 26rem;
   }
 }

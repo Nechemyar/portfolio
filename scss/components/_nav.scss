@@ -14,6 +14,46 @@
   transition: padding 0.3s ease;
 }
 
+.nav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: transparent;
+  border-bottom: 0 solid transparent;
+  transition: background-color $duration-fast ease, border-color $duration-fast ease;
+}
+
+body:not([data-nav-section='hero']) .nav::before {
+  border-bottom-width: 2px;
+}
+
+body[data-nav-section='logos'] .nav::before,
+body[data-nav-section='services'] .nav::before,
+body[data-nav-section='contact'] .nav::before {
+  background: #ffb93e;
+  border-bottom-color: #0b0b0b;
+}
+
+body[data-nav-section='bento'] .nav::before,
+body[data-nav-section='about'] .nav::before,
+body[data-nav-section='pricing'] .nav::before,
+body[data-nav-section='faq'] .nav::before {
+  background: #faf9f7;
+  border-bottom-color: #0b0b0b;
+}
+
+body[data-nav-section='testimonials'] .nav::before {
+  background: #050505;
+  border-bottom-color: rgba(250, 249, 247, 0.24);
+}
+
+body.menu-open .nav::before {
+  background: #050505;
+  border-bottom-width: 2px;
+  border-bottom-color: rgba(250, 249, 247, 0.24);
+}
+
 /* Base (Dark background) Nav colors */
 .nav__logo-svg {
   filter: invert(1); /* white/cream */

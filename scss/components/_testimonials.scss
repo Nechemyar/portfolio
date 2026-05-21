@@ -1,131 +1,136 @@
 @use '../base/tokens' as *;
 
 .testimonials {
-  background: $c-bg;
-  padding: $space-128 $page-padding $space-96;
+  background: #050505;
+  color: $c-cream;
+  padding: clamp(3rem, 8vw, 8rem) $page-padding;
 }
 
 .testimonials__inner {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
 }
 
 .testimonials__header {
-  text-align: center;
-  margin-bottom: $space-64;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: $space-32;
+  margin-bottom: clamp(1.5rem, 4vw, 4rem);
 }
 
 .testimonials__label {
-  display: inline-block;
-  font-family: $font-display;
-  font-size: $fs-xs;
-  font-weight: 700;
-  color: $c-accent;
+  display: inline-flex;
+  font-family: $font-body;
+  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+  font-weight: 800;
+  color: #0b0b0b;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0;
   margin-bottom: $space-16;
+  padding: 0.45rem 0.7rem;
+  background: $c-yellow;
+  border: 2px solid $c-cream;
+  border-radius: 8px;
 }
 
 .testimonials__title {
+  max-width: 10ch;
   font-family: $font-display;
-  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  font-size: clamp(3rem, 7vw, 7rem);
   font-weight: 900;
-  color: $c-text;
-  line-height: 1;
-  letter-spacing: -0.02em;
+  color: $c-cream;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
   margin: 0;
 }
 
 .testimonials__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: $space-24;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.9rem, 1.8vw, 1.5rem);
 }
 
 .testimonials__card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: $r-md;
-  padding: $space-32;
+  min-height: clamp(22rem, 30vw, 30rem);
+  background: $c-cream;
+  color: #0b0b0b;
+  border: 2px solid $c-cream;
+  border-radius: 10px;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: $space-24;
-  transition: border-color $duration-fast ease, transform $duration-fast ease;
 }
 
-.testimonials__card:hover {
-  border-color: rgba(255, 255, 255, 0.14);
-  transform: translateY(-4px);
+.testimonials__card:nth-child(2) {
+  background: $c-blush;
+}
+
+.testimonials__card:nth-child(3) {
+  background: $c-yellow;
 }
 
 .testimonials__quote {
   font-family: $font-body;
-  font-size: clamp(1rem, 1.2vw, 1.15rem);
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.85);
+  font-size: clamp(1.08rem, 1.45vw, 1.35rem);
+  font-weight: 650;
+  line-height: 1.35;
+  color: #0b0b0b;
   margin: 0;
-  font-style: italic;
-  position: relative;
-  padding-top: $space-16;
-}
-
-.testimonials__quote::before {
-  content: '"';
-  position: absolute;
-  top: -0.6rem;
-  left: -0.2rem;
-  font-family: $font-display;
-  font-size: 4rem;
-  line-height: 1;
-  color: $c-accent;
-  font-style: normal;
 }
 
 .testimonials__author {
   display: flex;
   align-items: center;
   gap: $space-16;
-  margin-top: auto;
   padding-top: $space-16;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 2px solid #0b0b0b;
 }
 
 .testimonials__photo {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
   object-fit: cover;
   flex-shrink: 0;
-  background: $c-bg-elevated;
+  background: $c-blush;
+  border: 2px solid #0b0b0b;
+}
+
+.testimonials__photo[src=''] {
+  display: none;
 }
 
 .testimonials__name {
   font-family: $font-display;
-  font-size: $fs-sm;
-  font-weight: 700;
-  color: $c-text;
+  font-size: clamp(0.86rem, 1vw, 1rem);
+  font-weight: 900;
+  color: #0b0b0b;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
   display: block;
 }
 
 .testimonials__role {
   font-family: $font-body;
-  font-size: $fs-xs;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: clamp(0.72rem, 0.85vw, 0.88rem);
+  color: #3a3a3a;
   display: block;
   margin-top: 2px;
 }
 
 @media (max-width: 900px) {
+  .testimonials__header {
+    display: block;
+  }
+
   .testimonials__grid {
     grid-template-columns: 1fr;
-    gap: $space-16;
   }
-}
 
-@media (max-width: 768px) {
-  .testimonials {
-    padding: $space-96 $page-padding $space-64;
+  .testimonials__card {
+    min-height: 17rem;
   }
 }

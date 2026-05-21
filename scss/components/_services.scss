@@ -1,65 +1,83 @@
 @use '../base/tokens' as *;
+
 .services {
-  padding: $space-128 $page-padding;
-  background-color: $c-soft;
+  padding: clamp(3rem, 8vw, 8rem) $page-padding;
+  background: $c-yellow;
+  color: #0b0b0b;
+  border-top: 2px solid #0b0b0b;
+  border-bottom: 2px solid #0b0b0b;
 }
 
 .services__header {
-  max-width: 1200px;
-  margin: 0 auto $space-96;
+  max-width: 1280px;
+  margin: 0 auto clamp(1.5rem, 4vw, 4rem);
 }
 
 .services__title {
+  max-width: 12ch;
   font-family: $font-display;
-  font-size: $fs-2xl;
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  color: $c-bg;
+  font-size: clamp(3rem, 7vw, 7rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  color: #0b0b0b;
 }
 
 .services__grid {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: $space-32;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.9rem, 1.8vw, 1.5rem);
 }
 
 .services__card {
-  background: rgba(255, 255, 255, 0.85);
-  padding: $space-48;
-  border-radius: $r-lg;
+  min-height: clamp(20rem, 30vw, 28rem);
+  background: $c-cream;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  border: 2px solid #0b0b0b;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
-  gap: $space-16;
+  justify-content: space-between;
+  gap: $space-24;
 }
 
 .services__card-label {
+  display: inline-flex;
+  width: fit-content;
   font-family: $font-body;
-  font-size: $fs-xs;
-  font-weight: 600;
+  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: $c-text-secondary;
+  letter-spacing: 0;
+  color: #0b0b0b;
+  padding: 0.45rem 0.7rem;
+  background: $c-accent;
+  border: 2px solid #0b0b0b;
+  border-radius: 8px;
 }
 
 .services__card-title {
   font-family: $font-display;
-  font-size: $fs-xl;
-  font-weight: 600;
-  line-height: 1.2;
-  color: $c-bg;
+  font-size: clamp(1.9rem, 3.1vw, 3rem);
+  font-weight: 900;
+  line-height: 0.98;
+  color: #0b0b0b;
 }
 
 .services__card-desc {
-  font-size: $fs-base;
-  color: $c-text-secondary;
-  line-height: 1.7;
+  font-size: clamp(0.98rem, 1.1vw, 1.08rem);
+  color: #2b2b2b;
+  line-height: 1.55;
 }
 
 @media (max-width: 900px) {
   .services__grid {
     grid-template-columns: 1fr;
+  }
+
+  .services__card {
+    min-height: 16rem;
   }
 }

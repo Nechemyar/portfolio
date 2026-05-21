@@ -1,44 +1,54 @@
 @use '../base/tokens' as *;
+
 .contact {
-  padding: $space-128 $page-padding;
-  text-align: center;
+  padding: clamp(3rem, 8vw, 8rem) $page-padding;
+  background: $c-yellow;
+  color: #0b0b0b;
+  border-top: 2px solid #0b0b0b;
 }
 
 .contact__inner {
-  max-width: 700px;
+  max-width: 1280px;
   margin: 0 auto;
+  padding: clamp(1.5rem, 5vw, 5rem);
+  background: $c-cream;
+  border: 2px solid #0b0b0b;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(17rem, 0.42fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: end;
 }
 
 .contact__title {
   font-family: $font-display;
-  font-size: $fs-2xl;
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  margin-bottom: $space-16;
+  font-size: clamp(3rem, 7vw, 7rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  margin-bottom: $space-24;
 }
 
 .contact__sub {
-  font-size: $fs-base;
-  color: $c-text-secondary;
-  margin-bottom: $space-48;
-  line-height: 1.7;
+  max-width: 58ch;
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  color: #2b2b2b;
+  line-height: 1.55;
 }
 
 .contact__buttons {
   display: flex;
-  justify-content: center;
-  gap: $space-16;
-  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: $space-12;
 }
 
-@media (max-width: 500px) {
-  .contact__buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-  .contact__buttons .btn {
-    width: 100%;
-    justify-content: center;
+.contact__buttons .btn {
+  width: 100%;
+}
+
+@media (max-width: 800px) {
+  .contact__inner {
+    grid-template-columns: 1fr;
   }
 }

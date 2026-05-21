@@ -1,52 +1,66 @@
 @use '../base/tokens' as *;
 
 .logo-strip {
-  padding: $space-48 $page-padding;
-  background: $c-bg;
-  text-align: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: clamp(2rem, 5vw, 4rem) $page-padding;
+  background: $c-yellow;
+  color: #0b0b0b;
+  border-top: 2px solid #0b0b0b;
+  border-bottom: 2px solid #0b0b0b;
 }
 
 .logo-strip__label {
-  font-family: $font-display;
-  font-size: $fs-xs;
-  font-weight: 500;
-  color: #ffffff;
+  max-width: 1200px;
+  margin: 0 auto $space-24;
+  font-family: $font-body;
+  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+  font-weight: 700;
+  color: #0b0b0b;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
-  margin-bottom: $space-32;
+  letter-spacing: 0;
 }
 
 .logo-strip__track {
+  max-width: 1200px;
+  margin: 0 auto;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
 }
 
 .logo-strip__logos {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: $space-32;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
   flex-wrap: wrap;
 }
 
 .logo-strip__logo {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.55rem 0.9rem;
   font-family: $font-display;
-  font-size: clamp(0.85rem, 1.2vw, 1.1rem);
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.25);
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  font-weight: 800;
+  color: #0b0b0b;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
   white-space: nowrap;
-  transition: color $duration-fast ease;
-}
-
-.logo-strip__logo:hover {
-  color: rgba(255, 255, 255, 0.5);
+  background: $c-cream;
+  border: 2px solid #0b0b0b;
+  border-radius: 8px;
 }
 
 .logo-strip__divider {
-  color: rgba(255, 255, 255, 0.12);
-  font-size: 1.5rem;
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .logo-strip__logos {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .logo-strip__logo {
+    justify-content: center;
+    width: 100%;
+  }
 }

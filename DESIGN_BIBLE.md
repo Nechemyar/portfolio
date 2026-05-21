@@ -49,8 +49,14 @@ Use black/near-black text on yellow, paper, blush, coral, and green. Do not use 
 - Nav color must respond to section background.
 - On yellow/light sections, wordmark and menu icon/label should be black.
 - On dark sections, use warm white.
-- When the mobile menu is open, wordmark and menu controls should switch to warm white over the dark overlay, even if the underlying section is yellow/light.
+- Keep the hero nav transparent. After the hero, give the fixed nav a section-matched backing so it never sits directly on top of large copy or FAQ text while scrolling.
+- When the mobile menu is open, keep the fixed nav backing visible as a dark bar and switch wordmark/menu controls to warm white, even if the underlying section is yellow/light.
 - If the nav is visually pleasing but not readable, readability wins.
+
+## Post-Hero Sections
+- Reuse the hero's visual language: warm paper fields, yellow proof bands, blush/coral accents, black borders, and 8px-10px radii.
+- Large headings should be anchored left, heavy, and intentional. Keep mobile top padding generous so the fixed nav has room.
+- Use boxed proof panels instead of soft floating cards; cards should feel like deliberate objects on the page.
 
 ## Mobile Menu
 - Bottom sheet uses blush paper, black border, and boxy corners.

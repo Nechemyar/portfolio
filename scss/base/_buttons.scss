@@ -2,17 +2,21 @@
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5em;
-  padding: 0.9em 2em;
+  padding: 0.95em 1.6em;
   font-family: $font-body;
   font-size: $fs-sm;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  border: none;
-  border-radius: $r-full;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  border: 2px solid #0b0b0b;
+  border-radius: 8px;
   cursor: pointer;
+  min-height: 52px;
   transition: transform $duration-fast $ease-out,
-              box-shadow $duration-fast $ease-out;
+              box-shadow $duration-fast $ease-out,
+              background-color $duration-fast ease;
   white-space: nowrap;
 }
 
@@ -21,21 +25,21 @@
 }
 
 .btn--primary {
-  color: $c-bg;
+  color: #0b0b0b;
   background-color: $c-accent;
 }
 
 .btn--primary:hover {
   background-color: $c-accent-hover;
-  box-shadow: 0 4px 24px rgba(199, 81, 45, 0.25);
+  box-shadow: 4px 4px 0 #0b0b0b;
 }
 
 .btn--secondary {
-  color: $c-text;
+  color: #0b0b0b;
   background-color: transparent;
-  border: 1.5px solid $c-border-visible;
 }
 
 .btn--secondary:hover {
-  border-color: $c-text;
+  background-color: $c-yellow;
+  box-shadow: 4px 4px 0 #0b0b0b;
 }

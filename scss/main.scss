@@ -18,6 +18,12 @@
 @use 'components/contact';
 @use 'components/project-page';
 
+@media (max-width: 768px) {
+  main > section:not(.hero) {
+    padding-top: clamp(5.75rem, 18vw, 7rem);
+  }
+}
+
 /* Lenis (smooth scroll) — inlined from lenis/dist/lenis.css. Inlining
    eliminates a render-blocking unpkg request that was costing ~750ms. */
 html.lenis,

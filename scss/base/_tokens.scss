@@ -17,10 +17,13 @@ $font-body: 'Satoshi', 'DM Sans', sans-serif;
 $font-display: 'Clash Display', $font-body;
 
 // Colors
-$c-cream: #F6F2EB;
-$c-rust: #C7512D;
-$c-charcoal: #1A1A1A;
+$c-cream: #FAF9F7;
+$c-rust: #FF9C7D;
+$c-charcoal: #050505;
 $c-forest: #19423D;
+$c-yellow: #FFB93E;
+$c-blush: #F8EBE7;
+$c-whatsapp: #80FF80;
 
 // Mobile hero palette — peach pair used as the section bg + the
 // rounded "platform" the TV sits on. Kept as separate tokens so the
@@ -29,15 +32,15 @@ $c-peach: #F9ECE8;
 $c-peach-soft: #FFF7F5;
 
 $c-bg: $c-charcoal;
-$c-bg-elevated: #24211F;
+$c-bg-elevated: $c-blush;
 $c-text: $c-cream;
-$c-text-secondary: #B8ADA2;
-$c-text-tertiary: #7F766E;
+$c-text-secondary: #4A4A4A;
+$c-text-tertiary: #73706B;
 $c-accent: $c-rust;
-$c-accent-hover: #D7653D;
+$c-accent-hover: #FFB096;
 $c-soft: $c-cream;
-$c-border: rgba(255, 255, 255, 0.06);
-$c-border-visible: rgba(255, 255, 255, 0.12);
+$c-border: rgba(5, 5, 5, 0.12);
+$c-border-visible: #0B0B0B;
 
 // Spacing (8px grid)
 $space-4: 0.25rem;

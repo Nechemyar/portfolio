@@ -117,7 +117,9 @@ html.js-loaded [data-reveal] {
 /* ——— Footer ——— */
 .footer {
   padding: $space-48 $page-padding;
-  border-top: 1px solid $c-border;
+  background: #050505;
+  color: #faf9f7;
+  border-top: 2px solid #050505;
 }
 
 .footer__inner {
@@ -130,7 +132,7 @@ html.js-loaded [data-reveal] {
 
 .footer__copy {
   font-size: $fs-sm;
-  color: $c-text-secondary;
+  color: rgba(250, 249, 247, 0.72);
 }
 
 .footer__links {
@@ -140,10 +142,18 @@ html.js-loaded [data-reveal] {
 
 .footer__links a {
   font-size: $fs-sm;
-  color: $c-text-secondary;
+  color: rgba(250, 249, 247, 0.72);
   transition: color $duration-fast ease;
 }
 
 .footer__links a:hover {
-  color: $c-text;
+  color: #faf9f7;
+}
+
+@media (max-width: 640px) {
+  .footer__inner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: $space-16;
+  }
 }

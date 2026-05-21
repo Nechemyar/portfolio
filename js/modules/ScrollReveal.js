@@ -11,48 +11,40 @@ export default class ScrollReveal {
     const reveals = document.querySelectorAll('[data-reveal]');
 
     // Hero entrance timeline
-    const tl = gsap.timeline({ delay: 0.2 });
-    
+    const tl = gsap.timeline({ delay: 0.3 });
+
+    const copyCard = document.querySelector('.hero__copy-card');
     const kicker = document.querySelector('.hero__kicker');
-    const lines = document.querySelectorAll('.hero__pitch-line');
+    const heading = document.querySelector('.hero__pitch-heading');
+    const ctaRow = document.querySelector('.hero__cta-row');
     const workCard = document.querySelector('.hero__work-card');
-    const helloCard = document.querySelector('.hero__hello-card');
-    
-    if (kicker) {
-      gsap.fromTo(kicker, 
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }
-      );
-    }
-    
-    if (lines.length) {
-      gsap.fromTo(lines, 
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          stagger: 0.12,
-          ease: 'power4.out'
-        },
-        "-=0.6"
-      );
-    }
-    
+
+    // Start: everything hidden
     if (workCard) {
-      gsap.fromTo(workCard, 
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 1.2, ease: 'power4.out' },
-        "-=0.8"
-      );
+      gsap.set(workCard, { opacity: 0, y: 30 });
+    }
+    if (copyCard) {
+      gsap.set(copyCard, { opacity: 0, y: 40 });
     }
 
-    if (helloCard) {
-      gsap.fromTo(helloCard, 
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 1, ease: 'power3.out' },
-        "-=0.9"
-      );
+    // Animate work card (TV) in first
+    if (workCard) {
+      tl.to(workCard, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power4.out',
+      });
+    }
+
+    // Animate the copy card in
+    if (copyCard) {
+      tl.to(copyCard, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power4.out',
+      }, '-=0.6');
     }
 
     // Everything else: reveal on scroll

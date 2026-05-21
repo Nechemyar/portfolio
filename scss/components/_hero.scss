@@ -13,7 +13,7 @@
   width: 100vw;
   min-height: 100vh;
   overflow: hidden;
-  background: #faf9f7;
+  background: #FFB93E;
   isolation: isolate;
   padding: clamp(6.75rem, 13vh, 8.5rem) clamp(0.75rem, 1.2vw, 1.25rem) clamp(1rem, 2vw, 1.5rem);
 }
@@ -40,132 +40,69 @@
   background: #faf9f7;
 }
 
-.hero__main-group {
-  display: contents;
-}
-
 .hero__copy-card {
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: clamp(1.2rem, 2vw, 2rem) clamp(1.25rem, 2.2vw, 2.25rem);
-}
-
-.hero__brand-title {
-  display: none;
-}
-
-.hero__mobile-pitch {
-  position: relative;
-  z-index: 5;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: clamp(1rem, 1.65vw, 1.45rem);
-  width: 100%;
-  min-width: 0;
-  pointer-events: auto;
+  gap: clamp(0.6rem, 1.2vw, 1rem);
 }
 
 .hero__kicker {
-  margin: 0 0 clamp(0.25rem, 0.6vw, 0.45rem);
+  margin: 0;
   color: #050505;
   font-family: $font-body;
-  font-size: clamp(0.78rem, 1.08vw, 1.18rem);
+  font-size: clamp(0.68rem, 1.08vw, 1.18rem);
   font-weight: 500;
   letter-spacing: 0;
   line-height: 1;
   text-transform: uppercase;
-  width: 100%;
 }
 
-.hero__pitch-text {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-  min-width: 0;
-  gap: clamp(0.16rem, 0.35vw, 0.36rem);
+.hero__pitch-heading {
   margin: 0;
   color: #050505;
   font-family: $font-body;
-  font-size: clamp(2.1rem, 3.18vw, 4.15rem);
+  font-size: clamp(1.5rem, 3.18vw, 4.15rem);
   font-weight: 500;
-  line-height: 1.1;
+  line-height: 1.2;
   letter-spacing: -0.02em;
 }
 
-.hero__pitch-line {
+.hero__cta-row {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  min-width: 0;
-  min-height: 1em;
-  gap: 0.28em;
-  white-space: nowrap;
+  gap: clamp(0.5rem, 1vw, 0.75rem);
 }
 
-.hero__media-pill {
-  position: relative;
+.hero__cta-icon {
   display: inline-flex;
-  flex: 0 1 auto;
-  width: clamp(5.8rem, 9.6vw, 10.8rem);
-  height: 0.76em;
-  min-height: 1.6rem;
-  max-height: 3.1rem;
-  min-width: clamp(4.6rem, 7vw, 7.4rem);
-  max-width: 100%;
-  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  width: clamp(2.6rem, 3.8vw, 4.35rem);
+  height: clamp(2.6rem, 3.8vw, 4.35rem);
   border: 2px solid #0b0b0b;
   border-radius: 8px;
-  background: #f5e4de;
-  transform: translateY(0.02em);
+  background: #faf9f7;
+  color: #050505;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: background 0.25s ease, transform 0.2s ease;
 }
 
-.hero__media-pill--stunning,
-.hero__media-pill--websites {
-  width: clamp(7.8rem, 14.5vw, 15.8rem);
+.hero__cta-icon:hover {
+  background: #eee;
+  transform: translateY(-2px);
 }
 
-.hero__media-pill--mobile {
-  width: clamp(6.8rem, 12.2vw, 13.4rem);
-}
-
-.hero__media-pill-img {
-  width: 100%;
-  height: 124%;
-  object-fit: cover;
-  object-position: center;
-  transform: translateY(-10%) scale(1.16);
-  will-change: transform;
-}
-
-.hero__media-pill--fast .hero__media-pill-img {
-  object-position: center 50%;
-  transform: translateY(-10%) scale(1.48);
-}
-
-.hero__media-pill--stunning .hero__media-pill-img {
-  object-position: center 45%;
-}
-
-.hero__media-pill--mobile .hero__media-pill-img {
-  object-position: center 46%;
-  transform: translateY(-10%) scale(1.28);
-}
-
-.hero__media-pill--websites .hero__media-pill-img {
-  object-position: center 52%;
-}
+/* Old pill styles removed — using paragraph heading now */
 
 .hero__pitch-cta {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  flex: 1;
   min-height: clamp(2.85rem, 3.8vw, 4.35rem);
-  margin-top: clamp(0.5rem, 1vw, 0.85rem);
   padding: 0.65em 1.5em;
   border: 3px solid #0b0b0b;
   border-radius: 8px;
@@ -190,62 +127,9 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  background: #f8ebe7;
+  background: #FFB93E;
   grid-column: 2;
   grid-row: 1 / -1;
-}
-
-/* ── "Say hello" card — sits below the copy-card on the left ── */
-.hero__hello-card {
-  position: relative;
-  min-width: 0;
-  overflow: hidden;
-  border: clamp(2px, 0.22vw, 4px) solid #0b0b0b;
-  border-radius: 14px;
-  background: #faf9f7;
-  grid-column: 1;
-  grid-row: 2;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: clamp(1rem, 1.6vw, 1.5rem) clamp(1.25rem, 2.2vw, 2.25rem);
-  gap: 1rem;
-}
-
-.hero__hello-title {
-  margin: 0;
-  color: #050505;
-  font-family: $font-body;
-  font-size: clamp(1.6rem, 2.4vw, 2.8rem);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0;
-  white-space: nowrap;
-}
-
-.hero__hello-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.6em 1.2em;
-  border: 3px solid #0b0b0b;
-  border-radius: 8px;
-  background: #FF9C7D;
-  color: #050505;
-  font-family: $font-body;
-  font-size: clamp(0.8rem, 1.1vw, 1.05rem);
-  font-weight: 700;
-  letter-spacing: 0;
-  line-height: 1;
-  text-transform: uppercase;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background 0.25s ease, transform $duration-fast $ease-out;
-}
-
-.hero__hello-cta:hover {
-  background: #f08a68;
-  transform: translateY(-2px);
 }
 
 .hero__tv-scene {
@@ -276,7 +160,7 @@
 
 .hero__cat-wrapper--base {
   z-index: 2;
-  mix-blend-mode: darken;
+  mix-blend-mode: multiply;
 }
 
 .hero__cat-wrapper--screen {
@@ -378,159 +262,101 @@
   display: none;
 }
 
-html.js-loaded {
-  .hero__pitch-line,
-  .hero__pitch-cta {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .hero__pitch-line,
-  .hero__pitch-cta {
-    opacity: 0;
-    transform: translateY(14px);
-    transition: opacity 0.7s $ease-out, transform 0.7s $ease-out, background 0.25s ease;
-  }
-
-  html.js-loaded {
-    .hero__pitch-line,
-    .hero__pitch-cta {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-}
+/* Animations handled by GSAP in ScrollReveal.js */
 
 @media (max-width: 1180px) {
   .hero__layout {
     grid-template-columns: minmax(25rem, 0.96fr) minmax(28rem, 1.04fr);
   }
 
-  .hero__pitch-text {
+  .hero__pitch-heading {
     font-size: clamp(2rem, 3.8vw, 4rem);
-  }
-
-  .hero__media-pill {
-    width: clamp(5.9rem, 11vw, 10.5rem);
-  }
-
-  .hero__media-pill--stunning,
-  .hero__media-pill--websites {
-    width: clamp(8.1rem, 16vw, 16rem);
-  }
-
-  .hero__media-pill--mobile {
-    width: clamp(7rem, 13vw, 12.5rem);
   }
 }
 
 @media (max-width: 900px) {
   .hero__stage {
-    padding: clamp(5.5rem, 11vh, 7rem) clamp(0.6rem, 2.5vw, 1.25rem) clamp(2rem, 5vw, 3rem);
+    padding: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
   }
 
   .hero__layout {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    height: auto;
-    min-height: auto;
-    gap: clamp(0.6rem, 2.5vw, 1rem);
-  }
-
-  .hero__main-group {
     display: flex;
     flex-direction: column;
-    background: #f8ebe7;
-    border: 2px solid #0b0b0b;
-    border-radius: 14px;
-    overflow: hidden;
+    height: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    gap: 0;
   }
 
-  .hero__copy-card {
-    padding: clamp(1.3rem, 5vw, 2rem);
-    background: transparent;
-    border: none;
-  }
-
-  .hero__brand-title {
-    font-size: clamp(3rem, 16vw, 5.2rem);
-  }
-
-  .hero__kicker {
-    font-size: clamp(0.68rem, 2.8vw, 0.85rem);
-    max-width: 100%;
-    white-space: normal;
-  }
-
-  .hero__pitch-text {
-    font-size: clamp(1.52rem, 6.9vw, 2.25rem);
-    gap: clamp(0.2rem, 0.9vw, 0.34rem);
-    line-height: 0.96;
-  }
-
-  .hero__pitch-line {
-    min-height: 1.04em;
-    gap: 0.24em;
-  }
-
-  .hero__pitch-line > span:not(.hero__media-pill) {
-    flex: 0 0 auto;
-  }
-
-  .hero__media-pill {
-    flex: 1 1 auto;
-    width: auto;
-    height: 0.86em;
-    min-width: clamp(3rem, 15vw, 4.8rem);
-    max-width: 100%;
-    border-width: 2px;
-  }
-
-  .hero__media-pill--stunning,
-  .hero__media-pill--websites {
-    flex-basis: clamp(5.2rem, 35vw, 9rem);
-  }
-
-  .hero__media-pill--mobile {
-    flex-basis: clamp(4.6rem, 26vw, 7.25rem);
-  }
-
-  .hero__pitch-cta {
-    min-height: clamp(2.8rem, 12vw, 3.35rem);
-    font-size: clamp(0.9rem, 4vw, 1.1rem);
-    border-width: 2px;
-  }
-
+  /* TV section — takes up the top portion */
   .hero__work-card {
+    position: relative;
     grid-column: 1;
     grid-row: auto;
-    min-height: clamp(28rem, 82vh, 40rem);
+    flex: 1 1 auto;
+    min-height: 46vh;
+    min-height: 46dvh;
     background: transparent;
     border: none;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  .hero__tv-scene {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 100%;
   }
 
   .hero__cat-wrapper {
-    bottom: clamp(2.25rem, 7vw, 4rem);
-    width: min(112vw, 35rem);
+    position: relative;
+    left: auto;
+    bottom: auto;
+    transform: none;
+    width: min(80vw, 22rem);
+    aspect-ratio: 1;
+  }
+
+  .hero__halo {
+    display: none;
   }
 
   .hero__work-title {
     display: none;
   }
 
-  .hero__hello-card {
-    grid-column: 1;
-    grid-row: auto;
-    padding: clamp(1rem, 4vw, 1.25rem) clamp(1.25rem, 5vw, 1.5rem);
+  /* Copy card — sits below the TV */
+  .hero__copy-card {
+    flex: 0 0 auto;
+    border-radius: 14px 14px 0 0;
+    border-bottom: none;
+    padding: clamp(1.5rem, 5vw, 2rem);
+    gap: clamp(0.75rem, 3vw, 1rem);
+    margin: 0 clamp(0.5rem, 2vw, 1rem);
   }
 
-  .hero__hello-title {
-    font-size: clamp(1.4rem, 6vw, 1.8rem);
+  .hero__kicker {
+    font-size: clamp(0.6rem, 2.5vw, 0.8rem);
   }
 
-  .hero__hello-cta {
-    font-size: clamp(0.75rem, 3vw, 0.9rem);
+  .hero__pitch-heading {
+    font-size: clamp(1.45rem, 6.5vw, 2.2rem);
+  }
+
+  .hero__pitch-cta {
+    flex: 1;
+    min-height: clamp(2.8rem, 12vw, 3.35rem);
+    font-size: clamp(0.85rem, 3.5vw, 1.1rem);
+    border-width: 2px;
+  }
+
+  .hero__cta-icon {
+    width: clamp(2.8rem, 12vw, 3.35rem);
+    height: clamp(2.8rem, 12vw, 3.35rem);
   }
 }

@@ -1,0 +1,1 @@
+import{n as e,s as t,t as n}from"./SmoothScroll-CreQN1Wd.js";var r=t((()=>{e(),new n}));export{r as t};

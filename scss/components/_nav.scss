@@ -6,7 +6,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   /* Sits above the overlay (900) and the mobile menu (950) so the
      hamburger / X is always reachable while the menu is open. */
   z-index: 1100;
@@ -28,6 +28,12 @@ body:not([data-nav-section='hero']) .nav::before {
   border-bottom-width: 2px;
 }
 
+body[data-nav-section='hero'].nav-has-backing .nav::before {
+  background: #ffb93e;
+  border-bottom-width: 2px;
+  border-bottom-color: #0b0b0b;
+}
+
 body[data-nav-section='logos'] .nav::before,
 body[data-nav-section='services'] .nav::before,
 body[data-nav-section='contact'] .nav::before {
@@ -43,6 +49,7 @@ body[data-nav-section='faq'] .nav::before {
   border-bottom-color: #0b0b0b;
 }
 
+body[data-nav-section='proof'] .nav::before,
 body[data-nav-section='testimonials'] .nav::before {
   background: #050505;
   border-bottom-color: rgba(250, 249, 247, 0.24);

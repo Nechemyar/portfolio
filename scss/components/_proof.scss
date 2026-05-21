@@ -1,0 +1,141 @@
+@use '../base/tokens' as *;
+
+.proof {
+  padding: clamp(3rem, 8vw, 8rem) $page-padding;
+  background: #0b0b0b;
+  color: $c-cream;
+  border-top: 2px solid #0b0b0b;
+}
+
+.proof__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.proof__header {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(18rem, 0.7fr);
+  gap: clamp(1rem, 3vw, 3rem);
+  align-items: end;
+  margin-bottom: clamp(1.5rem, 4vw, 4rem);
+}
+
+.proof__label {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.45rem 0.7rem;
+  font-family: $font-body;
+  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+  font-weight: 800;
+  color: #0b0b0b;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  background: $c-yellow;
+  border: 2px solid $c-cream;
+  border-radius: 8px;
+}
+
+.proof__title {
+  grid-column: 1 / -1;
+  max-width: 14ch;
+  margin: 0;
+  font-family: $font-display;
+  font-size: $fs-section-title;
+  font-weight: 800;
+  line-height: 0.96;
+  letter-spacing: 0;
+}
+
+.proof__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.9rem, 1.8vw, 1.5rem);
+}
+
+.proof__card {
+  overflow: hidden;
+  min-height: clamp(24rem, 34vw, 34rem);
+  background: $c-cream;
+  color: #0b0b0b;
+  border: 2px solid $c-cream;
+  border-radius: 10px;
+}
+
+.proof__card--image {
+  display: flex;
+  flex-direction: column;
+}
+
+.proof__card--image img {
+  width: 100%;
+  aspect-ratio: 1.35;
+  object-fit: cover;
+  border-bottom: 2px solid #0b0b0b;
+}
+
+.proof__card-copy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: $space-24;
+  padding: clamp(1.25rem, 2.4vw, 2rem);
+}
+
+.proof__card-copy span {
+  font-family: $font-display;
+  font-size: clamp(1.35rem, 2vw, 2.2rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.proof__card-copy p,
+.proof__card--compare li {
+  margin: 0;
+  color: #252525;
+  font-size: clamp(0.98rem, 1.1vw, 1.08rem);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.proof__card--compare {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: $space-32;
+  padding: clamp(1.25rem, 2.8vw, 2.6rem);
+  background: $c-yellow;
+  border-color: $c-yellow;
+}
+
+.proof__card--compare .proof__label {
+  background: $c-accent;
+  border-color: #0b0b0b;
+}
+
+.proof__card--compare ul {
+  display: grid;
+  gap: $space-16;
+}
+
+.proof__card--compare li {
+  padding: 1rem;
+  background: $c-cream;
+  border: 2px solid #0b0b0b;
+  border-radius: 8px;
+}
+
+@media (max-width: 900px) {
+  .proof {
+    padding-top: clamp(4.5rem, 18vw, 6rem);
+  }
+
+  .proof__header,
+  .proof__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .proof__card {
+    min-height: auto;
+  }
+}

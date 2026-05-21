@@ -76,10 +76,10 @@
 
 .about__title {
   font-family: $font-display;
-  font-size: clamp(2.4rem, 5vw, 5.4rem);
-  font-weight: 900;
-  line-height: 0.94;
-  letter-spacing: -0.01em;
+  font-size: $fs-section-title;
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: 0;
   margin: 0 0 $space-24;
 }
 

@@ -9,37 +9,70 @@ export default class ScrollReveal {
 
   init() {
     const reveals = document.querySelectorAll('[data-reveal]');
-    if (!reveals.length) return;
 
-    // Hero elements: stagger in on load
-    const heroReveals = document.querySelectorAll('.hero [data-reveal]');
-    if (heroReveals.length) {
-      gsap.to(heroReveals, {
-        opacity: 1,
-        y: 0,
-        duration: 0.9,
-        stagger: 0.12,
-        ease: 'power3.out',
-        delay: 0.3,
-      });
+    // Hero entrance timeline
+    const tl = gsap.timeline({ delay: 0.2 });
+    
+    const kicker = document.querySelector('.hero__kicker');
+    const lines = document.querySelectorAll('.hero__pitch-line');
+    const workCard = document.querySelector('.hero__work-card');
+    const helloCard = document.querySelector('.hero__hello-card');
+    
+    if (kicker) {
+      gsap.fromTo(kicker, 
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }
+      );
+    }
+    
+    if (lines.length) {
+      gsap.fromTo(lines, 
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          stagger: 0.12,
+          ease: 'power4.out'
+        },
+        "-=0.6"
+      );
+    }
+    
+    if (workCard) {
+      gsap.fromTo(workCard, 
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 1.2, ease: 'power4.out' },
+        "-=0.8"
+      );
+    }
+
+    if (helloCard) {
+      gsap.fromTo(helloCard, 
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 1, ease: 'power3.out' },
+        "-=0.9"
+      );
     }
 
     // Everything else: reveal on scroll
-    reveals.forEach((el) => {
-      const isHero = el.closest('.hero');
-      if (isHero) return;
+    if (reveals.length) {
+      reveals.forEach((el) => {
+        const isHero = el.closest('.hero');
+        if (isHero) return;
 
-      gsap.to(el, {
-        opacity: 1,
-        y: 0,
-        duration: 0.7,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 88%',
-          once: true,
-        },
+        gsap.to(el, {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            once: true,
+          },
+        });
       });
-    });
+    }
   }
 }

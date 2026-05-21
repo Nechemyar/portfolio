@@ -40,6 +40,10 @@
   background: #faf9f7;
 }
 
+.hero__main-group {
+  display: contents;
+}
+
 .hero__copy-card {
   display: flex;
   flex-direction: column;
@@ -435,8 +439,19 @@ html.js-loaded {
     gap: clamp(0.6rem, 2.5vw, 1rem);
   }
 
+  .hero__main-group {
+    display: flex;
+    flex-direction: column;
+    background: #f8ebe7;
+    border: 2px solid #0b0b0b;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
   .hero__copy-card {
     padding: clamp(1.3rem, 5vw, 2rem);
+    background: transparent;
+    border: none;
   }
 
   .hero__brand-title {
@@ -492,6 +507,8 @@ html.js-loaded {
     grid-column: 1;
     grid-row: auto;
     min-height: clamp(28rem, 82vh, 40rem);
+    background: transparent;
+    border: none;
   }
 
   .hero__cat-wrapper {
@@ -500,8 +517,7 @@ html.js-loaded {
   }
 
   .hero__work-title {
-    font-size: clamp(2.9rem, 16vw, 5.5rem);
-    white-space: normal;
+    display: none;
   }
 
   .hero__hello-card {

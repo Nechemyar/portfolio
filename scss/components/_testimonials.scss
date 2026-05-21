@@ -22,26 +22,27 @@
 .testimonials__label {
   display: inline-flex;
   font-family: $font-body;
-  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
-  font-weight: 800;
+  font-size: clamp(0.7rem, 0.8vw, 0.82rem);
+  font-weight: 600;
   color: #0b0b0b;
   text-transform: uppercase;
-  letter-spacing: 0;
+  letter-spacing: 0.02em;
   margin-bottom: $space-16;
-  padding: 0.45rem 0.7rem;
+  padding: 0.4rem 0.65rem;
   background: $c-yellow;
-  border: 2px solid $c-cream;
+  border: 1.5px solid $c-cream;
   border-radius: 8px;
 }
 
 .testimonials__title {
-  max-width: 10ch;
+  max-width: 16ch;
   font-family: $font-display;
-  font-size: clamp(3rem, 7vw, 7rem);
-  font-weight: 900;
+  font-size: clamp(2rem, 4.2vw, 3.5rem);
+  font-weight: 700;
   color: $c-cream;
-  line-height: 0.9;
-  letter-spacing: -0.01em;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
   margin: 0;
 }
 
@@ -74,11 +75,13 @@
 
 .testimonials__quote {
   font-family: $font-body;
-  font-size: clamp(1.08rem, 1.45vw, 1.35rem);
-  font-weight: 650;
-  line-height: 1.35;
+  font-size: clamp(1.05rem, 1.35vw, 1.25rem);
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: -0.005em;
   color: #0b0b0b;
   margin: 0;
+  text-wrap: pretty;
 }
 
 .testimonials__author {
@@ -106,10 +109,10 @@
 .testimonials__name {
   font-family: $font-display;
   font-size: clamp(0.86rem, 1vw, 1rem);
-  font-weight: 900;
+  font-weight: 700;
   color: #0b0b0b;
   text-transform: uppercase;
-  letter-spacing: 0;
+  letter-spacing: 0.02em;
   display: block;
 }
 

@@ -14,26 +14,27 @@
 .bento__label {
   display: inline-flex;
   margin-bottom: $space-16;
-  padding: 0.45rem 0.7rem;
+  padding: 0.4rem 0.65rem;
   font-family: $font-body;
-  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
-  font-weight: 800;
+  font-size: clamp(0.7rem, 0.8vw, 0.82rem);
+  font-weight: 600;
   color: #0b0b0b;
   text-transform: uppercase;
-  letter-spacing: 0;
+  letter-spacing: 0.02em;
   background: $c-accent;
-  border: 2px solid #0b0b0b;
+  border: 1.5px solid #0b0b0b;
   border-radius: 8px;
 }
 
 .bento__title {
-  max-width: 13ch;
+  max-width: 18ch;
   font-family: $font-display;
-  font-size: clamp(3rem, 7vw, 7rem);
-  font-weight: 900;
+  font-size: clamp(2rem, 4.2vw, 3.5rem);
+  font-weight: 700;
   color: #0b0b0b;
-  line-height: 0.9;
-  letter-spacing: -0.01em;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
   margin: 0;
 }
 
@@ -70,26 +71,27 @@
 
 .bento__stat-number {
   font-family: $font-display;
-  font-size: clamp(5rem, 12vw, 11rem);
-  font-weight: 900;
+  font-size: clamp(3.5rem, 8vw, 6.5rem);
+  font-weight: 700;
   color: #0b0b0b;
-  line-height: 0.82;
-  letter-spacing: -0.02em;
+  line-height: 0.85;
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
 }
 
 .bento__stat-label {
   display: inline-flex;
   width: fit-content;
-  padding: 0.5rem 0.75rem;
+  padding: 0.4rem 0.65rem;
   font-family: $font-body;
-  font-size: clamp(0.72rem, 0.9vw, 0.9rem);
-  font-weight: 800;
+  font-size: clamp(0.7rem, 0.8vw, 0.82rem);
+  font-weight: 600;
   color: #0b0b0b;
   text-transform: uppercase;
-  letter-spacing: 0;
+  letter-spacing: 0.02em;
   line-height: 1.2;
   background: $c-yellow;
-  border: 2px solid #0b0b0b;
+  border: 1.5px solid #0b0b0b;
   border-radius: 8px;
 }
 
@@ -102,10 +104,11 @@
 
 .bento__process-title {
   font-family: $font-display;
-  font-size: clamp(2.4rem, 5vw, 5.6rem);
-  font-weight: 900;
+  font-size: clamp(1.7rem, 3.2vw, 2.8rem);
+  font-weight: 700;
   color: #0b0b0b;
-  line-height: 0.92;
+  line-height: 1.0;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
   margin-bottom: $space-32;
 }
@@ -122,33 +125,34 @@
 .bento__process-list li {
   counter-increment: steps;
   position: relative;
-  padding: 0.8rem 1rem 0.8rem 3.25rem;
+  padding: 0.75rem 1rem 0.75rem 3.1rem;
   font-family: $font-body;
-  font-size: clamp(1rem, 1.4vw, 1.25rem);
-  font-weight: 700;
+  font-size: clamp(0.95rem, 1.15vw, 1.1rem);
+  font-weight: 600;
   color: #0b0b0b;
-  line-height: 1.2;
+  line-height: 1.25;
   background: $c-cream;
-  border: 2px solid #0b0b0b;
+  border: 1.5px solid #0b0b0b;
   border-radius: 8px;
 }
 
 .bento__process-list li::before {
   content: counter(steps);
   position: absolute;
-  left: 0.8rem;
+  left: 0.75rem;
   top: 50%;
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 1.7rem;
+  height: 1.7rem;
   display: grid;
   place-items: center;
   transform: translateY(-50%);
   font-family: $font-display;
-  font-weight: 900;
+  font-weight: 700;
   color: #0b0b0b;
   background: $c-accent;
-  border: 2px solid #0b0b0b;
+  border: 1.5px solid #0b0b0b;
   border-radius: 50%;
+  font-variant-numeric: tabular-nums;
 }
 
 .bento__card--wide {
@@ -183,10 +187,11 @@
 
 .bento__wide-headline {
   font-family: $font-display;
-  font-size: clamp(2.2rem, 5vw, 5.2rem);
-  font-weight: 900;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  font-weight: 700;
   color: #0b0b0b;
-  line-height: 0.9;
+  line-height: 1.0;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
   margin-bottom: $space-8;
 }

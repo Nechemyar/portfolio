@@ -62,24 +62,25 @@
   display: inline-flex;
   width: fit-content;
   font-family: $font-body;
-  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
-  font-weight: 800;
+  font-size: clamp(0.7rem, 0.8vw, 0.82rem);
+  font-weight: 600;
   color: #0b0b0b;
   text-transform: uppercase;
-  letter-spacing: 0;
+  letter-spacing: 0.02em;
   margin-bottom: $space-24;
-  padding: 0.5rem 0.75rem;
+  padding: 0.4rem 0.65rem;
   background: $c-cream;
-  border: 2px solid #0b0b0b;
+  border: 1.5px solid #0b0b0b;
   border-radius: 8px;
 }
 
 .about__title {
   font-family: $font-display;
-  font-size: clamp(2.4rem, 5vw, 5.4rem);
-  font-weight: 900;
-  line-height: 0.94;
-  letter-spacing: -0.01em;
+  font-size: clamp(2rem, 4.2vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
   margin: 0 0 $space-24;
 }
 
@@ -102,10 +103,10 @@
   align-items: center;
   gap: $space-12;
   font-family: $font-body;
-  font-size: clamp(0.78rem, 0.9vw, 0.92rem);
-  font-weight: 800;
+  font-size: clamp(0.74rem, 0.85vw, 0.86rem);
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0;
+  letter-spacing: 0.02em;
   color: #0b0b0b;
 }
 

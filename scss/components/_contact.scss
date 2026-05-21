@@ -22,10 +22,11 @@
 
 .contact__title {
   font-family: $font-display;
-  font-size: clamp(3rem, 7vw, 7rem);
-  font-weight: 900;
-  line-height: 0.9;
-  letter-spacing: -0.01em;
+  font-size: clamp(2rem, 4.2vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
   margin-bottom: $space-24;
 }
 

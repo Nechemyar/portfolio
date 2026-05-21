@@ -12,11 +12,11 @@
   max-width: 1200px;
   margin: 0 auto $space-24;
   font-family: $font-body;
-  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
-  font-weight: 700;
+  font-size: clamp(0.7rem, 0.8vw, 0.82rem);
+  font-weight: 600;
   color: #0b0b0b;
   text-transform: uppercase;
-  letter-spacing: 0;
+  letter-spacing: 0.02em;
 }
 
 .logo-strip__track {
@@ -36,16 +36,16 @@
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  padding: 0.55rem 0.9rem;
+  padding: 0.5rem 0.85rem;
   font-family: $font-display;
-  font-size: clamp(0.85rem, 1.1vw, 1rem);
-  font-weight: 800;
+  font-size: clamp(0.82rem, 1vw, 0.94rem);
+  font-weight: 600;
   color: #0b0b0b;
   text-transform: uppercase;
-  letter-spacing: 0;
+  letter-spacing: 0.02em;
   white-space: nowrap;
   background: $c-cream;
-  border: 2px solid #0b0b0b;
+  border: 1.5px solid #0b0b0b;
   border-radius: 8px;
 }
 

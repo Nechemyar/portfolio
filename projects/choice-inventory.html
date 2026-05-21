@@ -4,25 +4,48 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Choice Inventory — Nechemya</title>
-  <meta name="description" content="Premium inventory services site — case study by Nechemya." />
+  <title>Choice Inventory — Sumi Studios case study</title>
+  <meta name="description" content="A confident, conversion-led site for a premium inventory service, designed and hand-coded by Sumi Studios." />
+  <link rel="canonical" href="https://nechemya.com/projects/choice-inventory.html" />
+
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet" />
+  <link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" />
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" /></noscript>
 
-  <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css" />
   <link rel="stylesheet" href="../scss/main.scss" />
 </head>
 
 <body class="project-page project-page--choice">
 
-  <header class="nav" id="nav">
+  <!-- NAV -->
+  <header class="nav is-ready" id="nav">
     <div class="nav__inner">
-      <a href="../index.html" class="nav__logo">nech<br />emya.</a>
+      <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="nav__cta nav__cta--left">Book a free call</a>
+      <a href="../index.html" class="nav__logo" aria-label="Sumi Studios home">
+        <img class="nav__logo-mark" src="../assets/images/colbbord.svg" alt="" />
+        <span class="nav__logo-wordmark">
+          <span class="nav__logo-wordmark-line">SUMI</span>
+          <span class="nav__logo-wordmark-sub">STUDIOS</span>
+        </span>
+        <img class="nav__logo-svg" src="../assets/images/Wordmark.svg" alt="SUMI Studios" />
+      </a>
       <div class="nav__desktop-wrapper">
+        <button class="nav__menu-btn" id="menu-toggle" aria-label="Open menu">
+          <span class="nav__menu-label">MENU</span>
+          <span class="nav__menu-icon">
+            <img class="nav__menu-cross" src="../assets/images/Cross.svg" alt="" />
+            <span class="nav__menu-lines" aria-hidden="true">
+              <span class="nav__menu-line nav__menu-line--top"></span>
+              <span class="nav__menu-line nav__menu-line--bottom"></span>
+            </span>
+          </span>
+        </button>
         <div class="nav__desktop-links">
-          <a href="../index.html#projects">Work</a>
+          <a href="../index.html#bento">Work</a>
           <a href="../index.html#services">Services</a>
           <a href="../index.html#pricing">Pricing</a>
           <a href="../index.html#faq">FAQ</a>
@@ -32,31 +55,50 @@
     </div>
   </header>
 
+  <!-- MOBILE MENU -->
+  <div class="menu-overlay" id="menu-overlay"></div>
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+    <button id="mobile-menu-close-pill" class="mobile-menu__close-pill" aria-label="Close menu"></button>
+    <div class="mobile-menu__content">
+      <ul class="mobile-menu__nav">
+        <li><a href="../index.html#bento" class="mobile-menu__link menu-item">Work</a></li>
+        <li><a href="../index.html#services" class="mobile-menu__link menu-item">Services</a></li>
+        <li><a href="../index.html#pricing" class="mobile-menu__link menu-item">Pricing</a></li>
+        <li><a href="../index.html#faq" class="mobile-menu__link menu-item">FAQ</a></li>
+        <li><a href="../index.html#contact" class="mobile-menu__link menu-item">Contact</a></li>
+      </ul>
+      <div class="mobile-menu__actions">
+        <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="mobile-menu__cta menu-item">Book a free call</a>
+      </div>
+    </div>
+  </nav>
+
   <main class="project-page__main">
-    <section class="project-hero">
-      <a href="../index.html#projects" class="project-hero__back">← All work</a>
-      <span class="project-hero__eyebrow">Featured Project · 2025</span>
-      <h1 class="project-hero__title">Choice<br />Inventory</h1>
-      <p class="project-hero__sub">Premium inventory services for letting agents, landlords, and tenants — a confident, conversion-led site that turns first-time visitors into bookings.</p>
+    <section class="project-hero" data-nav-theme="light" id="project-hero">
+      <a href="../index.html#bento" class="project-hero__back">← All work</a>
+      <span class="project-hero__eyebrow">Case study · 2025</span>
+      <h1 class="project-hero__title">Choice Inventory</h1>
+      <p class="project-hero__sub">A confident, conversion-led site for a premium inventory service — turning first-time visitors into bookings in three clicks.</p>
       <div class="project-hero__meta">
         <div><span>Client</span> Choice Inventory</div>
         <div><span>Scope</span> Brand site, design + build</div>
-        <div><span>Stack</span> Hand-coded, Vite</div>
+        <div><span>Stack</span> Hand-coded · Vite</div>
+        <div><span>Timeline</span> 2 weeks</div>
       </div>
-      <a href="#" class="btn btn--primary project-hero__cta" target="_blank" rel="noopener noreferrer">Visit live site →</a>
+      <a href="#" class="project-hero__cta" target="_blank" rel="noopener noreferrer">Visit the live site →</a>
     </section>
 
-    <section class="project-shot">
-      <img src="../assets/images/project-choice.webp" alt="Choice Inventory — homepage" loading="lazy" decoding="async" />
+    <section class="project-shot" data-nav-theme="light">
+      <img src="../assets/images/project-choice.webp" alt="Choice Inventory homepage" loading="lazy" decoding="async" width="1280" height="800" />
     </section>
 
-    <section class="project-brief">
+    <section class="project-brief" data-nav-theme="light">
       <h2>The brief.</h2>
-      <p>Choice Inventory came in with a template site that didn't reflect the premium-end of the property services market they actually serve. Letting agents were bouncing because the site felt cheap; landlords couldn't tell what made the service different from any other inventory clerk.</p>
-      <p>The rebuild leans into confidence: bold typography, a saturated brand palette, accreditations surfaced where they matter, and a booking flow that takes three clicks. Hand-coded for speed and SEO, with structured data baked in.</p>
+      <p>Choice Inventory came in with a template that didn't reflect the premium end of the property services market they actually serve. Letting agents were bouncing because the site felt cheap; landlords couldn't tell what made the service different from any other inventory clerk.</p>
+      <p>The rebuild leans into confidence: strong typography, a saturated brand palette, accreditations surfaced where they matter, and a booking flow that takes three clicks. Hand-coded for speed and SEO, with structured data baked in.</p>
     </section>
 
-    <section class="project-next">
+    <section class="project-next" data-nav-theme="light">
       <a href="clinical-assessments.html" class="project-next__link">
         <span class="project-next__label">Next project</span>
         <span class="project-next__title">Clinical Assessments →</span>

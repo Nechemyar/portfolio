@@ -63,8 +63,8 @@ export default class Faq {
 
     gsap.to(answer, {
       height: 0,
-      duration: 0.34,
-      ease: 'power2.inOut',
+      duration: 0.28,
+      ease: 'power3.out',
       onComplete: () => {
         item.open = false;
       },

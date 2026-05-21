@@ -276,7 +276,7 @@
 
 @media (max-width: 900px) {
   .hero__stage {
-    padding: 0;
+    padding: 0 clamp(0.5rem, 2vw, 1rem) clamp(0.5rem, 2vw, 1rem);
     min-height: 100vh;
     min-height: 100dvh;
     display: flex;
@@ -286,39 +286,40 @@
   .hero__layout {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    min-height: 100vh;
-    min-height: 100dvh;
+    flex: 1;
+    min-height: 0;
     gap: 0;
   }
 
-  /* TV section — takes up the top portion */
+  /* TV section — invisible container, TV centered inside */
   .hero__work-card {
     position: relative;
-    grid-column: 1;
-    grid-row: auto;
     flex: 1 1 auto;
-    min-height: 46vh;
-    min-height: 46dvh;
+    min-height: 0;
     background: transparent;
     border: none;
     border-radius: 0;
     overflow: visible;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .hero__tv-scene {
+    position: relative;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
+    width: 100%;
     height: 100%;
   }
 
   .hero__cat-wrapper {
-    position: relative;
-    left: auto;
-    bottom: auto;
-    transform: none;
-    width: min(80vw, 22rem);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(75vw, 20rem);
     aspect-ratio: 1;
   }
 
@@ -330,33 +331,31 @@
     display: none;
   }
 
-  /* Copy card — sits below the TV */
+  /* Copy card — sits below the TV, stays in viewport */
   .hero__copy-card {
     flex: 0 0 auto;
-    border-radius: 14px 14px 0 0;
-    border-bottom: none;
-    padding: clamp(1.5rem, 5vw, 2rem);
-    gap: clamp(0.75rem, 3vw, 1rem);
-    margin: 0 clamp(0.5rem, 2vw, 1rem);
+    border-radius: 14px 14px 14px 14px;
+    padding: clamp(1.2rem, 4vw, 1.8rem);
+    gap: clamp(0.6rem, 2.5vw, 0.9rem);
   }
 
   .hero__kicker {
-    font-size: clamp(0.6rem, 2.5vw, 0.8rem);
+    font-size: clamp(0.55rem, 2.2vw, 0.75rem);
   }
 
   .hero__pitch-heading {
-    font-size: clamp(1.45rem, 6.5vw, 2.2rem);
+    font-size: clamp(1.35rem, 6vw, 2rem);
   }
 
   .hero__pitch-cta {
     flex: 1;
-    min-height: clamp(2.8rem, 12vw, 3.35rem);
-    font-size: clamp(0.85rem, 3.5vw, 1.1rem);
+    min-height: clamp(2.6rem, 10vw, 3rem);
+    font-size: clamp(0.8rem, 3.2vw, 1rem);
     border-width: 2px;
   }
 
   .hero__cta-icon {
-    width: clamp(2.8rem, 12vw, 3.35rem);
-    height: clamp(2.8rem, 12vw, 3.35rem);
+    width: clamp(2.6rem, 10vw, 3rem);
+    height: clamp(2.6rem, 10vw, 3rem);
   }
 }

@@ -83,6 +83,20 @@ body.menu-open {
   overflow: hidden;
 }
 
+html.menu-open,
+html.menu-open body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@supports (overflow: clip) {
+  html.menu-open,
+  html.menu-open body {
+    overflow-x: clip;
+  }
+}
+
 /* ——— Section Label ——— */
 .section-label {
   font-family: $font-body;

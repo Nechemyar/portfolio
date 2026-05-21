@@ -41,6 +41,7 @@ export default class Menu {
 
     // Make visible, then animate in
     this.menu.classList.add('is-open');
+    document.documentElement.classList.add('menu-open');
     document.body.classList.add('menu-open');
     this.overlay.classList.add('is-active');
 
@@ -81,6 +82,7 @@ export default class Menu {
       onComplete: () => {
         this.isOpen = false;
         this.menu.classList.remove('is-open');
+        document.documentElement.classList.remove('menu-open');
         document.body.classList.remove('menu-open');
         this.overlay.classList.remove('is-active');
         gsap.set(this.overlay, { opacity: 0 });

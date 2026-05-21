@@ -17,7 +17,7 @@
 
 .mobile-menu {
   position: fixed;
-  bottom: 16px;
+  bottom: 22px;
   left: 16px;
   right: 16px;
   width: auto;
@@ -36,6 +36,12 @@
   overflow-y: auto;
   contain: paint;
   overscroll-behavior: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.mobile-menu::-webkit-scrollbar {
+  display: none;
 }
 
 .mobile-menu.is-open {
@@ -64,7 +70,7 @@
 
 .mobile-menu__content {
   padding: clamp(1.2rem, 4vw, 1.8rem);
-  padding-top: 2rem; /* Add some padding so the content doesn't overlap the absolute positioned pill */
+  padding-top: 3rem;
 }
 
 /* ── Nav links ─────────────────────────────────── */

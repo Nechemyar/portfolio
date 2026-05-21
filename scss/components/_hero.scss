@@ -5,6 +5,7 @@
   width: 100vw;
   min-height: 100vh;
   overflow: hidden;
+  background: #FFB93E;
 }
 
 .hero__stage {
@@ -259,6 +260,10 @@
 }
 
 @media (max-width: 900px) {
+  .hero {
+    min-height: 100dvh;
+  }
+
   .hero__stage {
     padding: 0 clamp(0.5rem, 2vw, 1rem) clamp(0.5rem, 2vw, 1rem);
     min-height: 100vh;

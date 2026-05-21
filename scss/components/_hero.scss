@@ -291,19 +291,36 @@
     gap: 0;
   }
 
-  /* TV section — transparent container, inherits desktop TV/cat/reel styles */
+  /* TV section — solid background ensures multiply blend works */
   .hero__work-card {
     position: relative;
     flex: 1 1 auto;
     min-height: 0;
-    background: transparent;
+    background: #FFB93E;
     border: none;
     border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  /* Just make the TV bigger on mobile */
+  .hero__tv-scene {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Make the TV bigger and positioned higher up */
   .hero__cat-wrapper {
-    width: min(85vw, 24rem);
+    position: absolute;
+    left: 50%;
+    top: 42%;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    width: min(100vw, 30rem);
   }
 
   .hero__work-title {

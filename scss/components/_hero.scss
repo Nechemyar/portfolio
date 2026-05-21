@@ -291,7 +291,7 @@
     gap: 0;
   }
 
-  /* TV section — invisible container, TV centered inside */
+  /* TV section — transparent container, inherits desktop TV/cat/reel styles */
   .hero__work-card {
     position: relative;
     flex: 1 1 auto;
@@ -299,32 +299,11 @@
     background: transparent;
     border: none;
     border-radius: 0;
-    overflow: visible;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
-  .hero__tv-scene {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-  }
-
+  /* Just make the TV bigger on mobile */
   .hero__cat-wrapper {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: min(75vw, 20rem);
-    aspect-ratio: 1;
-  }
-
-  .hero__halo {
-    display: none;
+    width: min(85vw, 24rem);
   }
 
   .hero__work-title {
@@ -334,7 +313,7 @@
   /* Copy card — sits below the TV, stays in viewport */
   .hero__copy-card {
     flex: 0 0 auto;
-    border-radius: 14px 14px 14px 14px;
+    border-radius: 14px;
     padding: clamp(1.2rem, 4vw, 1.8rem);
     gap: clamp(0.6rem, 2.5vw, 0.9rem);
   }

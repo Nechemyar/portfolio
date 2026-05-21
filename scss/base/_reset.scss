@@ -58,6 +58,12 @@ a, button, .btn {
   text-decoration: none;
   cursor: url('/assets/images/cursor-pointer.svg') 12 12, pointer !important;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+:where(a, button, .btn):focus-visible {
+  outline: 2px solid $c-accent;
+  outline-offset: 4px;
 }
 
 /* Kill the default flash that Android/iOS paint on any tapped
@@ -73,6 +79,17 @@ a, button, .btn {
 
 h1, h2, h3, h4, h5, p, span {
   cursor: url('/assets/images/cursor-text.svg') 12 12, text;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p,
+li {
+  text-wrap: pretty;
 }
 
 ul {
@@ -135,18 +152,13 @@ html.js-loaded [data-reveal] {
   color: rgba(250, 249, 247, 0.72);
 }
 
-.footer__links {
-  display: flex;
-  gap: $space-32;
-}
-
-.footer__links a {
+.footer__email {
   font-size: $fs-sm;
   color: rgba(250, 249, 247, 0.72);
   transition: color $duration-fast ease;
 }
 
-.footer__links a:hover {
+.footer__email:hover {
   color: #faf9f7;
 }
 

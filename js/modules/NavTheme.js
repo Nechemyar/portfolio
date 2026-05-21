@@ -19,6 +19,9 @@ export default class NavTheme {
     const sections = document.querySelectorAll('[data-nav-theme]');
     if (!sections.length) return;
 
+    this.updateBacking();
+    window.addEventListener('scroll', () => this.updateBacking(), { passive: true });
+
     sections.forEach((section) => {
       const theme = section.dataset.navTheme;
       ScrollTrigger.create({
@@ -45,5 +48,9 @@ export default class NavTheme {
   setTheme(theme, sectionId = '') {
     document.body.classList.toggle('nav-theme-light', theme === 'light');
     document.body.dataset.navSection = sectionId;
+  }
+
+  updateBacking() {
+    document.body.classList.toggle('nav-has-backing', window.scrollY > 24);
   }
 }

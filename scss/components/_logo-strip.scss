@@ -12,11 +12,11 @@
   max-width: 1200px;
   margin: 0 auto $space-24;
   font-family: $font-body;
-  font-size: clamp(0.7rem, 0.8vw, 0.82rem);
-  font-weight: 600;
+  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+  font-weight: 700;
   color: #0b0b0b;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
 }
 
 .logo-strip__track {
@@ -35,32 +35,28 @@
 .logo-strip__logo {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
   min-height: 44px;
-  padding: 0.5rem 0.85rem;
+  padding: 0.55rem 0.9rem;
   font-family: $font-display;
-  font-size: clamp(0.82rem, 1vw, 0.94rem);
-  font-weight: 600;
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  font-weight: 800;
   color: #0b0b0b;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
   white-space: nowrap;
-  text-decoration: none;
   background: $c-cream;
-  border: 1.5px solid #0b0b0b;
+  border: 2px solid #0b0b0b;
   border-radius: 8px;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition: transform $duration-fast $ease-out, background $duration-fast ease;
 }
 
-.logo-strip__logo:hover,
-.logo-strip__logo:focus-visible {
-  background: #fff;
+.logo-strip__logo[href]:hover {
   transform: translateY(-2px);
+  background: $c-accent;
 }
 
-.logo-strip__logo:focus-visible {
-  outline: 2px solid #0b0b0b;
-  outline-offset: 3px;
+.logo-strip__logo--plain {
+  background: transparent;
 }
 
 .logo-strip__divider {

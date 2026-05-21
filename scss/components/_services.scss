@@ -14,13 +14,12 @@
 }
 
 .services__title {
-  max-width: 18ch;
+  max-width: 13ch;
   font-family: $font-display;
-  font-size: clamp(2rem, 4.2vw, 3.5rem);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.015em;
-  text-wrap: balance;
+  font-size: $fs-section-title;
+  font-weight: 800;
+  line-height: 0.96;
+  letter-spacing: 0;
   color: #0b0b0b;
 }
 
@@ -48,24 +47,22 @@
   display: inline-flex;
   width: fit-content;
   font-family: $font-body;
-  font-size: clamp(0.7rem, 0.8vw, 0.82rem);
-  font-weight: 600;
+  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
   color: #0b0b0b;
-  padding: 0.4rem 0.65rem;
+  padding: 0.45rem 0.7rem;
   background: $c-accent;
-  border: 1.5px solid #0b0b0b;
+  border: 2px solid #0b0b0b;
   border-radius: 8px;
 }
 
 .services__card-title {
   font-family: $font-display;
-  font-size: clamp(1.4rem, 2.3vw, 2rem);
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
-  text-wrap: balance;
+  font-size: clamp(1.65rem, 2.6vw, 2.55rem);
+  font-weight: 800;
+  line-height: 1.02;
   color: #0b0b0b;
 }
 

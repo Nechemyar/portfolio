@@ -11,11 +11,53 @@
      hamburger / X is always reachable while the menu is open. */
   z-index: 1100;
   padding: clamp(0.85rem, 2.2vw, 2rem) clamp(1rem, 3.5vw, 2.5rem);
-  mix-blend-mode: difference;
+  transition: padding 0.3s ease;
 }
 
-body.menu-open .nav {
-  mix-blend-mode: normal;
+/* Base (Dark background) Nav colors */
+.nav__logo-svg {
+  filter: invert(1); /* white/cream */
+}
+
+.nav__logo-wordmark-line,
+.nav__logo-wordmark-sub {
+  color: #faf9f7;
+}
+
+.nav__menu-label {
+  color: #faf9f7;
+}
+
+.nav__menu-line {
+  background: #faf9f7;
+}
+
+.nav__desktop-links a {
+  color: #faf9f7;
+}
+
+/* Light theme Nav colors (toggled by NavTheme.js when over light sections) */
+body.nav-theme-light {
+  .nav__logo-svg {
+    filter: invert(0); /* charcoal/black */
+  }
+
+  .nav__logo-wordmark-line,
+  .nav__logo-wordmark-sub {
+    color: $c-charcoal;
+  }
+
+  .nav__menu-label {
+    color: $c-charcoal;
+  }
+
+  .nav__menu-line {
+    background: $c-charcoal;
+  }
+
+  .nav__desktop-links a {
+    color: $c-charcoal;
+  }
 }
 
 /* Three-column grid: CTA (left) · logo (centre) · MENU (right).
@@ -36,7 +78,7 @@ body.menu-open .nav {
   align-items: center;
   gap: clamp(0.5rem, 1vw, 0.85rem);
   text-decoration: none;
-  color: $c-bg;
+  color: #faf9f7;
   transition: transform $duration-fast $ease-out;
 }
 
@@ -62,8 +104,7 @@ body.menu-open .nav {
      animation when the Loader removes its initial state. */
   opacity: 0;
   transform: translateY(-6px);
-  transition: opacity 0.7s $ease-out 0.1s, transform 0.7s $ease-out 0.1s;
-  filter: invert(1);
+  transition: opacity 0.7s $ease-out 0.1s, transform 0.7s $ease-out 0.1s, filter 0.3s ease;
 }
 
 .nav.is-ready .nav__logo-svg {
@@ -83,7 +124,6 @@ body.menu-open .nav {
   font-size: clamp(1.1rem, 1.8vw, 1.65rem);
   font-weight: 900;
   letter-spacing: 0.02em;
-  color: $c-bg;
 }
 
 .nav__logo-wordmark-sub {
@@ -91,7 +131,6 @@ body.menu-open .nav {
   font-weight: 700;
   letter-spacing: 0.32em;
   margin-top: 0.2em;
-  color: $c-bg;
 }
 
 /* Shared pill metrics — every nav button uses the same fluid height +
@@ -141,8 +180,7 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  background-color: $c-bg;
-  color: $c-soft;
+  background-color: transparent;
   border-radius: 6px;
   height: $nav-pill-height;
   /* Width is governed by the inner links' max-width (0 when collapsed,
@@ -176,10 +214,9 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   font-family: $font-display;
   font-size: $fs-base;
   font-weight: 800;
-  color: $c-soft;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  transition: opacity $duration-fast ease;
+  transition: opacity $duration-fast ease, color 0.3s ease;
 }
 
 .nav__desktop-links a:hover {
@@ -213,7 +250,7 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   border-radius: 0;
   cursor: pointer;
   flex-shrink: 0;
-  color: white;
+  transition: color 0.3s ease;
 }
 
 .nav__menu-btn:focus {
@@ -229,7 +266,6 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   font-family: $font-body; /* Satoshi — matches the CTA pill */
   font-size: clamp(0.78rem, 1vw, 0.95rem);
   font-weight: 700;
-  color: white;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   white-space: nowrap;
@@ -270,7 +306,6 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   left: 0;
   width: 100%;
   height: 2px;
-  background: white;
   border-radius: 2px;
   transform-origin: 50% 50%;
   /* Translate is animated by .nav.is-ready for the entrance; the
@@ -434,7 +469,6 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   font-family: $font-body;
   font-size: clamp(0.85rem, 1.1vw, 1.05rem);
   font-weight: 700;
-  color: white;
   text-transform: none;
   letter-spacing: 0;
   white-space: nowrap;
@@ -472,7 +506,7 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   }
 
   .nav__menu-btn.is-open .nav__menu-line {
-    background: #ffffff;
+    /* No hardcoded bg, relies on theme */
   }
 }
 

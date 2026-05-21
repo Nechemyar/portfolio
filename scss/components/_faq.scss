@@ -56,6 +56,7 @@
   border: 2px solid #0b0b0b;
   border-radius: 10px;
   overflow: hidden;
+  transition: background-color $duration-fast ease;
 }
 
 .faq__item > summary {
@@ -81,6 +82,8 @@
   width: 20px;
   height: 20px;
   flex-shrink: 0;
+  transform-origin: center;
+  transition: transform 0.34s $ease-out;
 }
 
 .faq__icon::before,
@@ -90,7 +93,6 @@
   background: currentColor;
   top: 50%;
   left: 50%;
-  transition: transform $duration-fast $ease-out;
 }
 
 .faq__icon::before {
@@ -105,16 +107,17 @@
   transform: translate(-50%, -50%);
 }
 
-.faq__item[open] {
+.faq__item[open],
+.faq__item.is-open {
   background: $c-yellow;
 }
 
-.faq__item[open] .faq__icon::after {
-  transform: translate(-50%, -50%) rotate(90deg);
-  opacity: 0;
+.faq__item.is-open .faq__icon {
+  transform: rotate(45deg);
 }
 
 .faq__answer {
+  overflow: hidden;
   padding: 0 clamp(1rem, 2vw, 1.5rem) clamp(1rem, 2vw, 1.5rem);
   font-family: $font-body;
   font-size: clamp(1rem, 1.15vw, 1.1rem);

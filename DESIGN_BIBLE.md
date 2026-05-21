@@ -50,7 +50,7 @@ Use black/near-black text on yellow, paper, blush, coral, and green. Do not use 
 - On yellow/light sections, wordmark and menu icon/label should be black.
 - On dark sections, use warm white.
 - Keep the hero nav transparent. After the hero, give the fixed nav a section-matched backing so it never sits directly on top of large copy or FAQ text while scrolling.
-- When the mobile menu is open, keep the fixed nav backing visible as a dark bar and switch wordmark/menu controls to warm white, even if the underlying section is yellow/light.
+- When the mobile menu is open, keep the fixed nav backing on its current section color; do not introduce a sudden black bar on the hero.
 - If the nav is visually pleasing but not readable, readability wins.
 
 ## Post-Hero Sections

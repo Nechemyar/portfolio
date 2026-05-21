@@ -14,7 +14,7 @@ $fs-massive: clamp(4.5rem, 12vw, 11rem);
 
 // Font Families
 $font-body: 'Satoshi', 'DM Sans', sans-serif;
-$font-display: 'Clash Display', $font-body;
+$font-display: $font-body;
 
 // Colors
 $c-cream: #FAF9F7;

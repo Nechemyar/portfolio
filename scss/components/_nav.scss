@@ -48,12 +48,6 @@ body[data-nav-section='testimonials'] .nav::before {
   border-bottom-color: rgba(250, 249, 247, 0.24);
 }
 
-body.menu-open .nav::before {
-  background: #050505;
-  border-bottom-width: 2px;
-  border-bottom-color: rgba(250, 249, 247, 0.24);
-}
-
 /* Base (Dark background) Nav colors */
 .nav__logo-svg {
   filter: invert(1); /* white/cream */

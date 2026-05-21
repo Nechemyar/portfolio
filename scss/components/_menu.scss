@@ -58,7 +58,7 @@
 }
 
 .mobile-menu__content {
-  padding: 1.25rem;
+  padding: clamp(1.2rem, 4vw, 1.8rem);
   padding-top: 2rem; /* Add some padding so the content doesn't overlap the absolute positioned pill */
 }
 

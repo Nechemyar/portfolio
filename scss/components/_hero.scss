@@ -19,10 +19,10 @@
 }
 
 .hero__layout {
-  display: grid;
-  grid-template-columns: minmax(27rem, 0.9fr) minmax(32rem, 1.1fr);
-  grid-template-rows: 1fr auto;
-  gap: clamp(0.5rem, 0.8vw, 0.75rem);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   max-width: 96rem;
   margin: 0 auto;
@@ -30,22 +30,31 @@
   height: calc(100vh - clamp(8.25rem, 16vh, 11.25rem));
 }
 
-.hero__copy-card,
 .hero__work-card {
-  position: relative;
-  min-width: 0;
-  overflow: hidden;
-  border: clamp(2px, 0.22vw, 4px) solid #0b0b0b;
-  border-radius: 14px;
-  background: #faf9f7;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 0;
 }
 
 .hero__copy-card {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  width: min(100%, 26rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(1.2rem, 2vw, 2rem) clamp(1.25rem, 2.2vw, 2.25rem);
-  gap: clamp(0.6rem, 1.2vw, 1rem);
+  padding: clamp(1.2rem, 4vw, 1.8rem);
+  gap: clamp(0.6rem, 2.5vw, 0.9rem);
+  border: clamp(2px, 0.22vw, 4px) solid #0b0b0b;
+  border-radius: 14px;
+  background: #faf9f7;
 }
 
 .hero__kicker {
@@ -63,7 +72,7 @@
   margin: 0;
   color: #050505;
   font-family: $font-body;
-  font-size: clamp(1.5rem, 3.18vw, 4.15rem);
+  font-size: clamp(1.5rem, 3.18vw, 3.8rem);
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.02em;
@@ -79,8 +88,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: clamp(2.6rem, 3.8vw, 4.35rem);
-  height: clamp(2.6rem, 3.8vw, 4.35rem);
+  width: clamp(2.6rem, 3.8vw, 4rem);
+  height: clamp(2.6rem, 3.8vw, 4rem);
   border: 2px solid #0b0b0b;
   border-radius: 8px;
   background: #faf9f7;
@@ -95,21 +104,19 @@
   transform: translateY(-2px);
 }
 
-/* Old pill styles removed — using paragraph heading now */
-
 .hero__pitch-cta {
   display: flex;
   align-items: center;
   justify-content: center;
   flex: 1;
-  min-height: clamp(2.85rem, 3.8vw, 4.35rem);
+  min-height: clamp(2.6rem, 3.8vw, 4rem);
   padding: 0.65em 1.5em;
   border: 3px solid #0b0b0b;
   border-radius: 8px;
   background: #FF9C7D;
   color: #050505;
   font-family: $font-body;
-  font-size: clamp(0.92rem, 1.3vw, 1.45rem);
+  font-size: clamp(0.92rem, 1.3vw, 1.25rem);
   font-weight: 700;
   letter-spacing: 0;
   line-height: 1;
@@ -123,19 +130,13 @@
   transform: translateY(-2px);
 }
 
-.hero__work-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  background: #FFB93E;
-  grid-column: 2;
-  grid-row: 1 / -1;
-}
-
 .hero__tv-scene {
   position: relative;
-  flex: 1 1 auto;
-  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 .hero__halo {
@@ -151,10 +152,10 @@
 .hero__cat-wrapper {
   position: absolute;
   left: 50%;
-  bottom: clamp(-2.7rem, -3vw, -1.25rem);
+  top: 50%;
+  transform: translate(-50%, -50%);
   width: min(90%, 56rem);
   aspect-ratio: 1;
-  transform: translateX(-50%);
   will-change: transform;
 }
 
@@ -265,12 +266,8 @@
 /* Animations handled by GSAP in ScrollReveal.js */
 
 @media (max-width: 1180px) {
-  .hero__layout {
-    grid-template-columns: minmax(25rem, 0.96fr) minmax(28rem, 1.04fr);
-  }
-
   .hero__pitch-heading {
-    font-size: clamp(2rem, 3.8vw, 4rem);
+    font-size: clamp(1.8rem, 3.8vw, 3.5rem);
   }
 }
 
@@ -317,7 +314,7 @@
   .hero__cat-wrapper {
     position: absolute;
     left: 50%;
-    top: 47%;
+    top: 54%; /* Brought down a little more */
     bottom: auto;
     transform: translate(-50%, -50%);
     width: min(110vw, 34rem);
@@ -329,10 +326,10 @@
 
   /* Copy card — sits below the TV, stays in viewport */
   .hero__copy-card {
+    position: relative;
     flex: 0 0 auto;
-    border-radius: 14px;
-    padding: clamp(1.2rem, 4vw, 1.8rem);
-    gap: clamp(0.6rem, 2.5vw, 0.9rem);
+    width: 100%;
+    /* padding and gap are already clamp(1.2rem, 4vw, 1.8rem) */
   }
 
   .hero__kicker {

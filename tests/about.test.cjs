@@ -9,7 +9,7 @@ const read = (file) => readFileSync(path.join(root, file), 'utf8');
 test('Phase 4 about markup uses redesigned structure with photo, copy, and meta tags', () => {
   const html = read('index.html');
 
-  // Section present with cream bg
+  // Section present with cream bg data attribute
   assert.match(html, /class="about"[^>]*data-bg="#FAF9F7"/);
   // Photo panel
   assert.match(html, /class="about__photo"/);
@@ -25,8 +25,8 @@ test('Phase 4 about markup uses redesigned structure with photo, copy, and meta 
 test('Phase 4 about CSS uses correct background and design tokens', () => {
   const scss = read('scss/components/_about.scss');
 
-  // Background uses cream token
-  assert.match(scss, /\.about\s*\{[\s\S]*background:\s*\$c-cream/);
+  // Background is transparent to let body transition show through
+  assert.match(scss, /\.about\s*\{[\s\S]*background:\s*transparent/);
   // Label uses yellow (not accent/rust)
   assert.match(scss, /\.about__label\s*\{[\s\S]*background:\s*\$c-yellow/);
   // Photo double-border inset via ::before
@@ -39,11 +39,11 @@ test('Phase 4 about CSS uses correct background and design tokens', () => {
   assert.match(scss, /\.about__inner\s*\{[\s\S]*display:\s*(grid|flex)/);
 });
 
-test('Phase 4 services background corrected to cream with yellow card labels', () => {
+test('Phase 4 services background corrected to transparent with yellow card labels', () => {
   const scss = read('scss/components/_services.scss');
 
-  // Section background is cream
-  assert.match(scss, /\.services\s*\{[\s\S]*background:\s*\$c-cream/);
+  // Section background is transparent
+  assert.match(scss, /\.services\s*\{[\s\S]*background:\s*transparent/);
   // Card labels use yellow (not accent/rust)
   assert.match(scss, /\.services__card-label\s*\{[\s\S]*background:\s*\$c-yellow/);
   // Cards use paper background for depth

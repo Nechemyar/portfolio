@@ -261,14 +261,11 @@ Start Phase 5: rebuild the Services section as an honest feature checklist/grid 
 Note: hero CTA button still uses hardcoded #FF9C7D (old salmon/blush). Needs updating to $c-rust (#C75B2A) — deferred, hero is "keep as-is" until Phase 8 polish pass.
 
 Latest Phase 4 verification:
-- About section completely redesigned to break the grid: large yellow-matted photo dominating the left, overlapping a paper-colored copy card on the bottom right.
-- Copy rewritten to be extremely punchy, direct, and conversational (no agency fluff).
-- About label now uses $c-yellow (was $c-rust/accent).
-- About meta tags replace the old signature line.
-- Services background corrected from $c-yellow to $c-cream.
-- Services card labels now use $c-yellow, card bodies use $c-paper.
-- `npm test` passes (14 tests), with updated 900px mobile breakpoint for the About section.
-- `npm run build` passes.
+- About section completely redesigned for premium typography and vertical photo parallax reveals using GSAP ScrollTrigger and SplitType.
+- Desktop layout powered by CSS Grid areas, aligning photo on the left with title/bio stack on the right.
+- Mobile layout redesigned to stack in correct editorial order: header introduces Nechemya first, then centers the yellow-matted photo, then presents the bio card.
+- Removed opaque section-level backgrounds across all major sections (.about, .services, .pricing, .faq, .testimonials, .work-showcase) to make body's color-changing scroll transitions completely transparent and seamless.
+- Tests updated in `tests/about.test.cjs`. `npm test` passes (14 tests) and production Vite build compiles successfully.
 
 Latest Phase 2 verification:
 - `npm test` passes (3 tests)

@@ -3,7 +3,7 @@
 // Work Showcase - scroll-pinned project card system (Phase 2)
 
 .work-showcase {
-  background: $c-yellow;
+  background: transparent;
   padding: clamp(4rem, 8vw, 7.5rem) $page-padding clamp(5rem, 9vw, 8rem);
   color: $c-ink;
   overflow-x: clip;

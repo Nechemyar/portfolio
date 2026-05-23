@@ -27,10 +27,9 @@ test('Phase 4 about CSS uses correct background and design tokens', () => {
 
   // Background is transparent to let body transition show through
   assert.match(scss, /\.about\s*\{[\s\S]*background:\s*transparent/);
-  // Label uses yellow (not accent/rust)
-  assert.match(scss, /\.about__label\s*\{[\s\S]*background:\s*\$c-yellow/);
-  // Photo double-border inset via ::before
-  assert.match(scss, /\.about__photo::before/);
+  // Label is now just text, no yellow background needed
+  assert.match(scss, /\.about__label\s*\{/);
+  // Photo double-border inset via ::before removed in new geometric layout
   // Meta tag element defined
   assert.match(scss, /\.about__meta-tag/);
   // Mobile breakpoint present
@@ -39,13 +38,13 @@ test('Phase 4 about CSS uses correct background and design tokens', () => {
   assert.match(scss, /\.about__inner\s*\{[\s\S]*display:\s*(grid|flex)/);
 });
 
-test('Phase 4 services background corrected to transparent with yellow card labels', () => {
+test('Phase 5 services uses transparent background and new item layout', () => {
   const scss = read('scss/components/_services.scss');
 
   // Section background is transparent
   assert.match(scss, /\.services\s*\{[\s\S]*background:\s*transparent/);
-  // Card labels use yellow (not accent/rust)
-  assert.match(scss, /\.services__card-label\s*\{[\s\S]*background:\s*\$c-yellow/);
-  // Cards use paper background for depth
-  assert.match(scss, /\.services__card\s*\{[\s\S]*background:\s*\$c-paper/);
+  // Uses new list items instead of cards
+  assert.match(scss, /\.services__item\s*\{/);
+  // Item numbers use rust accent
+  assert.match(scss, /\.services__item-num\s*\{[\s\S]*color:\s*\$c-rust/);
 });

@@ -24,7 +24,7 @@ const scrollReveal = new ScrollReveal();
 const heroScroll = new HeroScroll();
 const navTheme = new NavTheme();
 const faq = new Faq();
-const bgScroll = new BgScroll();
+// const bgScroll = new BgScroll();
 const workShowcase = new WorkShowcase();
 const howItWorks = new HowItWorks();
 

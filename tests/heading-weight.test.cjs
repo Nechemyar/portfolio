@@ -19,7 +19,7 @@ test('post-hero display headings use the hero pitch heading weight', () => {
       '.how-it-works__step h3',
     ]],
     ['scss/components/_about.scss', ['.about__title']],
-    ['scss/components/_services.scss', ['.services__title', '.services__card-title']],
+    ['scss/components/_services.scss', ['.services__title', '.services__item-title']],
     ['scss/components/_pricing.scss', ['.pricing__title', '.pricing__card-price']],
     ['scss/components/_testimonials.scss', ['.testimonials__title']],
     ['scss/components/_faq.scss', ['.faq__title', 'summary']],

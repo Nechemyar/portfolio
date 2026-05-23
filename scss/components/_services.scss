@@ -1,86 +1,143 @@
 @use '../base/tokens' as *;
 
 // ——————————————————————————————————————————————
-// Services — "What I do."
-// Background: cream ($c-cream) — sits between About (cream) and Pricing (yellow)
+// Services / What You Get — Phase 5
 // ——————————————————————————————————————————————
+// Anti-template asymmetric layout. No generic 3-card grids.
 
 .services {
-  padding: clamp(4rem, 8vw, 8rem) $page-padding;
   background: transparent;
+  padding: clamp(6rem, 10vw, 8rem) $page-padding;
   color: $c-ink;
+  border-top: 1px solid rgba(26, 26, 26, 0.1);
 }
 
+.services__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(4rem, 8vw, 8rem);
+  align-items: start;
+}
+
+// ——————————————————————————————————————————————
+// Header (Left Column on Desktop)
+// ——————————————————————————————————————————————
 .services__header {
-  max-width: 1280px;
-  margin: 0 auto clamp(1.5rem, 4vw, 4rem);
+  position: sticky;
+  top: clamp(6rem, 10vw, 8rem);
+}
+
+.services__label {
+  display: inline-flex;
+  font-family: $font-body;
+  font-size: clamp(0.75rem, 1vw, 0.9rem);
+  font-weight: 700;
+  color: $c-ink;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: $space-24;
+  align-items: center;
+  gap: $space-12;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 2px;
+    background: $c-ink;
+  }
 }
 
 .services__title {
-  max-width: 13ch;
   font-family: $font-display;
-  font-size: $fs-section-title;
+  font-size: clamp(3rem, 5vw, 4.5rem);
   font-weight: 500;
-  line-height: 0.96;
-  letter-spacing: -0.01em;
-  color: $c-ink;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: $space-24;
 }
 
-.services__grid {
-  max-width: 1280px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(0.9rem, 1.8vw, 1.5rem);
+.services__lead {
+  font-family: $font-body;
+  font-size: clamp(1.1rem, 1.4vw, 1.4rem);
+  line-height: 1.5;
+  color: $c-text-secondary;
+  max-width: 420px;
 }
 
-.services__card {
-  min-height: clamp(20rem, 30vw, 28rem);
-  background: $c-paper;
-  padding: clamp(1.25rem, 3vw, 2.5rem);
-  border: 2px solid $c-ink;
-  border-radius: $r-md;
+// ——————————————————————————————————————————————
+// Feature List (Right Column on Desktop)
+// ——————————————————————————————————————————————
+.services__list {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: $space-24;
+  gap: $space-48;
+  padding-top: $space-12; // Visual alignment with title
 }
 
-.services__card-label {
-  display: inline-flex;
-  width: fit-content;
-  font-family: $font-body;
-  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: $c-ink;
-  padding: 0.45rem 0.7rem;
-  background: $c-yellow;
-  border: 2px solid $c-ink;
-  border-radius: $r-sm;
-}
-
-.services__card-title {
-  font-family: $font-display;
-  font-size: clamp(1.65rem, 2.6vw, 2.55rem);
-  font-weight: 500;
-  line-height: 1.02;
-  color: $c-ink;
-}
-
-.services__card-desc {
-  font-size: clamp(0.98rem, 1.1vw, 1.08rem);
-  color: $c-text-secondary;
-  line-height: 1.55;
-}
-
-@media (max-width: 900px) {
-  .services__grid {
-    grid-template-columns: 1fr;
+.services__item {
+  position: relative;
+  padding-bottom: $space-32;
+  border-bottom: 1px solid rgba(26, 26, 26, 0.15);
+  
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
   }
+}
 
-  .services__card {
-    min-height: 16rem;
+.services__item-head {
+  display: flex;
+  align-items: baseline;
+  gap: $space-16;
+  margin-bottom: $space-16;
+}
+
+.services__item-num {
+  font-family: $font-body;
+  font-size: clamp(0.8rem, 1vw, 0.9rem);
+  font-weight: 800;
+  color: $c-rust;
+  padding: 0.2em 0.5em;
+  border: 1px solid $c-rust;
+  border-radius: 4px;
+}
+
+.services__item-title {
+  font-family: $font-display;
+  font-size: clamp(1.4rem, 2vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.services__item-desc {
+  font-family: $font-body;
+  font-size: clamp(1.05rem, 1.2vw, 1.15rem);
+  line-height: 1.6;
+  color: $c-text-secondary;
+  padding-left: clamp(2.5rem, 4vw, 3.5rem); // Indent to align with title text, not number
+}
+
+// ——————————————————————————————————————————————
+// Mobile & Tablet
+// ——————————————————————————————————————————————
+@media (max-width: 900px) {
+  .services__inner {
+    grid-template-columns: 1fr;
+    gap: $space-64;
+  }
+  
+  .services__header {
+    position: static;
+  }
+  
+  .services__title {
+    margin-bottom: $space-16;
+  }
+  
+  .services__item-desc {
+    padding-left: 0; // Remove indent on mobile for readability
   }
 }

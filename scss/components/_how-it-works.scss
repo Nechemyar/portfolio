@@ -1,0 +1,93 @@
+@use '../base/tokens' as *;
+
+// How It Works — scroll-driven 3-step sequence (Phase 3)
+// Foundation styles only; step animation built in Phase 3.
+
+.how-it-works {
+  background: $c-yellow;
+  padding: clamp(3rem, 7vw, 7rem) $page-padding;
+  color: $c-ink;
+}
+
+.how-it-works__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.how-it-works__header {
+  margin-bottom: clamp(2.5rem, 6vw, 5rem);
+}
+
+.how-it-works__label {
+  display: inline-flex;
+  font-family: $font-body;
+  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+  font-weight: 800;
+  color: $c-ink;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  padding: 0.45rem 0.7rem;
+  background: $c-mustard;
+  border: 2px solid $c-ink;
+  border-radius: 8px;
+  margin-bottom: $space-16;
+}
+
+.how-it-works__title {
+  font-family: $font-display;
+  font-size: $fs-section-title;
+  font-weight: 800;
+  color: $c-ink;
+  line-height: 0.96;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.how-it-works__steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.how-it-works__step {
+  background: $c-cream;
+  border: 2px solid $c-ink;
+  border-radius: 14px;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: $space-16;
+}
+
+.how-it-works__step-num {
+  font-family: $font-display;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 800;
+  color: $c-mustard;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.how-it-works__step h3 {
+  font-family: $font-display;
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
+  font-weight: 700;
+  color: $c-ink;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.how-it-works__step p {
+  font-family: $font-body;
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  font-weight: 500;
+  line-height: 1.55;
+  color: $c-text-secondary;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .how-it-works__steps {
+    grid-template-columns: 1fr;
+  }
+}

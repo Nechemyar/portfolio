@@ -17,31 +17,26 @@ $fs-massive: clamp(4.5rem, 12vw, 11rem);
 $font-body: 'Satoshi', 'DM Sans', sans-serif;
 $font-display: $font-body;
 
-// Colors
-$c-cream: #FAF9F7;
-$c-rust: #FF9C7D;
-$c-charcoal: #050505;
-$c-forest: #19423D;
-$c-yellow: #FFB93E;
-$c-blush: #F8EBE7;
-$c-whatsapp: #80FF80;
+// Colors — 2026 rebuild palette
+$c-yellow:     #FFB93E;  // Hero bg, accent bands, highlight moments
+$c-mustard:    #D4940A;  // Borders on yellow bg, hover states
+$c-cream:      #FAF9F7;  // Content card backgrounds, body text areas
+$c-warm-white: #FFFDF9;  // Subtle alternative to cream for layering
+$c-rust:       #C75B2A;  // Primary CTA fill, strong accent
+$c-rust-hover: #D96830;  // Hover state for rust CTAs
+$c-ink:        #1A1A1A;  // Text, dark sections, nav on light backgrounds
+$c-charcoal:   #2C2C2C;  // Dark section backgrounds
+$c-paper:      #F3EDE6;  // Cards sitting on cream, subtle depth
+$c-whatsapp:   #80FF80;  // WhatsApp CTA only
 
-// Mobile hero palette — peach pair used as the section bg + the
-// rounded "platform" the TV sits on. Kept as separate tokens so the
-// hero is the only thing that owns this colour relationship.
-$c-peach: #F9ECE8;
-$c-peach-soft: #FFF7F5;
-
-$c-bg: $c-charcoal;
-$c-bg-elevated: $c-blush;
-$c-text: $c-cream;
+// Semantic aliases
+$c-bg:             $c-yellow;
+$c-text:           $c-ink;
 $c-text-secondary: #4A4A4A;
-$c-text-tertiary: #73706B;
-$c-accent: $c-rust;
-$c-accent-hover: #FFB096;
-$c-soft: $c-cream;
-$c-border: rgba(5, 5, 5, 0.12);
-$c-border-visible: #0B0B0B;
+$c-text-tertiary:  #73706B;
+$c-accent:         $c-rust;
+$c-border:         rgba(26, 26, 26, 0.12);
+$c-border-visible: $c-ink;
 
 // Spacing (8px grid)
 $space-4: 0.25rem;
@@ -64,7 +59,7 @@ $r-lg: 16px;
 $r-xl: 24px;
 $r-full: 100px;
 
-// Transitions & Animation
+// Transitions & Animation (NON-GSAP only)
 $ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 $duration-fast: 0.3s;
 $duration-med: 0.6s;

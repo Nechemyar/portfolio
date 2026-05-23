@@ -94,7 +94,7 @@
           </span>
         </button>
         <div class="nav__desktop-links">
-          <a href="#bento">Work</a>
+          <a href="#work">Work</a>
           <a href="#services">Services</a>
           <a href="#pricing">Pricing</a>
           <a href="#faq">FAQ</a>
@@ -110,7 +110,7 @@
     <button id="mobile-menu-close-pill" class="mobile-menu__close-pill" aria-label="Close menu"></button>
     <div class="mobile-menu__content">
       <ul class="mobile-menu__nav">
-        <li><a href="#bento" class="mobile-menu__link menu-item">Work</a></li>
+        <li><a href="#work" class="mobile-menu__link menu-item">Work</a></li>
         <li><a href="#services" class="mobile-menu__link menu-item">Services</a></li>
         <li><a href="#pricing" class="mobile-menu__link menu-item">Pricing</a></li>
         <li><a href="#faq" class="mobile-menu__link menu-item">FAQ</a></li>
@@ -131,7 +131,7 @@
   <main>
 
     <!-- HERO (tall trigger, pinned sticky stage) -->
-    <section class="hero" id="hero" data-nav-theme="light">
+    <section class="hero" id="hero" data-nav-theme="light" data-bg="#FFB93E">
       <div class="hero__stage">
         <div class="hero__layout">
           <!-- TV Cat — sits above the card on mobile -->
@@ -208,101 +208,74 @@
             I make websites for businesses that give a damn
           </span>
           <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="hero__cta">Book a free call</a>
-          <a href="#bento" class="hero__footer-link hero__footer-link--right">EXPLORE WORK <svg class="hero__footer-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+          <a href="#work" class="hero__footer-link hero__footer-link--right">EXPLORE WORK <svg class="hero__footer-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
         </div>
 
       </div>
     </section>
 
     
-    <!-- LOGO TRUST STRIP -->
-    <section class="logo-strip" id="logos" data-nav-theme="light">
-      <p class="logo-strip__label" data-reveal>Recent work</p>
-      <div class="logo-strip__track">
-        <div class="logo-strip__logos">
-          <a class="logo-strip__logo" href="projects/clinical-assessments.html">Clinical Assessments →</a>
-          <a class="logo-strip__logo" href="projects/choice-inventory.html">Choice Inventory →</a>
-          <span class="logo-strip__logo logo-strip__logo--plain">More builds in progress</span>
+    <!-- WORK SHOWCASE -->
+    <section class="work-showcase" id="work" data-nav-theme="light" data-bg="#FFB93E">
+      <div class="work-showcase__inner">
+        <div class="work-showcase__header" data-reveal>
+          <span class="work-showcase__label">Work</span>
+          <h2 class="work-showcase__title">Sites that make the business easier to trust.</h2>
         </div>
-      </div>
-    </section>
-
-    <!-- BENTO GRID — TRUST WALL -->
-    <section class="bento" id="bento" data-nav-theme="light">
-      <div class="bento__header" data-reveal>
-        <span class="bento__label">How I work</span>
-        <h2 class="bento__title">Here's how the work gets done.</h2>
-      </div>
-      <div class="bento__grid">
-        <article class="bento__card bento__card--intro" data-reveal>
-          <span class="bento__card-kicker">01 / Scope</span>
-          <h3>We start with what the site has to do.</h3>
-          <p>We start by figuring out what a good visit looks like for your customers. That shapes the structure.</p>
-        </article>
-
-        <article class="bento__card bento__card--process" data-reveal>
-          <span class="bento__process-title">Call.<br/>Build.<br/>Ship.</span>
-          <ol class="bento__process-list">
-            <li>30-minute fit call</li>
-            <li>Fixed proposal</li>
-            <li>Design, code, launch</li>
-          </ol>
-        </article>
-
-        <article class="bento__card bento__card--metric" data-reveal>
-          <span class="bento__stat-number">2w</span>
-          <span class="bento__stat-label">Typical first launch</span>
-        </article>
-
-        <article class="bento__card bento__card--metric bento__card--metric-alt" data-reveal>
-          <span class="bento__stat-number">90+</span>
-          <span class="bento__stat-label">PageSpeed target</span>
-        </article>
-
-        <article class="bento__card bento__card--wide" data-reveal>
-          <span class="bento__card-kicker">Ownership</span>
-          <h3>You own the code outright.</h3>
-          <p>Full source on GitHub at handoff. Hosting runs direct from your account, usually free on a basic Vercel setup. Nothing ties back to me after we ship.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- PROOF -->
-    <section class="proof" id="proof" data-nav-theme="dark">
-      <div class="proof__inner">
-        <div class="proof__header" data-reveal>
-          <span class="proof__label">Work</span>
-          <h2 class="proof__title">Sites that make the business easier to trust.</h2>
-        </div>
-        <div class="proof__grid">
-          <article class="proof__card proof__card--image" data-reveal>
-            <img src="assets/images/project-choice.webp" alt="Choice Inventory homepage preview" loading="lazy" />
-            <div class="proof__card-copy">
-              <span>Choice Inventory</span>
+        <div class="work-showcase__cards">
+          <article class="work-showcase__card" data-reveal>
+            <div class="work-showcase__card-img">
+              <img src="assets/images/project-choice.webp" alt="Choice Inventory homepage" loading="lazy" />
+            </div>
+            <div class="work-showcase__card-copy">
+              <h3>Choice Inventory</h3>
               <p>Lead-gen site for an inventory company. Built to get visitors to book, not browse.</p>
+              <a href="projects/choice-inventory.html" class="work-showcase__card-link">View project →</a>
             </div>
           </article>
-          <article class="proof__card proof__card--image" data-reveal>
-            <img src="assets/images/project-clinical.webp" alt="Clinical Assessments homepage preview" loading="lazy" />
-            <div class="proof__card-copy">
-              <span>Clinical Assessments</span>
+          <article class="work-showcase__card" data-reveal>
+            <div class="work-showcase__card-img">
+              <img src="assets/images/project-clinical.webp" alt="Clinical Assessments homepage" loading="lazy" />
+            </div>
+            <div class="work-showcase__card-copy">
+              <h3>Clinical Assessments</h3>
               <p>Professional service site for a clinical practice. Calm, credible, built for a patient deciding whether to book.</p>
+              <a href="projects/clinical-assessments.html" class="work-showcase__card-link">View project →</a>
             </div>
           </article>
-          <article class="proof__card proof__card--compare" data-reveal>
-            <span class="proof__label">Why hand-coded?</span>
-            <ul>
-              <li><strong>Cleaner:</strong> purpose-built for your site, not a theme running 40 plugins.</li>
-              <li><strong>Faster:</strong> nothing gets added that wasn't needed.</li>
-              <li><strong>Yours:</strong> full source on GitHub at handoff. Take it anywhere.</li>
-            </ul>
-          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works" id="how-it-works" data-nav-theme="light" data-bg="#FFB93E">
+      <div class="how-it-works__inner">
+        <div class="how-it-works__header" data-reveal>
+          <span class="how-it-works__label">Process</span>
+          <h2 class="how-it-works__title">How we go from zero to live.</h2>
+        </div>
+        <div class="how-it-works__steps">
+          <div class="how-it-works__step" data-reveal>
+            <span class="how-it-works__step-num">01</span>
+            <h3>Call</h3>
+            <p>30-minute fit call. We figure out what the site needs to do and whether we're a good match. You get a fixed quote before anything starts.</p>
+          </div>
+          <div class="how-it-works__step" data-reveal>
+            <span class="how-it-works__step-num">02</span>
+            <h3>Build</h3>
+            <p>Design and code from scratch. You stay involved throughout. No handoff to a junior. No radio silence for six weeks.</p>
+          </div>
+          <div class="how-it-works__step" data-reveal>
+            <span class="how-it-works__step-num">03</span>
+            <h3>Ship</h3>
+            <p>Live in 2 to 4 weeks. Full source code goes to your GitHub. You own it outright and can take it anywhere.</p>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- ABOUT / FOUNDER -->
-    <section class="about" id="about" data-nav-theme="light">
+    <section class="about" id="about" data-nav-theme="light" data-bg="#FAF9F7">
       <div class="about__inner" data-reveal>
         <div class="about__photo">
           <img src="assets/images/meno-box.webp" alt="Nechemya" loading="lazy" />
@@ -320,7 +293,7 @@
     </section>
 
     <!-- SERVICES -->
-    <section class="services" id="services" data-nav-theme="light">
+    <section class="services" id="services" data-nav-theme="light" data-bg="#FAF9F7">
       <div class="services__header" data-reveal>
         <h2 class="services__title">What I do.</h2>
       </div>
@@ -344,7 +317,7 @@
     </section>
 
     <!-- PRICING -->
-    <section class="pricing" id="pricing" data-nav-theme="light">
+    <section class="pricing" id="pricing" data-nav-theme="light" data-bg="#FFB93E">
       <div class="pricing__header" data-reveal>
         <h2 class="pricing__title">Pick a scope.<br />Get a fixed price.</h2>
         <p class="pricing__sub">Every project gets scoped and quoted before a line of code. The number in the proposal is the number on the invoice.</p>
@@ -383,7 +356,7 @@
     </section>
 
     <!-- TESTIMONIALS -->
-    <section class="testimonials" id="testimonials" data-nav-theme="dark">
+    <section class="testimonials" id="testimonials" data-nav-theme="dark" data-bg="#2C2C2C">
       <div class="testimonials__inner">
         <div class="testimonials__header" data-reveal>
           <span class="testimonials__label">Client words</span>
@@ -410,19 +383,12 @@
               </div>
             </div>
           </article>
-          <article class="testimonials__card testimonials__card--note" data-reveal>
-            <p class="testimonials__quote">If you run a service business and people need to trust you before they pick up the phone, that's who I build for.</p>
-            <div class="testimonials__author testimonials__author--text">
-              <span class="testimonials__name">Who this is for</span>
-              <span class="testimonials__role">Service businesses · independent professionals · small teams</span>
-            </div>
-          </article>
         </div>
       </div>
     </section>
 
     <!-- FAQ -->
-    <section class="faq" id="faq" data-nav-theme="light">
+    <section class="faq" id="faq" data-nav-theme="light" data-bg="#FAF9F7">
       <div class="faq__inner">
         <div class="faq__header" data-reveal>
           <span class="faq__label">Common questions</span>
@@ -471,7 +437,7 @@
     </section>
 
     <!-- CONTACT -->
-    <section class="contact" id="contact" data-nav-theme="light">
+    <section class="contact" id="contact" data-nav-theme="light" data-bg="#FFB93E">
       <div class="contact__inner" data-reveal>
         <h2 class="contact__title">Let's talk about your site.</h2>
         <p class="contact__sub">30 minutes, free. If it's not a fit, I'll say so.</p>

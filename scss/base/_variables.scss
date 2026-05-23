@@ -1,19 +1,19 @@
 @use 'tokens' as *;
 :root {
   /* Colors */
-  --color-bg:            #1A1A1A;
-  --color-surface:       #24211F;
-  --color-text:          #F6F2EB;
-  --color-muted:         #B8ADA2;
-  --color-accent:        #C7512D;
-  --color-accent-hover:  #D7653D;
-  --color-accent-soft:   #F6F2EB;
-  --color-border:        rgba(255, 255, 255, 0.06);
-  --color-border-solid:  rgba(255, 255, 255, 0.1);
+  --color-bg:            #{$c-yellow};
+  --color-surface:       #{$c-cream};
+  --color-text:          #{$c-ink};
+  --color-muted:         #{$c-text-tertiary};
+  --color-accent:        #{$c-rust};
+  --color-accent-hover:  #D96830;
+  --color-accent-soft:   #{$c-paper};
+  --color-border:        #{$c-border};
+  --color-border-solid:  #{$c-border-visible};
 
   /* Typography */
-  --font-display:   'Satoshi', 'DM Sans', sans-serif;
-  --font-body:      'Satoshi', 'DM Sans', sans-serif;
+  --font-display:   #{$font-display};
+  --font-body:      #{$font-body};
 
   --fs-massive:     clamp(4rem, 12vw, 12rem);
   --fs-display:     clamp(3rem, 7vw, 7rem);

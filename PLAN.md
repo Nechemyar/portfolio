@@ -1,397 +1,275 @@
-# Portfolio Rebuild Plan
+# Sumi Studios — Full Rebuild Plan
 
-Living doc for any session (Opus, Sonnet, Codex) to pick up without re-deriving context.
-
-## Context
-Solo web designer (Nechemya / Sumi Studios). Premium hand-coded sites for service businesses. The hero section is done and the user is happy with it. Everything else feels AI-generated, mismatched, and needs rebuilding to match the hero's quality and voice.
-
-## Tech stack
-Vanilla HTML + SCSS + JS, Vite, GSAP + ScrollTrigger, Lenis smooth scroll, Satoshi font. No frameworks.
-
-## Source of truth
-- `DESIGN_BIBLE.md` for visual decisions
-- `AI_CONTEXT.md` for file architecture and immutable rules
-- `CLAUDE.md` for session instructions and skill activation
-
-## Current branch
-Auto-push to `origin/main` after every change (standing instruction).
-
-## The problem
-The hero is strong: yellow stage, warm palette, boxy controls, confident copy. Everything after the hero was written and styled by AI and it shows:
-- Copy uses AI patterns (rule of three, promotional language, vague claims)
-- Color choices don't flow naturally from the hero palette
-- Sections feel like generic SaaS templates, not a sharp independent studio
-- Mobile experience wasn't designed with intention
-- No visual rhythm -- sections feel disconnected
-
-## Design principles (derived from the hero)
-1. **Warm paper fields** with intentional color bands (yellow, blush, cream, dark)
-2. **Boxy controls** with 8-14px radii, 2px black borders
-3. **Left-anchored heavy headings**, not centered marketing blocks
-4. **Deliberate line breaks** in headlines, not accidental wrapping
-5. **Asymmetric layouts** where proof/image dominates and copy anchors action
-6. **Black text on warm surfaces**, white text on dark surfaces only
+Living doc. Read this FIRST at every session start. Update the "Progress" section at the end of every session.
 
 ---
 
-## Section-by-section rebuild
+## Vision
 
-Each section has: layout intent, copy direction, color, and animation notes. Copy drafts are placeholders -- run through humanizer + detect-ai before shipping.
-
----
-
-### 1. Logo Strip (after hero)
-
-**Purpose:** Transition from hero energy to proof. Quick credibility.
-
-**Layout:** Full-width cream band. Left-aligned project links as text links with arrows, not logos. Keep it minimal.
-
-**Color:** `$c-cream` background, `$c-charcoal` text.
-
-**Copy direction:**
-- Kill "Recent builds worth opening" -- sounds like a blog post headline
-- Replace with something direct: project names as links, no label needed. Or a quiet label like "Recent work" if needed.
-
-**Animation:** Simple fade-up on scroll reveal. No stagger needed.
-
-**Mobile:** Single column, links stack vertically.
+The site should feel like one continuous scroll journey, not stacked sections. Think therawmaterials.com meets brethrendesignco.com: a warm yellow canvas that persists underneath, with content panels and cards that slide, morph, and transition over it. The cat (beanie cat watching a CRT) is the brand mascot and appears throughout the site as a character with personality. The tone is a confident independent builder talking straight, not an agency pitching. Retro warmth from the TV aesthetic carries through the whole palette.
 
 ---
 
-### 2. Bento Grid ("How I work")
+## Palette (redesigned)
 
-**Purpose:** Build trust by showing process. Answer "what happens after I call you?"
+The current palette is scattered (coral, blush, forest green, random). New palette built from the yellow + retro TV warmth:
 
-**Layout:** Keep the bento grid but make the cards feel more like the hero's boxy controls. Strong borders, warm fills, intentional sizing.
+| Token | Hex | Use |
+|-------|-----|-----|
+| `$c-yellow` | `#FFB93E` | Hero bg, accent bands, highlight moments |
+| `$c-mustard` | `#D4940A` | Darker yellow for borders on yellow bg, hover states, active states |
+| `$c-cream` | `#FAF9F7` | Content card backgrounds, body text areas |
+| `$c-warm-white` | `#FFFDF9` | Subtle alternative to cream for layering |
+| `$c-rust` | `#C75B2A` | Primary CTA fill, strong accent (replaces coral -- deeper, more retro) |
+| `$c-ink` | `#1A1A1A` | Text, dark sections, nav on light backgrounds |
+| `$c-charcoal` | `#2C2C2C` | Dark section backgrounds (warmer than pure black) |
+| `$c-paper` | `#F3EDE6` | Cards sitting on cream, subtle depth without border |
+| `$c-whatsapp` | `#80FF80` | WhatsApp CTA only |
 
-**Color:**
-- Section bg: `$c-cream`
-- Cards: mix of `$c-blush`, `$c-yellow`, white with black border
-- Stat cards: yellow fill with black text
-- Process card: dark (`$c-charcoal`) with cream text for contrast
+**Dropped:** `$c-forest`, `$c-blush`, `$c-peach`, `$c-peach-soft`. These were adding noise without purpose.
 
-**Copy to rewrite:**
-- Header: "Clear scope. Sharp design. No disappearing act." -- rewrite, sounds AI
-- Card 1 (Scope): "We start with the job your website has to win." -- decent but "moodboard theatre" is try-hard. Simplify.
-- Card 2 (Process): "Call. Build. Ship." -- fine, keep it
-- Card 3 (2w): keep the stat, it's concrete
-- Card 4 (90+): keep the stat
-- Card 5 (Ownership): "Hand-coded. Yours forever." -- rewrite, "no monthly hostage situation" tries too hard
-
-**Copy rewrite approach:** Short, flat, factual. What happens, not why it's amazing. A builder explaining their process to another adult.
-
-**Animation:** Cards reveal on scroll with subtle y-offset, no rotation. Stagger 0.08s per card.
-
-**Mobile:** Stack cards single column. Process card goes full width.
+**Rule:** Maximum 3 colors visible in any single viewport. Yellow + ink + one accent. The restraint is what makes it feel premium.
 
 ---
 
-### 3. Proof (project showcase)
+## Sitemap (optimized order)
 
-**Purpose:** Show the work. This is the most important section for conversion.
+The order is designed for conversion psychology: hook > prove > explain > price > reassure > close.
 
-**Layout:** Keep the dark band but make project cards bigger and more prominent. Full-bleed images with thin captions below, not split image+text cards.
+### Homepage sections:
 
-**Color:**
-- Section bg: `$c-charcoal`
-- Cards: images with cream caption text below
-- "Why hand-coded" compare card: `$c-yellow` fill with black text and border (ties back to hero)
+1. **Hero** (DONE -- keep as is)
+   Yellow stage, cat watching TV, copy card, marquee, CTAs.
 
-**Copy to rewrite:**
-- "Proof, not perfume" -- too clever. Something like "Work" or "Recent projects" or nothing at all
-- "The work has to make the business easier to trust." -- this is actually good but could be shorter
-- Project descriptions: kill the AI copywriting. Just say what you did: "Lead-gen site for an inventory company" and "Professional service site for a clinical practice." Flat and honest.
-- "Why hand-coded?" list: rewrite the items. "Cleaner/Faster/Yours" with single sentences is fine structurally but the descriptions are weak
+2. **Work showcase** (replaces logo-strip + proof + bento)
+   Combine all proof into one powerful section. This is where trust is built. Show the work big, not in tiny cards. Scroll-driven: projects animate in one at a time as you scroll, each with a large screenshot and a one-line result statement ("Lead-gen site. Bookings up 40% in month one." -- or whatever the real number is).
 
-**Animation:** Image cards scale up slightly from 0.95 on scroll entry. Caption fades in after image settles.
+3. **How it works** (replaces bento "how I work")
+   Not a bento grid -- a horizontal scroll or scroll-pinned sequence. Three steps that animate in sequence as you scroll: Call > Build > Ship. Each step gets a moment. The cat could appear here watching each phase happen on its TV.
 
-**Mobile:** Stack cards vertically. Images full width.
+4. **About** (founder section)
+   Photo + copy. Short and real. Keep it after the work so they've already seen proof before meeting the person.
 
----
+5. **Services + what's included**
+   Not three generic cards. One section that lists everything they get: custom design, hand-coded, responsive, SEO foundations, accessibility compliance, CMS when needed. Presented as a checklist or feature grid, not marketing fluff. The point: "this is what £3-5K buys you."
 
-### 4. About (founder section)
+6. **Pricing** (two tiers, transparent)
+   Keep Essential and Growth. Make the visual treatment match the hero: cream cards on yellow band, boxy borders, clear hierarchy. Featured tier gets the rust accent.
 
-**Purpose:** Put a face to the work. Build personal trust.
+7. **Testimonials** (social proof)
+   Two real quotes. No fake third card. Simple cream cards on a dark charcoal band. Photos of real clients.
 
-**Layout:** Keep the two-column layout (photo left, copy right). Photo should be a real, natural shot -- not a studio headshot.
+8. **FAQ**
+   Accordion. Keep it clean. The current FAQ content is mostly solid.
 
-**Color:** `$c-cream` or `$c-blush` background. Black text.
+9. **Contact / CTA close**
+   Big, confident close. Yellow band bookending the hero. The cat could reappear here, maybe looking at the visitor (breaking the fourth wall from the TV). "Let's talk about your site." Single CTA.
 
-**Copy to rewrite:**
-- "Hi, I'm Nechemya" label -- fine
-- "One person. Hand-coded. No agency markup." -- the structure is AI (rule of three). Rewrite as a single clear sentence.
-- Body copy: "Most clients come to me after a WordPress build that cost too much..." -- this paragraph is decent but reads like AI copywriting. Make it more personal and specific. What do YOU actually do differently?
-- "No account managers. No mystery sprint. No upsells." -- AI pattern (triple negative). Rewrite.
-- Signature: "Based in Herzliya. Working worldwide." -- fine, keep it
+10. **Footer**
+    Minimal. Copyright, email, location.
 
-**Animation:** Photo and copy reveal together with a subtle y-offset.
+### What got cut:
+- **Logo strip** -- merged into work showcase. You only have 2 projects, a strip of logos is misleading.
+- **Bento grid** -- the "how I work" is better as a scroll-driven sequence than a card grid.
+- **Separate proof section** -- merged into work showcase.
 
-**Mobile:** Photo above copy, full width.
-
----
-
-### 5. Services
-
-**Purpose:** What you actually offer. Keep it tight.
-
-**Layout:** Three cards on yellow band. Cards should have `$c-cream` fill with black border, sitting on the yellow background. This creates visual continuity with the hero.
-
-**Color:**
-- Section bg: `$c-yellow` (matches hero, creates a callback)
-- Cards: `$c-cream` fill, `2px solid $c-charcoal` border, `8px` radius
-- Labels: coral pill badges (like bento kickers)
-
-**Copy to rewrite:**
-- "Three things, done properly." -- rewrite, AI-sounding
-- Card titles are trying too hard to be clever. "A site that doesn't look like everyone else's" -- just say what the service IS
-- Simpler approach: "Design" / "Development" / "Strategy" as labels, then 1-2 sentences of what's included. No headlines trying to be witty.
-
-**Animation:** Cards stagger in from below.
-
-**Mobile:** Cards stack vertically.
+### What's new:
+- Work showcase as a scroll-pinned, one-project-at-a-time experience
+- How-it-works as a scroll-driven animated sequence
+- Services section that's honest about what's included (SEO, accessibility, CMS, responsive)
+- Cat appearances throughout as a visual thread
 
 ---
 
-### 6. Pricing
+## The scroll journey (how sections flow)
 
-**Purpose:** Remove price anxiety. Make the next step obvious.
+This is the key differentiator. The site should NOT feel like stacked blocks.
 
-**Layout:** Two cards side by side. Featured card gets a yellow accent or border treatment, not just a badge. Make the visual hierarchy clear.
+**Hero → Work showcase:**
+The hero's yellow background stays. As you scroll past the marquee, the hero content (copy card, cat, CTAs) animates out upward. The yellow persists as the canvas. Work showcase cards slide in from below onto the yellow stage, one at a time as you scroll. Each project is a cream/paper card with a big screenshot and a short description. ScrollTrigger pins each card for a beat before the next one pushes it up.
 
-**Color:**
-- Section bg: `$c-cream`
-- Standard card: white with subtle border
-- Featured card: `$c-yellow` border or left-side accent stripe
+**Work showcase → How it works:**
+The yellow canvas continues. The last project card scrolls away and the "how it works" sequence begins on the same yellow field. Three steps animate in sequence. The cat's TV could show each phase.
 
-**Copy to rewrite:**
-- "Pick a scope. Get a fixed price." -- actually decent, might keep
-- "The number in the proposal is the number on the invoice." -- good, keep
-- Feature lists are fine as-is
-- "Most popular" badge -- keep
-- Footer "Need something bigger?" -- keep
+**How it works → About:**
+Background transitions from yellow to cream. A smooth GSAP color tween on the body/section background, not a hard edge. The about section lives on cream.
 
-**Animation:** Cards reveal together, no stagger (they're peers).
+**About → Services:**
+Cream continues. Services is a cream section with cards.
 
-**Mobile:** Cards stack. Featured card on top.
+**Services → Pricing:**
+Background transitions back to yellow. Pricing cards are cream on yellow, matching the hero callback.
 
----
+**Pricing → Testimonials:**
+Hard transition to dark charcoal. This is intentional contrast -- after the warm pricing section, the dark band makes the testimonials feel serious and grounded.
 
-### 7. Testimonials
+**Testimonials → FAQ:**
+Transition back to cream. Clean, light, readable.
 
-**Purpose:** Social proof from real clients.
+**FAQ → Contact:**
+Background transitions to yellow for the closing CTA band. Bookends the hero.
 
-**Layout:** Keep the dark band. Two real testimonial cards + one positioning card. Make testimonial cards feel like quoted notes (cream paper on dark background).
-
-**Color:**
-- Section bg: `$c-charcoal`
-- Cards: `$c-cream` fill, subtle border
-- Third card (positioning note): `$c-blush` fill
-
-**Copy to rewrite:**
-- "Client words" label -- fine
-- "What they said after." -- fine
-- Testimonial quotes: these read real (they probably are real quotes). Keep as-is.
-- Third card: "The best sites do three jobs quickly..." -- this is AI writing pretending to be a testimonial. Either get a third real testimonial or cut this card entirely.
-
-**Animation:** Cards stagger in.
-
-**Mobile:** Stack vertically.
+**Contact → Footer:**
+Hard cut to charcoal. Minimal.
 
 ---
 
-### 8. FAQ
+## Cat creative direction (for GPT image generation)
 
-**Purpose:** Handle objections. Reduce call anxiety.
+The cat is a beanie-wearing cat watching a CRT television. Generate variations:
 
-**Layout:** Keep the accordion pattern. Clean, wide, no fuss.
+1. **Hero cat** -- current, watching the TV with project work on screen (DONE)
+2. **Process cat** -- watching the TV showing a wireframe → design → live site (for "how it works" section)
+3. **Contact cat** -- turned toward the viewer, one paw raised like a wave. The TV behind shows a calendar/phone. Breaking the fourth wall.
+4. **404 cat** -- staring at static/snow on the TV. Confused expression.
+5. **Loader cat** -- the cat mark (colbbord.svg) animated: ears twitch or eyes blink during load.
+6. **Favicon** -- tiny cat face, simple, reads at 32x32.
 
-**Color:** `$c-cream` background. Black text. Accordion borders in `$c-border`.
-
-**Copy to rewrite:**
-- "Common questions" / "Things people ask on the call." -- fine
-- FAQ answers: mostly solid and specific. Light humanizer pass but don't over-edit. These read reasonably natural already.
-- "Templates look like the next 10,000 sites built from the same template, which makes you forgettable when a customer is comparing five tabs." -- this sentence is good, keep it.
-
-**Animation:** Accordion open/close with GSAP height tween (not CSS transition, per immutable rule).
-
-**Mobile:** Full width, generous padding.
-
----
-
-### 9. Contact
-
-**Purpose:** Close the deal. Single clear CTA.
-
-**Layout:** Centered. Big headline, subtitle, buttons.
-
-**Color:** `$c-blush` or `$c-cream` background. Consider a full-width yellow band to bookend with the hero.
-
-**Copy to rewrite:**
-- "Want a site that feels like this?" -- too meta/self-referential. The visitor hasn't been thinking about "this site" -- they've been thinking about THEIR site.
-- Better direction: speak to what they want. "Ready to start?" or "Let's talk about your site." Simple, direct.
-- "No pitch deck, no pressure." -- decent but "If we are not the right fit, I will say so" is AI-speak. Shorten.
-
-**Animation:** Subtle fade-up.
-
-**Mobile:** Stack buttons vertically.
+**Style consistency prompts for GPT image:**
+- Same beanie (keep the color consistent with the current one)
+- Same art style as the hero cat (line weight, color palette, level of detail)
+- CRT TV is always the same shape/model
+- White/cream background, no complex scenes -- the cat and TV are the only elements
+- Warm palette: yellows, creams, rust accents in the scene
 
 ---
 
-### 10. Footer
+## Copy direction
 
-**Purpose:** Minimal. Copyright + email.
+**Voice:** A skilled builder talking to a business owner who's been burned by agencies or bad WordPress builds. Direct, specific, no fluff. Not trying to sound clever -- trying to be clear.
 
-**Color:** `$c-charcoal` with cream text.
+**Rules:**
+- No em dashes
+- No rule of three ("X. Y. Z." parallel structure)
+- No "delve/tapestry/landscape/elevate/foster/leverage"
+- No promotional superlatives ("stunning/exceptional/world-class")
+- Numbers over adjectives: "2 weeks" not "fast turnaround"
+- Say what it IS, not what it ISN'T (avoid "no hidden fees, no lock-in, no surprises")
+- Read it out loud. If you'd never say it to someone's face, rewrite it.
 
-**No changes needed.** It's already clean.
+**Copy will be written section by section during implementation, not all at once upfront.** Each section's copy is drafted, humanized, scored with detect-ai, and approved before moving to the next.
 
 ---
-
-## Copy rewriting rules (for any session)
-
-1. Run every piece of copy through the **humanizer** skill
-2. Check AI score with **detect-ai** skill -- target under 20
-3. No em dashes. No rule of three. No "delve/tapestry/landscape/elevate"
-4. Write like you're explaining your work to a friend at a bar, not pitching an investor
-5. Specific beats clever: "2 weeks" beats "lightning-fast turnaround"
-6. If a headline needs to be clever, make it ONE thing. Not three things in parallel.
-7. Read the copy out loud. If you'd never say it in person, rewrite it.
-
-## Color flow (section order)
-
-| Section | Background | Nav theme |
-|---------|-----------|-----------|
-| Hero | `$c-yellow` | light (black nav) |
-| Logo strip | `$c-cream` | light |
-| Bento | `$c-cream` | light |
-| Proof | `$c-charcoal` | dark (white nav) |
-| About | `$c-blush` | light |
-| Services | `$c-yellow` | light |
-| Pricing | `$c-cream` | light |
-| Testimonials | `$c-charcoal` | dark |
-| FAQ | `$c-cream` | light |
-| Contact | `$c-yellow` or `$c-blush` | light |
-| Footer | `$c-charcoal` | dark |
-
-This creates a rhythm: warm-warm-DARK-warm-WARM-warm-DARK-warm-WARM-dark. The yellow sections (hero, services, contact) bookend the page and create visual landmarks.
 
 ## Animation system
 
-All animations use GSAP + ScrollTrigger. No CSS transitions on animated properties.
+All GSAP + ScrollTrigger. No CSS transitions on GSAP properties. All gated with `prefers-reduced-motion`.
 
-- **Reveal:** `y: 30, autoAlpha: 0` -> `y: 0, autoAlpha: 1`, duration 0.7s, ease `power2.out`
-- **Stagger:** 0.08s between sibling elements
-- **Images:** scale from 0.97 to 1 on reveal
-- **Reduced motion:** Skip all motion animations, show elements immediately
+| Pattern | Spec | Use |
+|---------|------|-----|
+| **Content reveal** | `y: 40, autoAlpha: 0` → `y: 0, autoAlpha: 1`, 0.8s, `power3.out` | Default for text/cards entering |
+| **Card pin** | ScrollTrigger pin, scrub: true | Work showcase -- each card pins, next pushes it |
+| **Background tween** | GSAP `to` on section bg color, tied to ScrollTrigger | Smooth yellow→cream→yellow→charcoal transitions |
+| **Stagger** | 0.1s between siblings | Card groups, feature lists |
+| **Image scale** | `scale: 0.95` → `1`, same timing as reveal | Project screenshots |
+| **Section exit** | `y: -60, autoAlpha: 0`, 0.5s | Content leaving viewport upward |
+| **Magnetic hover** | Desktop only (`hover: hover`), GSAP spring | CTAs, project cards |
+| **Page transition** | Full-viewport rust panels, stagger from center | Between home ↔ project pages (Phase 3) |
 
-## Anti-AI design rules
+**Reduced motion:** All animations resolve immediately. Elements appear in final position. No motion.
 
-These are the patterns that make a website scream "AI built this." Avoid all of them.
+---
 
-**Layout tells:**
-- Three symmetrical cards with icons above headings (the "SaaS trio")
-- Perfectly centered everything with equal margins on all sides
-- Generic gradient backgrounds (especially purple-to-blue or soft multi-color)
-- Stock photo hero with text overlay
-- Identical card sizes in a grid with no visual hierarchy
-- Excessive whitespace with no purpose
+## Phases
 
-**Interaction tells:**
-- Hover effects firing on mobile tap (gate ALL hovers with `@media (hover: hover)`)
-- Generic scale-up on card hover (1.05 scale + shadow)
-- Uniform fade-in-from-bottom for every element
-- Parallax scrolling on images for no reason
+### Phase 1: Foundation
+- [ ] Update `_tokens.scss` with new palette
+- [ ] Remove dropped colors, update all SCSS files referencing old tokens
+- [ ] Set up the scroll-driven background color system (GSAP ScrollTrigger tweening body/wrapper background)
+- [ ] Restructure `index.html` to the new sitemap order
+- [ ] Remove sections that got cut (logo-strip, bento, old proof)
+- [ ] Create new section shells (work-showcase, how-it-works, services-included)
 
-**Typography tells:**
-- Every section having the same heading size
-- Centered text on everything
-- All headings the same weight
-- Decorative gradients on text
+### Phase 2: Work showcase
+- [ ] Build the scroll-pinned project card system
+- [ ] Large project screenshots with one-line descriptions
+- [ ] ScrollTrigger pin + push animation
+- [ ] Mobile: stack vertically with reveal animations
+- [ ] Write copy for project descriptions (humanize + detect-ai)
 
-**What Awwwards sites do differently:**
-- Asymmetric layouts where one element dominates
-- Intentional typography hierarchy (different sizes, weights, and positions per section)
-- Custom assets that carry a visual thread (your cat is this thread)
-- Micro-interactions that respond to cursor position, not just hover state
-- Full-bleed images and edge-to-edge color bands
-- One big thing per section, not three equal things
+### Phase 3: How it works
+- [ ] Build the scroll-driven three-step sequence
+- [ ] Plan cat illustration for this section (provide GPT prompt)
+- [ ] Animate steps in sequence on scroll
+- [ ] Write copy (humanize + detect-ai)
 
-## Visual identity: the cat thread
+### Phase 4: About
+- [ ] Redesign layout to match new palette and spacing
+- [ ] Rewrite copy -- make it personal and specific (humanize + detect-ai)
+- [ ] Background transition animation from yellow to cream
 
-The beanie cat on the hero is your signature. Right now it appears once and then vanishes. To make the site feel cohesive and personal:
+### Phase 5: Services + what's included
+- [ ] Build the honest feature list/grid
+- [ ] Include: custom design, hand-coded, responsive, SEO, accessibility, CMS
+- [ ] Write copy (humanize + detect-ai)
 
-**Assets to create:**
-1. **Cat favicon** -- already exists as colbbord.svg, good
-2. **Cat in the loader** -- the loader should use the cat mark, not just the wordmark
-3. **Cat peek on scroll** -- small cat illustration peeking from behind a section edge (between proof and about, or between FAQ and contact). Subtle, not gimmicky.
-4. **Cat in the 404 page** -- confused cat looking at a broken monitor
-5. **Cat cursor** -- optional: idle cursor is a small cat paw, pointer cursor on links
-6. **Cat in empty states** -- if project pages have loading states, cat watching a loading bar
+### Phase 6: Pricing
+- [ ] Restyle cards to match hero visual language (cream on yellow, boxy borders)
+- [ ] Keep two tiers, refine copy
+- [ ] Background transition back to yellow
 
-**Where NOT to use it:**
-- Don't put the cat on every section. It should feel like a discovery, not a mascot parade.
-- Don't animate the cat excessively. One or two subtle animations max.
-- The cat is a character detail, not a brand system. The brand system is the typography, colors, and boxy controls.
+### Phase 7: Testimonials + FAQ + Contact
+- [ ] Testimonials: two real cards on dark charcoal band, cut the fake third card
+- [ ] FAQ: clean up, keep content, ensure accordion uses GSAP not CSS
+- [ ] Contact: yellow band, big CTA, cat illustration (provide GPT prompt)
+- [ ] Write/rewrite copy across all three (humanize + detect-ai)
 
-**Other assets that would elevate the site:**
-- Custom SVG icons for the services section (instead of none or generic icons)
-- Textured paper background for the cream sections (very subtle noise, like `opacity: 0.03`)
-- Hand-drawn arrow or underline for one key CTA (feels human, not template)
-- Before/after slider for project showcase (shows the transformation you made)
-- Browser mockup frames around project screenshots (more polished than raw images)
+### Phase 8: Polish
+- [ ] Mobile pass at 360, 390, 430px for every section
+- [ ] Hover states gated with `@media (hover: hover)`
+- [ ] Magnetic CTA effects (desktop)
+- [ ] Loader animation with cat mark
+- [ ] Page transitions (home ↔ project pages)
+- [ ] Performance audit (run performance skill)
+- [ ] Accessibility audit (run accessibility skill)
+- [ ] SEO audit (run seo-optimizer skill)
+- [ ] Final humanizer pass on all visible copy
+- [ ] Design consistency check against hero (spacing, sizing, weights, radii)
 
-## Design consistency checklist
+---
 
-Before shipping any section, verify against the hero:
+## Progress
 
-| Property | Hero value | Check |
-|----------|-----------|-------|
-| Section padding top | `clamp(3rem, 7vw, 7rem)` | Match across sections |
-| Heading font weight | 800 | Consistent for section titles |
-| Heading line height | 0.96 | Consistent for display text |
-| Label pills | `0.45rem 0.7rem` padding, 8px radius, 2px border | Same everywhere |
-| Card radius | 8-14px | No pills, no round corners |
-| Card border | `2px solid #0B0B0B` | Consistent |
-| Body text size | `$fs-base` to `$fs-md` | Don't go smaller than `$fs-sm` |
-| CTA height | Match hero CTAs | Same padding and line height |
-| Max content width | 1280px | Same for all sections |
-| Page padding | `$page-padding` | Use the token, not custom values |
+### Completed
+- [x] Hero section (design approved)
+- [x] Skills environment set up (33 skills)
+- [x] CLAUDE.md, DESIGN_BIBLE.md configured
+- [x] Stale worktrees cleaned up
 
-## Execution order (priority)
+### Current phase
+Phase 1: Foundation (not started)
 
-### Phase 1: Copy rewrite (do first, all sections)
-Rewrite all copy across every section. Run humanizer + detect-ai. This is the fastest way to make the site stop feeling AI.
+### Decisions made
+- Cat is the brand, will appear in 3-4 places across the site
+- Scroll-driven journey with yellow canvas persisting, background tweens between sections
+- Two-tier pricing stays, transparent
+- Homepage priority over project pages
+- New palette: yellow/mustard/rust/ink/cream (dropped blush, forest, peach)
+- New sitemap: Hero > Work > How it works > About > Services > Pricing > Testimonials > FAQ > Contact
 
-### Phase 2: Color and layout alignment
-Update SCSS for each section to match the color flow table. Fix backgrounds, borders, card fills, and typography to match hero language.
+### Next session
+Start Phase 1: update tokens, restructure HTML, set up scroll background system.
 
-### Phase 3: Mobile pass
-Walk through every section at 360px, 390px, 430px. Fix padding, stacking, overflow, font sizes.
-
-### Phase 4: Animation polish
-Wire up GSAP reveals for all sections. Test with reduced motion.
-
-### Phase 5: Loader and transitions (from old plan)
-- Loader iris-out animation
-- Page transition wipe between home and project pages
-- Magnetic CTA hover effects
+---
 
 ## Session handoff protocol
 
-When ending a session:
-1. Update this PLAN.md with what was completed (mark with [x])
-2. Note any decisions made or copy approved
-3. Note what to do next
-4. Commit and push
+**Ending a session:**
+1. Update the "Progress" section above
+2. Note what was completed, what's next
+3. Commit and push
 
-When starting a session:
-1. Read PLAN.md first
+**Starting a session:**
+1. Read this PLAN.md
 2. Read DESIGN_BIBLE.md if doing visual work
 3. Check skill-observations/log.md for open observations
-4. Continue from where the last session stopped
+4. Continue from the current phase
 
 ## Working agreements
 - Auto-push to main after every change
-- Minimal token usage, no narration
-- Run humanizer on all copy
+- Minimal token usage, concise responses
+- Run humanizer on all copy before committing
 - Check mobile at 360/390/430px after layout changes
+- No hover effects without `@media (hover: hover)` gate
+- Use tokens from `_tokens.scss`, no ad-hoc values
+- The hero sets the standard for spacing, sizing, and hierarchy

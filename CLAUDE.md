@@ -28,6 +28,12 @@ Aesthetic: editorial, confident, bold typography, warm palette.
 7. The hero sets the standard. Match its spacing, sizing, and hierarchy in every section.
 8. Design must not look AI-generated: no generic gradients, no stock-photo layouts, no symmetrical grid-of-three-cards-with-icons patterns. Favor asymmetry, editorial layouts, and intentional white space.
 
+## Git workflow
+- Work on main. Do not create feature branches or worktrees.
+- If Claude Code puts you in a worktree, push all changes to main: `git push origin HEAD:main`
+- At the end of each session, make sure main is up to date before stopping.
+- Clean up stale worktrees when you see them: `git worktree list` then `git worktree remove <path> --force`
+
 ## Dev commands
 - `npm run dev` to start Vite dev server
 - `npm run build` to build for production

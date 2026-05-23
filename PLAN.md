@@ -181,11 +181,11 @@ All GSAP + ScrollTrigger. No CSS transitions on GSAP properties. All gated with 
 - [x] Create new section shells (work-showcase, how-it-works)
 
 ### Phase 2: Work showcase
-- [ ] Build the scroll-pinned project card system
-- [ ] Large project screenshots with one-line descriptions
-- [ ] ScrollTrigger pin + push animation
-- [ ] Mobile: stack vertically with reveal animations
-- [ ] Write copy for project descriptions (humanize + detect-ai)
+- [x] Build the scroll-pinned project card system
+- [x] Large project screenshots with one-line descriptions
+- [x] ScrollTrigger pin + push animation
+- [x] Mobile: stack vertically with reveal animations
+- [x] Write copy for project descriptions (humanize pass done; detect-ai API key unavailable locally)
 
 ### Phase 3: How it works
 - [ ] Build the scroll-driven three-step sequence
@@ -235,9 +235,11 @@ All GSAP + ScrollTrigger. No CSS transitions on GSAP properties. All gated with 
 - [x] Skills environment set up (33 skills)
 - [x] CLAUDE.md, DESIGN_BIBLE.md configured
 - [x] Stale worktrees cleaned up
+- [x] Phase 1: Foundation
+- [x] Phase 2: Work showcase
 
 ### Current phase
-Phase 2: Work showcase
+Phase 3: How it works
 
 ### Decisions made
 - Cat is the brand, will appear in 3-4 places across the site
@@ -248,9 +250,15 @@ Phase 2: Work showcase
 - New sitemap: Hero > Work > How it works > About > Services > Pricing > Testimonials > FAQ > Contact
 
 ### Next session
-Start Phase 2: build scroll-pinned work showcase cards with large screenshots and one-line results.
+Start Phase 3: build the scroll-driven How it works sequence and prepare the process cat illustration prompt.
 
 Note: hero CTA button still uses hardcoded #FF9C7D (old salmon/blush). Needs updating to $c-rust (#C75B2A) — deferred, hero is "keep as-is" until Phase 8 polish pass.
+
+Latest Phase 2 verification:
+- `npm test` passes (3 tests)
+- `npm run build` passes
+- Browser checked at desktop 1280/1440/1920 and mobile 360/390/430 with no horizontal overflow
+- HumanizerAI detect-ai could not run because `HUMANIZERAI_API_KEY` was not set
 
 ---
 

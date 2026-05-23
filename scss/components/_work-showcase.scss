@@ -1,12 +1,12 @@
 @use '../base/tokens' as *;
 
-// Work Showcase — scroll-pinned project card system (Phase 2)
-// Foundation styles only; card pin animation built in Phase 2.
+// Work Showcase - scroll-pinned project card system (Phase 2)
 
 .work-showcase {
   background: $c-yellow;
-  padding: clamp(3rem, 7vw, 7rem) $page-padding;
+  padding: clamp(4rem, 8vw, 7.5rem) $page-padding clamp(5rem, 9vw, 8rem);
   color: $c-ink;
+  overflow-x: clip;
 }
 
 .work-showcase__inner {
@@ -48,25 +48,31 @@
 }
 
 .work-showcase__cards {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: clamp(2rem, 4vw, 3rem);
+  gap: clamp(3rem, 7vw, 5rem);
 }
 
 .work-showcase__card {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(1.5rem, 3vw, 2.5rem);
+  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+  gap: clamp(1.25rem, 3vw, 2.75rem);
   align-items: center;
+  min-height: min(78vh, 780px);
   background: $c-cream;
   border: 2px solid $c-ink;
-  border-radius: 14px;
+  border-radius: 12px;
   overflow: hidden;
+  isolation: isolate;
 }
 
 .work-showcase__card-img {
-  aspect-ratio: 16 / 10;
+  height: 100%;
+  min-height: clamp(24rem, 49vw, 39rem);
   overflow: hidden;
+  background: $c-paper;
+  border-right: 2px solid $c-ink;
 
   img {
     width: 100%;
@@ -80,15 +86,17 @@
   padding: clamp(1.5rem, 3vw, 2.5rem);
   display: flex;
   flex-direction: column;
-  gap: $space-16;
+  align-items: flex-start;
+  gap: clamp(0.85rem, 1.5vw, 1.25rem);
 
   h3 {
     font-family: $font-display;
-    font-size: clamp(1.4rem, 2vw, 2rem);
-    font-weight: 700;
+    font-size: clamp(2rem, 4vw, 4.4rem);
+    font-weight: 900;
     color: $c-ink;
     margin: 0;
-    letter-spacing: -0.01em;
+    line-height: 0.95;
+    letter-spacing: 0;
   }
 
   p {
@@ -99,6 +107,29 @@
     color: $c-text-secondary;
     margin: 0;
   }
+}
+
+.work-showcase__card-count {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.35rem 0.65rem;
+  font-family: $font-body;
+  font-size: clamp(0.72rem, 0.8vw, 0.82rem);
+  font-weight: 900;
+  letter-spacing: 0;
+  color: $c-ink;
+  background: $c-yellow;
+  border: 2px solid $c-ink;
+  border-radius: 8px;
+}
+
+.work-showcase__card-copy .work-showcase__result {
+  max-width: 31rem;
+  font-size: clamp(1.1rem, 1.55vw, 1.45rem);
+  font-weight: 800;
+  line-height: 1.28;
+  color: $c-ink;
 }
 
 .work-showcase__card-link {
@@ -123,13 +154,63 @@
   }
 }
 
+@media (min-width: 769px) {
+  .work-showcase__card:nth-child(even) {
+    grid-template-columns: minmax(320px, 0.8fr) minmax(0, 1.2fr);
+
+    .work-showcase__card-img {
+      grid-column: 2;
+      grid-row: 1;
+      border-right: 0;
+      border-left: 2px solid $c-ink;
+    }
+
+    .work-showcase__card-copy {
+      grid-column: 1;
+      grid-row: 1;
+    }
+  }
+}
+
 @media (max-width: 768px) {
+  .work-showcase {
+    padding-bottom: clamp(4rem, 16vw, 6rem);
+  }
+
+  .work-showcase__cards {
+    gap: $space-32;
+    position: relative;
+  }
+
   .work-showcase__card {
+    position: relative;
     grid-template-columns: 1fr;
+    min-height: 0;
   }
 
   .work-showcase__header {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .work-showcase__card-img {
+    min-height: 0;
+    aspect-ratio: 16 / 11;
+    border-right: 0;
+    border-bottom: 2px solid $c-ink;
+  }
+
+  .work-showcase__card-copy {
+    padding: clamp(1.25rem, 6vw, 1.75rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-showcase__card,
+  .work-showcase__card-img img,
+  .work-showcase__card-copy {
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 }

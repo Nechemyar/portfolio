@@ -277,6 +277,13 @@ Latest pin/process polish verification:
 - `npm test` passes (9 tests)
 - `npm run build` passes
 
+Latest nav polish verification:
+- Nav no longer changes colour by section; logo, menu label, and mobile hamburger stay black
+- Nav morphs from transparent top state into a blurred white glass pill with 8px button-matched corners after scroll
+- Browser checked desktop and mobile hash navigation to How it works; nav backing remains white, blurred, rounded, and without horizontal overflow
+- `npm test` passes (10 tests)
+- `npm run build` passes
+
 Process cat GPT prompt:
 Create a warm editorial illustration in the same style as the existing Sumi Studios hero cat: a beanie-wearing cat sitting beside a chunky CRT television, cream background, black ink outlines, warm yellow and rust accents, no extra room details. The TV screen shows a simple three-stage website build sequence: wireframe, visual design, live site. Keep the same beanie color, same CRT shape, same line weight, and the same soft retro texture as the hero image. The cat should face the TV with focused builder energy, slightly curious, not goofy. Transparent or cream background, subject centered, enough negative space for use inside a web section.
 

@@ -20,12 +20,17 @@
   inset: 0;
   z-index: -1;
   background: transparent;
-  border-bottom: 0 solid transparent;
+  border: 1px solid transparent;
+  border-radius: 0;
   backdrop-filter: blur(0);
   -webkit-backdrop-filter: blur(0);
+  box-shadow: none;
   transition:
+    inset 0.35s $ease-out,
     background-color $duration-fast ease,
     border-color $duration-fast ease,
+    border-radius 0.35s $ease-out,
+    box-shadow $duration-fast ease,
     backdrop-filter $duration-fast ease;
 }
 
@@ -34,90 +39,35 @@ body.nav-has-backing .nav {
 }
 
 body.nav-has-backing .nav::before {
-  background: rgba(255, 255, 255, 0.56);
+  inset: clamp(0.45rem, 1vw, 0.75rem) clamp(0.75rem, 3vw, 2.5rem);
+  background: rgba(255, 255, 255, 0.72);
   backdrop-filter: blur(18px) saturate(1.2);
   -webkit-backdrop-filter: blur(18px) saturate(1.2);
-  border-bottom-width: 1px;
-  border-bottom-color: rgba(11, 11, 11, 0.22);
+  border-color: rgba(11, 11, 11, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 14px 36px rgba(11, 11, 11, 0.08);
 }
 
-body:not([data-nav-section='hero']) .nav::before {
-  border-bottom-width: 2px;
-}
-
-body[data-nav-section='hero'].nav-has-backing .nav::before {
-  background: #ffb93e;
-  border-bottom-width: 2px;
-  border-bottom-color: #0b0b0b;
-}
-
-body[data-nav-section='logos'] .nav::before,
-body[data-nav-section='work'] .nav::before,
-body[data-nav-section='how-it-works'] .nav::before,
-body[data-nav-section='services'] .nav::before,
-body[data-nav-section='contact'] .nav::before {
-  background: rgba(255, 185, 62, 0.72);
-  border-bottom-color: rgba(11, 11, 11, 0.22);
-}
-
-body[data-nav-section='bento'] .nav::before,
-body[data-nav-section='about'] .nav::before,
-body[data-nav-section='pricing'] .nav::before,
-body[data-nav-section='faq'] .nav::before {
-  background: rgba(250, 249, 247, 0.72);
-  border-bottom-color: rgba(11, 11, 11, 0.18);
-}
-
-body[data-nav-section='proof'] .nav::before,
-body[data-nav-section='testimonials'] .nav::before {
-  background: rgba(44, 44, 44, 0.72);
-  border-bottom-color: rgba(250, 249, 247, 0.24);
-}
-
-/* Base (Dark background) Nav colors */
+/* Single nav colour system: black controls over a white glass backing. */
 .nav__logo-svg {
-  filter: invert(1); /* white/cream */
+  filter: invert(0);
 }
 
 .nav__logo-wordmark-line,
 .nav__logo-wordmark-sub {
-  color: #faf9f7;
+  color: $c-ink;
 }
 
 .nav__menu-label {
-  color: #faf9f7;
+  color: $c-ink;
 }
 
 .nav__menu-line {
-  background: #faf9f7;
+  background: $c-ink;
 }
 
 .nav__desktop-links a {
-  color: #faf9f7;
-}
-
-/* Light theme Nav colors (toggled by NavTheme.js when over light sections) */
-body.nav-theme-light {
-  .nav__logo-svg {
-    filter: invert(0); /* charcoal/black */
-  }
-
-  .nav__logo-wordmark-line,
-  .nav__logo-wordmark-sub {
-    color: $c-charcoal;
-  }
-
-  .nav__menu-label {
-    color: $c-charcoal;
-  }
-
-  .nav__menu-line {
-    background: $c-charcoal;
-  }
-
-  .nav__desktop-links a {
-    color: $c-charcoal;
-  }
+  color: $c-ink;
 }
 
 /* Three-column grid: CTA (left) · logo (centre) · MENU (right).
@@ -138,7 +88,7 @@ body.nav-theme-light {
   align-items: center;
   gap: clamp(0.5rem, 1vw, 0.85rem);
   text-decoration: none;
-  color: #faf9f7;
+  color: $c-ink;
   transition: transform $duration-fast $ease-out;
 }
 
@@ -395,6 +345,11 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
 @media (max-width: 768px) {
   .nav {
     padding: 1.1rem 1.25rem;
+  }
+
+  body.nav-has-backing .nav::before {
+    inset: 0.55rem 0.75rem;
+    border-radius: 8px;
   }
 
   .nav__cta {

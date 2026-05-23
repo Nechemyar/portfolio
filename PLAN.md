@@ -1,153 +1,324 @@
-# Portfolio plan & working state
+# Portfolio Rebuild Plan
 
-Living doc so any new Claude session can pick up where the last one stopped
-without re-deriving context. Update it as scope shifts.
+Living doc for any session (Opus, Sonnet, Codex) to pick up without re-deriving context.
 
-## Who this is for
-Solo web designer (Nechemya / SUMI STUDIOS direction). Premium hand-coded
-sites. Brand-led pitch, service-business clients (Clinical Assessments,
-Choice Inventory). Hero illustration is a beanie-cat watching a CRT monitor
-that screens current project work through a mask cutout.
+## Context
+Solo web designer (Nechemya / Sumi Studios). Premium hand-coded sites for service businesses. The hero section is done and the user is happy with it. Everything else feels AI-generated, mismatched, and needs rebuilding to match the hero's quality and voice.
+
+## Tech stack
+Vanilla HTML + SCSS + JS, Vite, GSAP + ScrollTrigger, Lenis smooth scroll, Satoshi font. No frameworks.
+
+## Source of truth
+- `DESIGN_BIBLE.md` for visual decisions
+- `AI_CONTEXT.md` for file architecture and immutable rules
+- `CLAUDE.md` for session instructions and skill activation
 
 ## Current branch
-`claude/confident-ptolemy-5a1b43` — auto-pushed to `origin/main` after
-every change (per the user's standing instruction in MEMORY.md).
+Auto-push to `origin/main` after every change (standing instruction).
 
-## Tech stack on this site
-- Vanilla HTML + SCSS + JS, bundled by Vite.
-- GSAP + ScrollTrigger for scroll-pinned hero/featured.
-- Lenis already imported in `js/main.js` for smooth scroll.
-- Fontshare CDN for Satoshi (body); Clash Display self-hosted (display) —
-  display font is still TBD, see "Open decisions" below.
-- No framework. No router. Project pages are full document loads.
+## The problem
+The hero is strong: yellow stage, warm palette, boxy controls, confident copy. Everything after the hero was written and styled by AI and it shows:
+- Copy uses AI patterns (rule of three, promotional language, vague claims)
+- Color choices don't flow naturally from the hero palette
+- Sections feel like generic SaaS templates, not a sharp independent studio
+- Mobile experience wasn't designed with intention
+- No visual rhythm -- sections feel disconnected
 
-## Brand & layout direction
-Reference mockup (user-provided) for the hero:
-- MENU pill on the left, BOOK A FREE CALL pill on the right (currently
-  both are right-clustered; mockup splits them).
-- Optional centred SUMI STUDIOS wordmark + cat icon as the nav logo.
-- Bottom of hero is a strong rust gradient band that hosts the footer
-  row: `[star + tagline]` left, `[Book a free call pill]` centre,
-  `[EXPLORE WORK]` right, with a cream hairline divider above.
-- Marquee strip ("WEB DESIGN ★") sits ABOVE the gradient band (currently
-  below it on mobile via dark band, below on desktop too).
-- Tagline copy on the hero: **"I make websites for businesses that give
-  a damn"** (matches the meta description). Open to swap to "service
-  businesses" if positioning narrows.
+## Design principles (derived from the hero)
+1. **Warm paper fields** with intentional color bands (yellow, blush, cream, dark)
+2. **Boxy controls** with 8-14px radii, 2px black borders
+3. **Left-anchored heavy headings**, not centered marketing blocks
+4. **Deliberate line breaks** in headlines, not accidental wrapping
+5. **Asymmetric layouts** where proof/image dominates and copy anchors action
+6. **Black text on warm surfaces**, white text on dark surfaces only
 
-## What landed (chronological, most recent first)
-- `146da51` Dropped mobile CTA out of the TV body (footer 17vh, marquee 6vh).
-- `833ae91` Lifted marquee, removed `.hero__headline` + `.hero__sticker` HTML.
-- `a8d5571` Moved hero CTA into the footer row, added the (now-removed)
-  mobile headline + 5+ years star sticker. SCSS hooks for `.hero__sticker`
-  and `.hero__headline` are still in `_hero.scss` for the planned custom
-  SVG sticker.
-- `ff58183` Distinct nav pills (rust CTA / charcoal MENU), hero CTA in
-  the centre, killed the empty space inside the MENU pill.
-- `8cabd6f` Fluid nav via clamp(), marquee dark band on mobile.
-- `9d8c701` Mobile hero anchored top:50%, hero-exit slide uses y:vh + autoAlpha.
-- `6e5a08a` Mobile-hero.png → WebP, recalibrated mobmask cutout, shared
-  reel images across breakpoints.
-- `f835570` Cat-cutout assets removed, new hero composition wired up.
+---
 
-## Open decisions (waiting on user)
-- **Display font for hero/titles.** Currently Clash Display (Variable
-  woff2). Candidates from Fontshare: Khand, Bonny, Boska, General Sans,
-  Clash Grotesk. User asked for "thick condensed, easy to read." Probably
-  Khand or Bonny; needs vibe check.
-- **Tagline X** in "I make websites for X." Default: "businesses that
-  give a damn." Alternative: "service businesses."
-- **Loader copy.** Current loader is the bnw cat logo + "LOADING". User
-  said they want to redesign it. Open question what.
+## Section-by-section rebuild
 
-## Roadmap (in priority order)
+Each section has: layout intent, copy direction, color, and animation notes. Copy drafts are placeholders -- run through humanizer + detect-ai before shipping.
 
-### Tier 1 — Hero polish (DOING NOW)
-- [x] Tagline + star icon in hero footer left column.
-- [x] Stronger rust gradient at the bottom.
-- [x] Hairline divider above the footer row.
-- [x] Switch body font to Satoshi via Fontshare.
-- [ ] Pick the new display font (waiting on user).
-- [ ] Custom SVG sticker (user is producing this).
+---
 
-### Tier 2 — Loader → hero handoff
-Replace the "loader fades, then GSAP entrance plays" two-step with one
-continuous gesture. Suggested approach:
-1. Loader is the same SVG mark as the nav logo (already
-   `colbbord.svg`), centred on a charcoal field.
-2. On `loader-ready`: GSAP FLIPs the mark from its centred position to
-   the nav slot (top-left of viewport), scales it down to nav-logo
-   size, while the charcoal field iris-opens (mask reveal) to expose
-   the hero stage underneath.
-3. The hero-stage entrance timeline (`new Loader(() => {...})` in
-   `js/main.js`) runs *during* the iris reveal, not after — nav slides
-   down behind the still-animating logo, marquee rises from below,
-   gradient fades in, footer row settles.
-4. Total budget: 0.9–1.2s, one ease curve across the whole thing
-   (`cubic-bezier(0.65, 0, 0.35, 1)` is a safe default).
+### 1. Logo Strip (after hero)
 
-Reference: steviaplease.me preloader iris-out animation
-(`scaleY(0) → 1` on grid lines with `stagger {each: 0.03, from: "center"}`).
+**Purpose:** Transition from hero energy to proof. Quick credibility.
 
-Files to touch: `js/modules/Loader.js`, `js/main.js`, `scss/components/_loader.scss`.
+**Layout:** Full-width cream band. Left-aligned project links as text links with arrows, not logos. Keep it minimal.
 
-### Tier 3 — Page transitions (project ↔ home)
-Cinematic block-wipe in brand colour (rust), inspired by steviaplease.me
-but DOM-only (no Vue/Nuxt, no WebGL). Approach:
-1. Intercept `a[href*="projects/"]` clicks. `preventDefault()`.
-2. GSAP-animate a grid of `.transition-block` panels from
-   `transform: translateY(100%)` to `0` with `stagger {each: 0.03,
-   from: "center"}` over 0.5s `cubic.out`. Panels are positioned absolutely
-   over the whole viewport, rust-coloured.
-3. Once the wipe is fully covering, `window.location.href` to the
-   destination. The next page is preloaded via `fetch` for ~0 perceived
-   load delay.
-4. On the destination page (project page), the same panel grid mounts
-   pre-painted, then animates out with `translateY(-100%)` + same
-   stagger reversed.
-5. Direction & colour vary by destination — project pages get rust,
-   contact gets accent (TBD), back-to-home gets the inverse direction.
+**Color:** `$c-cream` background, `$c-charcoal` text.
 
-Files to add: `js/modules/PageTransition.js` + `scss/components/_transition.scss`.
-Files to touch: `js/main.js` (wire it up), every `<a>` linking out of
-the current document.
+**Copy direction:**
+- Kill "Recent builds worth opening" -- sounds like a blog post headline
+- Replace with something direct: project names as links, no label needed. Or a quiet label like "Recent work" if needed.
 
-**Fallback**: if JS is blocked or the user has `prefers-reduced-motion`,
-the panels never paint and links navigate normally.
+**Animation:** Simple fade-up on scroll reveal. No stagger needed.
 
-### Tier 4 — Hover micro-interactions
-- Magnetic CTA + project cards (GSAP, no WebGL). Cursor proximity tugs
-  the element by a small offset, springs back on leave. ~1 hour.
-- Optional: link underline draw-on with `clip-path` or `mask`.
+**Mobile:** Single column, links stack vertically.
 
-### Tier 5 — Optional/signature
-- Custom cursor state (`idle / hover / drag`) — small but adds polish.
-- WebGL displacement on featured project hover — real cost, defer.
-- Fluid colour-wash backdrop — real cost, defer.
+---
+
+### 2. Bento Grid ("How I work")
+
+**Purpose:** Build trust by showing process. Answer "what happens after I call you?"
+
+**Layout:** Keep the bento grid but make the cards feel more like the hero's boxy controls. Strong borders, warm fills, intentional sizing.
+
+**Color:**
+- Section bg: `$c-cream`
+- Cards: mix of `$c-blush`, `$c-yellow`, white with black border
+- Stat cards: yellow fill with black text
+- Process card: dark (`$c-charcoal`) with cream text for contrast
+
+**Copy to rewrite:**
+- Header: "Clear scope. Sharp design. No disappearing act." -- rewrite, sounds AI
+- Card 1 (Scope): "We start with the job your website has to win." -- decent but "moodboard theatre" is try-hard. Simplify.
+- Card 2 (Process): "Call. Build. Ship." -- fine, keep it
+- Card 3 (2w): keep the stat, it's concrete
+- Card 4 (90+): keep the stat
+- Card 5 (Ownership): "Hand-coded. Yours forever." -- rewrite, "no monthly hostage situation" tries too hard
+
+**Copy rewrite approach:** Short, flat, factual. What happens, not why it's amazing. A builder explaining their process to another adult.
+
+**Animation:** Cards reveal on scroll with subtle y-offset, no rotation. Stagger 0.08s per card.
+
+**Mobile:** Stack cards single column. Process card goes full width.
+
+---
+
+### 3. Proof (project showcase)
+
+**Purpose:** Show the work. This is the most important section for conversion.
+
+**Layout:** Keep the dark band but make project cards bigger and more prominent. Full-bleed images with thin captions below, not split image+text cards.
+
+**Color:**
+- Section bg: `$c-charcoal`
+- Cards: images with cream caption text below
+- "Why hand-coded" compare card: `$c-yellow` fill with black text and border (ties back to hero)
+
+**Copy to rewrite:**
+- "Proof, not perfume" -- too clever. Something like "Work" or "Recent projects" or nothing at all
+- "The work has to make the business easier to trust." -- this is actually good but could be shorter
+- Project descriptions: kill the AI copywriting. Just say what you did: "Lead-gen site for an inventory company" and "Professional service site for a clinical practice." Flat and honest.
+- "Why hand-coded?" list: rewrite the items. "Cleaner/Faster/Yours" with single sentences is fine structurally but the descriptions are weak
+
+**Animation:** Image cards scale up slightly from 0.95 on scroll entry. Caption fades in after image settles.
+
+**Mobile:** Stack cards vertically. Images full width.
+
+---
+
+### 4. About (founder section)
+
+**Purpose:** Put a face to the work. Build personal trust.
+
+**Layout:** Keep the two-column layout (photo left, copy right). Photo should be a real, natural shot -- not a studio headshot.
+
+**Color:** `$c-cream` or `$c-blush` background. Black text.
+
+**Copy to rewrite:**
+- "Hi, I'm Nechemya" label -- fine
+- "One person. Hand-coded. No agency markup." -- the structure is AI (rule of three). Rewrite as a single clear sentence.
+- Body copy: "Most clients come to me after a WordPress build that cost too much..." -- this paragraph is decent but reads like AI copywriting. Make it more personal and specific. What do YOU actually do differently?
+- "No account managers. No mystery sprint. No upsells." -- AI pattern (triple negative). Rewrite.
+- Signature: "Based in Herzliya. Working worldwide." -- fine, keep it
+
+**Animation:** Photo and copy reveal together with a subtle y-offset.
+
+**Mobile:** Photo above copy, full width.
+
+---
+
+### 5. Services
+
+**Purpose:** What you actually offer. Keep it tight.
+
+**Layout:** Three cards on yellow band. Cards should have `$c-cream` fill with black border, sitting on the yellow background. This creates visual continuity with the hero.
+
+**Color:**
+- Section bg: `$c-yellow` (matches hero, creates a callback)
+- Cards: `$c-cream` fill, `2px solid $c-charcoal` border, `8px` radius
+- Labels: coral pill badges (like bento kickers)
+
+**Copy to rewrite:**
+- "Three things, done properly." -- rewrite, AI-sounding
+- Card titles are trying too hard to be clever. "A site that doesn't look like everyone else's" -- just say what the service IS
+- Simpler approach: "Design" / "Development" / "Strategy" as labels, then 1-2 sentences of what's included. No headlines trying to be witty.
+
+**Animation:** Cards stagger in from below.
+
+**Mobile:** Cards stack vertically.
+
+---
+
+### 6. Pricing
+
+**Purpose:** Remove price anxiety. Make the next step obvious.
+
+**Layout:** Two cards side by side. Featured card gets a yellow accent or border treatment, not just a badge. Make the visual hierarchy clear.
+
+**Color:**
+- Section bg: `$c-cream`
+- Standard card: white with subtle border
+- Featured card: `$c-yellow` border or left-side accent stripe
+
+**Copy to rewrite:**
+- "Pick a scope. Get a fixed price." -- actually decent, might keep
+- "The number in the proposal is the number on the invoice." -- good, keep
+- Feature lists are fine as-is
+- "Most popular" badge -- keep
+- Footer "Need something bigger?" -- keep
+
+**Animation:** Cards reveal together, no stagger (they're peers).
+
+**Mobile:** Cards stack. Featured card on top.
+
+---
+
+### 7. Testimonials
+
+**Purpose:** Social proof from real clients.
+
+**Layout:** Keep the dark band. Two real testimonial cards + one positioning card. Make testimonial cards feel like quoted notes (cream paper on dark background).
+
+**Color:**
+- Section bg: `$c-charcoal`
+- Cards: `$c-cream` fill, subtle border
+- Third card (positioning note): `$c-blush` fill
+
+**Copy to rewrite:**
+- "Client words" label -- fine
+- "What they said after." -- fine
+- Testimonial quotes: these read real (they probably are real quotes). Keep as-is.
+- Third card: "The best sites do three jobs quickly..." -- this is AI writing pretending to be a testimonial. Either get a third real testimonial or cut this card entirely.
+
+**Animation:** Cards stagger in.
+
+**Mobile:** Stack vertically.
+
+---
+
+### 8. FAQ
+
+**Purpose:** Handle objections. Reduce call anxiety.
+
+**Layout:** Keep the accordion pattern. Clean, wide, no fuss.
+
+**Color:** `$c-cream` background. Black text. Accordion borders in `$c-border`.
+
+**Copy to rewrite:**
+- "Common questions" / "Things people ask on the call." -- fine
+- FAQ answers: mostly solid and specific. Light humanizer pass but don't over-edit. These read reasonably natural already.
+- "Templates look like the next 10,000 sites built from the same template, which makes you forgettable when a customer is comparing five tabs." -- this sentence is good, keep it.
+
+**Animation:** Accordion open/close with GSAP height tween (not CSS transition, per immutable rule).
+
+**Mobile:** Full width, generous padding.
+
+---
+
+### 9. Contact
+
+**Purpose:** Close the deal. Single clear CTA.
+
+**Layout:** Centered. Big headline, subtitle, buttons.
+
+**Color:** `$c-blush` or `$c-cream` background. Consider a full-width yellow band to bookend with the hero.
+
+**Copy to rewrite:**
+- "Want a site that feels like this?" -- too meta/self-referential. The visitor hasn't been thinking about "this site" -- they've been thinking about THEIR site.
+- Better direction: speak to what they want. "Ready to start?" or "Let's talk about your site." Simple, direct.
+- "No pitch deck, no pressure." -- decent but "If we are not the right fit, I will say so" is AI-speak. Shorten.
+
+**Animation:** Subtle fade-up.
+
+**Mobile:** Stack buttons vertically.
+
+---
+
+### 10. Footer
+
+**Purpose:** Minimal. Copyright + email.
+
+**Color:** `$c-charcoal` with cream text.
+
+**No changes needed.** It's already clean.
+
+---
+
+## Copy rewriting rules (for any session)
+
+1. Run every piece of copy through the **humanizer** skill
+2. Check AI score with **detect-ai** skill -- target under 20
+3. No em dashes. No rule of three. No "delve/tapestry/landscape/elevate"
+4. Write like you're explaining your work to a friend at a bar, not pitching an investor
+5. Specific beats clever: "2 weeks" beats "lightning-fast turnaround"
+6. If a headline needs to be clever, make it ONE thing. Not three things in parallel.
+7. Read the copy out loud. If you'd never say it in person, rewrite it.
+
+## Color flow (section order)
+
+| Section | Background | Nav theme |
+|---------|-----------|-----------|
+| Hero | `$c-yellow` | light (black nav) |
+| Logo strip | `$c-cream` | light |
+| Bento | `$c-cream` | light |
+| Proof | `$c-charcoal` | dark (white nav) |
+| About | `$c-blush` | light |
+| Services | `$c-yellow` | light |
+| Pricing | `$c-cream` | light |
+| Testimonials | `$c-charcoal` | dark |
+| FAQ | `$c-cream` | light |
+| Contact | `$c-yellow` or `$c-blush` | light |
+| Footer | `$c-charcoal` | dark |
+
+This creates a rhythm: warm-warm-DARK-warm-WARM-warm-DARK-warm-WARM-dark. The yellow sections (hero, services, contact) bookend the page and create visual landmarks.
+
+## Animation system
+
+All animations use GSAP + ScrollTrigger. No CSS transitions on animated properties.
+
+- **Reveal:** `y: 30, autoAlpha: 0` -> `y: 0, autoAlpha: 1`, duration 0.7s, ease `power2.out`
+- **Stagger:** 0.08s between sibling elements
+- **Images:** scale from 0.97 to 1 on reveal
+- **Reduced motion:** Skip all motion animations, show elements immediately
+
+## Execution order (priority)
+
+### Phase 1: Copy rewrite (do first, all sections)
+Rewrite all copy across every section. Run humanizer + detect-ai. This is the fastest way to make the site stop feeling AI.
+
+### Phase 2: Color and layout alignment
+Update SCSS for each section to match the color flow table. Fix backgrounds, borders, card fills, and typography to match hero language.
+
+### Phase 3: Mobile pass
+Walk through every section at 360px, 390px, 430px. Fix padding, stacking, overflow, font sizes.
+
+### Phase 4: Animation polish
+Wire up GSAP reveals for all sections. Test with reduced motion.
+
+### Phase 5: Loader and transitions (from old plan)
+- Loader iris-out animation
+- Page transition wipe between home and project pages
+- Magnetic CTA hover effects
+
+## Session handoff protocol
+
+When ending a session:
+1. Update this PLAN.md with what was completed (mark with [x])
+2. Note any decisions made or copy approved
+3. Note what to do next
+4. Commit and push
+
+When starting a session:
+1. Read PLAN.md first
+2. Read DESIGN_BIBLE.md if doing visual work
+3. Check skill-observations/log.md for open observations
+4. Continue from where the last session stopped
 
 ## Working agreements
-- **Auto-push to main**: every commit gets pushed to `origin/main` via
-  `git push origin <branch>:main`, no asking. Memory file
-  `feedback_auto_push.md`.
-- **Minimal token usage**: user prefers tight responses, no narration.
-- **Working directory** is the `confident-ptolemy-5a1b43` worktree even
-  when the shell `cwd` defaults to a different worktree — always run
-  git/build commands inside `confident-ptolemy-5a1b43`.
-- **Preview server**: launch.json in this worktree's `.claude/` points at
-  Vite on port 3000 (Vite picks 3000 itself, not the standard 5173).
-- **Mask/screen geometry**: never guess. Run
-  `ffmpeg -i mobmask.webp -vf "alphaextract" tmp.png` then
-  `ffmpeg -loop 1 -i tmp.png -vf "cropdetect=24:2:0" -frames:v 3 -f null -`
-  to get exact percentages.
-
-## Known gotchas
-- `.hero__mouth-track` and `.featured__card-screen` positions are
-  alpha-channel-calibrated to the current mask files. If either mask
-  changes, re-run the cropdetect snippet above and update both selectors.
-- `aspect-ratio: 1672 / 941` on desktop, `941 / 1672` on mobile — these
-  are the hero image aspects, not the mask aspects. They happen to
-  match.
-- The hero exit timeline animates `.hero__footer`, `.marquee`,
-  `.hero__gradient`, and `.hero__cat-wrapper` together. Anything new in
-  the hero stage needs to either join that timeline or stay outside the
-  stage entirely.
+- Auto-push to main after every change
+- Minimal token usage, no narration
+- Run humanizer on all copy
+- Check mobile at 360/390/430px after layout changes

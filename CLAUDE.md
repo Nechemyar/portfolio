@@ -14,6 +14,7 @@ Aesthetic: editorial, confident, bold typography, warm palette.
 - ClashDisplay Variable + DM Sans (fonts)
 
 ## Source of truth
+- `PLAN.md` for the rebuild roadmap, section specs, and session handoff state. Read this FIRST at session start.
 - `DESIGN_BIBLE.md` for all visual decisions (palette, typography, contrast, cards, nav)
 - `AI_CONTEXT.md` for file architecture and immutable rules
 
@@ -22,6 +23,10 @@ Aesthetic: editorial, confident, bold typography, warm palette.
 2. Unit matching in animations (px to px, vw to vw)
 3. All copy must sound human, not AI-generated. Run humanizer checks on any text.
 4. Commit and push to main after every change without asking.
+5. No hover effects on mobile. Use `@media (hover: hover)` to gate all `:hover` states.
+6. Spacing, font sizes, and font weights must be consistent across sections. Use tokens from `_tokens.scss`, not ad-hoc values.
+7. The hero sets the standard. Match its spacing, sizing, and hierarchy in every section.
+8. Design must not look AI-generated: no generic gradients, no stock-photo layouts, no symmetrical grid-of-three-cards-with-icons patterns. Favor asymmetry, editorial layouts, and intentional white space.
 
 ## Dev commands
 - `npm run dev` to start Vite dev server

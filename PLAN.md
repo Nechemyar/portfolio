@@ -284,6 +284,79 @@ All animations use GSAP + ScrollTrigger. No CSS transitions on animated properti
 - **Images:** scale from 0.97 to 1 on reveal
 - **Reduced motion:** Skip all motion animations, show elements immediately
 
+## Anti-AI design rules
+
+These are the patterns that make a website scream "AI built this." Avoid all of them.
+
+**Layout tells:**
+- Three symmetrical cards with icons above headings (the "SaaS trio")
+- Perfectly centered everything with equal margins on all sides
+- Generic gradient backgrounds (especially purple-to-blue or soft multi-color)
+- Stock photo hero with text overlay
+- Identical card sizes in a grid with no visual hierarchy
+- Excessive whitespace with no purpose
+
+**Interaction tells:**
+- Hover effects firing on mobile tap (gate ALL hovers with `@media (hover: hover)`)
+- Generic scale-up on card hover (1.05 scale + shadow)
+- Uniform fade-in-from-bottom for every element
+- Parallax scrolling on images for no reason
+
+**Typography tells:**
+- Every section having the same heading size
+- Centered text on everything
+- All headings the same weight
+- Decorative gradients on text
+
+**What Awwwards sites do differently:**
+- Asymmetric layouts where one element dominates
+- Intentional typography hierarchy (different sizes, weights, and positions per section)
+- Custom assets that carry a visual thread (your cat is this thread)
+- Micro-interactions that respond to cursor position, not just hover state
+- Full-bleed images and edge-to-edge color bands
+- One big thing per section, not three equal things
+
+## Visual identity: the cat thread
+
+The beanie cat on the hero is your signature. Right now it appears once and then vanishes. To make the site feel cohesive and personal:
+
+**Assets to create:**
+1. **Cat favicon** -- already exists as colbbord.svg, good
+2. **Cat in the loader** -- the loader should use the cat mark, not just the wordmark
+3. **Cat peek on scroll** -- small cat illustration peeking from behind a section edge (between proof and about, or between FAQ and contact). Subtle, not gimmicky.
+4. **Cat in the 404 page** -- confused cat looking at a broken monitor
+5. **Cat cursor** -- optional: idle cursor is a small cat paw, pointer cursor on links
+6. **Cat in empty states** -- if project pages have loading states, cat watching a loading bar
+
+**Where NOT to use it:**
+- Don't put the cat on every section. It should feel like a discovery, not a mascot parade.
+- Don't animate the cat excessively. One or two subtle animations max.
+- The cat is a character detail, not a brand system. The brand system is the typography, colors, and boxy controls.
+
+**Other assets that would elevate the site:**
+- Custom SVG icons for the services section (instead of none or generic icons)
+- Textured paper background for the cream sections (very subtle noise, like `opacity: 0.03`)
+- Hand-drawn arrow or underline for one key CTA (feels human, not template)
+- Before/after slider for project showcase (shows the transformation you made)
+- Browser mockup frames around project screenshots (more polished than raw images)
+
+## Design consistency checklist
+
+Before shipping any section, verify against the hero:
+
+| Property | Hero value | Check |
+|----------|-----------|-------|
+| Section padding top | `clamp(3rem, 7vw, 7rem)` | Match across sections |
+| Heading font weight | 800 | Consistent for section titles |
+| Heading line height | 0.96 | Consistent for display text |
+| Label pills | `0.45rem 0.7rem` padding, 8px radius, 2px border | Same everywhere |
+| Card radius | 8-14px | No pills, no round corners |
+| Card border | `2px solid #0B0B0B` | Consistent |
+| Body text size | `$fs-base` to `$fs-md` | Don't go smaller than `$fs-sm` |
+| CTA height | Match hero CTAs | Same padding and line height |
+| Max content width | 1280px | Same for all sections |
+| Page padding | `$page-padding` | Use the token, not custom values |
+
 ## Execution order (priority)
 
 ### Phase 1: Copy rewrite (do first, all sections)

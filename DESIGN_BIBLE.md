@@ -76,6 +76,18 @@ Use black/near-black text on yellow, paper, blush, coral, and green. Do not use 
 - Keep blend-mode elements out of animated parent opacity/transform contexts.
 - Menu and hero animations should never create visible scrollbars.
 
+## Touch & Hover
+- Gate ALL hover states with `@media (hover: hover)`. No hover effects on touch devices.
+- Mobile tap targets: minimum 44px height.
+- No generic scale-up-on-hover (1.05 + shadow). If a card has a hover state, make it intentional: a color shift, a border change, or a subtle translate. Not all three.
+- Cursor changes: `pointer` on clickable elements, default elsewhere.
+
+## Anti-Template Patterns
+- Never use three symmetrical cards with icons as the primary layout for a section.
+- At least one section should break the grid (asymmetric layout, full-bleed image, offset element).
+- Vary heading sizes between sections. Not every section title should be the same scale.
+- Left-align headings by default. Center only when the content is short and the section calls for it (contact CTA, for example).
+
 ## Pre-Ship Checklist
 - Desktop: 1280, 1440, 1920 widths.
 - Mobile: 360, 390, 430 widths.

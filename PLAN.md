@@ -250,6 +250,8 @@ Phase 2: Work showcase
 ### Next session
 Start Phase 2: build scroll-pinned work showcase cards with large screenshots and one-line results.
 
+Note: hero CTA button still uses hardcoded #FF9C7D (old salmon/blush). Needs updating to $c-rust (#C75B2A) — deferred, hero is "keep as-is" until Phase 8 polish pass.
+
 ---
 
 ## Session handoff protocol

@@ -188,10 +188,10 @@ All GSAP + ScrollTrigger. No CSS transitions on GSAP properties. All gated with 
 - [x] Write copy for project descriptions (humanize pass done; detect-ai API key unavailable locally)
 
 ### Phase 3: How it works
-- [ ] Build the scroll-driven three-step sequence
-- [ ] Plan cat illustration for this section (provide GPT prompt)
-- [ ] Animate steps in sequence on scroll
-- [ ] Write copy (humanize + detect-ai)
+- [x] Build the scroll-driven three-step sequence
+- [x] Plan cat illustration for this section (provide GPT prompt)
+- [x] Animate steps in sequence on scroll
+- [x] Write copy (humanize pass done; detect-ai API key unavailable locally)
 
 ### Phase 4: About
 - [ ] Redesign layout to match new palette and spacing
@@ -237,9 +237,10 @@ All GSAP + ScrollTrigger. No CSS transitions on GSAP properties. All gated with 
 - [x] Stale worktrees cleaned up
 - [x] Phase 1: Foundation
 - [x] Phase 2: Work showcase
+- [x] Phase 3: How it works
 
 ### Current phase
-Phase 3: How it works
+Phase 4: About
 
 ### Decisions made
 - Cat is the brand, will appear in 3-4 places across the site
@@ -250,7 +251,7 @@ Phase 3: How it works
 - New sitemap: Hero > Work > How it works > About > Services > Pricing > Testimonials > FAQ > Contact
 
 ### Next session
-Start Phase 3: build the scroll-driven How it works sequence and prepare the process cat illustration prompt.
+Start Phase 4: redesign the About section to match the new palette and spacing, then rewrite the copy.
 
 Note: hero CTA button still uses hardcoded #FF9C7D (old salmon/blush). Needs updating to $c-rust (#C75B2A) — deferred, hero is "keep as-is" until Phase 8 polish pass.
 
@@ -259,6 +260,17 @@ Latest Phase 2 verification:
 - `npm run build` passes
 - Browser checked at desktop 1280/1440/1920 and mobile 360/390/430 with no horizontal overflow
 - HumanizerAI detect-ai could not run because `HUMANIZERAI_API_KEY` was not set
+
+Latest Phase 3 verification:
+- Work showcase pin rechecked in browser: pinned card center matches viewport center at desktop 1280x900
+- Header weights aligned to the hero pitch heading weight (`font-weight: 500`)
+- `npm test` passes (8 tests)
+- `npm run build` passes
+- Browser checked How it works at desktop 1280 and mobile 360/390/430 with no horizontal overflow
+- HumanizerAI detect-ai could not run because `HUMANIZERAI_API_KEY` was not set
+
+Process cat GPT prompt:
+Create a warm editorial illustration in the same style as the existing Sumi Studios hero cat: a beanie-wearing cat sitting beside a chunky CRT television, cream background, black ink outlines, warm yellow and rust accents, no extra room details. The TV screen shows a simple three-stage website build sequence: wireframe, visual design, live site. Keep the same beanie color, same CRT shape, same line weight, and the same soft retro texture as the hero image. The cat should face the TV with focused builder energy, slightly curious, not goofy. Transparent or cream background, subject centered, enough negative space for use inside a web section.
 
 ---
 

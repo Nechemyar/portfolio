@@ -1,12 +1,12 @@
 @use '../base/tokens' as *;
 
-// How It Works — scroll-driven 3-step sequence (Phase 3)
-// Foundation styles only; step animation built in Phase 3.
+// How It Works - scroll-driven 3-step sequence (Phase 3)
 
 .how-it-works {
   background: $c-yellow;
-  padding: clamp(3rem, 7vw, 7rem) $page-padding;
+  padding: clamp(4rem, 8vw, 7.5rem) $page-padding clamp(5rem, 9vw, 8rem);
   color: $c-ink;
+  overflow-x: clip;
 }
 
 .how-it-works__inner {
@@ -36,48 +36,159 @@
 .how-it-works__title {
   font-family: $font-display;
   font-size: $fs-section-title;
-  font-weight: 800;
+  font-weight: 500;
   color: $c-ink;
-  line-height: 0.96;
+  line-height: 1.03;
   letter-spacing: 0;
   margin: 0;
+  max-width: 13ch;
+}
+
+.how-it-works__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(22rem, 0.78fr);
+  gap: clamp(1.25rem, 3vw, 3rem);
+  align-items: stretch;
+  min-height: min(80vh, 760px);
+}
+
+.how-it-works__screen {
+  position: relative;
+  min-height: clamp(28rem, 48vw, 42rem);
+  background: $c-cream;
+  border: 2px solid $c-ink;
+  border-radius: 12px;
+  padding: clamp(0.9rem, 2vw, 1.3rem);
+}
+
+.how-it-works__screen-bezel {
+  position: relative;
+  height: 100%;
+  min-height: inherit;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: $c-charcoal;
+  border: 2px solid $c-ink;
+  border-radius: 8px;
+  color: $c-cream;
+}
+
+.how-it-works__screen-bezel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.06) 50%, transparent 50%),
+    radial-gradient(circle at 50% 34%, rgba(255, 185, 62, 0.28), transparent 42%);
+  background-size: 100% 8px, 100% 100%;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+.how-it-works__cat-mark {
+  position: absolute;
+  top: clamp(1rem, 2vw, 1.5rem);
+  left: clamp(1rem, 2vw, 1.5rem);
+  width: clamp(4.5rem, 8vw, 7rem);
+  height: auto;
+  filter: invert(1);
+  opacity: 0.92;
+  z-index: 2;
+}
+
+.how-it-works__screen-state {
+  position: absolute;
+  inset: clamp(1.2rem, 3vw, 2.2rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: $space-12;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
+
+  span {
+    width: fit-content;
+    padding: 0.35rem 0.6rem;
+    font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+    font-weight: 800;
+    color: $c-ink;
+    background: $c-yellow;
+    border: 2px solid $c-ink;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0;
+  }
+
+  strong {
+    max-width: 8ch;
+    font-family: $font-display;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 500;
+    line-height: 0.96;
+    letter-spacing: 0;
+  }
+
+  p {
+    max-width: 30ch;
+    margin: 0;
+    font-size: clamp(1rem, 1.3vw, 1.2rem);
+    font-weight: 500;
+    line-height: 1.4;
+    color: $c-paper;
+  }
+}
+
+.how-it-works__screen-state.is-active {
+  opacity: 1;
+  visibility: visible;
 }
 
 .how-it-works__steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(1.5rem, 3vw, 2.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: $space-16;
 }
 
 .how-it-works__step {
   background: $c-cream;
   border: 2px solid $c-ink;
-  border-radius: 14px;
-  padding: clamp(1.5rem, 3vw, 2.5rem);
-  display: flex;
-  flex-direction: column;
-  gap: $space-16;
+  border-radius: 12px;
+  padding: clamp(1.25rem, 2.4vw, 2rem);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: $space-16 $space-24;
+  align-items: start;
+}
+
+.how-it-works__step.is-active {
+  background: $c-paper;
 }
 
 .how-it-works__step-num {
+  grid-row: span 2;
   font-family: $font-display;
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 800;
+  font-size: clamp(1.4rem, 2.8vw, 2.8rem);
+  font-weight: 500;
   color: $c-mustard;
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
 
 .how-it-works__step h3 {
   font-family: $font-display;
-  font-size: clamp(1.4rem, 2vw, 1.8rem);
-  font-weight: 700;
+  font-size: clamp(1.6rem, 2.8vw, 2.7rem);
+  font-weight: 500;
   color: $c-ink;
+  line-height: 1;
   margin: 0;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 
 .how-it-works__step p {
+  grid-column: 2;
   font-family: $font-body;
   font-size: clamp(0.95rem, 1.1vw, 1.05rem);
   font-weight: 500;
@@ -87,7 +198,39 @@
 }
 
 @media (max-width: 768px) {
-  .how-it-works__steps {
+  .how-it-works {
+    padding-bottom: clamp(4rem, 16vw, 6rem);
+  }
+
+  .how-it-works__stage {
     grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .how-it-works__screen {
+    min-height: 22rem;
+  }
+
+  .how-it-works__screen-state strong {
+    font-size: clamp(2.7rem, 15vw, 4.2rem);
+  }
+
+  .how-it-works__step {
+    grid-template-columns: 1fr;
+  }
+
+  .how-it-works__step-num,
+  .how-it-works__step p {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .how-it-works__step,
+  .how-it-works__screen-state {
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 }

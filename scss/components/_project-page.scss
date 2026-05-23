@@ -62,7 +62,7 @@
 .project-hero__title {
   font-family: $font-display;
   font-size: clamp(2.5rem, 6vw, 5rem);
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: -0.02em;
   line-height: 1.0;
   text-wrap: balance;
@@ -160,7 +160,7 @@
 .project-brief h2 {
   font-family: $font-display;
   font-size: clamp(1.8rem, 3.4vw, 2.6rem);
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: -0.015em;
   text-wrap: balance;
   color: #0b0b0b;
@@ -209,7 +209,7 @@
 .project-next__title {
   font-family: $font-display;
   font-size: clamp(2rem, 4.5vw, 3.6rem);
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: -0.02em;
   line-height: 1.0;
   color: #0b0b0b;

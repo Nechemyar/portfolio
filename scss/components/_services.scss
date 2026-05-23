@@ -17,7 +17,7 @@
   max-width: 13ch;
   font-family: $font-display;
   font-size: $fs-section-title;
-  font-weight: 800;
+  font-weight: 500;
   line-height: 0.96;
   letter-spacing: 0;
   color: #0b0b0b;
@@ -61,7 +61,7 @@
 .services__card-title {
   font-family: $font-display;
   font-size: clamp(1.65rem, 2.6vw, 2.55rem);
-  font-weight: 800;
+  font-weight: 500;
   line-height: 1.02;
   color: #0b0b0b;
 }

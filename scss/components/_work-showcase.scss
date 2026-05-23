@@ -39,7 +39,7 @@
 .work-showcase__title {
   font-family: $font-display;
   font-size: $fs-section-title;
-  font-weight: 800;
+  font-weight: 500;
   color: $c-ink;
   line-height: 0.96;
   letter-spacing: 0;
@@ -92,7 +92,7 @@
   h3 {
     font-family: $font-display;
     font-size: clamp(2rem, 4vw, 4.4rem);
-    font-weight: 900;
+    font-weight: 500;
     color: $c-ink;
     margin: 0;
     line-height: 0.95;
@@ -127,7 +127,7 @@
 .work-showcase__card-copy .work-showcase__result {
   max-width: 31rem;
   font-size: clamp(1.1rem, 1.55vw, 1.45rem);
-  font-weight: 800;
+  font-weight: 500;
   line-height: 1.28;
   color: $c-ink;
 }

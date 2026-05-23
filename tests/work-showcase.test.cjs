@@ -26,6 +26,7 @@ test('Phase 2 work showcase JavaScript is wired and handles desktop, mobile, and
   assert.match(module, /prefers-reduced-motion: reduce/);
   assert.match(module, /min-width: 769px/);
   assert.match(module, /ScrollTrigger\.create\(/);
+  assert.match(module, /start:\s*'center center'/);
   assert.match(module, /pin:\s*true/);
 });
 
@@ -37,4 +38,11 @@ test('Phase 2 work showcase CSS supports pinned desktop cards and stacked mobile
   assert.match(scss, /@media \(min-width: 769px\)/);
   assert.match(scss, /@media \(max-width: 768px\)[\s\S]*position:\s*relative/);
   assert.match(scss, /@media \(prefers-reduced-motion: reduce\)/);
+});
+
+test('Phase 2 headings match the hero pitch heading weight', () => {
+  const scss = read('scss/components/_work-showcase.scss');
+
+  assert.match(scss, /\.work-showcase__title\s*\{[\s\S]*font-weight:\s*500/);
+  assert.match(scss, /\.work-showcase__card-copy\s*\{[\s\S]*h3\s*\{[\s\S]*font-weight:\s*500/);
 });

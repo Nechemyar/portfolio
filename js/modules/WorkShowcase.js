@@ -29,7 +29,6 @@ export default class WorkShowcase {
 
         gsap.set(card, {
           zIndex: index + 1,
-          y: 72,
         });
 
         gsap.set(image, { scale: 0.95 });
@@ -38,16 +37,11 @@ export default class WorkShowcase {
         const timeline = gsap.timeline({ paused: true });
 
         timeline
-          .to(card, {
-            y: 0,
-            duration: 0.22,
-            ease: 'none',
-          })
           .to(image, {
             scale: 1,
             duration: 0.22,
             ease: 'none',
-          }, 0)
+          })
           .to(copy, {
             y: 0,
             duration: 0.18,
@@ -66,7 +60,7 @@ export default class WorkShowcase {
         ScrollTrigger.create({
           animation: timeline,
           trigger: card,
-          start: 'top 46%',
+          start: 'center center',
           end: '+=120%',
           scrub: true,
           pin: true,

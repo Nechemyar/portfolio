@@ -25,7 +25,7 @@
 .pricing__title {
   font-family: $font-display;
   font-size: $fs-section-title;
-  font-weight: 800;
+  font-weight: 500;
   line-height: 0.96;
   letter-spacing: 0;
   margin: 0;
@@ -94,7 +94,7 @@
 .pricing__card-price {
   font-family: $font-display;
   font-size: clamp(2.2rem, 4.2vw, 4.4rem);
-  font-weight: 800;
+  font-weight: 500;
   color: #0b0b0b;
   letter-spacing: 0;
   line-height: 0.96;

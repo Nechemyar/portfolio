@@ -194,9 +194,13 @@ All GSAP + ScrollTrigger. No CSS transitions on GSAP properties. All gated with 
 - [x] Write copy (humanize pass done; detect-ai API key unavailable locally)
 
 ### Phase 4: About
-- [ ] Redesign layout to match new palette and spacing
-- [ ] Rewrite copy -- make it personal and specific (humanize + detect-ai)
-- [ ] Background transition animation from yellow to cream
+- [x] Redesign layout to match new palette and spacing
+- [x] Rewrite copy — direct voice, specific numbers, no em dashes, no agency fluff
+- [x] About label changed to yellow tag (matching hero visual language)
+- [x] About meta tags replace single signature line (location + worldwide + design+code)
+- [x] Services background corrected from $c-yellow to $c-cream (matches data-bg)
+- [x] Services card labels changed to yellow, card bodies to $c-paper for depth
+- [x] Background transition from yellow → cream works via existing BgScroll.js
 
 ### Phase 5: Services + what's included
 - [ ] Build the honest feature list/grid
@@ -238,9 +242,10 @@ All GSAP + ScrollTrigger. No CSS transitions on GSAP properties. All gated with 
 - [x] Phase 1: Foundation
 - [x] Phase 2: Work showcase
 - [x] Phase 3: How it works
+- [x] Phase 4: About
 
 ### Current phase
-Phase 4: About
+Phase 5: Services + what's included
 
 ### Decisions made
 - Cat is the brand, will appear in 3-4 places across the site
@@ -251,9 +256,19 @@ Phase 4: About
 - New sitemap: Hero > Work > How it works > About > Services > Pricing > Testimonials > FAQ > Contact
 
 ### Next session
-Start Phase 4: redesign the About section to match the new palette and spacing, then rewrite the copy.
+Start Phase 5: rebuild the Services section as an honest feature checklist/grid — custom design, hand-coded, responsive, SEO foundations, accessibility compliance, CMS when needed. The goal is to make it clear what the price buys, not to sell the services abstractly.
 
 Note: hero CTA button still uses hardcoded #FF9C7D (old salmon/blush). Needs updating to $c-rust (#C75B2A) — deferred, hero is "keep as-is" until Phase 8 polish pass.
+
+Latest Phase 4 verification:
+- About section redesigned: asymmetric grid, photo with double-border inset, copy rewrite complete
+- About label now uses $c-yellow (was $c-rust/accent)
+- About meta tags replace the old signature line
+- Services background corrected from $c-yellow to $c-cream
+- Services card labels now use $c-yellow, card bodies use $c-paper
+- `npm test` passes (14 tests)
+- `npm run build` passes
+- HumanizerAI detect-ai could not run because `HUMANIZERAI_API_KEY` was not set
 
 Latest Phase 2 verification:
 - `npm test` passes (3 tests)

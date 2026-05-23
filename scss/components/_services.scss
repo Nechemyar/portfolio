@@ -1,11 +1,14 @@
 @use '../base/tokens' as *;
 
+// ——————————————————————————————————————————————
+// Services — "What I do."
+// Background: cream ($c-cream) — sits between About (cream) and Pricing (yellow)
+// ——————————————————————————————————————————————
+
 .services {
-  padding: clamp(3rem, 7vw, 7rem) $page-padding;
-  background: $c-yellow;
-  color: #0b0b0b;
-  border-top: 2px solid #0b0b0b;
-  border-bottom: 2px solid #0b0b0b;
+  padding: clamp(4rem, 8vw, 8rem) $page-padding;
+  background: $c-cream;
+  color: $c-ink;
 }
 
 .services__header {
@@ -19,8 +22,8 @@
   font-size: $fs-section-title;
   font-weight: 500;
   line-height: 0.96;
-  letter-spacing: 0;
-  color: #0b0b0b;
+  letter-spacing: -0.01em;
+  color: $c-ink;
 }
 
 .services__grid {
@@ -33,10 +36,10 @@
 
 .services__card {
   min-height: clamp(20rem, 30vw, 28rem);
-  background: $c-cream;
+  background: $c-paper;
   padding: clamp(1.25rem, 3vw, 2.5rem);
-  border: 2px solid #0b0b0b;
-  border-radius: 10px;
+  border: 2px solid $c-ink;
+  border-radius: $r-md;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -50,12 +53,12 @@
   font-size: clamp(0.72rem, 0.85vw, 0.9rem);
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0;
-  color: #0b0b0b;
+  letter-spacing: 0.04em;
+  color: $c-ink;
   padding: 0.45rem 0.7rem;
-  background: $c-accent;
-  border: 2px solid #0b0b0b;
-  border-radius: 8px;
+  background: $c-yellow;
+  border: 2px solid $c-ink;
+  border-radius: $r-sm;
 }
 
 .services__card-title {
@@ -63,12 +66,12 @@
   font-size: clamp(1.65rem, 2.6vw, 2.55rem);
   font-weight: 500;
   line-height: 1.02;
-  color: #0b0b0b;
+  color: $c-ink;
 }
 
 .services__card-desc {
   font-size: clamp(0.98rem, 1.1vw, 1.08rem);
-  color: #2b2b2b;
+  color: $c-text-secondary;
   line-height: 1.55;
 }
 

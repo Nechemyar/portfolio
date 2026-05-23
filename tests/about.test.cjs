@@ -34,9 +34,9 @@ test('Phase 4 about CSS uses correct background and design tokens', () => {
   // Meta tag element defined
   assert.match(scss, /\.about__meta-tag/);
   // Mobile breakpoint present
-  assert.match(scss, /@media \(max-width: 768px\)/);
-  // Grid layout
-  assert.match(scss, /\.about__inner\s*\{[\s\S]*display:\s*grid/);
+  assert.match(scss, /@media \(max-width: 900px\)/);
+  // Grid layout (or flex layout used for the offset design)
+  assert.match(scss, /\.about__inner\s*\{[\s\S]*display:\s*(grid|flex)/);
 });
 
 test('Phase 4 services background corrected to cream with yellow card labels', () => {

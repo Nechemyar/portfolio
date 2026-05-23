@@ -3,46 +3,43 @@
 // ——————————————————————————————————————————————
 // About / Founder — Phase 4
 // ——————————————————————————————————————————————
-// Background: cream ($c-cream / #FAF9F7) — set via data-bg on the section
-// and reflected in background: $c-cream below.
-//
-// Layout: asymmetric two-column grid. Photo column is narrower on desktop
-// (~42%) to give the copy room to breathe. On mobile it stacks, photo first.
+// Background: cream ($c-cream)
+// Layout: Breaks the grid. A large photo panel on the left, 
+// with the copy card offset and overlapping the bottom right 
+// to create depth and asymmetry without relying on shadows.
 
 .about {
   background: $c-cream;
-  padding: clamp(4rem, 8vw, 8rem) $page-padding;
+  // Extra bottom padding to account for the overlapping negative-offset card
+  padding: clamp(4rem, 8vw, 6rem) $page-padding clamp(8rem, 12vw, 10rem);
   color: $c-ink;
+  overflow: hidden;
 }
 
 .about__inner {
-  max-width: 1280px;
+  position: relative;
+  max-width: 1080px; // Slightly tighter max-width to emphasize the overlap
   margin: 0 auto;
-  display: grid;
-  // Asymmetric: photo is ~38%, copy is ~58%, gap between
-  grid-template-columns: minmax(0, 0.68fr) minmax(0, 1fr);
-  gap: clamp(1.25rem, 2.5vw, 2rem);
-  align-items: stretch;
 }
 
 // ——————————————————————————————————————————————
-// Photo panel
+// Photo panel (Dominates)
 // ——————————————————————————————————————————————
 .about__photo {
   position: relative;
-  min-height: clamp(26rem, 48vw, 44rem);
-  overflow: hidden;
-  background: $c-paper;
+  width: clamp(65%, 75vw, 75%);
+  min-height: clamp(32rem, 55vw, 48rem);
+  background: $c-yellow; // Use the yellow as the matting for the photo to bring warmth
   border: 2px solid $c-ink;
   border-radius: $r-md;
-  padding: clamp(0.875rem, 1.75vw, 1.25rem);
+  padding: clamp(1rem, 2vw, 1.5rem);
+  z-index: 1;
 }
 
-// Inner border — creates the signature double-frame look
 .about__photo::before {
   content: '';
   position: absolute;
-  inset: clamp(0.875rem, 1.75vw, 1.25rem);
+  inset: clamp(1rem, 2vw, 1.5rem);
   border: 2px solid $c-ink;
   border-radius: calc(#{$r-md} - 4px);
   pointer-events: none;
@@ -55,25 +52,31 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 20%;
+  // Center slightly higher to focus on the face
+  object-position: 50% 15%;
   display: block;
   border-radius: calc(#{$r-md} - 6px);
+  filter: contrast(1.05) saturate(1.1); // Slight punch to the image
 }
 
 // ——————————————————————————————————————————————
-// Copy panel
+// Copy panel (Offset & Overlapping)
 // ——————————————————————————————————————————————
 .about__copy {
+  position: absolute;
+  right: 0;
+  bottom: clamp(-4rem, -6vw, -6rem);
+  width: clamp(45%, 55vw, 55%);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(2rem, 4vw, 4.5rem) clamp(1.75rem, 3.5vw, 3.5rem);
-  background: $c-cream;
+  padding: clamp(2.5rem, 5vw, 4.5rem) clamp(2rem, 4vw, 4rem);
+  background: $c-paper; // Depth against the cream background
   border: 2px solid $c-ink;
   border-radius: $r-md;
+  z-index: 10; // Sits above the photo
 }
 
-// Small label tag in yellow — matches hero visual language
 .about__label {
   display: inline-flex;
   width: fit-content;
@@ -92,7 +95,7 @@
 
 .about__title {
   font-family: $font-display;
-  font-size: $fs-section-title;
+  font-size: clamp(2rem, 3.5vw, 3.2rem);
   font-weight: 500;
   line-height: 0.96;
   letter-spacing: -0.01em;
@@ -102,22 +105,21 @@
 
 .about__body {
   font-family: $font-body;
-  font-size: clamp(1rem, 1.25vw, 1.18rem);
+  font-size: clamp(1rem, 1.15vw, 1.15rem);
   line-height: 1.6;
   color: $c-text-secondary;
-  max-width: 58ch;
 }
 
 .about__body p + p {
   margin-top: $space-16;
 }
 
-// Credentials line — location + two skills inline
+// Credentials line
 .about__meta {
   margin-top: $space-32;
   display: flex;
   flex-wrap: wrap;
-  gap: $space-8 $space-16;
+  gap: $space-8 $space-12;
 }
 
 .about__meta-tag {
@@ -125,34 +127,50 @@
   align-items: center;
   gap: $space-8;
   font-family: $font-body;
-  font-size: clamp(0.72rem, 0.82vw, 0.88rem);
+  font-size: clamp(0.7rem, 0.75vw, 0.8rem);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: $c-ink;
-  padding: 0.4rem 0.75rem;
-  border: 2px solid $c-ink;
+  padding: 0.4rem 0.6rem;
+  border: 2px solid $c-border-visible;
   border-radius: $r-sm;
+  background: $c-cream; // Pops against the paper background
 }
 
 // ——————————————————————————————————————————————
 // Mobile
 // ——————————————————————————————————————————————
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+  .about {
+    padding: clamp(3rem, 8vw, 4rem) $page-padding;
+  }
+
   .about__inner {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
   }
 
   .about__photo {
-    min-height: 24rem;
-    order: -1; // Photo above copy on mobile
+    width: 100%;
+    min-height: 26rem;
+    padding: 0.75rem;
+  }
+
+  .about__photo::before {
+    inset: 0.75rem;
   }
 
   .about__copy {
-    padding: clamp(1.5rem, 5vw, 2.5rem) clamp(1.25rem, 4vw, 2rem);
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: 95%; // Slightly inset from the left
+    margin: -3rem 0 0 auto; // Overlap the top edge, align right
+    padding: clamp(1.75rem, 5vw, 2.5rem);
   }
 
   .about__title {
-    font-size: clamp(2rem, 7vw, 3rem);
+    font-size: clamp(2.2rem, 7vw, 2.8rem);
   }
 }

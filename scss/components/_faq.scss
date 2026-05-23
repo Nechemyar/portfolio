@@ -108,7 +108,6 @@
 }
 
 .faq__answer {
-  padding-bottom: $space-24;
   padding-right: clamp(1rem, 10vw, 4rem);
   overflow: hidden;
   
@@ -118,6 +117,10 @@
     line-height: 1.6;
     color: $c-text-secondary;
     font-weight: 500;
+  }
+  
+  p:last-child {
+    margin-bottom: $space-24;
   }
 }
 

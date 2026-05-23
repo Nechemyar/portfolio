@@ -33,7 +33,9 @@ test('Phase 3 how it works CSS supports pinned desktop sequence, mobile stack, a
   const scss = read('scss/components/_how-it-works.scss');
 
   assert.match(scss, /\.how-it-works__title\s*\{[\s\S]*font-weight:\s*500/);
+  assert.match(scss, /\.how-it-works__inner\s*\{[\s\S]*min-height:\s*100vh/);
   assert.match(scss, /\.how-it-works__stage\s*\{[\s\S]*display:\s*grid/);
+  assert.match(scss, /\.how-it-works__stage\s*\{[\s\S]*height:\s*min\(58vh,\s*560px\)/);
   assert.match(scss, /\.how-it-works__screen\s*\{[\s\S]*position:\s*relative/);
   assert.match(scss, /@media \(max-width: 768px\)[\s\S]*grid-template-columns:\s*1fr/);
   assert.match(scss, /@media \(prefers-reduced-motion: reduce\)/);

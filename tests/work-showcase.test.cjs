@@ -28,6 +28,7 @@ test('Phase 2 work showcase JavaScript is wired and handles desktop, mobile, and
   assert.match(module, /ScrollTrigger\.create\(/);
   assert.match(module, /start:\s*'center center'/);
   assert.match(module, /pin:\s*true/);
+  assert.match(module, /pinType:\s*'transform'/);
 });
 
 test('Phase 2 work showcase CSS supports pinned desktop cards and stacked mobile cards', () => {

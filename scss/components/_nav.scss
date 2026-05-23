@@ -21,7 +21,24 @@
   z-index: -1;
   background: transparent;
   border-bottom: 0 solid transparent;
-  transition: background-color $duration-fast ease, border-color $duration-fast ease;
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
+  transition:
+    background-color $duration-fast ease,
+    border-color $duration-fast ease,
+    backdrop-filter $duration-fast ease;
+}
+
+body.nav-has-backing .nav {
+  padding: clamp(0.65rem, 1.35vw, 1rem) clamp(1rem, 3.5vw, 2.5rem);
+}
+
+body.nav-has-backing .nav::before {
+  background: rgba(255, 255, 255, 0.56);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  border-bottom-width: 1px;
+  border-bottom-color: rgba(11, 11, 11, 0.22);
 }
 
 body:not([data-nav-section='hero']) .nav::before {
@@ -35,23 +52,25 @@ body[data-nav-section='hero'].nav-has-backing .nav::before {
 }
 
 body[data-nav-section='logos'] .nav::before,
+body[data-nav-section='work'] .nav::before,
+body[data-nav-section='how-it-works'] .nav::before,
 body[data-nav-section='services'] .nav::before,
 body[data-nav-section='contact'] .nav::before {
-  background: #ffb93e;
-  border-bottom-color: #0b0b0b;
+  background: rgba(255, 185, 62, 0.72);
+  border-bottom-color: rgba(11, 11, 11, 0.22);
 }
 
 body[data-nav-section='bento'] .nav::before,
 body[data-nav-section='about'] .nav::before,
 body[data-nav-section='pricing'] .nav::before,
 body[data-nav-section='faq'] .nav::before {
-  background: #faf9f7;
-  border-bottom-color: #0b0b0b;
+  background: rgba(250, 249, 247, 0.72);
+  border-bottom-color: rgba(11, 11, 11, 0.18);
 }
 
 body[data-nav-section='proof'] .nav::before,
 body[data-nav-section='testimonials'] .nav::before {
-  background: #050505;
+  background: rgba(44, 44, 44, 0.72);
   border-bottom-color: rgba(250, 249, 247, 0.24);
 }
 

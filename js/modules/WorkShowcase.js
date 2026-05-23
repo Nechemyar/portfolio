@@ -64,6 +64,7 @@ export default class WorkShowcase {
           end: '+=120%',
           scrub: true,
           pin: true,
+          pinType: 'transform',
           pinSpacing: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,

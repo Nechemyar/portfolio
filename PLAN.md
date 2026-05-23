@@ -284,6 +284,14 @@ Latest nav polish verification:
 - `npm test` passes (10 tests)
 - `npm run build` passes
 
+Latest compact nav polish verification:
+- Desktop nav now morphs into a compact centered solid cream pill with 14px corners, no glass/blur, and tighter logo/menu spacing
+- Sumi wordmark is smaller on desktop and mobile
+- Mobile open menu edges align to the hero card edges at 8px margins
+- Browser checked desktop 1280/1920 and mobile 390 with no horizontal overflow
+- `npm test` passes (11 tests)
+- `npm run build` passes
+
 Process cat GPT prompt:
 Create a warm editorial illustration in the same style as the existing Sumi Studios hero cat: a beanie-wearing cat sitting beside a chunky CRT television, cream background, black ink outlines, warm yellow and rust accents, no extra room details. The TV screen shows a simple three-stage website build sequence: wireframe, visual design, live site. Keep the same beanie color, same CRT shape, same line weight, and the same soft retro texture as the hero image. The cat should face the TV with focused builder energy, slightly curious, not goofy. Transparent or cream background, subject centered, enough negative space for use inside a web section.
 

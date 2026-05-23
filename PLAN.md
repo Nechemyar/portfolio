@@ -172,13 +172,13 @@ All GSAP + ScrollTrigger. No CSS transitions on GSAP properties. All gated with 
 
 ## Phases
 
-### Phase 1: Foundation
-- [ ] Update `_tokens.scss` with new palette
-- [ ] Remove dropped colors, update all SCSS files referencing old tokens
-- [ ] Set up the scroll-driven background color system (GSAP ScrollTrigger tweening body/wrapper background)
-- [ ] Restructure `index.html` to the new sitemap order
-- [ ] Remove sections that got cut (logo-strip, bento, old proof)
-- [ ] Create new section shells (work-showcase, how-it-works, services-included)
+### Phase 1: Foundation ✅ DONE
+- [x] Update `_tokens.scss` with new palette
+- [x] Remove dropped colors, update all SCSS files referencing old tokens
+- [x] Set up the scroll-driven background color system (GSAP ScrollTrigger tweening body/wrapper background)
+- [x] Restructure `index.html` to the new sitemap order
+- [x] Remove sections that got cut (logo-strip, bento, old proof)
+- [x] Create new section shells (work-showcase, how-it-works)
 
 ### Phase 2: Work showcase
 - [ ] Build the scroll-pinned project card system
@@ -237,7 +237,7 @@ All GSAP + ScrollTrigger. No CSS transitions on GSAP properties. All gated with 
 - [x] Stale worktrees cleaned up
 
 ### Current phase
-Phase 1: Foundation (not started)
+Phase 2: Work showcase
 
 ### Decisions made
 - Cat is the brand, will appear in 3-4 places across the site
@@ -248,7 +248,7 @@ Phase 1: Foundation (not started)
 - New sitemap: Hero > Work > How it works > About > Services > Pricing > Testimonials > FAQ > Contact
 
 ### Next session
-Start Phase 1: update tokens, restructure HTML, set up scroll background system.
+Start Phase 2: build scroll-pinned work showcase cards with large screenshots and one-line results.
 
 ---
 

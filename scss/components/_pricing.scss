@@ -1,7 +1,7 @@
 @use '../base/tokens' as *;
 
 .pricing {
-  padding: clamp(3rem, 8vw, 8rem) $page-padding;
+  padding: clamp(3rem, 7vw, 7rem) $page-padding;
   background: $c-cream;
   color: #0b0b0b;
 }
@@ -47,7 +47,7 @@
 .pricing__card {
   position: relative;
   min-height: clamp(28rem, 42vw, 39rem);
-  background: $c-blush;
+  background: $c-cream;
   border: 2px solid #0b0b0b;
   border-radius: 10px;
   padding: clamp(1.5rem, 3.5vw, 3rem);
@@ -57,7 +57,7 @@
 }
 
 .pricing__card--featured {
-  background: $c-accent;
+  background: $c-yellow;
   box-shadow: 8px 8px 0 #0b0b0b;
 }
 

@@ -359,11 +359,24 @@ Before shipping any section, verify against the hero:
 
 ## Execution order (priority)
 
-### Phase 1: Copy rewrite (do first, all sections)
+### Phase 1: Copy rewrite [x] DONE
 Rewrite all copy across every section. Run humanizer + detect-ai. This is the fastest way to make the site stop feeling AI.
 
-### Phase 2: Color and layout alignment
+### Phase 2: Color and layout alignment [x] DONE
 Update SCSS for each section to match the color flow table. Fix backgrounds, borders, card fills, and typography to match hero language.
+
+Changes made:
+- Logo strip: bg yellow → cream
+- About: section bg cream → blush; inner boxes (photo + copy) blush → cream
+- About label: padding standardized to 0.45rem 0.7rem; color changed to coral (matches other labels)
+- About title: line-height 0.98 → 0.96 (matches hero spec)
+- Pricing: standard card blush → cream; featured card coral → yellow
+- Testimonials card 3: yellow → blush
+- Proof compare card: border-color yellow → #0b0b0b
+- Bento intro card: removed soft gradient, now plain $c-blush
+- Bento card: removed CSS transition on transform (GSAP will own it in Phase 4); hover now box-shadow only, gated with @media (hover: hover)
+- Logo strip hover: gated with @media (hover: hover); removed transform from hover and transition
+- All sections: padding standardized to clamp(3rem, 7vw, 7rem) to match hero
 
 ### Phase 3: Mobile pass
 Walk through every section at 360px, 390px, 430px. Fix padding, stacking, overflow, font sizes.

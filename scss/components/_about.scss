@@ -1,8 +1,8 @@
 @use '../base/tokens' as *;
 
 .about {
-  background: $c-cream;
-  padding: clamp(3rem, 8vw, 8rem) $page-padding;
+  background: $c-blush;
+  padding: clamp(3rem, 7vw, 7rem) $page-padding;
   color: #0b0b0b;
 }
 
@@ -25,7 +25,7 @@
   position: relative;
   min-height: clamp(24rem, 46vw, 42rem);
   overflow: hidden;
-  background: $c-blush;
+  background: $c-cream;
   padding: clamp(0.75rem, 1.5vw, 1rem);
 }
 
@@ -55,7 +55,7 @@
   flex-direction: column;
   justify-content: center;
   padding: clamp(1.5rem, 4vw, 4rem);
-  background: $c-blush;
+  background: $c-cream;
 }
 
 .about__label {
@@ -68,8 +68,8 @@
   text-transform: uppercase;
   letter-spacing: 0;
   margin-bottom: $space-24;
-  padding: 0.5rem 0.75rem;
-  background: $c-cream;
+  padding: 0.45rem 0.7rem;
+  background: $c-accent;
   border: 2px solid #0b0b0b;
   border-radius: 8px;
 }
@@ -78,7 +78,7 @@
   font-family: $font-display;
   font-size: $fs-section-title;
   font-weight: 800;
-  line-height: 0.98;
+  line-height: 0.96;
   letter-spacing: 0;
   margin: 0 0 $space-24;
 }

@@ -3,7 +3,7 @@
 .testimonials {
   background: #050505;
   color: $c-cream;
-  padding: clamp(3rem, 8vw, 8rem) $page-padding;
+  padding: clamp(3rem, 7vw, 7rem) $page-padding;
 }
 
 .testimonials__inner {
@@ -69,7 +69,7 @@
 }
 
 .testimonials__card:nth-child(3) {
-  background: $c-yellow;
+  background: $c-blush;
 }
 
 .testimonials__card--note {

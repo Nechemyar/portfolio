@@ -58,12 +58,13 @@
   background: $c-cream;
   border: 2px solid #0b0b0b;
   border-radius: 10px;
-  transition: transform $duration-fast $ease-out, box-shadow $duration-fast $ease-out;
+  transition: box-shadow $duration-fast $ease-out;
 }
 
-.bento__card:hover {
-  transform: translateY(-3px);
-  box-shadow: 6px 6px 0 #0b0b0b;
+@media (hover: hover) {
+  .bento__card:hover {
+    box-shadow: 6px 6px 0 #0b0b0b;
+  }
 }
 
 .bento__card h3 {
@@ -87,9 +88,7 @@
 .bento__card--intro {
   grid-column: span 2;
   min-height: clamp(22rem, 28vw, 31rem);
-  background:
-    linear-gradient(135deg, rgba(255, 156, 125, 0.18), transparent 42%),
-    $c-blush;
+  background: $c-blush;
 }
 
 .bento__card--process {

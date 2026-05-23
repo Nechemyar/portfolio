@@ -1,7 +1,7 @@
 @use '../base/tokens' as *;
 
 .proof {
-  padding: clamp(3rem, 8vw, 8rem) $page-padding;
+  padding: clamp(3rem, 7vw, 7rem) $page-padding;
   background: #0b0b0b;
   color: $c-cream;
   border-top: 2px solid #0b0b0b;
@@ -105,7 +105,7 @@
   gap: $space-32;
   padding: clamp(1.25rem, 2.8vw, 2.6rem);
   background: $c-yellow;
-  border-color: $c-yellow;
+  border-color: #0b0b0b;
 }
 
 .proof__card--compare .proof__label {

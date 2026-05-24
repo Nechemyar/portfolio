@@ -235,11 +235,13 @@
   }
 }
 
-/* ── Desktop — centered dropdown with dark backdrop ── */
+/* ── Desktop — full dark overlay, huge BrandelLuchador ── */
 @media (min-width: 769px) {
   .mobile-menu {
     visibility: hidden;
-    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .mobile-menu.is-open {
@@ -247,6 +249,7 @@
     pointer-events: auto;
   }
 
+  /* Backdrop is the full dark background — clickable to close */
   .mobile-menu.is-open .mobile-menu__backdrop {
     pointer-events: auto;
   }
@@ -255,39 +258,85 @@
     display: block;
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.55);
+    background: $c-ink;
   }
 
+  /* Card-wrap sits above backdrop, centered */
   .mobile-menu__card-wrap {
-    position: static;
-    display: contents;
+    position: relative;
+    z-index: 1;
+    display: block;
     bottom: auto;
     left: auto;
     right: auto;
+    width: 100%;
+    pointer-events: none; /* clicks pass through to backdrop to close */
+  }
+
+  /* Restore pointer events on interactive children */
+  .mobile-menu__card-wrap .mobile-menu__link,
+  .mobile-menu__card-wrap .mobile-menu__footer {
+    pointer-events: auto;
+  }
+
+  /* Card becomes transparent — just a layout wrapper */
+  .mobile-menu__card {
+    position: static;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-height: none;
+    overflow: visible;
+    align-items: center;
   }
 
   .mobile-menu__topbar {
-    display: flex;
+    display: none;
   }
 
-  .mobile-menu__card {
-    position: absolute;
-    top: 70px;
-    bottom: auto;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    width: 500px;
-    max-width: calc(100vw - 32px);
-    max-height: calc(100vh - 90px);
-    border-radius: $r-md;
-    border: 2px solid $c-ink;
-    overflow-y: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+  /* Nav list centered, generous vertical rhythm */
+  .mobile-menu__nav {
+    padding: clamp(0.5rem, 3vw, 2rem) 0;
+    text-align: center;
+    overflow: visible;
   }
 
-  .mobile-menu__card::-webkit-scrollbar {
+  /* Links centered, no clipping */
+  .mobile-menu__link {
+    justify-content: center;
+    overflow: visible;
+    padding: 0 2rem;
+    color: #fff;
+  }
+
+  /* Huge text — colour inherits from link so GSAP open animation works */
+  .mobile-menu__link-text {
+    font-size: clamp(5rem, 13vw, 18rem);
+    color: inherit;
+    line-height: 0.9;
+    /* No CSS transition here — hover color is set on parent link */
+  }
+
+  .mobile-menu__link {
+    color: #fff;
+    transition: color 0.25s ease;
+  }
+
+  .mobile-menu__link:hover {
+    color: $c-rust;
+  }
+
+  /* No arrow circles or curtain fill on desktop */
+  .mobile-menu__link-arrow-circle,
+  .mobile-menu__link-fill {
+    display: none;
+  }
+
+  /* Hide mobile CTA bar */
+  .mobile-menu__footer {
     display: none;
   }
 }

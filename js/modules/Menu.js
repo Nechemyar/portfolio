@@ -81,18 +81,13 @@ export default class Menu {
   _openDesktop() {
     gsap.set(this.menu, { clearProps: 'clipPath', visibility: 'visible' });
     gsap.set(this.backdrop, { opacity: 0 });
-    gsap.set(this.card, { y: -20, opacity: 0 });
 
-    gsap.to(this.backdrop, { opacity: 1, duration: 0.3, ease: 'power2.out' });
+    gsap.to(this.backdrop, { opacity: 1, duration: 0.35, ease: 'power2.out' });
 
-    gsap.to(this.card, {
-      y: 0, opacity: 1,
-      duration: 0.4, ease: 'power3.out', delay: 0.05,
-    });
-
+    // Items come in from below; brief rust tint settles to white
     gsap.fromTo(this.menuLinks,
-      { opacity: 0, y: -8 },
-      { opacity: 1, y: 0, duration: 0.28, stagger: 0.03, ease: 'power2.out', delay: 0.12 }
+      { opacity: 0, y: 50, color: '#d07933' },
+      { opacity: 1, y: 0, color: '#ffffff', duration: 0.55, stagger: 0.07, ease: 'power3.out', delay: 0.1 }
     );
   }
 
@@ -120,10 +115,9 @@ export default class Menu {
   }
 
   _closeDesktop() {
-    gsap.to(this.menuLinks, { opacity: 0, duration: 0.1 });
-    gsap.to(this.card, { y: -20, opacity: 0, duration: 0.25, ease: 'power2.in' });
+    gsap.to(this.menuLinks, { opacity: 0, y: -30, duration: 0.22, stagger: 0.04, ease: 'power2.in' });
     gsap.to(this.backdrop, {
-      opacity: 0, duration: 0.3, delay: 0.1,
+      opacity: 0, duration: 0.35, delay: 0.15,
       onComplete: () => this._resetClosed(),
     });
   }

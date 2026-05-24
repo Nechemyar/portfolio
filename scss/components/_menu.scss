@@ -22,10 +22,10 @@
   inset: 0;
 }
 
-/* ── Card wrap — floats off the bottom edge with page margins ── */
+/* ── Card wrap — bottom: 0 so translateY(100%) fully clears the screen ── */
 .mobile-menu__card-wrap {
   position: absolute;
-  bottom: 0.75rem;
+  bottom: 0;
   left: 0.75rem;
   right: 0.75rem;
 }
@@ -40,6 +40,9 @@
   max-height: 92dvh;
   display: flex;
   flex-direction: column;
+  /* bottom margin creates the floating gap; included in wrap height so
+     translateY(100%) pushes the whole thing off-screen cleanly. */
+  margin-bottom: 0.75rem;
 }
 
 /* ── Topbar: hidden on mobile, shown on desktop ── */
@@ -75,7 +78,7 @@
 /* ── Nav list ── */
 .mobile-menu__nav {
   list-style: none;
-  padding: 0.5rem 0.75rem 0.25rem;
+  padding: 1rem 0.75rem 0.25rem;
   margin: 0;
   flex: 1;
   overflow-y: auto;

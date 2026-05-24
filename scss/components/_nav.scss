@@ -7,9 +7,9 @@
   top: 0;
   left: 0;
   width: 100%;
-  /* Sits above the overlay (900) and the mobile menu (950) so the
-     hamburger / X is always reachable while the menu is open. */
-  z-index: 1100;
+  /* Sits above the mobile menu overlay (1150) so logo + X stay visible
+     when the backdrop is open. */
+  z-index: 1200;
   padding: clamp(0.85rem, 2.2vw, 2rem) clamp(1rem, 3.5vw, 2.5rem);
   transition: padding 0.3s ease;
 }

@@ -276,8 +276,8 @@ Note: hero CTA button still uses hardcoded #FF9C7D. Fix in Phase 8 polish pass.
 
 ### State of About section files (as of session end)
 - `index.html` — About follows the supplied Stevia DOM shape: left chat feed, right `about-infos` panel and `about-links`
-- `scss/components/_about.scss` — desktop is a 100vh pinned split; mobile stacks chat, info, and links without horizontal overflow
-- `js/modules/AboutReveal.js` — desktop ScrollTrigger pins the section and scrubs `.about-chat__list`; mobile uses simple reveal
+- `scss/components/_about.scss` — desktop is a 100vh pinned split with a scrollable chat rail; mobile stacks chat, info, and links without horizontal overflow
+- `js/modules/AboutReveal.js` — desktop ScrollTrigger pins the section, messages auto-pop with a bottom typing indicator, and the chat rail remains manually scrollable
 - `tests/about.test.cjs` — updated to cover Stevia-style class structure and AboutReveal chat-list pin logic
 - Verification: `npm test` passes (15 tests), `npm run build` passes, in-app browser checked mobile 457x897 at `#about`
 

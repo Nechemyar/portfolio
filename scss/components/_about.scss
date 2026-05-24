@@ -63,19 +63,38 @@
 .about-chat {
   min-height: 0;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  padding-top: clamp(2.5rem, 8vh, 6rem);
+  padding-right: $space-8;
+  scroll-behavior: smooth;
+  outline: none;
+}
+
+.about-chat::-webkit-scrollbar {
+  width: 6px;
+}
+
+.about-chat::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.about-chat::-webkit-scrollbar-thumb {
+  background: rgba(26, 26, 26, 0.2);
+  border-radius: $r-full;
 }
 
 .about-chat__list {
-  position: absolute;
-  inset: 0 auto auto 0;
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: $space-32;
   list-style: none;
   margin: 0;
-  padding: 0 0 45vh;
+  padding: 0 0 clamp(6rem, 22vh, 12rem);
   will-change: transform;
 }
 
@@ -83,8 +102,13 @@
   position: relative;
   width: min(100%, 32rem);
   color: $c-warm-white;
+  opacity: 0;
   transform-origin: 10% 50%;
   will-change: transform, opacity;
+}
+
+.about-chat__el--is-revealed {
+  opacity: 1;
 }
 
 .about-chat__el:nth-child(even) {
@@ -115,6 +139,35 @@
   display: none;
   gap: 5px;
   margin-bottom: $space-12;
+}
+
+.about-chat__typing {
+  position: sticky;
+  left: 0;
+  bottom: $space-16;
+  z-index: 4;
+  display: flex;
+  width: max-content;
+  margin: $space-16 0 0 $space-12;
+  padding: 0.7rem 0.9rem;
+  background: $c-warm-white;
+  border: 2px solid $c-ink;
+  border-radius: $r-full;
+  box-shadow: 3px 3px 0 rgba(26, 26, 26, 0.08);
+  opacity: 0;
+  transform: translateY(0.75rem) scale(0.92);
+  pointer-events: none;
+  transition: opacity 0.18s $ease-out, transform 0.18s $ease-out;
+
+  .about-chat___loading {
+    display: flex;
+    margin: 0;
+  }
+}
+
+.about-chat--is-typing .about-chat__typing {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 .about-chat___loading-el {
@@ -185,7 +238,7 @@
   max-height: calc(100vh - clamp(6.75rem, 11vh, 8.5rem));
   min-height: 0;
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: minmax(0, 1fr) auto;
   gap: clamp(0.75rem, 1.3vw, 1rem);
 }
 
@@ -198,8 +251,8 @@
   border-radius: 22px;
   padding: clamp(1.25rem, 2.2vw, 2rem);
   display: grid;
-  align-content: space-between;
-  gap: clamp(2.25rem, 6vh, 4.5rem);
+  grid-template-rows: auto 1fr auto;
+  gap: clamp(1.5rem, 3.5vh, 3rem);
   will-change: transform, opacity;
 }
 
@@ -234,6 +287,9 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  display: grid;
+  align-content: center;
+  min-height: 100%;
 }
 
 .about-infos__clients {
@@ -245,9 +301,9 @@
 .about-infos__skill {
   display: block;
   font-family: $font-display;
-  font-size: clamp(2rem, 4.7vw, 5.4rem);
+  font-size: clamp(1.35rem, 3.2vw, 4.2rem);
   font-weight: 500;
-  line-height: 0.95;
+  line-height: 0.98;
   letter-spacing: 0;
   text-transform: uppercase;
   color: $c-ink;
@@ -418,12 +474,14 @@
 
   .about-chat {
     overflow: visible;
+    padding-top: 0;
+    padding-right: 0;
   }
 
   .about-chat__list {
     position: relative;
     inset: auto;
-    padding: 0;
+    padding: 0 0 $space-32;
   }
 
   .about-chat__el,
@@ -442,12 +500,13 @@
   }
 
   .about-infos {
-    gap: $space-48;
-    min-height: clamp(34rem, 92vw, 42rem);
+    grid-template-rows: auto auto auto;
+    gap: $space-32;
+    min-height: auto;
   }
 
   .about-infos__skill {
-    font-size: clamp(1.9rem, 10vw, 4rem);
+    font-size: clamp(1.8rem, 8.8vw, 3.4rem);
   }
 
   .about-links {
@@ -461,5 +520,47 @@
   .about-links__contact-text {
     font-size: clamp(2rem, 13vw, 4rem);
     white-space: normal;
+  }
+}
+
+@media (max-width: 640px) {
+  .about__container {
+    gap: $space-32;
+  }
+
+  .about-chat__list {
+    gap: $space-24;
+  }
+
+  .about-chat__el-container {
+    padding: $space-16;
+  }
+
+  .about-infos {
+    border-radius: $r-lg;
+    padding: $space-24 $space-16;
+  }
+
+  .about-infos__icon {
+    width: clamp(3rem, 16vw, 4.75rem);
+  }
+
+  .about-infos__title {
+    margin-bottom: $space-16;
+  }
+
+  .about-infos__skill {
+    font-size: clamp(1.55rem, 8vw, 2.95rem);
+    line-height: 1.02;
+  }
+
+  .about-infos__clients {
+    gap: $space-8 $space-16;
+  }
+
+  .about-links__contact,
+  .about-links__arrow,
+  .about-links__block {
+    min-height: clamp(4.75rem, 19vw, 6.25rem);
   }
 }

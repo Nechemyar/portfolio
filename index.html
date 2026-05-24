@@ -309,8 +309,8 @@
             <h2 class="about__title" data-about-heading>Hi, I'm Nechemya</h2>
           </div>
 
-          <div class="about-chat" aria-label="About Nechemya">
-            <ul class="about-chat__list">
+          <div class="about-chat" data-chat-scroll tabindex="0" aria-label="About Nechemya">
+            <ul class="about-chat__list" aria-live="polite">
               <li class="about-chat__el about-chat__el--intro" data-id="0" data-bubble>
                 <svg width="66" height="23" viewBox="0 0 66 23" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                   <path d="M0 22.5482H65.5C51.3333 1.71489 22.5 -3.45179 22.5 2.04822C22.5 7.54823 9.5 19.0482 0 22.5482Z" fill="currentColor"/>
@@ -381,6 +381,14 @@
                 </div>
               </li>
             </ul>
+
+            <div class="about-chat__typing" aria-hidden="true">
+              <div class="about-chat___loading">
+                <div class="about-chat___loading-el"></div>
+                <div class="about-chat___loading-el"></div>
+                <div class="about-chat___loading-el"></div>
+              </div>
+            </div>
           </div>
         </div>
 

@@ -19,6 +19,9 @@ export default class AboutReveal {
     this.infoRows = this.section.querySelectorAll('.about-infos__skill, .about-infos__client');
     this.links = this.section.querySelectorAll('.about-links__contact, .about-links__arrow, .about-links__block');
     this.reactions = this.section.querySelectorAll('.about-chat__emojis');
+    this.typingIndicator = this.section.querySelector('.about-chat__typing');
+    this.hasStartedTypingSequence = false;
+    this.userScrolledChat = false;
 
     if (this.title) {
       this.splitTitle = new SplitType(this.title, { types: 'lines,words' });
@@ -30,9 +33,10 @@ export default class AboutReveal {
 
   init() {
     this.mm.add('(prefers-reduced-motion: reduce)', () => {
-      gsap.set([this.list, this.chatItems, this.infoPanel, this.infoRows, this.links, this.reactions], {
+      gsap.set([this.list, this.chatItems, this.infoPanel, this.infoRows, this.links, this.reactions, this.typingIndicator], {
         clearProps: 'all',
       });
+      this.chatItems.forEach((item) => item.classList.add('about-chat__el--is-revealed'));
       this._setActiveChat(1);
     });
 
@@ -50,27 +54,23 @@ export default class AboutReveal {
 
     this._titleReveal(this.header, 'top 80%');
     this._contentReveal();
+    this._prepareChatSequence();
+    this._bindTypingSequence('top 72%');
+    this._trackChatScrollIntent();
 
     gsap.set(this.chatItems, {
-      autoAlpha: 0.42,
-      scale: 0.96,
+      autoAlpha: 0,
+      y: 24,
+      scale: 0.92,
       transformOrigin: '10% 50%',
-    });
-    gsap.set(this.chatItems[0], {
-      autoAlpha: 1,
-      scale: 1,
     });
     gsap.set(this.reactions, {
       autoAlpha: 0,
       scale: 0,
       transformOrigin: 'left center',
     });
-    gsap.set(this.chatItems[0].querySelectorAll('.about-chat__emojis'), {
-      autoAlpha: 1,
-      scale: 1,
-    });
 
-    const chatDistance = () => Math.max(0, this.list.scrollHeight - this.chat.clientHeight);
+    const chatDistance = () => Math.max(0, this.chat.scrollHeight - this.chat.clientHeight);
 
     const tl = gsap.timeline({
       defaults: { ease: 'none' },
@@ -82,66 +82,25 @@ export default class AboutReveal {
         scrub: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,
-        onUpdate: (self) => this._setActiveChat(self.progress),
+        onUpdate: (self) => {
+          this._setActiveChat(self.progress);
+          if (!this.userScrolledChat && !this.hasStartedTypingSequence) {
+            this.chat.scrollTo({ top: chatDistance() * self.progress, behavior: 'auto' });
+          }
+        },
       },
     });
 
-    tl.to(this.list, {
-      y: () => -chatDistance(),
+    tl.to({}, {
       duration: 1,
     }, 0);
-
-    this.chatItems.forEach((item, index) => {
-      const at = this.chatItems.length <= 1 ? 0 : index / (this.chatItems.length - 1);
-      const emojis = item.querySelectorAll('.about-chat__emojis');
-
-      tl.to(item, {
-        autoAlpha: 1,
-        scale: 1,
-        duration: 0.12,
-      }, at);
-
-      if (emojis.length) {
-        tl.to(emojis, {
-          autoAlpha: 1,
-          scale: 1,
-          duration: 0.08,
-          ease: 'back.out(2)',
-        }, Math.min(0.98, at + 0.03));
-      }
-
-      if (index > 0) {
-        tl.to(this.chatItems[index - 1], {
-          autoAlpha: 0.62,
-          scale: 0.985,
-          duration: 0.1,
-        }, at);
-      }
-    });
   }
 
   _mobileReveal() {
     this._titleReveal(this.header, 'top 86%');
 
-    if (this.chatItems.length) {
-      gsap.fromTo(this.chatItems,
-        { y: 32, autoAlpha: 0, scale: 0.96 },
-        {
-          y: 0,
-          autoAlpha: 1,
-          scale: 1,
-          duration: 0.65,
-          stagger: 0.12,
-          ease: 'back.out(1.35)',
-          scrollTrigger: {
-            trigger: this.chat,
-            start: 'top 88%',
-            once: true,
-          },
-        }
-      );
-    }
-
+    this._prepareChatSequence();
+    this._bindTypingSequence('top 82%');
     this._contentReveal();
   }
 
@@ -188,6 +147,115 @@ export default class AboutReveal {
     );
   }
 
+  _prepareChatSequence() {
+    if (!this.chatItems.length) return;
+
+    this.chat?.classList.remove('about-chat--is-typing');
+    this.chatItems.forEach((item) => {
+      item.classList.remove(
+        'about-chat__el--is-revealed',
+        'about-chat__el--is-active',
+        'about-chat__el--is-full-active'
+      );
+    });
+
+    gsap.set(this.chatItems, {
+      y: 24,
+      autoAlpha: 0,
+      scale: 0.92,
+      transformOrigin: '10% 50%',
+    });
+    gsap.set(this.reactions, {
+      autoAlpha: 0,
+      scale: 0,
+      transformOrigin: 'left center',
+    });
+  }
+
+  _bindTypingSequence(start) {
+    if (!this.chat || !this.chatItems.length) return;
+
+    ScrollTrigger.create({
+      trigger: this.chat,
+      start,
+      once: true,
+      onEnter: () => this._runTypingSequence(),
+    });
+  }
+
+  _runTypingSequence() {
+    if (this.hasStartedTypingSequence || !this.chatItems.length) return;
+    this.hasStartedTypingSequence = true;
+
+    const sequence = gsap.timeline({
+      defaults: { ease: 'power3.out' },
+      onComplete: () => {
+        this.chat?.classList.remove('about-chat--is-typing');
+      },
+    });
+
+    this.chatItems.forEach((item, index) => {
+      const emojis = item.querySelectorAll('.about-chat__emojis');
+
+      sequence.call(() => {
+        this.chat?.classList.add('about-chat--is-typing');
+        this._setActiveChatByIndex(index);
+        this._scrollChatToItem(item);
+      });
+
+      sequence.to(this.typingIndicator, {
+        autoAlpha: 1,
+        scale: 1,
+        duration: 0.16,
+      }, '<');
+
+      sequence.to(item, {
+        y: 0,
+        autoAlpha: 1,
+        scale: 1,
+        duration: 0.42,
+        ease: 'back.out(1.35)',
+        onStart: () => item.classList.add('about-chat__el--is-revealed'),
+      }, '+=0.42');
+
+      if (emojis.length) {
+        sequence.to(emojis, {
+          autoAlpha: 1,
+          scale: 1,
+          duration: 0.18,
+          ease: 'back.out(2)',
+        }, '-=0.12');
+      }
+
+      sequence.to(this.typingIndicator, {
+        autoAlpha: index === this.chatItems.length - 1 ? 0 : 1,
+        duration: 0.08,
+      }, '+=0.03');
+    });
+  }
+
+  _scrollChatToItem(item) {
+    if (!this.chat || !item) return;
+    const chatDistance = Math.max(0, this.chat.scrollHeight - this.chat.clientHeight);
+    if (!chatDistance) return;
+
+    const target = Math.max(0, item.offsetTop - this.chat.clientHeight * 0.46);
+    this.chat.scrollTo({
+      top: Math.min(chatDistance, target),
+      behavior: 'smooth',
+    });
+  }
+
+  _trackChatScrollIntent() {
+    if (!this.chat) return;
+
+    ['wheel', 'touchstart', 'pointerdown', 'keydown'].forEach((eventName) => {
+      this.chat.addEventListener(eventName, () => {
+        this.userScrolledChat = true;
+      }, { passive: true });
+    });
+  }
+
   _setActiveChat(progress) {
     if (!this.chatItems.length) return;
 
@@ -196,6 +264,13 @@ export default class AboutReveal {
       Math.floor(progress * this.chatItems.length)
     );
 
+    this.chatItems.forEach((item, index) => {
+      item.classList.toggle('about-chat__el--is-active', index <= activeIndex);
+      item.classList.toggle('about-chat__el--is-full-active', index === activeIndex);
+    });
+  }
+
+  _setActiveChatByIndex(activeIndex) {
     this.chatItems.forEach((item, index) => {
       item.classList.toggle('about-chat__el--is-active', index <= activeIndex);
       item.classList.toggle('about-chat__el--is-full-active', index === activeIndex);

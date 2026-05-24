@@ -18,23 +18,26 @@
 
 .faq__header {
   margin-bottom: clamp(3rem, 6vw, 4rem);
-  text-align: center;
 }
 
 .faq__label {
   display: inline-flex;
   font-family: $font-body;
-  font-size: clamp(0.75rem, 1vw, 0.9rem);
-  font-weight: 700;
+  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+  font-weight: 800;
   color: $c-ink;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
+  padding: 0.45rem 0.7rem;
+  background: $c-mustard;
+  border: 2px solid $c-ink;
+  border-radius: 8px;
   margin-bottom: $space-24;
 }
 
 .faq__title {
   font-family: $font-display;
-  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-size: clamp(3rem, 5vw, 4.5rem);
   font-weight: 500;
   line-height: 1.05;
   letter-spacing: -0.02em;

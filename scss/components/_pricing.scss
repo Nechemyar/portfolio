@@ -22,6 +22,21 @@
   max-width: 600px;
 }
 
+.pricing__label {
+  display: inline-flex;
+  font-family: $font-body;
+  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+  font-weight: 800;
+  color: $c-ink;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  padding: 0.45rem 0.7rem;
+  background: $c-mustard;
+  border: 2px solid $c-ink;
+  border-radius: 8px;
+  margin-bottom: $space-16;
+}
+
 .pricing__title {
   font-family: $font-display;
   font-size: clamp(3rem, 5vw, 4.5rem);

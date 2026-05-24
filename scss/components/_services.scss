@@ -9,7 +9,6 @@
   background: transparent;
   padding: clamp(6rem, 10vw, 8rem) $page-padding;
   color: $c-ink;
-  border-top: 1px solid rgba(26, 26, 26, 0.1);
 }
 
 .services__inner {
@@ -32,22 +31,16 @@
 .services__label {
   display: inline-flex;
   font-family: $font-body;
-  font-size: clamp(0.75rem, 1vw, 0.9rem);
-  font-weight: 700;
+  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+  font-weight: 800;
   color: $c-ink;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
+  padding: 0.45rem 0.7rem;
+  background: $c-mustard;
+  border: 2px solid $c-ink;
+  border-radius: 8px;
   margin-bottom: $space-24;
-  align-items: center;
-  gap: $space-12;
-
-  &::before {
-    content: '';
-    display: block;
-    width: 40px;
-    height: 2px;
-    background: $c-ink;
-  }
 }
 
 .services__title {

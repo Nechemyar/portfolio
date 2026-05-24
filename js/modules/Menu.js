@@ -2,12 +2,15 @@ import gsap from 'gsap';
 
 export default class Menu {
   constructor() {
-    this.toggle = document.getElementById('menu-toggle');
-    this.menu = document.getElementById('mobile-menu');
-    this.overlay = document.getElementById('menu-overlay');
-    this.pillClose = document.getElementById('mobile-menu-close-pill');
+    this.toggle   = document.getElementById('menu-toggle');
+    this.menu     = document.getElementById('mobile-menu');
+    this.card     = document.getElementById('mobile-menu-card');
+    this.closeBtn = document.getElementById('mobile-menu-close-pill');
     this.menuLinks = this.menu.querySelectorAll('.menu-item');
-    this.isOpen = false;
+    this.isOpen   = false;
+
+    // Start fully clipped — invisible until opened
+    gsap.set(this.menu, { clipPath: 'inset(0% 0% 100% 0%)' });
 
     this.init();
   }
@@ -17,10 +20,8 @@ export default class Menu {
       this.isOpen ? this.close() : this.open();
     });
 
-    this.overlay.addEventListener('click', () => this.close());
-    
-    if (this.pillClose) {
-      this.pillClose.addEventListener('click', () => this.close());
+    if (this.closeBtn) {
+      this.closeBtn.addEventListener('click', () => this.close());
     }
 
     this.menuLinks.forEach((link) => {
@@ -32,36 +33,53 @@ export default class Menu {
     });
   }
 
+  _navBottom() {
+    const nav = document.getElementById('nav');
+    const rect = nav.getBoundingClientRect();
+    return window.innerHeight - rect.bottom;
+  }
+
   open() {
     if (this.isOpen) return;
     this.isOpen = true;
 
     this.toggle.classList.add('is-open');
     this.toggle.setAttribute('aria-label', 'Close menu');
-
-    // Make visible, then animate in
     this.menu.classList.add('is-open');
     document.documentElement.classList.add('menu-open');
     document.body.classList.add('menu-open');
-    this.overlay.classList.add('is-active');
 
-    gsap.fromTo(this.menu,
-      { y: '100%' },
-      { y: 0, duration: 0.5, ease: 'power3.out' }
-    );
+    // Clip starts at the nav bar's bottom edge — menu appears to grow from it
+    gsap.set(this.menu, { clipPath: `inset(0px 0px ${this._navBottom()}px 0px)` });
+    gsap.set(this.card, { y: 56, opacity: 0 });
 
-    gsap.to(this.overlay, { opacity: 1, duration: 0.3 });
+    // Expand orange bg to full screen
+    gsap.to(this.menu, {
+      clipPath: 'inset(0px 0px 0px 0px)',
+      duration: 0.48,
+      ease: 'power3.out',
+    });
 
+    // Card rises up
+    gsap.to(this.card, {
+      y: 0,
+      opacity: 1,
+      duration: 0.44,
+      ease: 'power3.out',
+      delay: 0.14,
+    });
+
+    // Nav links stagger in
     gsap.fromTo(
       this.menuLinks,
-      { opacity: 0, y: 20 },
+      { opacity: 0, x: -14 },
       {
         opacity: 1,
-        y: 0,
-        duration: 0.4,
-        stagger: 0.05,
+        x: 0,
+        duration: 0.32,
+        stagger: 0.04,
         ease: 'power2.out',
-        delay: 0.2,
+        delay: 0.22,
       }
     );
   }
@@ -72,20 +90,30 @@ export default class Menu {
     this.toggle.classList.remove('is-open');
     this.toggle.setAttribute('aria-label', 'Open menu');
 
-    gsap.to(this.menuLinks, { opacity: 0, y: -10, duration: 0.2 });
+    // Fade links
+    gsap.to(this.menuLinks, { opacity: 0, duration: 0.15 });
 
+    // Card drops
+    gsap.to(this.card, {
+      y: 56,
+      opacity: 0,
+      duration: 0.28,
+      ease: 'power2.in',
+    });
+
+    // Collapse orange bg back to the nav bar
     gsap.to(this.menu, {
-      y: '100%',
-      duration: 0.4,
+      clipPath: `inset(0px 0px ${this._navBottom()}px 0px)`,
+      duration: 0.42,
       ease: 'power3.in',
-      delay: 0.1,
+      delay: 0.12,
       onComplete: () => {
         this.isOpen = false;
         this.menu.classList.remove('is-open');
         document.documentElement.classList.remove('menu-open');
         document.body.classList.remove('menu-open');
-        this.overlay.classList.remove('is-active');
-        gsap.set(this.overlay, { opacity: 0 });
+        // Reset to fully hidden for next open
+        gsap.set(this.menu, { clipPath: 'inset(0% 0% 100% 0%)' });
       },
     });
   }

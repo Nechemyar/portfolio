@@ -28,15 +28,13 @@ test('About section markup uses chat+bento layout structure', () => {
   assert.match(html, /class="about__bento-icon"/);
   assert.match(html, /class="about__bento-label"/);
   assert.match(html, /class="about__bento-value"/);
-  // Featured cell
-  assert.match(html, /about__bento-cell--featured/);
 });
 
 test('About CSS uses transparent background, chat bubbles, and bento grid', () => {
   const scss = read('scss/components/_about.scss');
 
-  // Background is transparent to let body transition show through
-  assert.match(scss, /\.about\s*\{[\s\S]*background:\s*transparent/);
+  // Section has an explicit background (cream, not transparent/yellow)
+  assert.match(scss, /\.about\s*\{[\s\S]*background:\s*\$c-cream/);
   // Chat bubble styles
   assert.match(scss, /\.about__bubble\s*\{/);
   assert.match(scss, /\.about__reaction\s*\{/);

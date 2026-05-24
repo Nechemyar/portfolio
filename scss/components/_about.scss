@@ -5,7 +5,7 @@
 // ——————————————————————————————————————————————
 
 .about {
-  background: transparent;
+  background: $c-cream;
   padding: clamp(5rem, 9vw, 7rem) $page-padding;
   color: $c-ink;
   overflow: hidden;
@@ -69,61 +69,69 @@
 .about__chat {
   display: flex;
   flex-direction: column;
-  gap: $space-24;
+  // Extra gap so floated reactions have clearance below each bubble
+  gap: $space-32;
 }
 
 .about__bubble {
-  background: $c-cream;
+  background: $c-warm-white;
   border: 2px solid $c-ink;
-  border-radius: $r-lg $r-lg $r-lg 4px; // tail bottom-left
-  padding: $space-24 $space-24 $space-16;
-  max-width: 540px;
+  border-radius: $r-lg $r-lg $r-lg 4px;
+  padding: $space-16 $space-16 $space-12;
+  max-width: 480px;
+  position: relative;
+  // Bottom margin absorbs the floating reaction badges
+  margin-bottom: $space-8;
   will-change: transform, opacity;
 
   p {
     font-family: $font-body;
-    font-size: $fs-md;
-    line-height: 1.65;
+    font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+    line-height: 1.6;
     color: $c-text-secondary;
     font-weight: 500;
     margin: 0;
   }
 }
 
-// Photo as a chat bubble (iMessage "sent photo" style)
+// Photo as a chat bubble (inline "sent photo" style)
 .about__bubble--photo {
-  padding: 6px;
-  max-width: 300px;
+  padding: 5px;
+  max-width: 280px;
+  margin-bottom: $space-8;
 
   img {
     width: 100%;
-    height: 260px;
+    height: 240px;
     object-fit: cover;
     object-position: 50% 15%;
-    border-radius: $r-sm;
+    border-radius: 10px;
     display: block;
   }
 }
 
+// Reactions float outside the bubble at the bottom-left edge
 .about__reactions {
+  position: absolute;
+  bottom: -20px;
+  left: $space-12;
   display: flex;
-  flex-wrap: wrap;
   gap: $space-8;
-  margin-top: $space-16;
+  z-index: 1;
 }
 
 .about__reaction {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   font-family: $font-body;
-  font-size: $fs-xs;
+  font-size: 0.85rem;
   font-weight: 700;
   color: $c-ink;
-  background: $c-paper;
+  background: $c-warm-white;
   border: 2px solid $c-ink;
   border-radius: $r-full;
-  padding: 0.2rem 0.65rem;
+  padding: 0.25rem 0.7rem;
   cursor: default;
   will-change: transform, opacity;
 
@@ -137,42 +145,24 @@
 }
 
 // ——————————————————————————————————————————————
-// Bento grid
+// Bento grid — uniform 2×3, no spanning cells
 // ——————————————————————————————————————————————
 
 .about__bento {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto auto;
   gap: $space-12;
 }
 
 .about__bento-cell {
-  background: $c-cream;
+  background: $c-warm-white;
   border: 2px solid $c-ink;
   border-radius: $r-md;
-  padding: $space-24 $space-24 $space-24;
+  padding: $space-16;
   display: flex;
   flex-direction: column;
   gap: $space-8;
-  min-height: 120px;
   will-change: transform, opacity;
-
-  // Featured cell (solo statement)
-  &--featured {
-    grid-column: 1 / -1;
-    background: $c-yellow;
-    min-height: 0;
-    padding: $space-24;
-    flex-direction: row;
-    align-items: center;
-    gap: $space-16;
-  }
-
-  // Wide cells
-  &--wide {
-    grid-column: 1 / -1;
-  }
 }
 
 .about__bento-icon {
@@ -180,14 +170,13 @@
   flex-shrink: 0;
 
   svg {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     display: block;
     stroke: currentColor;
     fill: none;
     stroke-linecap: round;
     stroke-linejoin: round;
-    // Stroke-draw animation target
     stroke-dasharray: 200;
     stroke-dashoffset: 200;
   }
@@ -205,15 +194,10 @@
 
 .about__bento-value {
   font-family: $font-display;
-  font-size: $fs-md;
+  font-size: $fs-base;
   font-weight: 700;
   color: $c-ink;
   line-height: 1.25;
-
-  .about__bento-cell--featured & {
-    font-size: $fs-lg;
-    font-weight: 500;
-  }
 }
 
 // ——————————————————————————————————————————————
@@ -236,7 +220,10 @@
 
   .about__bubble {
     max-width: 100%;
-    border-radius: $r-lg $r-lg $r-lg 4px;
+  }
+
+  .about__bubble--photo {
+    max-width: 260px;
   }
 
   .about__bento {
@@ -244,22 +231,12 @@
   }
 
   .about__bento-cell {
-    min-height: 100px;
     padding: $space-16;
-  }
-
-  .about__bento-cell--featured {
-    padding: $space-16 $space-16;
   }
 }
 
 @media (max-width: 480px) {
   .about__bento {
-    grid-template-columns: 1fr;
-  }
-
-  .about__bento-cell--wide,
-  .about__bento-cell--featured {
-    grid-column: 1;
+    grid-template-columns: 1fr 1fr;
   }
 }

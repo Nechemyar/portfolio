@@ -9,13 +9,16 @@ export default class AboutReveal {
     this.section = document.querySelector('.about');
     if (!this.section) return;
 
+    this.container = this.section.querySelector('.about__container');
     this.title = this.section.querySelector('[data-about-heading]');
     this.header = this.section.querySelector('.about__header');
-    this.chat = this.section.querySelector('.about__chat');
-    this.bento = this.section.querySelector('.about__bento');
-    this.bubbles = this.section.querySelectorAll('[data-bubble]');
-    this.cells = this.section.querySelectorAll('[data-bento-cell]');
-    this.icons = this.section.querySelectorAll('.about__bento-icon svg');
+    this.chat = this.section.querySelector('.about-chat');
+    this.list = this.section.querySelector('.about-chat__list');
+    this.chatItems = this.section.querySelectorAll('.about-chat__el');
+    this.infoPanel = this.section.querySelector('.about-infos');
+    this.infoRows = this.section.querySelectorAll('.about-infos__skill, .about-infos__client');
+    this.links = this.section.querySelectorAll('.about-links__contact, .about-links__arrow, .about-links__block');
+    this.reactions = this.section.querySelectorAll('.about-chat__emojis');
 
     if (this.title) {
       this.splitTitle = new SplitType(this.title, { types: 'lines,words' });
@@ -27,10 +30,10 @@ export default class AboutReveal {
 
   init() {
     this.mm.add('(prefers-reduced-motion: reduce)', () => {
-      gsap.set([this.bubbles, this.cells, this.section.querySelectorAll('.about__reaction')], {
+      gsap.set([this.list, this.chatItems, this.infoPanel, this.infoRows, this.links, this.reactions], {
         clearProps: 'all',
       });
-      this._drawIconsInstantly();
+      this._setActiveChat(1);
     });
 
     this.mm.add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', () => {
@@ -43,83 +46,85 @@ export default class AboutReveal {
   }
 
   _desktopPinnedSequence() {
-    if (!this.chat || !this.bento || !this.bubbles.length) return;
+    if (!this.list || !this.chat || !this.chatItems.length) return;
 
     this._titleReveal(this.header, 'top 80%');
-    this._bentoReveal();
+    this._contentReveal();
 
-    gsap.set(this.bubbles, {
-      y: () => window.innerHeight * 0.7,
-      autoAlpha: 0,
-      scale: 0.94,
-      transformOrigin: 'left bottom',
+    gsap.set(this.chatItems, {
+      autoAlpha: 0.42,
+      scale: 0.96,
+      transformOrigin: '10% 50%',
     });
-    gsap.set(this.bubbles[0], {
-      y: 0,
+    gsap.set(this.chatItems[0], {
       autoAlpha: 1,
       scale: 1,
     });
-    gsap.set(this.section.querySelectorAll('.about__reaction'), {
-      scale: 0,
+    gsap.set(this.reactions, {
       autoAlpha: 0,
+      scale: 0,
       transformOrigin: 'left center',
     });
+    gsap.set(this.chatItems[0].querySelectorAll('.about-chat__emojis'), {
+      autoAlpha: 1,
+      scale: 1,
+    });
+
+    const chatDistance = () => Math.max(0, this.list.scrollHeight - this.chat.clientHeight);
 
     const tl = gsap.timeline({
       defaults: { ease: 'none' },
       scrollTrigger: {
         trigger: this.section,
         start: 'top top',
-        end: () => `+=${this.bubbles.length * window.innerHeight * 0.75}`,
+        end: () => `+=${Math.max(window.innerHeight * 2.2, chatDistance() * 1.4)}`,
         pin: this.section,
         scrub: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,
+        onUpdate: (self) => this._setActiveChat(self.progress),
       },
     });
 
-    this.bubbles.forEach((bubble, index) => {
-      const reactions = bubble.querySelectorAll('.about__reaction');
-      const at = index * 0.85;
+    tl.to(this.list, {
+      y: () => -chatDistance(),
+      duration: 1,
+    }, 0);
+
+    this.chatItems.forEach((item, index) => {
+      const at = this.chatItems.length <= 1 ? 0 : index / (this.chatItems.length - 1);
+      const emojis = item.querySelectorAll('.about-chat__emojis');
+
+      tl.to(item, {
+        autoAlpha: 1,
+        scale: 1,
+        duration: 0.12,
+      }, at);
+
+      if (emojis.length) {
+        tl.to(emojis, {
+          autoAlpha: 1,
+          scale: 1,
+          duration: 0.08,
+          ease: 'back.out(2)',
+        }, Math.min(0.98, at + 0.03));
+      }
 
       if (index > 0) {
-        tl.to(bubble, {
-          y: 0,
-          autoAlpha: 1,
-          scale: 1,
-          duration: 0.38,
-          ease: 'back.out(1.4)',
+        tl.to(this.chatItems[index - 1], {
+          autoAlpha: 0.62,
+          scale: 0.985,
+          duration: 0.1,
         }, at);
       }
-
-      if (reactions.length) {
-        if (index === 0) {
-          gsap.set(reactions, { scale: 1, autoAlpha: 1 });
-        }
-
-        tl.to(reactions, {
-          scale: 1,
-          autoAlpha: 1,
-          duration: 0.16,
-          stagger: 0.04,
-          ease: 'back.out(2)',
-        }, at + 0.24);
-      }
-
-      tl.to(bubble, {
-        y: () => -window.innerHeight * 0.46,
-        autoAlpha: 0,
-        scale: 0.98,
-        duration: 0.35,
-      }, at + 0.78);
     });
   }
 
   _mobileReveal() {
     this._titleReveal(this.header, 'top 86%');
 
-    if (this.bubbles.length) {
-      gsap.fromTo(this.bubbles,
+    if (this.chatItems.length) {
+      gsap.fromTo(this.chatItems,
         { y: 32, autoAlpha: 0, scale: 0.96 },
         {
           y: 0,
@@ -137,7 +142,7 @@ export default class AboutReveal {
       );
     }
 
-    this._bentoReveal();
+    this._contentReveal();
   }
 
   _titleReveal(trigger, start) {
@@ -162,67 +167,38 @@ export default class AboutReveal {
     );
   }
 
-  _bentoReveal() {
-    if (!this.cells.length) return;
+  _contentReveal() {
+    const revealTargets = [this.infoPanel, ...this.infoRows, ...this.links].filter(Boolean);
+    if (!revealTargets.length) return;
 
-    gsap.fromTo(this.cells,
-      { y: 22, autoAlpha: 0 },
+    gsap.fromTo(revealTargets,
+      { y: 24, autoAlpha: 0 },
       {
         y: 0,
         autoAlpha: 1,
-        duration: 0.7,
-        stagger: 0.08,
+        duration: 0.72,
+        stagger: 0.055,
         ease: 'power3.out',
         scrollTrigger: {
-          trigger: this.bento,
-          start: 'top 85%',
+          trigger: this.infoPanel || this.container,
+          start: 'top 84%',
           once: true,
         },
       }
     );
-
-    this._drawIcons();
   }
 
-  _drawIcons() {
-    if (!this.icons.length) return;
+  _setActiveChat(progress) {
+    if (!this.chatItems.length) return;
 
-    this.icons.forEach((svg) => {
-      const paths = svg.querySelectorAll('path, circle, polyline, line');
-      if (!paths.length) return;
+    const activeIndex = Math.min(
+      this.chatItems.length - 1,
+      Math.floor(progress * this.chatItems.length)
+    );
 
-      const lengths = Array.from(paths).map((path) => {
-        try { return path.getTotalLength(); } catch { return 60; }
-      });
-
-      paths.forEach((path, index) => {
-        gsap.set(path, {
-          strokeDasharray: lengths[index],
-          strokeDashoffset: lengths[index],
-        });
-      });
-
-      gsap.to(paths, {
-        strokeDashoffset: 0,
-        duration: 0.9,
-        stagger: 0.06,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: svg,
-          start: 'top 90%',
-          once: true,
-        },
-      });
-    });
-  }
-
-  _drawIconsInstantly() {
-    if (!this.icons.length) return;
-
-    this.icons.forEach((svg) => {
-      svg.querySelectorAll('path, circle, polyline, line').forEach((path) => {
-        path.style.strokeDashoffset = '0';
-      });
+    this.chatItems.forEach((item, index) => {
+      item.classList.toggle('about-chat__el--is-active', index <= activeIndex);
+      item.classList.toggle('about-chat__el--is-full-active', index === activeIndex);
     });
   }
 }

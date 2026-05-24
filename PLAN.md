@@ -193,22 +193,21 @@ All GSAP + ScrollTrigger. No CSS transitions on GSAP properties. All gated with 
 - [x] Animate steps in sequence on scroll
 - [x] Write copy (humanize pass done; detect-ai API key unavailable locally)
 
-### Phase 4: About ← NEEDS REBUILD (design direction changed mid-session)
+### Phase 4: About ✅ DONE
 - [x] Chat bubble layout (photo inline as bubble, reactions floating outside)
 - [x] Copy rewritten — no em dashes, no choppy sentences, conversational voice
 - [x] Background: explicit $c-cream (not transparent/yellow)
 - [x] AboutReveal.js spring pop animation (back.out bounce, staggered)
 - [x] AboutReveal imported in main.js (was missing)
-- [x] **LAYOUT REBUILT** — current is now the full-viewport pinned split layout:
-    - Section = 100vh, nothing scrolls off screen
-    - LEFT (40%): chat bubbles column — user scrolls *through* the bubbles
-      (ScrollTrigger pinned section, bubbles progress as user scrolls)
-    - RIGHT (60%): full-height editorial bento — fixed on screen, does NOT scroll
-      Bento should be a proper asymmetric grid (varied cell sizes, not uniform),
-      spanning the full viewport height beside the chat column
-    - The bento IS the right panel. It stays put. The bubbles animate in as the
-      left side scrolls. Think: sticky right panel + scrolling left feed.
-- [x] Rebuild HTML, SCSS, JS to match the correct design above
+- [x] **LAYOUT REBUILT** — current now follows the steviaplease.me/about reference:
+    - Section uses `about__container`, `about__chat-container`, `about-chat__list`,
+      `about__content`, `about-infos`, and `about-links`
+    - LEFT (42%): full-height chat feed with message tails, reaction pills, and
+      inline photo message
+    - RIGHT (58%): full-height skills/info panel with contact/social blocks below
+    - Desktop pins the section and scrubs the chat list upward; mobile stacks the
+      chat, info panel, and links in source order
+- [x] Rebuild HTML, SCSS, JS to match the supplied Stevia DOM reference
 
 ### Phase 5: Services + what's included
 - [ ] Build the honest feature list/grid
@@ -262,7 +261,7 @@ Phase 5: Services + what's included
 - Homepage priority over project pages
 - New palette: yellow/mustard/rust/ink/cream (dropped blush, forest, peach)
 - New sitemap: Hero > Work > How it works > About > Services > Pricing > Testimonials > FAQ > Contact
-- About section = full-viewport pinned split (left scrolls, right bento stays fixed)
+- About section = Stevia-style full-viewport split (left chat feed scrolls, right info/contact rail stays fixed)
 - Chat bubbles: spring pop (back.out), photo embedded as a bubble in the flow
 - Copy voice: conversational, no em dashes, no short choppy sentences with full stops
 - Reference: steviaplease.me/about (left chat column, right skills/info panel)
@@ -276,11 +275,11 @@ Rebuild the Services section as an honest feature checklist/grid. Include custom
 Note: hero CTA button still uses hardcoded #FF9C7D. Fix in Phase 8 polish pass.
 
 ### State of About section files (as of session end)
-- `index.html` — About is a two-panel layout: left header/chat, right editorial bento
-- `scss/components/_about.scss` — desktop is a 100vh pinned split; mobile stacks header, bubbles, then bento
-- `js/modules/AboutReveal.js` — desktop ScrollTrigger pins the section and scrubs bubbles through the left column; mobile uses simple reveal
-- `tests/about.test.cjs` — updated to cover pinned split layout and AboutReveal pin logic
-- Verification: `npm test` passes (15 tests), `npm run build` passes, browser checked desktop 1250x771 and mobile 457x897
+- `index.html` — About follows the supplied Stevia DOM shape: left chat feed, right `about-infos` panel and `about-links`
+- `scss/components/_about.scss` — desktop is a 100vh pinned split; mobile stacks chat, info, and links without horizontal overflow
+- `js/modules/AboutReveal.js` — desktop ScrollTrigger pins the section and scrubs `.about-chat__list`; mobile uses simple reveal
+- `tests/about.test.cjs` — updated to cover Stevia-style class structure and AboutReveal chat-list pin logic
+- Verification: `npm test` passes (15 tests), `npm run build` passes, in-app browser checked mobile 457x897 at `#about`
 
 Latest Phase 2 verification:
 - `npm test` passes (3 tests)

@@ -1,6 +1,6 @@
 @use '../base/tokens' as *;
 
-// About - pinned chat feed with fixed bento panel
+// About - Stevia-inspired pinned chat and info rail
 
 .about {
   background: $c-cream;
@@ -10,19 +10,20 @@
   position: relative;
 }
 
-.about__inner {
+.about__container {
   min-height: 100vh;
   width: 100%;
   max-width: 1680px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 0.4fr) minmax(0, 0.6fr);
+  grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr);
   gap: clamp(1rem, 2vw, 2rem);
   padding: clamp(5.75rem, 9vh, 7rem) $page-padding clamp(1rem, 2vh, 1.5rem);
 }
 
-.about__left {
-  height: calc(100vh - clamp(6.75rem, 11vh, 8.5rem));
+.about__chat-container {
+  height: 100vh;
+  max-height: calc(100vh - clamp(6.75rem, 11vh, 8.5rem));
   min-height: 0;
   display: grid;
   grid-template-rows: auto 1fr;
@@ -59,184 +60,333 @@
   }
 }
 
-.about__chat {
-  height: 100vh;
-  max-height: calc(100vh - clamp(6.75rem, 11vh, 8.5rem));
+.about-chat {
   min-height: 0;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
 }
 
-.about__bubble {
+.about-chat__list {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: $space-32;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 45vh;
+  will-change: transform;
+}
+
+.about-chat__el {
+  position: relative;
   width: min(100%, 32rem);
+  color: $c-warm-white;
+  transform-origin: 10% 50%;
+  will-change: transform, opacity;
+}
+
+.about-chat__el:nth-child(even) {
+  margin-left: clamp(1rem, 5vw, 5rem);
+}
+
+.about-chat__el > svg {
+  position: absolute;
+  left: 1.15rem;
+  bottom: calc(100% - 2px);
+  width: clamp(3rem, 5vw, 4.125rem);
+  height: auto;
+  color: $c-warm-white;
+  z-index: 0;
+}
+
+.about-chat__el-container {
+  position: relative;
+  z-index: 1;
   background: $c-warm-white;
   border: 2px solid $c-ink;
-  border-radius: 18px 18px 18px 5px;
+  border-radius: 18px;
   padding: clamp(1rem, 1.6vw, 1.35rem);
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform: translateY(100vh);
-  will-change: transform, opacity;
-
-  p {
-    font-family: $font-body;
-    font-size: clamp(1rem, 1.12vw, 1.15rem);
-    line-height: 1.55;
-    color: $c-text-secondary;
-    font-weight: 500;
-    margin: 0;
-  }
+  box-shadow: 4px 4px 0 rgba(26, 26, 26, 0.08);
 }
 
-.about__bubble:nth-child(even) {
-  left: clamp(1rem, 5vw, 5rem);
+.about-chat___loading {
+  display: none;
+  gap: 5px;
+  margin-bottom: $space-12;
 }
 
-.about__bubble--photo {
-  width: min(76%, 19rem);
-  padding: 6px;
-
-  img {
-    width: 100%;
-    height: clamp(13rem, 27vh, 17rem);
-    object-fit: cover;
-    object-position: 50% 15%;
-    border-radius: 12px;
-    display: block;
-  }
+.about-chat___loading-el {
+  width: 7px;
+  height: 7px;
+  border-radius: $r-full;
+  background: $c-text-tertiary;
+  animation: aboutTyping 1s infinite ease-in-out;
 }
 
-.about__reactions {
+.about-chat___loading-el:nth-child(2) {
+  animation-delay: 0.14s;
+}
+
+.about-chat___loading-el:nth-child(3) {
+  animation-delay: 0.28s;
+}
+
+.about-chat__el-text {
+  font-family: $font-body;
+  font-size: clamp(1rem, 1.12vw, 1.15rem);
+  font-weight: 600;
+  line-height: 1.55;
+  color: $c-text-secondary;
+}
+
+.about-chat__emojis {
   position: absolute;
   bottom: -20px;
   left: $space-12;
-  display: flex;
-  gap: $space-8;
-  z-index: 1;
-}
-
-.about__reaction {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-family: $font-body;
-  font-size: 0.85rem;
-  font-weight: 700;
+  min-height: 2rem;
   color: $c-ink;
   background: $c-warm-white;
   border: 2px solid $c-ink;
   border-radius: $r-full;
   padding: 0.25rem 0.7rem;
-  cursor: default;
-  will-change: transform, opacity;
+  font-family: $font-body;
+  font-size: 0.85rem;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 2px 2px 0 rgba(26, 26, 26, 0.08);
+  transform-origin: left center;
+  z-index: 2;
+}
 
-  @media (hover: hover) {
-    &:hover {
-      background: $c-ink;
-      color: $c-yellow;
-      transition: background $duration-fast $ease-out, color $duration-fast $ease-out;
-    }
+.about-chat__img {
+  display: block;
+  width: 100%;
+  height: clamp(13rem, 27vh, 17rem);
+  object-fit: cover;
+  object-position: 50% 15%;
+  border-radius: 12px;
+}
+
+.about-chat__el--photo {
+  width: min(76%, 19rem);
+
+  .about-chat__el-container {
+    padding: 6px;
   }
 }
 
-.about__bento {
+.about__content {
   height: 100vh;
   max-height: calc(100vh - clamp(6.75rem, 11vh, 8.5rem));
   min-height: 0;
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  grid-template-rows: repeat(6, minmax(0, 1fr));
+  grid-template-rows: 1fr auto;
   gap: clamp(0.75rem, 1.3vw, 1rem);
-  padding-bottom: clamp(1rem, 2vh, 1.5rem);
 }
 
-.about__bento-cell {
-  background: $c-warm-white;
-  border: 2px solid $c-ink;
-  border-radius: $r-md;
-  padding: clamp(0.85rem, 1.4vw, 1.25rem);
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: $space-12;
+.about-infos {
+  position: relative;
   overflow: hidden;
+  min-height: 0;
+  background: $c-yellow;
+  border: 2px solid $c-ink;
+  border-radius: 22px;
+  padding: clamp(1.25rem, 2.2vw, 2rem);
+  display: grid;
+  align-content: space-between;
+  gap: clamp(2.25rem, 6vh, 4.5rem);
   will-change: transform, opacity;
 }
 
-.about__bento-cell--profile {
-  grid-row: span 2;
-  grid-column: 1 / span 3;
-  grid-row: 1 / span 3;
-  background: $c-yellow;
+.about-infos__icon {
+  position: absolute;
+  top: clamp(1rem, 2vw, 1.5rem);
+  right: clamp(1rem, 2vw, 1.5rem);
+  width: clamp(3.5rem, 6vw, 7rem);
+  height: auto;
+  color: $c-rust;
+  opacity: 0.9;
 }
 
-.about__bento-cell--reach {
-  grid-column: 4 / span 3;
-  grid-row: 1 / span 2;
+.about-infos__skills-c,
+.about-infos__clients-c {
+  position: relative;
+  z-index: 1;
 }
 
-.about__bento-cell--wide {
-  grid-column: span 2;
-  grid-column: 4 / span 3;
-  grid-row: 3 / span 2;
-  background: $c-paper;
+.about-infos__title {
+  margin: 0 0 $space-24;
+  font-family: $font-body;
+  font-size: $fs-xs;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: $c-text-tertiary;
 }
 
-.about__bento-cell--ships {
-  grid-column: 1 / span 2;
-  grid-row: 5 / span 2;
+.about-infos__skills {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.about__bento-cell--stack {
-  grid-column: 3 / span 2;
-  grid-row: 5 / span 2;
+.about-infos__clients {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.about__bento-cell--access {
-  grid-column: 5 / span 2;
-  grid-row: 5 / span 2;
-}
-
-.about__bento-icon {
+.about-infos__skill {
+  display: block;
+  font-family: $font-display;
+  font-size: clamp(2rem, 4.7vw, 5.4rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: 0;
+  text-transform: uppercase;
   color: $c-ink;
-  flex-shrink: 0;
+  will-change: transform, opacity;
 
-  svg {
-    width: clamp(1.5rem, 2vw, 2rem);
-    height: clamp(1.5rem, 2vw, 2rem);
-    display: block;
-    stroke: currentColor;
-    fill: none;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 200;
-    stroke-dashoffset: 200;
+  span {
+    display: inline;
   }
 }
 
-.about__bento-label {
+.about-infos__clients {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-12 $space-24;
+}
+
+.about-infos__client {
   font-family: $font-body;
-  font-size: $fs-xs;
+  font-size: clamp(1rem, 1.4vw, 1.35rem);
   font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0;
-  color: $c-text-tertiary;
-  margin-top: auto;
-}
-
-.about__bento-value {
-  max-width: 12ch;
-  font-family: $font-display;
-  font-size: clamp(1.1rem, 1.72vw, 1.95rem);
-  font-weight: 500;
+  line-height: 1.1;
   color: $c-ink;
-  line-height: 1.02;
-  letter-spacing: 0;
+  will-change: transform, opacity;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 
-.about__bento-cell--wide .about__bento-value {
-  max-width: none;
+.about-links {
+  display: grid;
+  grid-template-columns: 1fr clamp(5.25rem, 9vw, 8rem);
+  gap: clamp(0.75rem, 1.3vw, 1rem);
+}
+
+.about-links__contact,
+.about-links__arrow,
+.about-links__block {
+  min-height: clamp(5.25rem, 9vw, 8rem);
+  border: 2px solid $c-ink;
+  border-radius: $r-md;
+  color: $c-ink;
+  text-decoration: none;
+  will-change: transform, opacity;
+}
+
+.about-links__contact {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  background: $c-rust;
+}
+
+.about-links__contact-text {
+  font-family: $font-display;
+  font-size: clamp(2rem, 4vw, 4.9rem);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: 0;
+  color: $c-warm-white;
+  white-space: nowrap;
+  transition: transform $duration-med $ease-out, opacity $duration-med $ease-out;
+}
+
+.about-links__contact-text--cta {
+  position: absolute;
+  left: clamp(1rem, 2vw, 1.5rem);
+  opacity: 0;
+  transform: translateX(1.25rem);
+}
+
+.about-links__arrow {
+  display: grid;
+  place-items: center;
+  background: $c-warm-white;
+  color: $c-rust;
+
+  svg {
+    width: 68%;
+    height: auto;
+  }
+}
+
+.about-links__socials {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.75rem, 1.3vw, 1rem);
+}
+
+.about-links__block {
+  display: grid;
+  place-items: center;
+  background: $c-warm-white;
+  font-family: $font-body;
+  font-size: clamp(1rem, 1.45vw, 1.35rem);
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+@keyframes aboutTyping {
+  0%,
+  80%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+
+  40% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+@media (hover: hover) {
+  .about-chat__emojis:hover,
+  .about-links__block:hover,
+  .about-links__arrow:hover {
+    background: $c-ink;
+    color: $c-yellow;
+    transform: translateY(-2px);
+    transition: background $duration-fast $ease-out, color $duration-fast $ease-out, transform $duration-fast $ease-out;
+  }
+
+  .about-links__contact:hover {
+    .about-links__contact-text--main {
+      opacity: 0;
+      transform: translateX(-1.25rem);
+    }
+
+    .about-links__contact-text--cta {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
 }
 
 @media (max-width: 900px) {
@@ -245,7 +395,7 @@
     overflow: visible;
   }
 
-  .about__inner {
+  .about__container {
     min-height: auto;
     display: flex;
     flex-direction: column;
@@ -253,8 +403,9 @@
     padding: clamp(5.75rem, 18vw, 7rem) $page-padding clamp(4rem, 10vw, 5.5rem);
   }
 
-  .about__left {
+  .about__chat-container {
     height: auto;
+    max-height: none;
     display: flex;
     flex-direction: column;
     overflow: visible;
@@ -265,56 +416,50 @@
     font-size: clamp(2.6rem, 13vw, 4.35rem);
   }
 
-  .about__chat {
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    gap: $space-32;
+  .about-chat {
+    overflow: visible;
   }
 
-  .about__bubble,
-  .about__bubble:nth-child(even) {
+  .about-chat__list {
     position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-    width: 100%;
+    inset: auto;
+    padding: 0;
   }
 
-  .about__bubble--photo {
+  .about-chat__el,
+  .about-chat__el:nth-child(even) {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .about-chat__el--photo {
     width: min(74vw, 18rem);
   }
 
-  .about__bento {
+  .about__content {
     height: auto;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: none;
-    padding-bottom: 0;
+    max-height: none;
   }
 
-  .about__bento-cell--profile,
-  .about__bento-cell--reach,
-  .about__bento-cell--wide,
-  .about__bento-cell--ships,
-  .about__bento-cell--stack,
-  .about__bento-cell--access {
-    grid-column: span 2;
-    grid-row: auto;
+  .about-infos {
+    gap: $space-48;
+    min-height: clamp(34rem, 92vw, 42rem);
   }
-}
 
-@media (max-width: 480px) {
-  .about__bento {
+  .about-infos__skill {
+    font-size: clamp(1.9rem, 10vw, 4rem);
+  }
+
+  .about-links {
     grid-template-columns: 1fr;
   }
 
-  .about__bento-cell--profile,
-  .about__bento-cell--reach,
-  .about__bento-cell--wide,
-  .about__bento-cell--ships,
-  .about__bento-cell--stack,
-  .about__bento-cell--access {
-    grid-column: auto;
-    grid-row: auto;
+  .about-links__socials {
+    grid-template-columns: 1fr;
+  }
+
+  .about-links__contact-text {
+    font-size: clamp(2rem, 13vw, 4rem);
+    white-space: normal;
   }
 }

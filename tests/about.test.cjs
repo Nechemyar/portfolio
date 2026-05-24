@@ -6,60 +6,51 @@ const test = require('node:test');
 const root = path.resolve(__dirname, '..');
 const read = (file) => readFileSync(path.join(root, file), 'utf8');
 
-test('About section markup uses chat+bento layout structure', () => {
+test('About section markup follows the Stevia-style chat and info panel structure', () => {
   const html = read('index.html');
 
-  // Section present with cream bg data attribute
   assert.match(html, /class="about"[^>]*data-bg="#FAF9F7"/);
-  // Section label and heading
-  assert.match(html, /class="about__header"/);
-  assert.match(html, /class="section-label"/);
-  assert.match(html, /data-about-heading/);
-  // Chat column: bubbles (including photo bubble inline)
-  assert.match(html, /class="about__chat"/);
-  assert.match(html, /about__bubble--photo/);
+  assert.match(html, /class="about__container"/);
+  assert.match(html, /class="about__chat-container"/);
+  assert.match(html, /class="about-chat"/);
+  assert.match(html, /class="about-chat__list"/);
+  assert.match(html, /class="about-chat__el about-chat__el--intro"/);
+  assert.match(html, /class="about-chat__el-container"/);
+  assert.match(html, /class="about-chat___loading"/);
+  assert.match(html, /class="about-chat__el-text"/);
+  assert.match(html, /class="about-chat__emojis"/);
+  assert.match(html, /class="about-chat__el about-chat__el--photo"/);
+  assert.match(html, /class="about-chat__img"/);
   assert.match(html, /meno-box\.webp/);
-  assert.match(html, /data-bubble/);
-  assert.match(html, /class="about__reactions"/);
-  assert.match(html, /class="about__reaction"/);
-  // Bento grid with cells and inline SVGs
-  assert.match(html, /class="about__bento"/);
-  assert.match(html, /data-bento-cell/);
-  assert.match(html, /class="about__bento-icon"/);
-  assert.match(html, /class="about__bento-label"/);
-  assert.match(html, /class="about__bento-value"/);
+  assert.match(html, /class="about__content"/);
+  assert.match(html, /class="about-infos"/);
+  assert.match(html, /class="about-infos__skills"/);
+  assert.match(html, /class="about-infos__clients"/);
+  assert.match(html, /class="about-links"/);
+  assert.match(html, /class="about-links__contact"/);
+  assert.match(html, /class="about-links__socials"/);
 });
 
-test('About CSS uses pinned split layout with scrollable chat and fixed bento panel', () => {
+test('About CSS uses full-screen chat column and fixed info panel layout', () => {
   const scss = read('scss/components/_about.scss');
 
-  // Section has an explicit background (cream, not transparent/yellow)
   assert.match(scss, /\.about\s*\{[\s\S]*background:\s*\$c-cream/);
   assert.match(scss, /\.about\s*\{[\s\S]*min-height:\s*100vh/);
-  assert.match(scss, /\.about__inner\s*\{[\s\S]*min-height:\s*100vh/);
-  assert.match(scss, /\.about__inner\s*\{[\s\S]*grid-template-columns:\s*minmax\(0,\s*0\.4fr\)\s+minmax\(0,\s*0\.6fr\)/);
-  assert.match(scss, /\.about__chat\s*\{[\s\S]*height:\s*100vh/);
-  assert.match(scss, /\.about__bento\s*\{[\s\S]*height:\s*100vh/);
-  // Chat bubble styles
-  assert.match(scss, /\.about__bubble\s*\{/);
-  assert.match(scss, /\.about__reaction\s*\{/);
-  // Bento grid styles
-  assert.match(scss, /\.about__bento\s*\{/);
-  assert.match(scss, /\.about__bento-cell\s*\{/);
-  assert.match(scss, /\.about__bento-cell--profile\s*\{[\s\S]*grid-row:\s*span 2/);
-  assert.match(scss, /\.about__bento-cell--wide\s*\{[\s\S]*grid-column:\s*span 2/);
-  assert.match(scss, /\.about__bento-icon\s*\{/);
-  // SVG stroke-draw initial state
-  assert.match(scss, /stroke-dashoffset:\s*200/);
-  // Mobile breakpoint
+  assert.match(scss, /\.about__container\s*\{[\s\S]*grid-template-columns:\s*minmax\(0,\s*0\.42fr\)\s+minmax\(0,\s*0\.58fr\)/);
+  assert.match(scss, /\.about__chat-container\s*\{[\s\S]*height:\s*100vh/);
+  assert.match(scss, /\.about-chat__list\s*\{[\s\S]*position:\s*absolute/);
+  assert.match(scss, /\.about-chat__el\s*\{[\s\S]*transform-origin:\s*10% 50%/);
+  assert.match(scss, /\.about-chat__el > svg\s*\{/);
+  assert.match(scss, /\.about-chat___loading-el\s*\{/);
+  assert.match(scss, /\.about__content\s*\{[\s\S]*height:\s*100vh/);
+  assert.match(scss, /\.about-infos\s*\{[\s\S]*background:\s*\$c-yellow/);
+  assert.match(scss, /\.about-infos__skills\s*\{/);
+  assert.match(scss, /\.about-links\s*\{[\s\S]*display:\s*grid/);
   assert.match(scss, /@media \(max-width: 900px\)/);
-  // Hover gated correctly
   assert.match(scss, /@media \(hover: hover\)/);
-  // Inner layout
-  assert.match(scss, /\.about__inner\s*\{[\s\S]*display:\s*grid/);
 });
 
-test('AboutReveal module pins desktop section and scrubs bubbles through the left column', () => {
+test('AboutReveal module pins desktop section and scrolls the chat list', () => {
   const main = read('js/main.js');
   const module = read('js/modules/AboutReveal.js');
 
@@ -68,7 +59,11 @@ test('AboutReveal module pins desktop section and scrubs bubbles through the lef
   assert.match(module, /_desktopPinnedSequence/);
   assert.match(module, /pin:\s*this\.section/);
   assert.match(module, /scrub:\s*true/);
-  assert.match(module, /end:\s*\(\)\s*=>\s*`\+=\$\{this\.bubbles\.length \* window\.innerHeight \* 0\.75\}`/);
+  assert.match(module, /this\.list/);
+  assert.match(module, /this\.chatItems/);
+  assert.match(module, /chatDistance/);
+  assert.match(module, /about-chat__el--is-active/);
+  assert.match(module, /about-chat__el--is-full-active/);
   assert.match(module, /_mobileReveal/);
 });
 

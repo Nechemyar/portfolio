@@ -9,21 +9,23 @@
   z-index: 1150;
   visibility: hidden;
   will-change: clip-path;
-  display: flex;
-  flex-direction: column;
 }
 
 .mobile-menu.is-open {
   visibility: visible;
 }
 
-/* ── Topbar — matches nav bar so the morph looks seamless ── */
+/* ── Topbar — absolutely placed so the card can be content-sized ── */
 .mobile-menu__topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0.85rem 1.25rem;
-  flex-shrink: 0;
+  z-index: 2;
 }
 
 .mobile-menu__top-logo-img {
@@ -45,13 +47,22 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ── White card ── */
+/* ── Backdrop — hidden on mobile, dark overlay on desktop ── */
+.mobile-menu__backdrop {
+  display: none;
+}
+
+/* ── White card — content-sized, anchored to the bottom on mobile ── */
 .mobile-menu__card {
-  flex: 1;
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  right: 8px;
+  height: auto;
+  max-height: calc(100dvh - 5.5rem);
   background: #fff;
   border: 2px solid $c-ink;
-  border-radius: $r-xl;
-  margin: 0 8px 8px;
+  border-radius: $r-md;
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;
@@ -71,7 +82,7 @@
   margin: 0;
 }
 
-/* Dividers sit inside the text padding — they don't bleed to the card edge */
+/* Dividers inset to match text padding */
 .mobile-menu__nav li {
   position: relative;
 }
@@ -117,7 +128,7 @@
   margin: 12px 12px 0;
   padding: 0.85rem 1rem;
   background: $c-paper;
-  border-radius: $r-md;
+  border-radius: $r-sm;
   text-decoration: none;
   color: $c-ink;
   -webkit-tap-highlight-color: transparent;
@@ -170,7 +181,7 @@
   font-size: clamp(0.88rem, 4vw, 1rem);
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  border-radius: $r-md;
+  border-radius: $r-sm;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -182,7 +193,7 @@
   width: 36px;
   height: 36px;
   background: rgba(0, 0, 0, 0.14);
-  border-radius: $r-sm;
+  border-radius: 6px;
   flex-shrink: 0;
 }
 
@@ -192,7 +203,6 @@
   align-items: flex-start;
   gap: 10px;
   padding: 0.9rem 1.5rem 1rem;
-  margin-top: auto;
 }
 
 .mobile-menu__trust-shield {
@@ -207,9 +217,33 @@
   line-height: 1.55;
 }
 
-/* Desktop: mobile menu is mobile-only */
+/* ── Desktop — centered dropdown with dark backdrop ── */
 @media (min-width: 769px) {
   .mobile-menu {
+    background: transparent;
+  }
+
+  .mobile-menu__backdrop {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+  }
+
+  .mobile-menu__topbar {
     display: none;
+  }
+
+  .mobile-menu__card {
+    position: absolute;
+    top: 70px;
+    bottom: auto;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 440px;
+    max-width: calc(100vw - 32px);
+    max-height: calc(100vh - 90px);
+    border-radius: $r-md;
   }
 }

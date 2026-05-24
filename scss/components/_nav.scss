@@ -73,7 +73,7 @@ body.nav-has-backing .nav::before {
   margin-inline: 0;
   background: transparent;
   border: 2px solid transparent;
-  border-radius: 14px;
+  border-radius: 10px;
   transition:
     width 0.35s $ease-out,
     padding 0.35s $ease-out,
@@ -90,7 +90,7 @@ body.nav-has-backing .nav__inner {
   padding: clamp(0.5rem, 0.8vw, 0.7rem) clamp(1rem, 1.5vw, 1.4rem);
   background: $c-cream;
   border: 2px solid $c-ink;
-  border-radius: 14px;
+  border-radius: 10px;
 }
 
 /* ——— Logo ——— */
@@ -524,7 +524,7 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
     margin-inline: 0;
     background: $c-cream;
     border: 2px solid $c-ink;
-    border-radius: 14px;
+    border-radius: 10px;
   }
 
   .nav__logo-svg {

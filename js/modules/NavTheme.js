@@ -23,8 +23,8 @@ export default class NavTheme {
     return window.matchMedia('(min-width: 769px)').matches;
   }
 
-  // Measure the natural pill width by briefly applying the backed class
-  // without any transitions so the measurement is instant and accurate.
+  // Briefly apply the backed class (without transitions) to measure the
+  // natural pill width so GSAP has an exact px target to animate toward.
   _measure() {
     if (!this._isDesktop()) return;
     const wasBacked = document.body.classList.contains('nav-has-backing');
@@ -38,11 +38,11 @@ export default class NavTheme {
   }
 
   _heroWidth() {
-    const style = getComputedStyle(this.nav);
+    const s = getComputedStyle(this.nav);
     return (
       this.nav.getBoundingClientRect().width
-      - parseFloat(style.paddingLeft)
-      - parseFloat(style.paddingRight)
+      - parseFloat(s.paddingLeft)
+      - parseFloat(s.paddingRight)
     );
   }
 
@@ -50,15 +50,19 @@ export default class NavTheme {
     const should = window.scrollY > 24;
     if (should === this.isBacked) return;
     this.isBacked = should;
-    document.body.classList.toggle('nav-has-backing', should);
 
-    // Mobile: class toggle is enough — CSS handles the full-width pill.
-    if (!this._isDesktop()) return;
+    // Mobile: CSS handles the full-width backed pill via class alone.
+    if (!this._isDesktop()) {
+      document.body.classList.toggle('nav-has-backing', should);
+      return;
+    }
 
     gsap.killTweensOf(this.inner);
 
     if (should) {
+      // Measure current width BEFORE the class snaps width: fit-content.
       const heroW = this.inner.getBoundingClientRect().width;
+      document.body.classList.add('nav-has-backing');
       gsap.fromTo(
         this.inner,
         { width: heroW },
@@ -70,7 +74,9 @@ export default class NavTheme {
         }
       );
     } else {
+      // Measure current (pill) width BEFORE the class removal restores width:100%.
       const pillW = this.inner.getBoundingClientRect().width;
+      document.body.classList.remove('nav-has-backing');
       gsap.fromTo(
         this.inner,
         { width: pillW },

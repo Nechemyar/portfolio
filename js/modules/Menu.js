@@ -4,6 +4,7 @@ export default class Menu {
   constructor() {
     this.toggle   = document.getElementById('menu-toggle');
     this.menu     = document.getElementById('mobile-menu');
+    this.wrap     = document.getElementById('mobile-menu-card-wrap');
     this.card     = document.getElementById('mobile-menu-card');
     this.closeBtn = document.getElementById('mobile-menu-close-pill');
     this.backdrop = this.menu.querySelector('.mobile-menu__backdrop');
@@ -20,7 +21,7 @@ export default class Menu {
 
   _initHidden() {
     if (this._isMobile()) {
-      gsap.set(this.menu, { clipPath: 'inset(0% 0% 100% 0%)' });
+      gsap.set(this.menu, { clearProps: 'visibility', clipPath: 'inset(0% 0% 100% 0%)' });
     } else {
       gsap.set(this.menu, { clearProps: 'clipPath', visibility: 'hidden' });
       gsap.set(this.backdrop, { opacity: 0 });
@@ -71,8 +72,8 @@ export default class Menu {
   }
 
   _openMobile() {
-    gsap.set(this.menu, { clipPath: `inset(0px 0px ${this._navBottom()}px 0px)` });
-    gsap.set(this.card, { y: 56, opacity: 0 });
+    gsap.set(this.menu, { clearProps: 'visibility', clipPath: `inset(0px 0px ${this._navBottom()}px 0px)` });
+    gsap.set(this.wrap, { y: 56, opacity: 0 });
 
     gsap.to(this.menu, {
       clipPath: 'inset(0px 0px 0px 0px)',
@@ -80,7 +81,7 @@ export default class Menu {
       ease: 'power3.out',
     });
 
-    gsap.to(this.card, {
+    gsap.to(this.wrap, {
       y: 0, opacity: 1,
       duration: 0.44, ease: 'power3.out', delay: 0.14,
     });
@@ -124,7 +125,7 @@ export default class Menu {
 
   _closeMobile() {
     gsap.to(this.menuLinks, { opacity: 0, duration: 0.15 });
-    gsap.to(this.card, { y: 56, opacity: 0, duration: 0.28, ease: 'power2.in' });
+    gsap.to(this.wrap, { y: 56, opacity: 0, duration: 0.28, ease: 'power2.in' });
 
     gsap.to(this.menu, {
       clipPath: `inset(0px 0px ${this._navBottom()}px 0px)`,

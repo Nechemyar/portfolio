@@ -52,14 +52,36 @@
   display: none;
 }
 
-/* ── White card — content-sized, anchored to the bottom on mobile ── */
-.mobile-menu__card {
+/* ── Wrap — anchors peek image + card together at the bottom ── */
+.mobile-menu__card-wrap {
   position: absolute;
   bottom: 8px;
   left: 8px;
   right: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── Peeking character — overlaps the card's top edge ── */
+.mobile-menu__peek {
+  width: clamp(130px, 42vw, 200px);
   height: auto;
-  max-height: calc(100dvh - 5.5rem);
+  display: block;
+  position: relative;
+  z-index: 2;
+  margin-bottom: -3rem;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── White card — content-sized, sits inside the wrap ── */
+.mobile-menu__card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  max-height: calc(100dvh - 9rem);
   background: #fff;
   border: 2px solid $c-ink;
   border-radius: $r-md;
@@ -232,6 +254,16 @@
   }
 
   .mobile-menu__topbar {
+    display: none;
+  }
+
+  /* Wrap is a transparent passthrough on desktop; card positions itself. */
+  .mobile-menu__card-wrap {
+    position: static;
+    display: contents;
+  }
+
+  .mobile-menu__peek {
     display: none;
   }
 

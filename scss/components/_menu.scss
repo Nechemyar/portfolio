@@ -11,14 +11,13 @@
   will-change: clip-path;
   display: flex;
   flex-direction: column;
-  /* clip-path initial state set by GSAP on init */
 }
 
 .mobile-menu.is-open {
   visibility: visible;
 }
 
-/* ── Topbar — mirrors the nav bar so the morph feels seamless ── */
+/* ── Topbar — matches nav bar so the morph looks seamless ── */
 .mobile-menu__topbar {
   display: flex;
   align-items: center;
@@ -50,6 +49,7 @@
 .mobile-menu__card {
   flex: 1;
   background: #fff;
+  border: 2px solid $c-ink;
   border-radius: $r-xl;
   margin: 0 8px 8px;
   overflow-y: auto;
@@ -71,17 +71,28 @@
   margin: 0;
 }
 
+/* Dividers sit inside the text padding — they don't bleed to the card edge */
 .mobile-menu__nav li {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  position: relative;
+}
+
+.mobile-menu__nav li + li::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 1.5rem;
+  right: 1.5rem;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.07);
 }
 
 .mobile-menu__link {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.05rem 1.5rem;
+  padding: 0.78rem 1.5rem;
   font-family: $font-body;
-  font-size: clamp(1.1rem, 5vw, 1.25rem);
+  font-size: clamp(1rem, 4.5vw, 1.15rem);
   font-weight: 500;
   color: $c-ink;
   text-decoration: none;
@@ -196,7 +207,7 @@
   line-height: 1.55;
 }
 
-/* Desktop: the mobile menu is for mobile only */
+/* Desktop: mobile menu is mobile-only */
 @media (min-width: 769px) {
   .mobile-menu {
     display: none;

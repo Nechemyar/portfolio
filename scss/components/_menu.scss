@@ -1,6 +1,6 @@
 @use '../base/tokens' as *;
 
-/* ── Mobile menu overlay — transparent, card slides up from bottom ── */
+/* ── Mobile menu overlay ── */
 .mobile-menu {
   position: fixed;
   inset: 0;
@@ -9,37 +9,37 @@
   pointer-events: none;
 }
 
-/* Only the card-wrap and backdrop are interactive — the transparent
-   overlay area must NOT capture clicks so the nav X stays tappable. */
-.mobile-menu.is-open .mobile-menu__card-wrap,
-.mobile-menu.is-open .mobile-menu__backdrop {
+/* Card-wrap always interactive when open.
+   Backdrop interactive on desktop only (mobile uses GSAP fade, no click-to-close). */
+.mobile-menu.is-open .mobile-menu__card-wrap {
   pointer-events: auto;
 }
 
-/* ── Backdrop — desktop only ── */
+/* ── Backdrop ── */
 .mobile-menu__backdrop {
   display: none;
+  position: absolute;
+  inset: 0;
 }
 
-/* ── Card wrap — pinned to screen bottom ── */
+/* ── Card wrap — floats off the bottom edge with page margins ── */
 .mobile-menu__card-wrap {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  right: 0.75rem;
 }
 
-/* ── White card ── */
+/* ── Card — matches hero copy-card design language ── */
 .mobile-menu__card {
   width: 100%;
   background: #fff;
-  border-top: 2px solid $c-ink;
-  border-radius: 6px 6px 0 0;
+  border: 2px solid $c-ink;
+  border-radius: 14px;
   overflow: hidden;
   max-height: 92dvh;
   display: flex;
   flex-direction: column;
-  padding: 0 0.75rem 1.25rem;
 }
 
 /* ── Topbar: hidden on mobile, shown on desktop ── */
@@ -72,16 +72,15 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ── Nav list — no dividers, tight vertical rhythm ── */
+/* ── Nav list ── */
 .mobile-menu__nav {
   list-style: none;
-  padding: 0.6rem 0 0;
+  padding: 0.5rem 0.75rem 0.25rem;
   margin: 0;
   flex: 1;
   overflow-y: auto;
 }
 
-/* No visible dividers between items */
 .mobile-menu__nav-item {}
 
 /* ── Nav link ── */
@@ -91,7 +90,7 @@
   align-items: center;
   justify-content: space-between;
   overflow: hidden;
-  padding: 0 0.5rem;
+  padding: 0;
   text-decoration: none;
   color: $c-rust;
   line-height: 1;
@@ -131,7 +130,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 0.5rem;
+  padding: 0;
   color: #fff;
   transform: translateY(101%);
 }
@@ -167,18 +166,23 @@
   }
 }
 
-/* ── BOOK A CALL bar ── */
+/* ── Footer bar: Book a call + WhatsApp ── */
+.mobile-menu__footer {
+  display: flex;
+  align-items: stretch;
+  flex-shrink: 0;
+}
+
+/* ── BOOK A CALL ── */
 .mobile-menu__cta {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 1.1rem 1.25rem;
-  margin: 0 -0.75rem -1.25rem;
   background: $c-ink;
   color: #fff;
   text-decoration: none;
-  flex-shrink: 0;
-  border-radius: 0 0 6px 6px;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -203,6 +207,31 @@
   flex-shrink: 0;
 }
 
+/* ── WhatsApp button ── */
+.mobile-menu__wa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.2rem;
+  background: $c-ink;
+  color: #fff;
+  text-decoration: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ── Mobile: dark backdrop (GSAP-controlled opacity) ── */
+@media (max-width: 768px) {
+  .mobile-menu__backdrop {
+    display: block;
+    background: rgba(0, 0, 0, 0.65);
+    opacity: 0;
+    /* No CSS transition — GSAP animates this */
+    pointer-events: none;
+  }
+}
+
 /* ── Desktop — centered dropdown with dark backdrop ── */
 @media (min-width: 769px) {
   .mobile-menu {
@@ -212,6 +241,10 @@
 
   .mobile-menu.is-open {
     visibility: visible;
+    pointer-events: auto;
+  }
+
+  .mobile-menu.is-open .mobile-menu__backdrop {
     pointer-events: auto;
   }
 
@@ -225,6 +258,9 @@
   .mobile-menu__card-wrap {
     position: static;
     display: contents;
+    bottom: auto;
+    left: auto;
+    right: auto;
   }
 
   .mobile-menu__topbar {

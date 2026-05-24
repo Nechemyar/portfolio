@@ -45,25 +45,26 @@
   bottom: 0;
   left: 0;
   z-index: 10;
-  width: clamp(34rem, 35vw, 42rem);
+  width: clamp(34rem, 37vw, 46rem);
   max-width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: clamp(1.2rem, 4vw, 1.8rem);
   gap: clamp(0.6rem, 2.5vw, 0.9rem);
-  border: clamp(2px, 0.22vw, 4px) solid #0b0b0b;
+  border: 2px solid $c-ink;
   border-radius: 14px;
-  background: #faf9f7;
+  background: #fff;
+  overflow: hidden;
 }
 
 .hero__kicker {
   margin: 0;
-  color: #050505;
+  color: $c-rust;
   font-family: $font-body;
   font-size: clamp(0.68rem, 1.08vw, 1.18rem);
-  font-weight: 500;
-  letter-spacing: 0;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   line-height: 1;
   text-transform: uppercase;
 }
@@ -89,7 +90,6 @@
 
 .hero__pitch-line {
   display: block;
-  white-space: nowrap;
 }
 
 .hero__cta-row {
@@ -128,26 +128,42 @@
 .hero__pitch-cta {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   flex: 1;
   min-height: clamp(2.6rem, 3.8vw, 4rem);
-  padding: 0.65em 1.5em;
-  border: var(--hero-cta-border) solid #0b0b0b;
+  padding: 0.5em 0.5em 0.5em 1.25em;
+  border: var(--hero-cta-border) solid $c-ink;
   border-radius: var(--hero-cta-radius);
-  background: #FF9C7D;
-  color: #050505;
+  background: $c-ink;
+  color: #fff;
   font-family: $font-body;
-  font-size: clamp(0.92rem, 1.3vw, 1.25rem);
-  font-weight: 700;
-  letter-spacing: 0;
-  line-height: 1;
-  text-transform: uppercase;
   text-decoration: none;
+  gap: 0.75em;
   transition: background 0.25s ease, transform $duration-fast $ease-out;
 }
 
+.hero__pitch-cta-text {
+  font-size: clamp(0.92rem, 1.3vw, 1.25rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.hero__pitch-cta-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(2rem, 3vw, 2.75rem);
+  height: clamp(2rem, 3vw, 2.75rem);
+  border-radius: 50%;
+  background: $c-rust;
+  color: #fff;
+  flex-shrink: 0;
+}
+
 .hero__pitch-cta:hover {
-  background: #f08a68;
+  background: #1a1a1a;
   transform: translateY(-2px);
 }
 
@@ -374,8 +390,17 @@
   .hero__pitch-cta {
     flex: 1;
     min-height: clamp(2.6rem, 10vw, 3rem);
-    font-size: clamp(0.8rem, 3.2vw, 1rem);
     border-width: 2px;
+    padding: 0.4em 0.4em 0.4em 1em;
+  }
+
+  .hero__pitch-cta-text {
+    font-size: clamp(0.8rem, 3.2vw, 1rem);
+  }
+
+  .hero__pitch-cta-circle {
+    width: clamp(2rem, 9vw, 2.6rem);
+    height: clamp(2rem, 9vw, 2.6rem);
   }
 
   .hero__cta-icon {

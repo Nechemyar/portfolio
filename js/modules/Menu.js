@@ -21,9 +21,9 @@ export default class Menu {
 
   _initHidden() {
     if (this._isMobile()) {
-      // Card starts off-screen below; overlay is transparent/pointer-events:none via CSS
       gsap.set(this.menu, { clearProps: 'all' });
       gsap.set(this.wrap, { y: '100%' });
+      gsap.set(this.backdrop, { opacity: 0 });
     } else {
       gsap.set(this.menu, { clearProps: 'clipPath', visibility: 'hidden' });
       gsap.set(this.backdrop, { opacity: 0 });
@@ -70,13 +70,8 @@ export default class Menu {
 
   _openMobile() {
     gsap.set(this.menu, { visibility: 'visible' });
-    // Slide the card up from the bottom
-    gsap.to(this.wrap, {
-      y: '0%',
-      duration: 0.52,
-      ease: 'power4.out',
-    });
-
+    gsap.to(this.backdrop, { opacity: 1, duration: 0.35, ease: 'power2.out' });
+    gsap.to(this.wrap, { y: '0%', duration: 0.52, ease: 'power4.out' });
     gsap.fromTo(this.menuLinks,
       { opacity: 0, y: 14 },
       { opacity: 1, y: 0, duration: 0.3, stagger: 0.05, ease: 'power2.out', delay: 0.3 }
@@ -116,7 +111,7 @@ export default class Menu {
 
   _closeMobile() {
     gsap.to(this.menuLinks, { opacity: 0, y: 6, duration: 0.15, ease: 'power2.in' });
-
+    gsap.to(this.backdrop, { opacity: 0, duration: 0.35, ease: 'power2.in' });
     gsap.to(this.wrap, {
       y: '100%',
       duration: 0.44, ease: 'power4.in', delay: 0.06,

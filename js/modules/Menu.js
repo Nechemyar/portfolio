@@ -21,16 +21,13 @@ export default class Menu {
 
   _initHidden() {
     if (this._isMobile()) {
-      gsap.set(this.menu, { clearProps: 'visibility', clipPath: 'inset(0% 0% 100% 0%)' });
+      // Card starts off-screen below; overlay is transparent/pointer-events:none via CSS
+      gsap.set(this.menu, { clearProps: 'all' });
+      gsap.set(this.wrap, { y: '100%' });
     } else {
       gsap.set(this.menu, { clearProps: 'clipPath', visibility: 'hidden' });
       gsap.set(this.backdrop, { opacity: 0 });
     }
-  }
-
-  _navBottom() {
-    const nav = document.getElementById('nav');
-    return window.innerHeight - nav.getBoundingClientRect().bottom;
   }
 
   init() {
@@ -72,23 +69,17 @@ export default class Menu {
   }
 
   _openMobile() {
-    gsap.set(this.menu, { clearProps: 'visibility', clipPath: `inset(0px 0px ${this._navBottom()}px 0px)` });
-    gsap.set(this.wrap, { y: 56, opacity: 0 });
-
-    gsap.to(this.menu, {
-      clipPath: 'inset(0px 0px 0px 0px)',
-      duration: 0.48,
-      ease: 'power3.out',
-    });
-
+    gsap.set(this.menu, { visibility: 'visible' });
+    // Slide the card up from the bottom
     gsap.to(this.wrap, {
-      y: 0, opacity: 1,
-      duration: 0.44, ease: 'power3.out', delay: 0.14,
+      y: '0%',
+      duration: 0.52,
+      ease: 'power4.out',
     });
 
     gsap.fromTo(this.menuLinks,
-      { opacity: 0, x: -14 },
-      { opacity: 1, x: 0, duration: 0.32, stagger: 0.04, ease: 'power2.out', delay: 0.22 }
+      { opacity: 0, y: 14 },
+      { opacity: 1, y: 0, duration: 0.3, stagger: 0.05, ease: 'power2.out', delay: 0.3 }
     );
   }
 
@@ -124,12 +115,11 @@ export default class Menu {
   }
 
   _closeMobile() {
-    gsap.to(this.menuLinks, { opacity: 0, duration: 0.15 });
-    gsap.to(this.wrap, { y: 56, opacity: 0, duration: 0.28, ease: 'power2.in' });
+    gsap.to(this.menuLinks, { opacity: 0, y: 6, duration: 0.15, ease: 'power2.in' });
 
-    gsap.to(this.menu, {
-      clipPath: `inset(0px 0px ${this._navBottom()}px 0px)`,
-      duration: 0.42, ease: 'power3.in', delay: 0.12,
+    gsap.to(this.wrap, {
+      y: '100%',
+      duration: 0.44, ease: 'power4.in', delay: 0.06,
       onComplete: () => this._resetClosed(),
     });
   }
@@ -150,7 +140,7 @@ export default class Menu {
     document.body.classList.remove('menu-open');
 
     if (this._isMobile()) {
-      gsap.set(this.menu, { clipPath: 'inset(0% 0% 100% 0%)' });
+      gsap.set(this.wrap, { y: '100%' });
     } else {
       gsap.set(this.menu, { visibility: 'hidden' });
     }

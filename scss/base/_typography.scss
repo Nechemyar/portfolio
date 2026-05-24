@@ -3,9 +3,10 @@
 // Add our typography logic
 h1, h2, h3, h4, .font-display {
   font-family: $font-display;
-  line-height: 1.1;
-  font-weight: 700;
+  line-height: 1.0;
+  font-weight: 400;
   letter-spacing: 0;
+  text-transform: uppercase;
 }
 
 .fs-massive { font-size: $fs-massive; letter-spacing: 0; line-height: 0.9; }

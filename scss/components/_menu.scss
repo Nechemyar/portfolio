@@ -1,25 +1,24 @@
 @use '../base/tokens' as *;
 
-/* ── Full-screen mobile menu overlay ── */
+/* ── Mobile menu overlay — transparent, card slides up from bottom ── */
 .mobile-menu {
   position: fixed;
   inset: 0;
-  background: $c-yellow;
+  background: transparent;
   z-index: 1150;
-  visibility: hidden;
-  will-change: clip-path;
+  pointer-events: none;
 }
 
 .mobile-menu.is-open {
-  visibility: visible;
+  pointer-events: auto;
 }
 
-/* ── Backdrop — desktop only, dark overlay behind the card ── */
+/* ── Backdrop — desktop only ── */
 .mobile-menu__backdrop {
   display: none;
 }
 
-/* ── Card wrap — anchors the card at the bottom of the screen ── */
+/* ── Card wrap — pinned to screen bottom ── */
 .mobile-menu__card-wrap {
   position: absolute;
   bottom: 0;
@@ -27,21 +26,21 @@
   right: 0;
 }
 
-/* ── The white card ── */
+/* ── White card ── */
 .mobile-menu__card {
   width: 100%;
   background: #fff;
   border-top: 2px solid $c-ink;
-  border-radius: $r-xl $r-xl 0 0;
+  border-radius: 6px 6px 0 0;
   overflow: hidden;
-  max-height: 90dvh;
+  max-height: 92dvh;
   display: flex;
   flex-direction: column;
 }
 
-/* ── Topbar: logo left, close right ── */
+/* ── Topbar: hidden on mobile, shown on desktop ── */
 .mobile-menu__topbar {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: space-between;
   padding: 0.85rem 1.5rem;
@@ -69,35 +68,35 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ── Nav list ── */
+/* ── Nav list — no dividers, tight vertical rhythm ── */
 .mobile-menu__nav {
   list-style: none;
-  padding: 0;
+  padding: 0.6rem 0 0;
   margin: 0;
   flex: 1;
   overflow-y: auto;
 }
 
-.mobile-menu__nav-item {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
-}
+/* No visible dividers between items */
+.mobile-menu__nav-item {}
 
-/* ── Nav link — large BrandelLuchador items ── */
+/* ── Nav link ── */
 .mobile-menu__link {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   overflow: hidden;
-  padding: 0.3rem 1.5rem;
+  padding: 0 1.25rem;
   text-decoration: none;
   color: $c-rust;
+  line-height: 1;
   -webkit-tap-highlight-color: transparent;
 }
 
 .mobile-menu__link-text {
   font-family: $font-display;
-  font-size: clamp(2.5rem, 10vw, 3.75rem);
+  font-size: clamp(3.2rem, 14vw, 5.5rem);
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.01em;
@@ -106,13 +105,13 @@
   z-index: 2;
 }
 
-/* Circle with arrow — sits on the right */
+/* Arrow circle */
 .mobile-menu__link-arrow-circle {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(2rem, 7vw, 2.75rem);
-  height: clamp(2rem, 7vw, 2.75rem);
+  width: clamp(1.75rem, 6vw, 2.5rem);
+  height: clamp(1.75rem, 6vw, 2.5rem);
   border-radius: 50%;
   border: 2px solid currentColor;
   flex-shrink: 0;
@@ -120,7 +119,7 @@
   z-index: 2;
 }
 
-/* ── Black fill that slides up on hover ── */
+/* ── Black curtain fill — slides up on hover ── */
 .mobile-menu__link-fill {
   position: absolute;
   inset: 0;
@@ -128,15 +127,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.3rem 1.5rem;
+  padding: 0 1.25rem;
   color: #fff;
   transform: translateY(101%);
-  /* No transition here — added only under hover media query */
 }
 
 .mobile-menu__link-fill-text {
   font-family: $font-display;
-  font-size: clamp(2.5rem, 10vw, 3.75rem);
+  font-size: clamp(3.2rem, 14vw, 5.5rem);
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.01em;
@@ -147,14 +145,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(2rem, 7vw, 2.75rem);
-  height: clamp(2rem, 7vw, 2.75rem);
+  width: clamp(1.75rem, 6vw, 2.5rem);
+  height: clamp(1.75rem, 6vw, 2.5rem);
   border-radius: 50%;
   border: 2px solid #fff;
   flex-shrink: 0;
 }
 
-/* Desktop-only hover curtain effect */
+/* Desktop-only curtain hover */
 @media (hover: hover) {
   .mobile-menu__link .mobile-menu__link-fill {
     transition: transform 0.44s cubic-bezier(0.16, 1, 0.3, 1);
@@ -165,12 +163,12 @@
   }
 }
 
-/* ── BOOK A CALL — solid black bar ── */
+/* ── BOOK A CALL bar ── */
 .mobile-menu__cta {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.1rem 1.5rem;
+  padding: 1.1rem 1.25rem;
   background: $c-ink;
   color: #fff;
   text-decoration: none;
@@ -202,7 +200,13 @@
 /* ── Desktop — centered dropdown with dark backdrop ── */
 @media (min-width: 769px) {
   .mobile-menu {
-    background: transparent;
+    visibility: hidden;
+    pointer-events: auto;
+  }
+
+  .mobile-menu.is-open {
+    visibility: visible;
+    pointer-events: auto;
   }
 
   .mobile-menu__backdrop {
@@ -217,6 +221,10 @@
     display: contents;
   }
 
+  .mobile-menu__topbar {
+    display: flex;
+  }
+
   .mobile-menu__card {
     position: absolute;
     top: 70px;
@@ -227,9 +235,8 @@
     width: 500px;
     max-width: calc(100vw - 32px);
     max-height: calc(100vh - 90px);
-    border-radius: $r-lg;
+    border-radius: $r-md;
     border: 2px solid $c-ink;
-    border-top: 2px solid $c-ink;
     overflow-y: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;

@@ -330,15 +330,24 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   height: 2px;
   border-radius: 2px;
   transform-origin: 50% 50%;
-  /* Translate is animated by .nav.is-ready for the entrance; the
-     X morph is driven by .is-open. Keep the two on separate
-     properties so they don't fight. */
   opacity: 0;
   transition:
     opacity 0.55s $ease-out,
     top 0.35s $ease-out,
     transform 0.35s $ease-out,
-    width 0.35s $ease-out;
+    width 0.35s $ease-out,
+    background-color 0.3s ease;
+}
+
+/* Nav turns white on mobile when the card menu is open */
+@media (max-width: 768px) {
+  body.menu-open .nav__logo-svg {
+    filter: brightness(0) invert(1);
+  }
+
+  body.menu-open .nav__menu-line {
+    background: #fff;
+  }
 }
 
 .nav__menu-line--top    { top: 4px;  transform: translateX(-14px); }

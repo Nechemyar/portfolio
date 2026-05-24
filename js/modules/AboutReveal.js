@@ -9,11 +9,13 @@ export default class AboutReveal {
     this.section = document.querySelector('.about');
     if (!this.section) return;
 
-    this.title   = this.section.querySelector('[data-about-heading]');
-    this.header  = this.section.querySelector('.about__header');
+    this.title = this.section.querySelector('[data-about-heading]');
+    this.header = this.section.querySelector('.about__header');
+    this.chat = this.section.querySelector('.about__chat');
+    this.bento = this.section.querySelector('.about__bento');
     this.bubbles = this.section.querySelectorAll('[data-bubble]');
-    this.cells   = this.section.querySelectorAll('[data-bento-cell]');
-    this.icons   = this.section.querySelectorAll('.about__bento-icon svg');
+    this.cells = this.section.querySelectorAll('[data-bento-cell]');
+    this.icons = this.section.querySelectorAll('.about__bento-icon svg');
 
     if (this.title) {
       this.splitTitle = new SplitType(this.title, { types: 'lines,words' });
@@ -25,27 +27,121 @@ export default class AboutReveal {
 
   init() {
     this.mm.add('(prefers-reduced-motion: reduce)', () => {
-      this.section.querySelectorAll('[data-bubble], [data-bento-cell], .about__reaction').forEach(el => {
-        gsap.set(el, { clearProps: 'all' });
+      gsap.set([this.bubbles, this.cells, this.section.querySelectorAll('.about__reaction')], {
+        clearProps: 'all',
       });
-      if (this.icons.length) {
-        this.icons.forEach(svg => {
-          svg.querySelectorAll('path, circle, polyline, line').forEach(p => {
-            p.style.strokeDashoffset = '0';
-          });
-        });
-      }
+      this._drawIconsInstantly();
     });
 
-    this.mm.add('(prefers-reduced-motion: no-preference)', () => {
-      this._titleReveal();
-      this._bubbleReveal();
-      this._bentoReveal();
+    this.mm.add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', () => {
+      this._desktopPinnedSequence();
+    });
+
+    this.mm.add('(max-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
+      this._mobileReveal();
     });
   }
 
-  _titleReveal() {
-    if (!this.title) return;
+  _desktopPinnedSequence() {
+    if (!this.chat || !this.bento || !this.bubbles.length) return;
+
+    this._titleReveal(this.header, 'top 80%');
+    this._bentoReveal();
+
+    gsap.set(this.bubbles, {
+      y: () => window.innerHeight * 0.7,
+      autoAlpha: 0,
+      scale: 0.94,
+      transformOrigin: 'left bottom',
+    });
+    gsap.set(this.bubbles[0], {
+      y: 0,
+      autoAlpha: 1,
+      scale: 1,
+    });
+    gsap.set(this.section.querySelectorAll('.about__reaction'), {
+      scale: 0,
+      autoAlpha: 0,
+      transformOrigin: 'left center',
+    });
+
+    const tl = gsap.timeline({
+      defaults: { ease: 'none' },
+      scrollTrigger: {
+        trigger: this.section,
+        start: 'top top',
+        end: () => `+=${this.bubbles.length * window.innerHeight * 0.75}`,
+        pin: this.section,
+        scrub: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    this.bubbles.forEach((bubble, index) => {
+      const reactions = bubble.querySelectorAll('.about__reaction');
+      const at = index * 0.85;
+
+      if (index > 0) {
+        tl.to(bubble, {
+          y: 0,
+          autoAlpha: 1,
+          scale: 1,
+          duration: 0.38,
+          ease: 'back.out(1.4)',
+        }, at);
+      }
+
+      if (reactions.length) {
+        if (index === 0) {
+          gsap.set(reactions, { scale: 1, autoAlpha: 1 });
+        }
+
+        tl.to(reactions, {
+          scale: 1,
+          autoAlpha: 1,
+          duration: 0.16,
+          stagger: 0.04,
+          ease: 'back.out(2)',
+        }, at + 0.24);
+      }
+
+      tl.to(bubble, {
+        y: () => -window.innerHeight * 0.46,
+        autoAlpha: 0,
+        scale: 0.98,
+        duration: 0.35,
+      }, at + 0.78);
+    });
+  }
+
+  _mobileReveal() {
+    this._titleReveal(this.header, 'top 86%');
+
+    if (this.bubbles.length) {
+      gsap.fromTo(this.bubbles,
+        { y: 32, autoAlpha: 0, scale: 0.96 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          scale: 1,
+          duration: 0.65,
+          stagger: 0.12,
+          ease: 'back.out(1.35)',
+          scrollTrigger: {
+            trigger: this.chat,
+            start: 'top 88%',
+            once: true,
+          },
+        }
+      );
+    }
+
+    this._bentoReveal();
+  }
+
+  _titleReveal(trigger, start) {
+    if (!this.title || !trigger) return;
     const words = this.title.querySelectorAll('.word');
     if (!words.length) return;
 
@@ -58,106 +154,75 @@ export default class AboutReveal {
         stagger: 0.04,
         ease: 'power4.out',
         scrollTrigger: {
-          trigger: this.header,
-          start: 'top 85%',
+          trigger,
+          start,
           once: true,
-        }
+        },
       }
     );
-  }
-
-  _bubbleReveal() {
-    if (!this.bubbles.length) return;
-
-    // Each bubble pops in with a spring bounce, staggered by 0.3s each
-    this.bubbles.forEach((bubble, i) => {
-      const isPhoto = bubble.classList.contains('about__bubble--photo');
-      const reactions = bubble.querySelectorAll('.about__reaction');
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: this.section.querySelector('.about__chat'),
-          start: 'top 80%',
-          once: true,
-        }
-      });
-
-      // Pop: scale from 0.6 + slight upward offset, spring out
-      tl.fromTo(bubble,
-        { scale: 0.6, autoAlpha: 0, y: 12, transformOrigin: 'left bottom' },
-        {
-          scale: 1,
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.5,
-          ease: 'back.out(1.7)',
-          delay: i * 0.28,
-        }
-      );
-
-      // Reactions ping in after the bubble lands (only text bubbles have them)
-      if (!isPhoto && reactions.length) {
-        tl.fromTo(reactions,
-          { scale: 0, autoAlpha: 0 },
-          {
-            scale: 1,
-            autoAlpha: 1,
-            duration: 0.35,
-            stagger: 0.07,
-            ease: 'back.out(2)',
-          },
-          // Offset from this bubble's entry point in the timeline
-          i * 0.28 + 0.38
-        );
-      }
-    });
   }
 
   _bentoReveal() {
     if (!this.cells.length) return;
 
     gsap.fromTo(this.cells,
-      { y: 20, autoAlpha: 0 },
+      { y: 22, autoAlpha: 0 },
       {
         y: 0,
         autoAlpha: 1,
         duration: 0.7,
-        stagger: 0.1,
+        stagger: 0.08,
         ease: 'power3.out',
         scrollTrigger: {
-          trigger: this.section.querySelector('.about__bento'),
-          start: 'top 88%',
+          trigger: this.bento,
+          start: 'top 85%',
           once: true,
-        }
+        },
       }
     );
 
-    // SVG stroke-draw
-    if (this.icons.length) {
-      this.icons.forEach(svg => {
-        const paths = svg.querySelectorAll('path, circle, polyline, line');
-        if (!paths.length) return;
+    this._drawIcons();
+  }
 
-        const lengths = Array.from(paths).map(p => {
-          try { return p.getTotalLength(); } catch { return 60; }
-        });
+  _drawIcons() {
+    if (!this.icons.length) return;
 
-        paths.forEach((p, i) => {
-          gsap.set(p, { strokeDasharray: lengths[i], strokeDashoffset: lengths[i] });
-        });
+    this.icons.forEach((svg) => {
+      const paths = svg.querySelectorAll('path, circle, polyline, line');
+      if (!paths.length) return;
 
-        gsap.to(paths, {
-          strokeDashoffset: 0,
-          duration: 0.9,
-          stagger: 0.06,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: svg,
-            start: 'top 90%',
-            once: true,
-          }
+      const lengths = Array.from(paths).map((path) => {
+        try { return path.getTotalLength(); } catch { return 60; }
+      });
+
+      paths.forEach((path, index) => {
+        gsap.set(path, {
+          strokeDasharray: lengths[index],
+          strokeDashoffset: lengths[index],
         });
       });
-    }
+
+      gsap.to(paths, {
+        strokeDashoffset: 0,
+        duration: 0.9,
+        stagger: 0.06,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: svg,
+          start: 'top 90%',
+          once: true,
+        },
+      });
+    });
+  }
+
+  _drawIconsInstantly() {
+    if (!this.icons.length) return;
+
+    this.icons.forEach((svg) => {
+      svg.querySelectorAll('path, circle, polyline, line').forEach((path) => {
+        path.style.strokeDashoffset = '0';
+      });
+    });
   }
 }

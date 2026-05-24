@@ -1,41 +1,49 @@
 @use '../base/tokens' as *;
 
-// ——————————————————————————————————————————————
-// About — Chat Bubbles + Bento Grid Layout
-// ——————————————————————————————————————————————
+// About - pinned chat feed with fixed bento panel
 
 .about {
   background: $c-cream;
-  padding: clamp(5rem, 9vw, 7rem) $page-padding;
   color: $c-ink;
+  min-height: 100vh;
   overflow: hidden;
   position: relative;
 }
 
 .about__inner {
-  max-width: 1200px;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 1680px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(2.5rem, 5vw, 4rem);
+  display: grid;
+  grid-template-columns: minmax(0, 0.4fr) minmax(0, 0.6fr);
+  gap: clamp(1rem, 2vw, 2rem);
+  padding: clamp(5.75rem, 9vh, 7rem) $page-padding clamp(1rem, 2vh, 1.5rem);
 }
 
-// ——————————————————————————————————————————————
-// Header
-// ——————————————————————————————————————————————
+.about__left {
+  height: calc(100vh - clamp(6.75rem, 11vh, 8.5rem));
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: clamp(1.5rem, 3vh, 2.25rem);
+  overflow: hidden;
+}
 
 .about__header {
   display: flex;
   flex-direction: column;
   gap: $space-16;
+  align-self: start;
 }
 
 .about__title {
+  max-width: 9ch;
   font-family: $font-display;
-  font-size: $fs-3xl;
+  font-size: clamp(3.1rem, 6.2vw, 6.8rem);
   font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.025em;
+  line-height: 0.96;
+  letter-spacing: 0;
   color: $c-ink;
   margin: 0;
 
@@ -51,66 +59,54 @@
   }
 }
 
-// ——————————————————————————————————————————————
-// Body: Chat (left) + Bento (right)
-// ——————————————————————————————————————————————
-
-.about__body {
-  display: grid;
-  grid-template-columns: 1fr 0.85fr;
-  gap: clamp(2rem, 4vw, 3.5rem);
-  align-items: start;
-}
-
-// ——————————————————————————————————————————————
-// Chat column
-// ——————————————————————————————————————————————
-
 .about__chat {
-  display: flex;
-  flex-direction: column;
-  // Extra gap so floated reactions have clearance below each bubble
-  gap: $space-32;
+  height: 100vh;
+  max-height: calc(100vh - clamp(6.75rem, 11vh, 8.5rem));
+  min-height: 0;
+  position: relative;
+  overflow: visible;
 }
 
 .about__bubble {
+  width: min(100%, 32rem);
   background: $c-warm-white;
   border: 2px solid $c-ink;
-  border-radius: $r-lg $r-lg $r-lg 4px;
-  padding: $space-16 $space-16 $space-12;
-  max-width: 480px;
-  position: relative;
-  // Bottom margin absorbs the floating reaction badges
-  margin-bottom: $space-8;
+  border-radius: 18px 18px 18px 5px;
+  padding: clamp(1rem, 1.6vw, 1.35rem);
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translateY(100vh);
   will-change: transform, opacity;
 
   p {
     font-family: $font-body;
-    font-size: clamp(0.95rem, 1.1vw, 1.05rem);
-    line-height: 1.6;
+    font-size: clamp(1rem, 1.12vw, 1.15rem);
+    line-height: 1.55;
     color: $c-text-secondary;
     font-weight: 500;
     margin: 0;
   }
 }
 
-// Photo as a chat bubble (inline "sent photo" style)
+.about__bubble:nth-child(even) {
+  left: clamp(1rem, 5vw, 5rem);
+}
+
 .about__bubble--photo {
-  padding: 5px;
-  max-width: 280px;
-  margin-bottom: $space-8;
+  width: min(76%, 19rem);
+  padding: 6px;
 
   img {
     width: 100%;
-    height: 240px;
+    height: clamp(13rem, 27vh, 17rem);
     object-fit: cover;
     object-position: 50% 15%;
-    border-radius: 10px;
+    border-radius: 12px;
     display: block;
   }
 }
 
-// Reactions float outside the bubble at the bottom-left edge
 .about__reactions {
   position: absolute;
   bottom: -20px;
@@ -144,25 +140,62 @@
   }
 }
 
-// ——————————————————————————————————————————————
-// Bento grid — uniform 2×3, no spanning cells
-// ——————————————————————————————————————————————
-
 .about__bento {
+  height: 100vh;
+  max-height: calc(100vh - clamp(6.75rem, 11vh, 8.5rem));
+  min-height: 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: $space-12;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-rows: repeat(6, minmax(0, 1fr));
+  gap: clamp(0.75rem, 1.3vw, 1rem);
+  padding-bottom: clamp(1rem, 2vh, 1.5rem);
 }
 
 .about__bento-cell {
   background: $c-warm-white;
   border: 2px solid $c-ink;
   border-radius: $r-md;
-  padding: $space-16;
+  padding: clamp(0.85rem, 1.4vw, 1.25rem);
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: $space-8;
+  gap: $space-12;
+  overflow: hidden;
   will-change: transform, opacity;
+}
+
+.about__bento-cell--profile {
+  grid-row: span 2;
+  grid-column: 1 / span 3;
+  grid-row: 1 / span 3;
+  background: $c-yellow;
+}
+
+.about__bento-cell--reach {
+  grid-column: 4 / span 3;
+  grid-row: 1 / span 2;
+}
+
+.about__bento-cell--wide {
+  grid-column: span 2;
+  grid-column: 4 / span 3;
+  grid-row: 3 / span 2;
+  background: $c-paper;
+}
+
+.about__bento-cell--ships {
+  grid-column: 1 / span 2;
+  grid-row: 5 / span 2;
+}
+
+.about__bento-cell--stack {
+  grid-column: 3 / span 2;
+  grid-row: 5 / span 2;
+}
+
+.about__bento-cell--access {
+  grid-column: 5 / span 2;
+  grid-row: 5 / span 2;
 }
 
 .about__bento-icon {
@@ -170,8 +203,8 @@
   flex-shrink: 0;
 
   svg {
-    width: 24px;
-    height: 24px;
+    width: clamp(1.5rem, 2vw, 2rem);
+    height: clamp(1.5rem, 2vw, 2rem);
     display: block;
     stroke: currentColor;
     fill: none;
@@ -187,56 +220,101 @@
   font-size: $fs-xs;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
   color: $c-text-tertiary;
   margin-top: auto;
 }
 
 .about__bento-value {
+  max-width: 12ch;
   font-family: $font-display;
-  font-size: $fs-base;
-  font-weight: 700;
+  font-size: clamp(1.1rem, 1.72vw, 1.95rem);
+  font-weight: 500;
   color: $c-ink;
-  line-height: 1.25;
+  line-height: 1.02;
+  letter-spacing: 0;
 }
 
-// ——————————————————————————————————————————————
-// Mobile & Tablet
-// ——————————————————————————————————————————————
+.about__bento-cell--wide .about__bento-value {
+  max-width: none;
+}
 
 @media (max-width: 900px) {
   .about {
-    padding: clamp(4rem, 8vw, 5.5rem) $page-padding;
+    min-height: auto;
+    overflow: visible;
   }
 
-  .about__body {
-    grid-template-columns: 1fr;
+  .about__inner {
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
     gap: $space-48;
+    padding: clamp(5.75rem, 18vw, 7rem) $page-padding clamp(4rem, 10vw, 5.5rem);
+  }
+
+  .about__left {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
   }
 
   .about__title {
-    font-size: clamp(2.5rem, 8vw, 3.5rem);
+    max-width: 10ch;
+    font-size: clamp(2.6rem, 13vw, 4.35rem);
   }
 
-  .about__bubble {
-    max-width: 100%;
+  .about__chat {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: $space-32;
+  }
+
+  .about__bubble,
+  .about__bubble:nth-child(even) {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
   }
 
   .about__bubble--photo {
-    max-width: 260px;
+    width: min(74vw, 18rem);
   }
 
   .about__bento {
+    height: auto;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: none;
+    padding-bottom: 0;
   }
 
-  .about__bento-cell {
-    padding: $space-16;
+  .about__bento-cell--profile,
+  .about__bento-cell--reach,
+  .about__bento-cell--wide,
+  .about__bento-cell--ships,
+  .about__bento-cell--stack,
+  .about__bento-cell--access {
+    grid-column: span 2;
+    grid-row: auto;
   }
 }
 
 @media (max-width: 480px) {
   .about__bento {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+  }
+
+  .about__bento-cell--profile,
+  .about__bento-cell--reach,
+  .about__bento-cell--wide,
+  .about__bento-cell--ships,
+  .about__bento-cell--stack,
+  .about__bento-cell--access {
+    grid-column: auto;
+    grid-row: auto;
   }
 }

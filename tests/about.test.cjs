@@ -30,17 +30,24 @@ test('About section markup uses chat+bento layout structure', () => {
   assert.match(html, /class="about__bento-value"/);
 });
 
-test('About CSS uses transparent background, chat bubbles, and bento grid', () => {
+test('About CSS uses pinned split layout with scrollable chat and fixed bento panel', () => {
   const scss = read('scss/components/_about.scss');
 
   // Section has an explicit background (cream, not transparent/yellow)
   assert.match(scss, /\.about\s*\{[\s\S]*background:\s*\$c-cream/);
+  assert.match(scss, /\.about\s*\{[\s\S]*min-height:\s*100vh/);
+  assert.match(scss, /\.about__inner\s*\{[\s\S]*min-height:\s*100vh/);
+  assert.match(scss, /\.about__inner\s*\{[\s\S]*grid-template-columns:\s*minmax\(0,\s*0\.4fr\)\s+minmax\(0,\s*0\.6fr\)/);
+  assert.match(scss, /\.about__chat\s*\{[\s\S]*height:\s*100vh/);
+  assert.match(scss, /\.about__bento\s*\{[\s\S]*height:\s*100vh/);
   // Chat bubble styles
   assert.match(scss, /\.about__bubble\s*\{/);
   assert.match(scss, /\.about__reaction\s*\{/);
   // Bento grid styles
   assert.match(scss, /\.about__bento\s*\{/);
   assert.match(scss, /\.about__bento-cell\s*\{/);
+  assert.match(scss, /\.about__bento-cell--profile\s*\{[\s\S]*grid-row:\s*span 2/);
+  assert.match(scss, /\.about__bento-cell--wide\s*\{[\s\S]*grid-column:\s*span 2/);
   assert.match(scss, /\.about__bento-icon\s*\{/);
   // SVG stroke-draw initial state
   assert.match(scss, /stroke-dashoffset:\s*200/);
@@ -49,14 +56,20 @@ test('About CSS uses transparent background, chat bubbles, and bento grid', () =
   // Hover gated correctly
   assert.match(scss, /@media \(hover: hover\)/);
   // Inner layout
-  assert.match(scss, /\.about__inner\s*\{[\s\S]*display:\s*(grid|flex)/);
+  assert.match(scss, /\.about__inner\s*\{[\s\S]*display:\s*grid/);
 });
 
-test('AboutReveal module is imported and instantiated in main.js', () => {
+test('AboutReveal module pins desktop section and scrubs bubbles through the left column', () => {
   const main = read('js/main.js');
+  const module = read('js/modules/AboutReveal.js');
 
   assert.match(main, /import AboutReveal from/);
   assert.match(main, /new AboutReveal\(\)/);
+  assert.match(module, /_desktopPinnedSequence/);
+  assert.match(module, /pin:\s*this\.section/);
+  assert.match(module, /scrub:\s*true/);
+  assert.match(module, /end:\s*\(\)\s*=>\s*`\+=\$\{this\.bubbles\.length \* window\.innerHeight \* 0\.75\}`/);
+  assert.match(module, /_mobileReveal/);
 });
 
 test('Phase 5 services uses transparent background and new item layout', () => {

@@ -199,8 +199,7 @@ All GSAP + ScrollTrigger. No CSS transitions on GSAP properties. All gated with 
 - [x] Background: explicit $c-cream (not transparent/yellow)
 - [x] AboutReveal.js spring pop animation (back.out bounce, staggered)
 - [x] AboutReveal imported in main.js (was missing)
-- [ ] **LAYOUT WRONG** — current is a scrollable section with 6-cell uniform bento
-- [ ] **CORRECT DESIGN** — full-viewport pinned split layout:
+- [x] **LAYOUT REBUILT** — current is now the full-viewport pinned split layout:
     - Section = 100vh, nothing scrolls off screen
     - LEFT (40%): chat bubbles column — user scrolls *through* the bubbles
       (ScrollTrigger pinned section, bubbles progress as user scrolls)
@@ -209,7 +208,7 @@ All GSAP + ScrollTrigger. No CSS transitions on GSAP properties. All gated with 
       spanning the full viewport height beside the chat column
     - The bento IS the right panel. It stays put. The bubbles animate in as the
       left side scrolls. Think: sticky right panel + scrolling left feed.
-- [ ] Rebuild HTML, SCSS, JS to match the correct design above
+- [x] Rebuild HTML, SCSS, JS to match the correct design above
 
 ### Phase 5: Services + what's included
 - [ ] Build the honest feature list/grid
@@ -251,10 +250,10 @@ All GSAP + ScrollTrigger. No CSS transitions on GSAP properties. All gated with 
 - [x] Phase 1: Foundation
 - [x] Phase 2: Work showcase
 - [x] Phase 3: How it works
-- [x] Phase 4: About (partial — copy/animation done, layout needs rebuild)
+- [x] Phase 4: About
 
 ### Current phase
-Phase 4 layout rebuild (About section), then Phase 5: Services
+Phase 5: Services + what's included
 
 ### Decisions made
 - Cat is the brand, will appear in 3-4 places across the site
@@ -270,37 +269,18 @@ Phase 4 layout rebuild (About section), then Phase 5: Services
 
 ### Next session — START HERE
 
-**Priority 1: Rebuild About section layout**
+**Priority 1: Phase 5 Services**
 
-The copy, animation style, and photo-as-bubble are all approved. Only the layout is wrong.
-
-Target design:
-- Section height = 100vh (fits in one viewport, no overflow scroll on the section itself)
-- LEFT column (~45%): chat bubbles stacked. The *page* scroll drives the bubbles — use ScrollTrigger to pin the section and reveal each bubble as the user scrolls through ~4 scroll lengths. Each bubble pops in (back.out spring) as its scroll position is reached.
-- RIGHT column (~55%): full-height editorial bento grid. Stays fixed while left side scrolls. Height = 100vh minus section padding. Asymmetric cell sizes (not uniform 6-equal). Design it like a magazine spread: 2 large cells + 4 smaller, or a mix of tall and wide.
-- On mobile: drop the pinned layout entirely, stack normally (header → bubbles → bento).
-
-Implementation approach:
-1. Wrap section in a ScrollTrigger pin of ~400vh total scroll distance
-2. Left column: bubbles start invisible, pop in sequentially at scroll milestones (0%, 25%, 50%, 75%)
-3. Right column: `position: sticky; top: 0; height: 100vh` — stays put throughout
-4. SCSS: `.about` height: 100vh on desktop, auto on mobile
-
-Bento cell ideas (asymmetric, not uniform):
-- Large top-left: location + a decorative element
-- Large right: a short bold statement or the stack
-- Small cells: timeline, pricing, access, remote
-
-**Priority 2 after that: Phase 5 Services**
+Rebuild the Services section as an honest feature checklist/grid. Include custom design, hand-coded development, responsive QA, SEO foundations, accessibility compliance, and CMS when needed. The goal is to make it clear what the price buys, not to sell the services abstractly.
 
 Note: hero CTA button still uses hardcoded #FF9C7D. Fix in Phase 8 polish pass.
 
 ### State of About section files (as of session end)
-- `scss/components/_about.scss` — has chat bubble + 6-cell bento styles, needs layout rebuild
-- `index.html` — has correct copy and structure, needs layout change
-- `js/modules/AboutReveal.js` — has spring pop animations, needs ScrollTrigger pin logic
-- `tests/about.test.cjs` — 15/15 passing, will need updates after rebuild
-- All pushed to main, build passes
+- `index.html` — About is a two-panel layout: left header/chat, right editorial bento
+- `scss/components/_about.scss` — desktop is a 100vh pinned split; mobile stacks header, bubbles, then bento
+- `js/modules/AboutReveal.js` — desktop ScrollTrigger pins the section and scrubs bubbles through the left column; mobile uses simple reveal
+- `tests/about.test.cjs` — updated to cover pinned split layout and AboutReveal pin logic
+- Verification: `npm test` passes (15 tests), `npm run build` passes, browser checked desktop 1250x771 and mobile 457x897
 
 Latest Phase 2 verification:
 - `npm test` passes (3 tests)

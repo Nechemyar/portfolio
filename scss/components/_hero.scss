@@ -5,7 +5,7 @@
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
-  background: #FFB93E;
+  background: #f39e38;
 }
 
 .hero__stage {
@@ -14,7 +14,7 @@
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
-  background: #FFB93E;
+  background: #f39e38;
   isolation: isolate;
   padding: clamp(6.75rem, 13vh, 8.5rem) clamp(0.75rem, 1.2vw, 1.25rem) clamp(1rem, 2vw, 1.5rem);
 }
@@ -35,7 +35,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #FFB93E;
+  background: #f39e38;
   border: none;
   border-radius: 0;
 }
@@ -174,7 +174,6 @@
 
 .hero__cat-wrapper--base {
   z-index: 2;
-  mix-blend-mode: multiply;
 }
 
 .hero__cat-wrapper--screen {
@@ -200,8 +199,8 @@
   height: 100%;
   overflow: hidden;
   background: #000;
-  -webkit-mask-image: url('../../assets/images/mobmask.webp');
-  mask-image: url('../../assets/images/mobmask.webp');
+  -webkit-mask-image: url('../../assets/images/orangemask.webp');
+  mask-image: url('../../assets/images/orangemask.webp');
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
@@ -296,12 +295,12 @@
     gap: 0;
   }
 
-  /* TV section — solid background ensures multiply blend works */
+  /* TV section */
   .hero__work-card {
     position: relative;
     flex: 1 1 auto;
     min-height: 0;
-    background: #FFB93E;
+    background: #f39e38;
     border: none;
     border-radius: 0;
     display: flex;

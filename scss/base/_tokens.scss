@@ -15,15 +15,15 @@ $fs-massive: clamp(4.5rem, 12vw, 11rem);
 
 // Font Families
 $font-body: 'Satoshi', 'DM Sans', sans-serif;
-$font-display: $font-body;
+$font-display: 'BrandelLuchador', sans-serif;
 
 // Colors — 2026 rebuild palette
-$c-yellow:     #FFB93E;  // Hero bg, accent bands, highlight moments
-$c-mustard:    #D4940A;  // Borders on yellow bg, hover states
+$c-yellow:     #f39e38;  // Hero bg, accent bands, highlight moments
+$c-mustard:    #c07820;  // Borders on yellow bg, hover states
 $c-cream:      #FAF9F7;  // Content card backgrounds, body text areas
 $c-warm-white: #FFFDF9;  // Subtle alternative to cream for layering
-$c-rust:       #C75B2A;  // Primary CTA fill, strong accent
-$c-rust-hover: #D96830;  // Hover state for rust CTAs
+$c-rust:       #d07933;  // Primary CTA fill, strong accent
+$c-rust-hover: #b85e22;  // Hover state for rust CTAs
 $c-ink:        #1A1A1A;  // Text, dark sections, nav on light backgrounds
 $c-charcoal:   #2C2C2C;  // Dark section backgrounds
 $c-paper:      #F3EDE6;  // Cards sitting on cream, subtle depth

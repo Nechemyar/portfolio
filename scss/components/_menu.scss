@@ -1,7 +1,6 @@
 @use '../base/tokens' as *;
 
-/* ── Full-screen mobile menu — morphs from the nav bar via clip-path ── */
-
+/* ── Full-screen mobile menu overlay ── */
 .mobile-menu {
   position: fixed;
   inset: 0;
@@ -15,21 +14,43 @@
   visibility: visible;
 }
 
-/* ── Topbar — absolutely placed so the card can be content-sized ── */
-.mobile-menu__topbar {
+/* ── Backdrop — desktop only, dark overlay behind the card ── */
+.mobile-menu__backdrop {
+  display: none;
+}
+
+/* ── Card wrap — anchors the card at the bottom of the screen ── */
+.mobile-menu__card-wrap {
   position: absolute;
-  top: 0;
+  bottom: 0;
   left: 0;
   right: 0;
+}
+
+/* ── The white card ── */
+.mobile-menu__card {
+  width: 100%;
+  background: #fff;
+  border-top: 2px solid $c-ink;
+  border-radius: $r-xl $r-xl 0 0;
+  overflow: hidden;
+  max-height: 90dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Topbar: logo left, close right ── */
+.mobile-menu__topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.85rem 1.25rem;
-  z-index: 2;
+  padding: 0.85rem 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  flex-shrink: 0;
 }
 
 .mobile-menu__top-logo-img {
-  height: clamp(2rem, 9vw, 2.6rem);
+  height: clamp(1.75rem, 8vw, 2.4rem);
   width: auto;
   display: block;
 }
@@ -43,58 +64,9 @@
   background: none;
   border: none;
   color: $c-ink;
+  cursor: pointer;
   padding: 0;
   -webkit-tap-highlight-color: transparent;
-}
-
-/* ── Backdrop — hidden on mobile, dark overlay on desktop ── */
-.mobile-menu__backdrop {
-  display: none;
-}
-
-/* ── Wrap — anchors peek image + card together at the bottom ── */
-.mobile-menu__card-wrap {
-  position: absolute;
-  bottom: 8px;
-  left: 8px;
-  right: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* ── Peeking character — overlaps the card's top edge ── */
-.mobile-menu__peek {
-  width: clamp(130px, 42vw, 200px);
-  height: auto;
-  display: block;
-  position: relative;
-  z-index: 2;
-  margin-bottom: -3.5rem;
-  pointer-events: none;
-  user-select: none;
-}
-
-/* ── White card — content-sized, sits inside the wrap ── */
-.mobile-menu__card {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: auto;
-  max-height: calc(100dvh - 9rem);
-  background: #fff;
-  border: 2px solid $c-ink;
-  border-radius: $r-md;
-  overflow-y: auto;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.mobile-menu__card::-webkit-scrollbar {
-  display: none;
 }
 
 /* ── Nav list ── */
@@ -102,142 +74,129 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  padding-top: 0.85rem;
+  flex: 1;
+  overflow-y: auto;
 }
 
-/* Dividers inset to match text padding */
-.mobile-menu__nav li {
-  position: relative;
+.mobile-menu__nav-item {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
 }
 
-.mobile-menu__nav li + li::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 1.5rem;
-  right: 1.5rem;
-  height: 1px;
-  background: rgba(0, 0, 0, 0.07);
-}
-
+/* ── Nav link — large BrandelLuchador items ── */
 .mobile-menu__link {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.58rem 1.5rem;
-  font-family: $font-body;
-  font-size: clamp(1rem, 4.5vw, 1.15rem);
-  font-weight: 500;
-  color: $c-ink;
+  overflow: hidden;
+  padding: 0.3rem 1.5rem;
   text-decoration: none;
+  color: $c-rust;
   -webkit-tap-highlight-color: transparent;
 }
 
-.mobile-menu__chevron {
-  color: $c-ink;
-  opacity: 0.3;
-  flex-shrink: 0;
+.mobile-menu__link-text {
+  font-family: $font-display;
+  font-size: clamp(2.5rem, 10vw, 3.75rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 2;
 }
 
-.mobile-menu__chevron--sm {
-  opacity: 0.3;
-}
-
-/* ── WhatsApp row ── */
-.mobile-menu__wa-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 12px 12px 0;
-  padding: 0.85rem 1rem;
-  background: $c-paper;
-  border-radius: $r-sm;
-  text-decoration: none;
-  color: $c-ink;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.mobile-menu__wa-icon-wrap {
+/* Circle with arrow — sits on the right */
+.mobile-menu__link-arrow-circle {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  background: $c-cream;
-  border: 1.5px solid rgba(0, 0, 0, 0.1);
-  border-radius: $r-sm;
+  width: clamp(2rem, 7vw, 2.75rem);
+  height: clamp(2rem, 7vw, 2.75rem);
+  border-radius: 50%;
+  border: 2px solid currentColor;
   flex-shrink: 0;
-  color: $c-ink;
+  position: relative;
+  z-index: 2;
 }
 
-.mobile-menu__wa-text {
-  flex: 1;
+/* ── Black fill that slides up on hover ── */
+.mobile-menu__link-fill {
+  position: absolute;
+  inset: 0;
+  background: $c-ink;
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.3rem 1.5rem;
+  color: #fff;
+  transform: translateY(101%);
+  /* No transition here — added only under hover media query */
 }
 
-.mobile-menu__wa-title {
-  font-size: clamp(0.85rem, 3.5vw, 0.95rem);
-  font-weight: 700;
-  color: $c-ink;
-  line-height: 1.2;
+.mobile-menu__link-fill-text {
+  font-family: $font-display;
+  font-size: clamp(2.5rem, 10vw, 3.75rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
 }
 
-.mobile-menu__wa-sub {
-  font-size: clamp(0.72rem, 3vw, 0.8rem);
-  color: $c-text-secondary;
-  line-height: 1.3;
+.mobile-menu__link-fill-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(2rem, 7vw, 2.75rem);
+  height: clamp(2rem, 7vw, 2.75rem);
+  border-radius: 50%;
+  border: 2px solid #fff;
+  flex-shrink: 0;
 }
 
-/* ── Book CTA ── */
+/* Desktop-only hover curtain effect */
+@media (hover: hover) {
+  .mobile-menu__link .mobile-menu__link-fill {
+    transition: transform 0.44s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .mobile-menu__link:hover .mobile-menu__link-fill {
+    transform: translateY(0);
+  }
+}
+
+/* ── BOOK A CALL — solid black bar ── */
 .mobile-menu__cta {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 10px 12px 0;
-  padding: 1rem 1.15rem;
-  background: #FF9C7D;
-  color: $c-ink;
-  font-family: $font-body;
-  font-weight: 800;
-  font-size: clamp(0.88rem, 4vw, 1rem);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  border-radius: $r-sm;
+  padding: 1.1rem 1.5rem;
+  background: $c-ink;
+  color: #fff;
   text-decoration: none;
+  flex-shrink: 0;
   -webkit-tap-highlight-color: transparent;
 }
 
+.mobile-menu__cta-text {
+  font-family: $font-body;
+  font-size: clamp(0.9rem, 3.5vw, 1rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Orange circle with diagonal arrow */
 .mobile-menu__cta-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  background: rgba(0, 0, 0, 0.14);
-  border-radius: 6px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: $c-rust;
+  color: #fff;
   flex-shrink: 0;
-}
-
-/* ── Trust badge ── */
-.mobile-menu__trust {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 0.9rem 1.5rem 1rem;
-}
-
-.mobile-menu__trust-shield {
-  display: flex;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-
-.mobile-menu__trust p {
-  font-size: clamp(0.7rem, 3vw, 0.78rem);
-  color: $c-text-secondary;
-  line-height: 1.55;
 }
 
 /* ── Desktop — centered dropdown with dark backdrop ── */
@@ -253,18 +212,9 @@
     background: rgba(0, 0, 0, 0.55);
   }
 
-  .mobile-menu__topbar {
-    display: none;
-  }
-
-  /* Wrap is a transparent passthrough on desktop; card positions itself. */
   .mobile-menu__card-wrap {
     position: static;
     display: contents;
-  }
-
-  .mobile-menu__peek {
-    display: none;
   }
 
   .mobile-menu__card {
@@ -274,9 +224,18 @@
     left: 0;
     right: 0;
     margin: 0 auto;
-    width: 440px;
+    width: 500px;
     max-width: calc(100vw - 32px);
     max-height: calc(100vh - 90px);
-    border-radius: $r-md;
+    border-radius: $r-lg;
+    border: 2px solid $c-ink;
+    border-top: 2px solid $c-ink;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .mobile-menu__card::-webkit-scrollbar {
+    display: none;
   }
 }

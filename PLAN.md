@@ -193,14 +193,23 @@ All GSAP + ScrollTrigger. No CSS transitions on GSAP properties. All gated with 
 - [x] Animate steps in sequence on scroll
 - [x] Write copy (humanize pass done; detect-ai API key unavailable locally)
 
-### Phase 4: About
-- [x] Redesign layout to match new palette and spacing
-- [x] Rewrite copy — direct voice, specific numbers, no em dashes, no agency fluff
-- [x] About label changed to yellow tag (matching hero visual language)
-- [x] About meta tags replace single signature line (location + worldwide + design+code)
-- [x] Services background corrected from $c-yellow to $c-cream (matches data-bg)
-- [x] Services card labels changed to yellow, card bodies to $c-paper for depth
-- [x] Background transition from yellow → cream works via existing BgScroll.js
+### Phase 4: About ← NEEDS REBUILD (design direction changed mid-session)
+- [x] Chat bubble layout (photo inline as bubble, reactions floating outside)
+- [x] Copy rewritten — no em dashes, no choppy sentences, conversational voice
+- [x] Background: explicit $c-cream (not transparent/yellow)
+- [x] AboutReveal.js spring pop animation (back.out bounce, staggered)
+- [x] AboutReveal imported in main.js (was missing)
+- [ ] **LAYOUT WRONG** — current is a scrollable section with 6-cell uniform bento
+- [ ] **CORRECT DESIGN** — full-viewport pinned split layout:
+    - Section = 100vh, nothing scrolls off screen
+    - LEFT (40%): chat bubbles column — user scrolls *through* the bubbles
+      (ScrollTrigger pinned section, bubbles progress as user scrolls)
+    - RIGHT (60%): full-height editorial bento — fixed on screen, does NOT scroll
+      Bento should be a proper asymmetric grid (varied cell sizes, not uniform),
+      spanning the full viewport height beside the chat column
+    - The bento IS the right panel. It stays put. The bubbles animate in as the
+      left side scrolls. Think: sticky right panel + scrolling left feed.
+- [ ] Rebuild HTML, SCSS, JS to match the correct design above
 
 ### Phase 5: Services + what's included
 - [ ] Build the honest feature list/grid
@@ -242,10 +251,10 @@ All GSAP + ScrollTrigger. No CSS transitions on GSAP properties. All gated with 
 - [x] Phase 1: Foundation
 - [x] Phase 2: Work showcase
 - [x] Phase 3: How it works
-- [x] Phase 4: About
+- [x] Phase 4: About (partial — copy/animation done, layout needs rebuild)
 
 ### Current phase
-Phase 5: Services + what's included
+Phase 4 layout rebuild (About section), then Phase 5: Services
 
 ### Decisions made
 - Cat is the brand, will appear in 3-4 places across the site
@@ -254,18 +263,44 @@ Phase 5: Services + what's included
 - Homepage priority over project pages
 - New palette: yellow/mustard/rust/ink/cream (dropped blush, forest, peach)
 - New sitemap: Hero > Work > How it works > About > Services > Pricing > Testimonials > FAQ > Contact
+- About section = full-viewport pinned split (left scrolls, right bento stays fixed)
+- Chat bubbles: spring pop (back.out), photo embedded as a bubble in the flow
+- Copy voice: conversational, no em dashes, no short choppy sentences with full stops
+- Reference: steviaplease.me/about (left chat column, right skills/info panel)
 
-### Next session
-Start Phase 5: rebuild the Services section as an honest feature checklist/grid — custom design, hand-coded, responsive, SEO foundations, accessibility compliance, CMS when needed. The goal is to make it clear what the price buys, not to sell the services abstractly.
+### Next session — START HERE
 
-Note: hero CTA button still uses hardcoded #FF9C7D (old salmon/blush). Needs updating to $c-rust (#C75B2A) — deferred, hero is "keep as-is" until Phase 8 polish pass.
+**Priority 1: Rebuild About section layout**
 
-Latest Phase 4 verification:
-- About section completely redesigned for premium typography and vertical photo parallax reveals using GSAP ScrollTrigger and SplitType.
-- Desktop layout powered by CSS Grid areas, aligning photo on the left with title/bio stack on the right.
-- Mobile layout redesigned to stack in correct editorial order: header introduces Nechemya first, then centers the yellow-matted photo, then presents the bio card.
-- Removed opaque section-level backgrounds across all major sections (.about, .services, .pricing, .faq, .testimonials, .work-showcase) to make body's color-changing scroll transitions completely transparent and seamless.
-- Tests updated in `tests/about.test.cjs`. `npm test` passes (14 tests) and production Vite build compiles successfully.
+The copy, animation style, and photo-as-bubble are all approved. Only the layout is wrong.
+
+Target design:
+- Section height = 100vh (fits in one viewport, no overflow scroll on the section itself)
+- LEFT column (~45%): chat bubbles stacked. The *page* scroll drives the bubbles — use ScrollTrigger to pin the section and reveal each bubble as the user scrolls through ~4 scroll lengths. Each bubble pops in (back.out spring) as its scroll position is reached.
+- RIGHT column (~55%): full-height editorial bento grid. Stays fixed while left side scrolls. Height = 100vh minus section padding. Asymmetric cell sizes (not uniform 6-equal). Design it like a magazine spread: 2 large cells + 4 smaller, or a mix of tall and wide.
+- On mobile: drop the pinned layout entirely, stack normally (header → bubbles → bento).
+
+Implementation approach:
+1. Wrap section in a ScrollTrigger pin of ~400vh total scroll distance
+2. Left column: bubbles start invisible, pop in sequentially at scroll milestones (0%, 25%, 50%, 75%)
+3. Right column: `position: sticky; top: 0; height: 100vh` — stays put throughout
+4. SCSS: `.about` height: 100vh on desktop, auto on mobile
+
+Bento cell ideas (asymmetric, not uniform):
+- Large top-left: location + a decorative element
+- Large right: a short bold statement or the stack
+- Small cells: timeline, pricing, access, remote
+
+**Priority 2 after that: Phase 5 Services**
+
+Note: hero CTA button still uses hardcoded #FF9C7D. Fix in Phase 8 polish pass.
+
+### State of About section files (as of session end)
+- `scss/components/_about.scss` — has chat bubble + 6-cell bento styles, needs layout rebuild
+- `index.html` — has correct copy and structure, needs layout change
+- `js/modules/AboutReveal.js` — has spring pop animations, needs ScrollTrigger pin logic
+- `tests/about.test.cjs` — 15/15 passing, will need updates after rebuild
+- All pushed to main, build passes
 
 Latest Phase 2 verification:
 - `npm test` passes (3 tests)

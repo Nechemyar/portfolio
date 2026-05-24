@@ -14,6 +14,7 @@ import Loader from './modules/Loader.js';
 import BgScroll from './modules/BgScroll.js';
 import WorkShowcase from './modules/WorkShowcase.js';
 import HowItWorks from './modules/HowItWorks.js';
+import AboutReveal from './modules/AboutReveal.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,6 +28,7 @@ const faq = new Faq();
 // const bgScroll = new BgScroll();
 const workShowcase = new WorkShowcase();
 const howItWorks = new HowItWorks();
+const aboutReveal = new AboutReveal();
 
 /* Hero paints in its final state — no fade-in choreography. The previous
    entrance animated nav / marquee / gradient / footer in from offset

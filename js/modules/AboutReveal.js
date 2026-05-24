@@ -9,156 +9,155 @@ export default class AboutReveal {
     this.section = document.querySelector('.about');
     if (!this.section) return;
 
-    this.photo = this.section.querySelector('.about__photo');
-    this.img = this.section.querySelector('.about__photo-wrapper img');
-    this.copy = this.section.querySelector('.about__copy');
-    this.label = this.section.querySelector('.about__label');
-    this.title = this.section.querySelector('[data-about-heading]');
+    this.title   = this.section.querySelector('[data-about-heading]');
+    this.header  = this.section.querySelector('.about__header');
+    this.bubbles = this.section.querySelectorAll('[data-bubble]');
+    this.cells   = this.section.querySelectorAll('[data-bento-cell]');
+    this.icons   = this.section.querySelectorAll('.about__bento-icon svg');
 
-    if (!this.title) return;
-
-    // Split heading using SplitType
-    this.splitHeading = new SplitType(this.title, { types: 'lines,words' });
+    if (this.title) {
+      this.splitTitle = new SplitType(this.title, { types: 'lines,words' });
+    }
 
     this.mm = gsap.matchMedia();
     this.init();
   }
 
   init() {
-    // 1. Reduced Motion Match: immediately visible, no transitions/transforms
     this.mm.add('(prefers-reduced-motion: reduce)', () => {
-      if (this.img) gsap.set(this.img, { clearProps: 'all' });
-      if (this.photo) gsap.set(this.photo, { clearProps: 'all' });
-      if (this.copy) gsap.set(this.copy, { clearProps: 'all' });
-      if (this.label) gsap.set(this.label, { clearProps: 'all' });
-      
-      const words = this.title.querySelectorAll('.word');
-      if (words.length) gsap.set(words, { clearProps: 'all' });
+      this.section.querySelectorAll('[data-bubble], [data-bento-cell], .about__reaction').forEach(el => {
+        gsap.set(el, { clearProps: 'all' });
+      });
+      if (this.icons.length) {
+        this.icons.forEach(svg => {
+          svg.querySelectorAll('path, circle, polyline, line').forEach(p => {
+            p.style.strokeDashoffset = '0';
+          });
+        });
+      }
     });
 
-    // 2. Desktop Match: Pinned layout features, photo parallax, word staggered reveals
-    this.mm.add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', () => {
-      // Photo Parallax (scrubbed through section scrolling)
-      if (this.img) {
-        gsap.fromTo(this.img,
-          { yPercent: -12 },
-          {
-            yPercent: 12,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: this.section,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: true,
-            }
-          }
-        );
-      }
+    this.mm.add('(prefers-reduced-motion: no-preference)', () => {
+      this._titleReveal();
+      this._bubbleReveal();
+      this._bentoReveal();
+    });
+  }
 
-      // Title word stagger reveal
-      const words = this.title.querySelectorAll('.word');
-      if (words.length) {
-        gsap.fromTo(words,
-          { yPercent: 105, autoAlpha: 0 },
+  _titleReveal() {
+    if (!this.title) return;
+    const words = this.title.querySelectorAll('.word');
+    if (!words.length) return;
+
+    gsap.fromTo(words,
+      { yPercent: 110, autoAlpha: 0 },
+      {
+        yPercent: 0,
+        autoAlpha: 1,
+        duration: 0.9,
+        stagger: 0.04,
+        ease: 'power4.out',
+        scrollTrigger: {
+          trigger: this.header,
+          start: 'top 85%',
+          once: true,
+        }
+      }
+    );
+  }
+
+  _bubbleReveal() {
+    if (!this.bubbles.length) return;
+
+    // Each bubble pops in with a spring bounce, staggered by 0.3s each
+    this.bubbles.forEach((bubble, i) => {
+      const isPhoto = bubble.classList.contains('about__bubble--photo');
+      const reactions = bubble.querySelectorAll('.about__reaction');
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: this.section.querySelector('.about__chat'),
+          start: 'top 80%',
+          once: true,
+        }
+      });
+
+      // Pop: scale from 0.6 + slight upward offset, spring out
+      tl.fromTo(bubble,
+        { scale: 0.6, autoAlpha: 0, y: 12, transformOrigin: 'left bottom' },
+        {
+          scale: 1,
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.5,
+          ease: 'back.out(1.7)',
+          delay: i * 0.28,
+        }
+      );
+
+      // Reactions ping in after the bubble lands (only text bubbles have them)
+      if (!isPhoto && reactions.length) {
+        tl.fromTo(reactions,
+          { scale: 0, autoAlpha: 0 },
           {
-            yPercent: 0,
+            scale: 1,
             autoAlpha: 1,
-            duration: 0.95,
-            stagger: 0.035,
-            ease: 'power4.out',
-            scrollTrigger: {
-              trigger: this.title,
-              start: 'top 85%',
-              once: true,
-            }
-          }
+            duration: 0.35,
+            stagger: 0.07,
+            ease: 'back.out(2)',
+          },
+          // Offset from this bubble's entry point in the timeline
+          i * 0.28 + 0.38
         );
       }
+    });
+  }
 
-      // Copy card and tag list staggered fade/slide up
-      if (this.copy) {
-        const tl = gsap.timeline({
+  _bentoReveal() {
+    if (!this.cells.length) return;
+
+    gsap.fromTo(this.cells,
+      { y: 20, autoAlpha: 0 },
+      {
+        y: 0,
+        autoAlpha: 1,
+        duration: 0.7,
+        stagger: 0.1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: this.section.querySelector('.about__bento'),
+          start: 'top 88%',
+          once: true,
+        }
+      }
+    );
+
+    // SVG stroke-draw
+    if (this.icons.length) {
+      this.icons.forEach(svg => {
+        const paths = svg.querySelectorAll('path, circle, polyline, line');
+        if (!paths.length) return;
+
+        const lengths = Array.from(paths).map(p => {
+          try { return p.getTotalLength(); } catch { return 60; }
+        });
+
+        paths.forEach((p, i) => {
+          gsap.set(p, { strokeDasharray: lengths[i], strokeDashoffset: lengths[i] });
+        });
+
+        gsap.to(paths, {
+          strokeDashoffset: 0,
+          duration: 0.9,
+          stagger: 0.06,
+          ease: 'power2.out',
           scrollTrigger: {
-            trigger: this.copy,
-            start: 'top 85%',
+            trigger: svg,
+            start: 'top 90%',
             once: true,
           }
         });
-
-        // Reveal label first
-        if (this.label) {
-          tl.fromTo(this.label,
-            { y: 24, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, duration: 0.65, ease: 'power3.out' }
-          );
-        }
-
-        // Slide/fade copy card in
-        tl.fromTo(this.copy,
-          { y: 44, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 0.85, ease: 'power3.out' },
-          '-=0.45'
-        );
-      }
-    });
-
-    // 3. Mobile Match: Natural stack, simplified reveals to ensure no layout jumps
-    this.mm.add('(max-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
-      // Mobile title reveal
-      const words = this.title.querySelectorAll('.word');
-      if (words.length) {
-        gsap.fromTo(words,
-          { yPercent: 100, autoAlpha: 0 },
-          {
-            yPercent: 0,
-            autoAlpha: 1,
-            duration: 0.85,
-            stagger: 0.02,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: this.title,
-              start: 'top 88%',
-              once: true,
-            }
-          }
-        );
-      }
-
-      // Mobile photo reveal
-      if (this.photo) {
-        gsap.fromTo(this.photo,
-          { y: 32, autoAlpha: 0 },
-          {
-            y: 0,
-            autoAlpha: 1,
-            duration: 0.8,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: this.photo,
-              start: 'top 88%',
-              once: true,
-            }
-          }
-        );
-      }
-
-      // Mobile copy card reveal
-      if (this.copy) {
-        gsap.fromTo(this.copy,
-          { y: 32, autoAlpha: 0 },
-          {
-            y: 0,
-            autoAlpha: 1,
-            duration: 0.8,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: this.copy,
-              start: 'top 88%',
-              once: true,
-            }
-          }
-        );
-      }
-    });
+      });
+    }
   }
 }

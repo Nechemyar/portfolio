@@ -6,36 +6,59 @@ const test = require('node:test');
 const root = path.resolve(__dirname, '..');
 const read = (file) => readFileSync(path.join(root, file), 'utf8');
 
-test('Phase 4 about markup uses redesigned structure with photo, copy, and meta tags', () => {
+test('About section markup uses chat+bento layout structure', () => {
   const html = read('index.html');
 
   // Section present with cream bg data attribute
   assert.match(html, /class="about"[^>]*data-bg="#FAF9F7"/);
-  // Photo panel
-  assert.match(html, /class="about__photo"/);
+  // Section label and heading
+  assert.match(html, /class="about__header"/);
+  assert.match(html, /class="section-label"/);
+  assert.match(html, /data-about-heading/);
+  // Chat column: bubbles (including photo bubble inline)
+  assert.match(html, /class="about__chat"/);
+  assert.match(html, /about__bubble--photo/);
   assert.match(html, /meno-box\.webp/);
-  // Copy panel with new elements
-  assert.match(html, /class="about__label"/);
-  assert.match(html, /class="about__title"/);
-  assert.match(html, /class="about__body"/);
-  assert.match(html, /class="about__meta"/);
-  assert.match(html, /class="about__meta-tag"/);
+  assert.match(html, /data-bubble/);
+  assert.match(html, /class="about__reactions"/);
+  assert.match(html, /class="about__reaction"/);
+  // Bento grid with cells and inline SVGs
+  assert.match(html, /class="about__bento"/);
+  assert.match(html, /data-bento-cell/);
+  assert.match(html, /class="about__bento-icon"/);
+  assert.match(html, /class="about__bento-label"/);
+  assert.match(html, /class="about__bento-value"/);
+  // Featured cell
+  assert.match(html, /about__bento-cell--featured/);
 });
 
-test('Phase 4 about CSS uses correct background and design tokens', () => {
+test('About CSS uses transparent background, chat bubbles, and bento grid', () => {
   const scss = read('scss/components/_about.scss');
 
   // Background is transparent to let body transition show through
   assert.match(scss, /\.about\s*\{[\s\S]*background:\s*transparent/);
-  // Label is now just text, no yellow background needed
-  assert.match(scss, /\.about__label\s*\{/);
-  // Photo double-border inset via ::before removed in new geometric layout
-  // Meta tag element defined
-  assert.match(scss, /\.about__meta-tag/);
-  // Mobile breakpoint present
+  // Chat bubble styles
+  assert.match(scss, /\.about__bubble\s*\{/);
+  assert.match(scss, /\.about__reaction\s*\{/);
+  // Bento grid styles
+  assert.match(scss, /\.about__bento\s*\{/);
+  assert.match(scss, /\.about__bento-cell\s*\{/);
+  assert.match(scss, /\.about__bento-icon\s*\{/);
+  // SVG stroke-draw initial state
+  assert.match(scss, /stroke-dashoffset:\s*200/);
+  // Mobile breakpoint
   assert.match(scss, /@media \(max-width: 900px\)/);
-  // Grid layout (or flex layout used for the offset design)
+  // Hover gated correctly
+  assert.match(scss, /@media \(hover: hover\)/);
+  // Inner layout
   assert.match(scss, /\.about__inner\s*\{[\s\S]*display:\s*(grid|flex)/);
+});
+
+test('AboutReveal module is imported and instantiated in main.js', () => {
+  const main = read('js/main.js');
+
+  assert.match(main, /import AboutReveal from/);
+  assert.match(main, /new AboutReveal\(\)/);
 });
 
 test('Phase 5 services uses transparent background and new item layout', () => {

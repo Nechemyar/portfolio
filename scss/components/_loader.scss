@@ -31,19 +31,20 @@ $loader-w: min(28vw, 130px);
   height: 100vh;
 }
 
-// position: relative is required — without it overflow:hidden won't clip
-// children that have been promoted to their own composite layers by GSAP
+// clip-path: inset(0) is applied at the compositor level and reliably clips
+// GSAP-animated children even when they are promoted to their own GPU layers.
+// overflow: hidden alone cannot clip composited children.
 .loader__mask {
-  overflow: hidden;
   position: relative;
+  clip-path: inset(0);
 }
 
 .loader__wordmark {
   display: block;
   width: $loader-w;
   height: auto;
-  // aspect-ratio lets the browser compute height before the SVG loads,
-  // so GSAP's yPercent has a real pixel value from the first frame
+  // aspect-ratio lets the browser resolve the height from width alone,
+  // before the SVG file loads, so GSAP reads the correct px value for yPercent
   aspect-ratio: 184.32 / 137.16;
   transform: translateY(100%);
 }

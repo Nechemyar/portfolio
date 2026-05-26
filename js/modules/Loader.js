@@ -20,51 +20,51 @@ export default class Loader {
   init() {
     document.body.style.overflow = 'hidden';
 
-    // CSS already sets translateY(100%) — no gsap.set() needed.
-    // fromTo forces GSAP to record the from-state at tween-start time,
-    // when aspect-ratio has already given the elements correct heights.
+    // rAF ensures one layout pass has completed so aspect-ratio heights
+    // are resolved before GSAP reads yPercent pixel values
+    requestAnimationFrame(() => {
+      const proxy = { top: 0, bottom: 100, curve: 0 };
 
-    const proxy = { top: 0, bottom: 100, curve: 0 };
-
-    gsap.timeline()
-      // Step 1 — left + right wordmarks slide up into their masks
-      .fromTo([this.wLeft, this.wRight],
-        { yPercent: 100 },
-        { yPercent: 0, duration: 1, ease: 'power4.out' }
-      )
-      // Step 2 — center stacked logo follows 0.15s later
-      .fromTo(this.stacked,
-        { yPercent: 100 },
-        { yPercent: 0, duration: 1, ease: 'power4.out' },
-        '<0.15'
-      )
-      // Step 3 — wordmarks cut upward out of their masks
-      .to([this.wLeft, this.wRight], {
-        yPercent: -100,
-        duration: 0.7,
-        ease: 'power3.inOut',
-      })
-      // Step 4 — hold center logo
-      .to({}, { duration: 0.4 })
-      // Step 5a — center logo fades to black
-      .to(this.stacked, {
-        opacity: 0,
-        duration: 0.2,
-        ease: 'power2.in',
-      })
-      // Step 5b — black wipe sweeps off top with curved bottom edge
-      .to(proxy, {
-        top: -120,
-        bottom: -20,
-        curve: 24,
-        duration: 1.5,
-        ease: 'power4.inOut',
-        onUpdate: () => this._setPath(proxy.top, proxy.bottom, proxy.curve),
-        onComplete: () => {
-          this.loader.style.display = 'none';
-          document.body.style.overflow = '';
-          if (this.onComplete) this.onComplete();
-        },
-      });
+      gsap.timeline()
+        // Step 1 — left + right wordmarks slide up into their clip masks
+        .fromTo([this.wLeft, this.wRight],
+          { yPercent: 100 },
+          { yPercent: 0, duration: 1, ease: 'power4.out' }
+        )
+        // Step 2 — center stacked logo follows 0.15s after step 1 starts
+        .fromTo(this.stacked,
+          { yPercent: 100 },
+          { yPercent: 0, duration: 1, ease: 'power4.out' },
+          '<0.15'
+        )
+        // Step 3 — wordmarks cut upward, disappearing out the top of their masks
+        .to([this.wLeft, this.wRight], {
+          yPercent: -100,
+          duration: 0.7,
+          ease: 'power3.inOut',
+        })
+        // Step 4 — hold center logo
+        .to({}, { duration: 0.4 })
+        // Step 5a — center logo fades into the black
+        .to(this.stacked, {
+          opacity: 0,
+          duration: 0.2,
+          ease: 'power2.in',
+        })
+        // Step 5b — black wipe sweeps off top with curved bottom edge
+        .to(proxy, {
+          top: -120,
+          bottom: -20,
+          curve: 24,
+          duration: 1.5,
+          ease: 'power4.inOut',
+          onUpdate: () => this._setPath(proxy.top, proxy.bottom, proxy.curve),
+          onComplete: () => {
+            this.loader.style.display = 'none';
+            document.body.style.overflow = '';
+            if (this.onComplete) this.onComplete();
+          },
+        });
+    });
   }
 }

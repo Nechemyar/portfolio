@@ -1,7 +1,6 @@
 @use '../base/tokens' as *;
 
-/* Nav padding scales fluidly (16→32) so the bar sits tight on mobile and
-   breathes on wide displays without two discrete media-query jumps. */
+/* Nav padding sits tight on mobile and breathes on wide displays. */
 .nav {
   position: fixed;
   top: 0;
@@ -10,55 +9,29 @@
   /* Sits above the mobile menu overlay (1150) so logo + X stay visible
      when the backdrop is open. */
   z-index: 1200;
-  padding: clamp(0.85rem, 2.2vw, 2rem) clamp(1rem, 3.5vw, 2.5rem);
-  transition: padding 0.3s ease;
-}
-
-.nav::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 0;
-  backdrop-filter: blur(0);
-  -webkit-backdrop-filter: blur(0);
-  box-shadow: none;
-  transition:
-    background-color $duration-fast ease,
-    border-color $duration-fast ease;
-}
-
-body.nav-has-backing .nav {
   padding: clamp(0.55rem, 1vw, 0.85rem) clamp(1rem, 3.5vw, 2.5rem);
 }
 
-body.nav-has-backing .nav::before {
-  background: transparent;
-  border-color: transparent;
-}
-
-/* Single nav colour system: black controls over a solid cream backing. */
+/* Single nav colour system */
 .nav__logo-svg {
   filter: invert(0);
 }
 
-.nav__logo-wordmark-line,
-.nav__logo-wordmark-sub {
+.nav__menu-label,
+.nav__cta {
   color: $c-ink;
+  transition: color 0.3s ease;
 }
 
-.nav__menu-label {
-  color: $c-ink;
+/* Theme Overrides (unless menu is open) */
+body.nav-theme-dark:not(.menu-open) .nav__logo-svg {
+  filter: brightness(0) invert(1);
 }
 
-.nav__menu-line {
-  background: $c-ink;
-}
-
-.nav__desktop-links a {
-  color: $c-ink;
+body.nav-theme-dark:not(.menu-open) .nav__menu-label,
+body.nav-theme-dark:not(.menu-open) .nav__desktop-links a,
+body.nav-theme-dark:not(.menu-open) .nav__cta {
+  color: #fff;
 }
 
 /* Three-column grid: MENU (left) · logo (centre) · CONTACT (right) */
@@ -67,27 +40,8 @@ body.nav-has-backing .nav::before {
   grid-template-columns: 1fr auto 1fr;
   grid-auto-flow: dense;
   align-items: center;
-  column-gap: clamp(0.5rem, 2vw, 1.5rem);
+  margin-inline: auto;
   width: 100%;
-  margin-inline: auto;
-  background: transparent;
-  border: 2px solid transparent;
-  border-radius: 10px;
-  transition:
-    padding 0.35s $ease-out,
-    background-color $duration-fast ease,
-    border-color $duration-fast ease,
-    border-radius 0.35s $ease-out;
-}
-
-body.nav-has-backing .nav__inner {
-  width: fit-content;
-  margin-inline: auto;
-  column-gap: clamp(1.35rem, 3vw, 2.75rem);
-  padding: clamp(0.5rem, 0.8vw, 0.7rem) clamp(1rem, 1.5vw, 1.4rem);
-  background: $c-cream;
-  border: 2px solid $c-ink;
-  border-radius: 14px;
 }
 
 /* ——— Logo ——— */
@@ -176,7 +130,7 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   white-space: nowrap;
   border-radius: 6px;
   text-decoration: none;
-  transition: transform $duration-fast $ease-out, background $duration-fast ease;
+  transition: transform $duration-fast $ease-out, background $duration-fast ease, color 0.3s ease;
 }
 
 .nav__cta--left {
@@ -337,21 +291,6 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
     background-color 0.3s ease;
 }
 
-/* Nav turns white on mobile when the card menu is open */
-@media (max-width: 768px) {
-  body.menu-open .nav__logo-svg {
-    filter: brightness(0) invert(1);
-  }
-
-  body.menu-open .nav__menu-label {
-    color: #fff;
-  }
-
-  body.menu-open .nav__cta {
-    color: #fff;
-  }
-}
-
 .nav__menu-line--top    { top: 4px;  transform: translateX(-14px); }
 .nav__menu-line--bottom { top: 10px; transform: translateX(14px); }
 
@@ -409,9 +348,9 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
 }
 
 .nav__menu-label {
-  display: block;
+  display: flex;
+  align-items: center;
   position: relative;
-  overflow: hidden;
   height: 1.15em;
   font-family: $font-body;
   font-size: clamp(0.85rem, 1.1vw, 1.05rem);
@@ -422,23 +361,36 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   line-height: 1.15;
 }
 
-.nav__menu-label-text {
-  display: block;
-  transition: transform 0.4s $ease-out;
+.nav__menu-bracket {
+  display: inline-block;
 }
 
-.nav__menu-label-text--close {
+.nav__menu-letters-wrap {
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.nav__menu-word {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.nav__menu-word--open {
+  position: relative;
+}
+
+.nav__menu-word--close {
   position: absolute;
-  top: 100%;
+  top: 0;
   left: 0;
 }
 
-.nav__menu-btn.is-open .nav__menu-label-text--open {
-  transform: translateY(-100%);
-}
-
-.nav__menu-btn.is-open .nav__menu-label-text--close {
-  transform: translateY(-100%);
+.nav__menu-letter {
+  display: inline-block;
+  /* Will be animated by GSAP */
 }
 
 .nav__menu-icon {
@@ -480,18 +432,7 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   opacity: 0.7;
 }
 
-/* White nav on dark hero (before scroll backing) */
-body:not(.nav-has-backing) .nav__logo-svg {
-  filter: brightness(0) invert(1);
-}
 
-body:not(.nav-has-backing) .nav__menu-label {
-  color: #fff;
-}
-
-body:not(.nav-has-backing) .nav__cta {
-  color: #fff;
-}
 
 /* Mobile overrides */
 @media (max-width: 768px) {
@@ -501,31 +442,15 @@ body:not(.nav-has-backing) .nav__cta {
 
   .nav__inner {
     align-items: center;
+    width: 100%;
+    column-gap: $space-16;
   }
 
   .nav__logo-svg {
     height: clamp(2.2rem, 9vw, 2.75rem);
   }
 
-  .nav__menu-label {
-    font-size: clamp(0.82rem, 3.2vw, 1rem);
-  }
-
-  body.nav-has-backing .nav {
-    padding: 0.4rem 0.75rem;
-  }
-
-  body.nav-has-backing .nav__inner {
-    width: 100%;
-    max-width: none;
-    column-gap: $space-16;
-    padding: 0.45rem 0.6rem;
-    margin-inline: 0;
-    background: $c-cream;
-    border: 2px solid $c-ink;
-    border-radius: 10px;
-  }
-
+  .nav__menu-label,
   .nav__cta {
     font-size: clamp(0.82rem, 3.2vw, 1rem);
   }

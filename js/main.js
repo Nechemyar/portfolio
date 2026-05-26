@@ -46,8 +46,48 @@ const wipeElements = [
   '.nav__desktop-wrapper'
 ];
 gsap.set(wipeElements, { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)', y: 40 });
+
+// Split text utility to dynamically wrap lines for animation based on screen size
+function splitLines(element) {
+  const words = element.innerText.trim().split(' ');
+  element.innerHTML = '';
+  const wordSpans = words.map(word => {
+    const span = document.createElement('span');
+    span.style.display = 'inline-block';
+    span.innerText = word + ' ';
+    element.appendChild(span);
+    return span;
+  });
+
+  const lines = [];
+  let currentLine = [];
+  let currentTop = null;
+
+  wordSpans.forEach(span => {
+    const top = span.offsetTop;
+    if (currentTop === null || top > currentTop + 10) {
+      if (currentLine.length) lines.push(currentLine);
+      currentTop = top;
+      currentLine = [];
+    }
+    currentLine.push(span);
+  });
+  if (currentLine.length) lines.push(currentLine);
+
+  element.innerHTML = '';
+  lines.forEach(lineSpans => {
+    const lineWrapper = document.createElement('span');
+    lineWrapper.className = 'hero__pitch-line';
+    lineWrapper.style.display = 'block';
+    lineWrapper.innerHTML = lineSpans.map(s => s.innerText).join('');
+    element.appendChild(lineWrapper);
+  });
+}
+
+const splitHeading = document.querySelector('.js-split-lines');
+if (splitHeading) splitLines(splitHeading);
+
 gsap.set('.hero__pitch-line', { clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)', y: 50 });
-gsap.set('.hero__note', { opacity: 0, y: 20 });
 
 new Loader(() => {
   document.documentElement.classList.add('js-loaded');
@@ -91,12 +131,4 @@ new Loader(() => {
     ease: 'expo.out',
     stagger: 0.2
   }, '-=0.8');
-
-  // 5. Fade in note
-  tl.to('.hero__note', {
-    opacity: 1,
-    y: 0,
-    duration: 1.0,
-    ease: 'power2.out'
-  }, '-=1.2');
 });

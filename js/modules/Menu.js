@@ -9,7 +9,13 @@ export default class Menu {
     this.closeBtn = document.getElementById('mobile-menu-close-pill');
     this.backdrop = this.menu.querySelector('.mobile-menu__backdrop');
     this.menuLinks = this.menu.querySelectorAll('.menu-item');
-    this.isOpen   = false;
+    this.navItems  = this.menu.querySelectorAll('.mobile-menu__nav-item');
+    this.linkTexts = this.menu.querySelectorAll('.mobile-menu__link-text');
+    this.footer    = this.menu.querySelector('.mobile-menu__footer');
+    this.pageWrap  = document.querySelector('main');
+    this.nav       = document.getElementById('nav');
+    this.isOpen    = false;
+    this.tl        = null;
 
     this._initHidden();
     this.init();
@@ -21,11 +27,11 @@ export default class Menu {
 
   _initHidden() {
     if (this._isMobile()) {
-      gsap.set(this.menu, { clearProps: 'all' });
-      gsap.set(this.wrap, { y: '-100%' });
-      gsap.set(this.backdrop, { opacity: 0 });
+      gsap.set(this.menu, { height: 0 });
+      gsap.set(this.linkTexts, { clipPath: 'inset(0 0 100% 0)' });
+      if (this.footer) gsap.set(this.footer, { opacity: 0, y: 10 });
     } else {
-      gsap.set(this.menu, { clearProps: 'clipPath', visibility: 'hidden' });
+      gsap.set(this.menu, { clearProps: 'clipPath,height', visibility: 'hidden' });
       gsap.set(this.backdrop, { opacity: 0 });
     }
   }
@@ -39,7 +45,6 @@ export default class Menu {
       this.closeBtn.addEventListener('click', () => this.close());
     }
 
-    // Close on backdrop click (desktop)
     this.backdrop.addEventListener('click', () => this.close());
 
     this.menuLinks.forEach((link) => {
@@ -69,22 +74,47 @@ export default class Menu {
   }
 
   _openMobile() {
-    gsap.set(this.menu, { visibility: 'visible' });
-    gsap.to(this.backdrop, { opacity: 1, duration: 0.35, ease: 'power2.out' });
-    gsap.to(this.wrap, { y: '0%', duration: 0.45, ease: 'power3.out' });
-    gsap.fromTo(this.menuLinks,
-      { opacity: 0, y: -20 },
-      { opacity: 1, y: 0, duration: 0.35, stagger: 0.04, ease: 'power2.out', delay: 0.15 }
-    );
+    if (this.tl) this.tl.kill();
+    this.tl = gsap.timeline();
+
+    this.tl.set(this.menu, { visibility: 'visible', overflow: 'hidden' });
+
+    this.tl.to(this.menu, {
+      height: '100dvh',
+      duration: 0.55,
+      ease: 'power3.inOut',
+    }, 0);
+
+    this.tl.to(this.pageWrap, {
+      y: () => window.innerHeight,
+      duration: 0.55,
+      ease: 'power3.inOut',
+    }, 0);
+
+    this.linkTexts.forEach((text, i) => {
+      this.tl.to(text, {
+        clipPath: 'inset(0 0 0% 0)',
+        duration: 0.5,
+        ease: 'power3.out',
+      }, 0.25 + i * 0.07);
+    });
+
+    if (this.footer) {
+      this.tl.to(this.footer, {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        ease: 'power2.out',
+      }, 0.5);
+    }
   }
 
   _openDesktop() {
-    gsap.set(this.menu, { clearProps: 'clipPath', visibility: 'visible' });
+    gsap.set(this.menu, { clearProps: 'clipPath,height', visibility: 'visible' });
     gsap.set(this.backdrop, { opacity: 0 });
 
     gsap.to(this.backdrop, { opacity: 1, duration: 0.35, ease: 'power2.out' });
 
-    // Items come in from below; brief rust tint settles to white
     gsap.fromTo(this.menuLinks,
       { opacity: 0, y: 50, color: '#d07933' },
       { opacity: 1, y: 0, color: '#ffffff', duration: 0.55, stagger: 0.07, ease: 'power3.out', delay: 0.1 }
@@ -105,13 +135,40 @@ export default class Menu {
   }
 
   _closeMobile() {
-    gsap.to(this.menuLinks, { opacity: 0, y: -10, duration: 0.15, ease: 'power2.in' });
-    gsap.to(this.backdrop, { opacity: 0, duration: 0.35, ease: 'power2.in' });
-    gsap.to(this.wrap, {
-      y: '-100%',
-      duration: 0.4, ease: 'power3.in', delay: 0.06,
+    if (this.tl) this.tl.kill();
+    this.tl = gsap.timeline({
       onComplete: () => this._resetClosed(),
     });
+
+    if (this.footer) {
+      this.tl.to(this.footer, {
+        opacity: 0,
+        y: 10,
+        duration: 0.2,
+        ease: 'power2.in',
+      }, 0);
+    }
+
+    this.linkTexts.forEach((text, i) => {
+      const reversed = this.linkTexts.length - 1 - i;
+      this.tl.to(text, {
+        clipPath: 'inset(0 0 100% 0)',
+        duration: 0.35,
+        ease: 'power3.in',
+      }, 0.05 + reversed * 0.04);
+    });
+
+    this.tl.to(this.menu, {
+      height: 0,
+      duration: 0.5,
+      ease: 'power3.inOut',
+    }, 0.15);
+
+    this.tl.to(this.pageWrap, {
+      y: 0,
+      duration: 0.5,
+      ease: 'power3.inOut',
+    }, 0.15);
   }
 
   _closeDesktop() {
@@ -129,7 +186,10 @@ export default class Menu {
     document.body.classList.remove('menu-open');
 
     if (this._isMobile()) {
-      gsap.set(this.wrap, { y: '-100%' });
+      gsap.set(this.menu, { height: 0 });
+      gsap.set(this.pageWrap, { y: 0 });
+      gsap.set(this.linkTexts, { clipPath: 'inset(0 0 100% 0)' });
+      if (this.footer) gsap.set(this.footer, { opacity: 0, y: 10 });
     } else {
       gsap.set(this.menu, { visibility: 'hidden' });
     }

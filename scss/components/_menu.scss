@@ -1,98 +1,99 @@
 @use '../base/tokens' as *;
 
-/* ── Mobile menu overlay ── */
+/* ── Mobile menu — full-page dark panel, drops from top, pushes page down ── */
 .mobile-menu {
   position: fixed;
-  inset: 0;
-  background: transparent;
-  z-index: 1150;
-  pointer-events: none;
-}
-
-/* Card-wrap always interactive when open.
-   Backdrop interactive on desktop only (mobile uses GSAP fade, no click-to-close). */
-.mobile-menu.is-open .mobile-menu__card-wrap {
-  pointer-events: auto;
-}
-
-/* ── Backdrop ── */
-.mobile-menu__backdrop {
-  display: none;
-  position: absolute;
-  inset: 0;
-}
-
-/* ── Card wrap — top: 0 so it drops down from the top ── */
-.mobile-menu__card-wrap {
-  position: absolute;
   top: 0;
   left: 0;
   right: 0;
+  z-index: 1150;
+  pointer-events: none;
+  overflow: hidden;
 }
 
-/* ── Card — full-width dark panel that drops from the top ── */
+.mobile-menu.is-open {
+  pointer-events: auto;
+}
+
+/* ── Backdrop — sits behind the card ── */
+.mobile-menu__backdrop {
+  display: none;
+}
+
+/* ── Card wrap ── */
+.mobile-menu__card-wrap {
+  position: relative;
+  width: 100%;
+}
+
+/* ── Card — full dark panel ── */
 .mobile-menu__card {
   width: 100%;
+  min-height: 100dvh;
   background: $c-ink;
-  border: none;
-  border-radius: 0 0 14px 14px;
-  overflow: hidden;
-  max-height: 100dvh;
   display: flex;
   flex-direction: column;
   color: #fff;
-  margin: 0;
-  padding-top: clamp(4.5rem, 14vw, 6rem);
+  padding: clamp(5rem, 16vw, 7rem) clamp(1.25rem, 4vw, 2rem) 0;
+  overflow: hidden;
 }
 
-/* ── Topbar: hidden on mobile, shown on desktop ── */
+/* ── Topbar — arrow in top-right corner ── */
 .mobile-menu__topbar {
-  display: none;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.85rem 1.5rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
-  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 0;
+  border: none;
+  position: absolute;
+  top: clamp(5rem, 16vw, 7rem);
+  right: clamp(1.25rem, 4vw, 2rem);
+  z-index: 2;
 }
 
 .mobile-menu__top-logo-img {
-  height: clamp(1.75rem, 8vw, 2.4rem);
-  width: auto;
-  display: block;
+  display: none;
 }
 
 .mobile-menu__close {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: clamp(2.5rem, 8vw, 3.5rem);
+  height: clamp(2.5rem, 8vw, 3.5rem);
   background: none;
   border: none;
-  color: $c-ink;
+  color: $c-rust;
   cursor: pointer;
   padding: 0;
   -webkit-tap-highlight-color: transparent;
 }
 
+.mobile-menu__close svg {
+  width: 100%;
+  height: 100%;
+}
+
 /* ── Nav list ── */
 .mobile-menu__nav {
   list-style: none;
-  padding: 1rem 0.75rem 0.25rem;
+  padding: 0;
   margin: 0;
   flex: 1;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0;
 }
 
-.mobile-menu__nav-item {}
+.mobile-menu__nav-item {
+  overflow: hidden;
+}
 
 /* ── Nav link ── */
 .mobile-menu__link {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  overflow: hidden;
+  display: block;
   padding: 0;
   text-decoration: none;
   color: #fff;
@@ -101,89 +102,35 @@
 }
 
 .mobile-menu__link-text {
-  font-family: $font-display;
-  font-size: clamp(4rem, 19vw, 7rem);
-  font-weight: 400;
-  line-height: 1;
+  font-family: $font-body;
+  font-size: clamp(2.8rem, 12vw, 5rem);
+  font-weight: 500;
+  line-height: 1.15;
   letter-spacing: -0.01em;
-  text-transform: uppercase;
-  position: relative;
-  z-index: 2;
+  display: block;
 }
 
-/* Arrow circle */
-.mobile-menu__link-arrow-circle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: clamp(1.75rem, 6vw, 2.5rem);
-  height: clamp(1.75rem, 6vw, 2.5rem);
-  border-radius: 50%;
-  border: 2px solid #fff;
-  flex-shrink: 0;
-  position: relative;
-  z-index: 2;
-}
-
-/* ── Black curtain fill — slides up on hover ── */
+/* Hide arrow circles and fill on mobile menu */
+.mobile-menu__link-arrow-circle,
 .mobile-menu__link-fill {
-  position: absolute;
-  inset: 0;
-  background: $c-ink;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0;
-  color: #fff;
-  transform: translateY(101%);
+  display: none;
 }
 
-.mobile-menu__link-fill-text {
-  font-family: $font-display;
-  font-size: clamp(4rem, 19vw, 7rem);
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-}
-
-.mobile-menu__link-fill-arrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: clamp(1.75rem, 6vw, 2.5rem);
-  height: clamp(1.75rem, 6vw, 2.5rem);
-  border-radius: 50%;
-  border: 2px solid #fff;
-  flex-shrink: 0;
-}
-
-/* Desktop-only curtain hover */
-@media (hover: hover) {
-  .mobile-menu__link .mobile-menu__link-fill {
-    transition: transform 0.44s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .mobile-menu__link:hover .mobile-menu__link-fill {
-    transform: translateY(0);
-  }
-}
-
-/* ── Footer bar: Book a call + WhatsApp ── */
+/* ── Footer — email left, Sumi Studios center, Whatsapp right ── */
 .mobile-menu__footer {
   display: flex;
-  align-items: stretch;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(1.5rem, 5vw, 2.5rem) 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  margin-top: auto;
   flex-shrink: 0;
 }
 
-/* ── BOOK A CALL ── */
 .mobile-menu__cta {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.1rem 1.25rem;
-  background: $c-ink;
+  display: inline;
+  background: none;
+  padding: 0;
   color: #fff;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
@@ -191,57 +138,51 @@
 
 .mobile-menu__cta-text {
   font-family: $font-body;
-  font-size: clamp(0.9rem, 3.5vw, 1rem);
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: clamp(0.75rem, 2.8vw, 0.9rem);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
-/* Orange circle with diagonal arrow */
 .mobile-menu__cta-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: $c-rust;
-  color: #fff;
-  flex-shrink: 0;
+  display: none;
 }
 
-/* ── WhatsApp button ── */
+.mobile-menu__footer-brand {
+  font-family: $font-body;
+  font-size: clamp(0.75rem, 2.8vw, 0.9rem);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+}
+
 .mobile-menu__wa {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  padding: 0 1.2rem;
-  background: $c-ink;
+  background: none;
+  border: none;
+  padding: 0;
   color: #fff;
   text-decoration: none;
-  border-left: 1px solid rgba(255, 255, 255, 0.15);
-  flex-shrink: 0;
+  font-family: $font-body;
+  font-size: clamp(0.75rem, 2.8vw, 0.9rem);
+  font-weight: 500;
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ── Mobile: dark backdrop (GSAP-controlled opacity) ── */
-@media (max-width: 768px) {
-  .mobile-menu__backdrop {
-    display: block;
-    background: rgba(0, 0, 0, 0.65);
-    opacity: 0;
-    /* No CSS transition — GSAP animates this */
-    pointer-events: none;
-  }
+.mobile-menu__wa svg {
+  display: none;
 }
 
 /* ── Desktop — full dark overlay, huge BrandelLuchador ── */
 @media (min-width: 769px) {
   .mobile-menu {
     visibility: hidden;
+    position: fixed;
+    inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: visible;
   }
 
   .mobile-menu.is-open {
@@ -249,7 +190,6 @@
     pointer-events: auto;
   }
 
-  /* Backdrop is the full dark background — clickable to close */
   .mobile-menu.is-open .mobile-menu__backdrop {
     pointer-events: auto;
   }
@@ -261,25 +201,17 @@
     background: $c-ink;
   }
 
-  /* Card-wrap sits above backdrop, centered */
   .mobile-menu__card-wrap {
     position: relative;
     z-index: 1;
-    display: block;
-    bottom: auto;
-    left: auto;
-    right: auto;
-    width: 100%;
-    pointer-events: none; /* clicks pass through to backdrop to close */
+    pointer-events: none;
   }
 
-  /* Restore pointer events on interactive children */
   .mobile-menu__card-wrap .mobile-menu__link,
   .mobile-menu__card-wrap .mobile-menu__footer {
     pointer-events: auto;
   }
 
-  /* Card becomes transparent — just a layout wrapper */
   .mobile-menu__card {
     position: static;
     background: transparent;
@@ -288,6 +220,7 @@
     margin: 0;
     padding: 0;
     width: 100%;
+    min-height: 0;
     max-height: none;
     overflow: visible;
     align-items: center;
@@ -297,45 +230,33 @@
     display: none;
   }
 
-  /* Nav list centered, generous vertical rhythm */
   .mobile-menu__nav {
     padding: clamp(0.5rem, 3vw, 2rem) 0;
     text-align: center;
     overflow: visible;
   }
 
-  /* Links centered, no clipping */
   .mobile-menu__link {
-    justify-content: center;
-    overflow: visible;
+    text-align: center;
     padding: 0 2rem;
-    color: #fff;
-  }
-
-  /* Huge text — colour inherits from link so GSAP open animation works */
-  .mobile-menu__link-text {
-    font-size: clamp(5rem, 13vw, 18rem);
-    color: inherit;
-    line-height: 0.9;
-    /* No CSS transition here — hover color is set on parent link */
-  }
-
-  .mobile-menu__link {
     color: #fff;
     transition: color 0.25s ease;
   }
 
-  .mobile-menu__link:hover {
-    color: $c-rust;
+  @media (hover: hover) {
+    .mobile-menu__link:hover {
+      color: $c-rust;
+    }
   }
 
-  /* No arrow circles or curtain fill on desktop */
-  .mobile-menu__link-arrow-circle,
-  .mobile-menu__link-fill {
-    display: none;
+  .mobile-menu__link-text {
+    font-family: $font-display;
+    font-size: clamp(5rem, 13vw, 18rem);
+    color: inherit;
+    line-height: 0.9;
+    font-weight: 400;
   }
 
-  /* Hide mobile CTA bar */
   .mobile-menu__footer {
     display: none;
   }

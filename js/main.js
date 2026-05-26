@@ -49,7 +49,7 @@ gsap.set(wipeElements, { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 10
 
 // Split text utility to dynamically wrap lines for animation based on screen size
 function splitLines(element) {
-  const words = element.innerText.trim().split(' ');
+  const words = element.textContent.trim().split(/\s+/);
   element.innerHTML = '';
   const wordSpans = words.map(word => {
     const span = document.createElement('span');

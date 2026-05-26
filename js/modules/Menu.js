@@ -22,7 +22,7 @@ export default class Menu {
   _initHidden() {
     if (this._isMobile()) {
       gsap.set(this.menu, { clearProps: 'all' });
-      gsap.set(this.wrap, { y: '100%' });
+      gsap.set(this.wrap, { y: '-100%' });
       gsap.set(this.backdrop, { opacity: 0 });
     } else {
       gsap.set(this.menu, { clearProps: 'clipPath', visibility: 'hidden' });
@@ -71,10 +71,10 @@ export default class Menu {
   _openMobile() {
     gsap.set(this.menu, { visibility: 'visible' });
     gsap.to(this.backdrop, { opacity: 1, duration: 0.35, ease: 'power2.out' });
-    gsap.to(this.wrap, { y: '0%', duration: 0.52, ease: 'power4.out' });
+    gsap.to(this.wrap, { y: '0%', duration: 0.45, ease: 'power3.out' });
     gsap.fromTo(this.menuLinks,
-      { opacity: 0, y: 14 },
-      { opacity: 1, y: 0, duration: 0.3, stagger: 0.05, ease: 'power2.out', delay: 0.3 }
+      { opacity: 0, y: -20 },
+      { opacity: 1, y: 0, duration: 0.35, stagger: 0.04, ease: 'power2.out', delay: 0.15 }
     );
   }
 
@@ -105,11 +105,11 @@ export default class Menu {
   }
 
   _closeMobile() {
-    gsap.to(this.menuLinks, { opacity: 0, y: 6, duration: 0.15, ease: 'power2.in' });
+    gsap.to(this.menuLinks, { opacity: 0, y: -10, duration: 0.15, ease: 'power2.in' });
     gsap.to(this.backdrop, { opacity: 0, duration: 0.35, ease: 'power2.in' });
     gsap.to(this.wrap, {
-      y: '100%',
-      duration: 0.44, ease: 'power4.in', delay: 0.06,
+      y: '-100%',
+      duration: 0.4, ease: 'power3.in', delay: 0.06,
       onComplete: () => this._resetClosed(),
     });
   }
@@ -129,7 +129,7 @@ export default class Menu {
     document.body.classList.remove('menu-open');
 
     if (this._isMobile()) {
-      gsap.set(this.wrap, { y: '100%' });
+      gsap.set(this.wrap, { y: '-100%' });
     } else {
       gsap.set(this.menu, { visibility: 'hidden' });
     }

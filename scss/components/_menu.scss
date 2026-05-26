@@ -4,9 +4,6 @@
 .mobile-menu {
   position: fixed;
   inset: 0;
-  left: 8px;
-  right: 8px;
-  max-width: calc(100dvw - 16px);
   background: transparent;
   z-index: 1150;
   pointer-events: none;
@@ -25,27 +22,27 @@
   inset: 0;
 }
 
-/* ── Card wrap — bottom: 0 so translateY(100%) fully clears the screen ── */
+/* ── Card wrap — top: 0 so it drops down from the top ── */
 .mobile-menu__card-wrap {
   position: absolute;
-  bottom: 0;
-  left: 0.75rem;
-  right: 0.75rem;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
-/* ── Card — matches hero copy-card design language ── */
+/* ── Card — full-width dark panel that drops from the top ── */
 .mobile-menu__card {
   width: 100%;
-  background: #fff;
-  border: 2px solid $c-ink;
-  border-radius: 14px;
+  background: $c-ink;
+  border: none;
+  border-radius: 0 0 14px 14px;
   overflow: hidden;
-  max-height: 92dvh;
+  max-height: 100dvh;
   display: flex;
   flex-direction: column;
-  /* bottom margin creates the floating gap; included in wrap height so
-     translateY(100%) pushes the whole thing off-screen cleanly. */
-  margin-bottom: 0.75rem;
+  color: #fff;
+  margin: 0;
+  padding-top: clamp(4.5rem, 14vw, 6rem);
 }
 
 /* ── Topbar: hidden on mobile, shown on desktop ── */
@@ -98,7 +95,7 @@
   overflow: hidden;
   padding: 0;
   text-decoration: none;
-  color: $c-rust;
+  color: #fff;
   line-height: 1;
   -webkit-tap-highlight-color: transparent;
 }
@@ -122,7 +119,7 @@
   width: clamp(1.75rem, 6vw, 2.5rem);
   height: clamp(1.75rem, 6vw, 2.5rem);
   border-radius: 50%;
-  border: 2px solid currentColor;
+  border: 2px solid #fff;
   flex-shrink: 0;
   position: relative;
   z-index: 2;

@@ -320,7 +320,7 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   display: none;
   position: relative;
   width: 22px;
-  height: 22px;
+  height: 14px;
 }
 
 .nav__menu-line {
@@ -351,7 +351,7 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
 }
 
 .nav__menu-line--top    { top: 4px;  transform: translateX(-14px); }
-.nav__menu-line--bottom { top: 16px; transform: translateX(14px); }
+.nav__menu-line--bottom { top: 10px; transform: translateX(14px); }
 
 .nav.is-ready {
   .nav__menu-line--top,
@@ -377,14 +377,7 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
     display: none;
   }
 
-  /* On mobile the grid collapses to two columns: logo on the left,
-     menu button on the right. */
-  .nav__inner {
-    grid-template-columns: 1fr auto;
-  }
-
-  /* Hide the text wordmark + icon-mark combo; the SVG wordmark
-     takes over so the brushwork mark matches the hero illustration. */
+  /* Hamburger left, logo centred, right column balances the grid */
   .nav__inner {
     grid-template-columns: 1fr auto 1fr;
   }
@@ -403,10 +396,10 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
     display: block;
   }
 
-  /* Right column hosts only the hamburger — the desktop expanding
-     wrapper UX has no role here. */
+  /* Hamburger lives in col 1 (left) */
   .nav__desktop-wrapper {
-    grid-column: 2;
+    grid-column: 1;
+    justify-self: start;
     background: transparent;
     height: auto;
     overflow: visible;
@@ -430,13 +423,13 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   /* Override the desktop icon-box constraint — on mobile the icon
      IS the hamburger, so it needs to grow to host the lines. */
   .nav__menu-icon {
-    width: 28px;
+    width: 36px;
     height: 16px;
   }
 
   .nav__menu-lines {
     display: block;
-    width: 28px;
+    width: 36px;
     height: 16px;
   }
 
@@ -454,12 +447,12 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
    into an X. Keep the rotations equal-and-opposite so the cross sits
    true. */
 .nav__menu-btn.is-open .nav__menu-line--top {
-  top: 10px;
+  top: 7px;
   transform: rotate(45deg);
 }
 
 .nav__menu-btn.is-open .nav__menu-line--bottom {
-  top: 10px;
+  top: 7px;
   transform: rotate(-45deg);
 }
 

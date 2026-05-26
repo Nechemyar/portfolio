@@ -12,6 +12,7 @@ export default class Menu {
     this.footer    = this.menu.querySelector('.mobile-menu__footer');
     this.pageWrap  = document.querySelector('main');
     this.isOpen    = false;
+    this.isAnimating = false;
     this.tl        = null;
 
     // Button elements
@@ -73,8 +74,9 @@ export default class Menu {
   }
 
   open() {
-    if (this.isOpen) return;
+    if (this.isOpen || this.isAnimating) return;
     this.isOpen = true;
+    this.isAnimating = true;
 
     this.toggle.classList.add('is-open');
     this.toggle.setAttribute('aria-label', 'Close menu');
@@ -114,7 +116,9 @@ export default class Menu {
 
   _openMobile() {
     if (this.tl) this.tl.kill();
-    this.tl = gsap.timeline();
+    this.tl = gsap.timeline({
+      onComplete: () => { this.isAnimating = false; }
+    });
 
     this.tl.set(this.menu, { visibility: 'visible', overflow: 'hidden' });
 
@@ -173,12 +177,13 @@ export default class Menu {
 
     gsap.fromTo(this.menuLinks,
       { opacity: 0, y: 50 },
-      { opacity: 1, y: 0, duration: 0.55, stagger: 0.07, ease: 'power3.out', delay: 0.1 }
+      { opacity: 1, y: 0, duration: 0.55, stagger: 0.07, ease: 'power3.out', delay: 0.1, onComplete: () => { this.isAnimating = false; } }
     );
   }
 
   close() {
-    if (!this.isOpen) return;
+    if (!this.isOpen || this.isAnimating) return;
+    this.isAnimating = true;
 
     this.toggle.classList.remove('is-open');
     this.toggle.setAttribute('aria-label', 'Open menu');
@@ -218,7 +223,10 @@ export default class Menu {
   _closeMobile() {
     if (this.tl) this.tl.kill();
     this.tl = gsap.timeline({
-      onComplete: () => this._resetClosed(),
+      onComplete: () => {
+        this._resetClosed();
+        this.isAnimating = false;
+      },
     });
 
     if (this.footer) {
@@ -266,7 +274,10 @@ export default class Menu {
     if (this.backdrop) {
       gsap.to(this.backdrop, {
         opacity: 0, duration: 0.35, delay: 0.15,
-        onComplete: () => this._resetClosed(),
+        onComplete: () => {
+          this._resetClosed();
+          this.isAnimating = false;
+        },
       });
       // remove menu-open earlier on desktop too
       setTimeout(() => {
@@ -274,7 +285,10 @@ export default class Menu {
         document.body.classList.remove('menu-open');
       }, 150);
     } else {
-      setTimeout(() => this._resetClosed(), 350);
+      setTimeout(() => {
+        this._resetClosed();
+        this.isAnimating = false;
+      }, 350);
     }
   }
 

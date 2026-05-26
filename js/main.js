@@ -35,10 +35,58 @@ const aboutReveal = new AboutReveal();
    positions, but the stage colour underneath those elements isn't an
    exact match for the page, so the staged fade revealed colour seams.
    Showing the hero immediately at full opacity sidesteps the issue. */
+// Setup initial hidden states for hero elements
+const wipeElements = [
+  '.hero__display-word',
+  '.hero__kicker-zone',
+  '.hero__tv-scene',
+  '.hero__award-badge',
+  '.hero__cta-row',
+  '.nav__logo',
+  '.nav__cta--right',
+  '.nav__desktop-wrapper'
+];
+gsap.set(wipeElements, { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)', y: 40 });
+
 new Loader(() => {
   document.documentElement.classList.add('js-loaded');
-  /* Nav entrance — flips on the wordmark fade and the hamburger
-     line slide-in once the loader has cleared. */
   document.getElementById('nav')?.classList.add('is-ready');
   document.dispatchEvent(new CustomEvent('hero:ready'));
+  
+  // Hero Entrance Sequence
+  const tl = gsap.timeline();
+  
+  // 1. DESIGN word wipes up
+  tl.to('.hero__display-word', {
+    clipPath: 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)',
+    y: 0,
+    duration: 1.4,
+    ease: 'expo.out'
+  });
+  
+  // 2. Award, CTA, and TV Cat wipe up
+  tl.to(['.hero__tv-scene', '.hero__award-badge', '.hero__cta-row'], {
+    clipPath: 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)',
+    y: 0,
+    duration: 1.2,
+    ease: 'expo.out',
+    stagger: 0.1
+  }, '-=1.0');
+
+  // 3. Nav elements wipe up
+  tl.to(['.nav__logo', '.nav__cta--right', '.nav__desktop-wrapper'], {
+    clipPath: 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)',
+    y: 0,
+    duration: 1.2,
+    ease: 'expo.out',
+    stagger: 0.1
+  }, '-=1.1');
+
+  // 4. Kicker ("We are Sumi Studios") wipes up last
+  tl.to('.hero__kicker-zone', {
+    clipPath: 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)',
+    y: 0,
+    duration: 1.2,
+    ease: 'expo.out'
+  }, '-=1.0');
 });

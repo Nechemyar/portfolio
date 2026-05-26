@@ -22,7 +22,7 @@ export default class HeroScroll {
 
     // Setup initial state for the message so it doesn't flash
     gsap.set('.hero__pitch-line', {
-      clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)',
+      clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)', // start clipped to the top line
       y: 50
     });
     gsap.set('.hero__note', { opacity: 0, y: 20 });
@@ -52,14 +52,14 @@ export default class HeroScroll {
       immediateRender: false
     });
 
-    // 2. Wipe paragraph in line by line
+    // 2. Wipe paragraph in line by line (slides up while mask uncovers downwards)
     tl.to('.hero__pitch-line', {
       clipPath: 'polygon(0% -20%, 100% -20%, 100% 120%, 0% 120%)',
       y: 0,
       ease: 'power3.out',
       duration: 1.5,
       stagger: 0.3
-    }, '-=0.5'); // overlap slightly with kicker going out
+    }, '+=0.2'); // Starts 0.2s AFTER the kicker has completely wiped out
 
     // 3. Fade in note
     tl.to('.hero__note', {

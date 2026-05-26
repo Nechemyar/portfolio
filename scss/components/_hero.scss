@@ -106,27 +106,6 @@
   z-index: 2;
 }
 
-// --- Kicker — white, centered ---
-
-.hero__kicker-zone {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: clamp(4rem, 10vh, 6rem);
-  padding-bottom: clamp(12rem, 25vh, 16rem);
-}
-
-.hero__kicker {
-  margin: 0;
-  color: #fff;
-  font-family: $font-body;
-  font-size: clamp(1.35rem, 5.2vw, 2rem);
-  font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: 0;
-  text-align: center;
-}
 
 // --- Message box — unwrap, hide pitch heading ---
 
@@ -281,9 +260,6 @@
     font-size: clamp(20rem, 25vw, 40rem);
   }
 
-  .hero__kicker {
-    font-size: clamp(2rem, 2.8vw, 3.2rem);
-  }
 
   .hero__pitch-heading {
     font-size: clamp(2rem, 2.8vw, 3.2rem);

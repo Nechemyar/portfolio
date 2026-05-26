@@ -9,65 +9,10 @@ export default class HeroScroll {
   }
 
   init() {
-    this.initHeroPin();
     this.initMouthSlider();
     this.initPillReveal();
     this.initCardsFan();
     this.initMarquee();
-  }
-
-  initHeroPin() {
-    const stage = document.querySelector('.hero__stage');
-    if (!stage) return;
-
-    // Setup initial state for the message so it doesn't flash
-    gsap.set('.hero__pitch-line', {
-      clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)', // start clipped to the top line
-      y: 50
-    });
-    gsap.set('.hero__note', { opacity: 0, y: 20 });
-    
-    // We want the clip-path of the kicker to start full (which it is after load)
-    // Wait for JS load to finish before the pin triggers? Actually ScrollTrigger handles this on refresh.
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.hero', // We pin the entire hero container
-        start: 'top top',
-        end: '+=150%', // 150vh of scroll distance
-        pin: true,
-        scrub: 1, // smooth scrubbing
-      }
-    });
-
-    // 1. Wipe kicker up and out
-    tl.fromTo('.hero__kicker-zone', {
-      clipPath: 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)',
-      y: 0
-    }, {
-      clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)',
-      y: -50,
-      ease: 'power2.inOut',
-      duration: 1,
-      immediateRender: false
-    });
-
-    // 2. Wipe paragraph in line by line (slides up while mask uncovers downwards)
-    tl.to('.hero__pitch-line', {
-      clipPath: 'polygon(0% -20%, 100% -20%, 100% 120%, 0% 120%)',
-      y: 0,
-      ease: 'power3.out',
-      duration: 1.5,
-      stagger: 0.3
-    }, '+=0.2'); // Starts 0.2s AFTER the kicker has completely wiped out
-
-    // 3. Fade in note
-    tl.to('.hero__note', {
-      opacity: 1,
-      y: 0,
-      ease: 'power2.out',
-      duration: 1
-    }, '-=0.8');
   }
 
   initMouthSlider() {

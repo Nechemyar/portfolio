@@ -38,7 +38,6 @@ const aboutReveal = new AboutReveal();
 // Setup initial hidden states for hero elements
 const wipeElements = [
   '.hero__display-word',
-  '.hero__kicker-zone',
   '.hero__tv-scene',
   '.hero__award-badge',
   '.hero__cta-row',
@@ -47,6 +46,8 @@ const wipeElements = [
   '.nav__desktop-wrapper'
 ];
 gsap.set(wipeElements, { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)', y: 40 });
+gsap.set('.hero__pitch-line', { clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)', y: 50 });
+gsap.set('.hero__note', { opacity: 0, y: 20 });
 
 new Loader(() => {
   document.documentElement.classList.add('js-loaded');
@@ -82,11 +83,20 @@ new Loader(() => {
     stagger: 0.1
   }, '-=1.1');
 
-  // 4. Kicker ("We are Sumi Studios") wipes up last
-  tl.to('.hero__kicker-zone', {
-    clipPath: 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)',
+  // 4. Paragraph reveals line by line last
+  tl.to('.hero__pitch-line', {
+    clipPath: 'polygon(0% -20%, 100% -20%, 100% 120%, 0% 120%)',
     y: 0,
-    duration: 1.2,
-    ease: 'expo.out'
-  }, '-=1.0');
+    duration: 1.5,
+    ease: 'expo.out',
+    stagger: 0.2
+  }, '-=0.8');
+
+  // 5. Fade in note
+  tl.to('.hero__note', {
+    opacity: 1,
+    y: 0,
+    duration: 1.0,
+    ease: 'power2.out'
+  }, '-=1.2');
 });

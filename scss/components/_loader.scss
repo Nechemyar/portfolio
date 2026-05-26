@@ -6,13 +6,24 @@ $loader-w: min(28vw, 130px);
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: #000;
   overflow: hidden;
-  will-change: transform;
+}
+
+// SVG provides the black background and morphing curved exit
+.loader__wipe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
+  path {
+    fill: #000;
+  }
 }
 
 .loader__inner {
   position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -30,6 +41,8 @@ $loader-w: min(28vw, 130px);
   display: block;
   width: $loader-w;
   height: auto;
+  // Hidden below mask before GSAP runs — prevents any first-frame flash
+  transform: translateY(100%);
   will-change: transform;
 }
 

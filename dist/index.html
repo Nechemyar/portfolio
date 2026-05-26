@@ -24,10 +24,13 @@
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" /></noscript>
 
+  <!-- Heading font preload -->
+  <link rel="preload" as="font" href="./assets/BrandelLuchador-Regular-XCf2s4ST.woff2" type="font/woff2" crossorigin />
+
   <!-- LCP image preload — preload the hero composition so the first paint
        has both the screen content (visible through the mask window) and the
        hero foreground. -->
-  <link rel="preload" as="image" href="./assets/tvonwhite-pFr5_Kus.webp" fetchpriority="high" />
+  <link rel="preload" as="image" href="./assets/orangetv-kvuoi4ka.webp" fetchpriority="high" />
   <link rel="preload" as="image" href="./assets/project-choice-CCiiNZL8.webp" fetchpriority="high" />
   <link rel="preload" as="image" href="./assets/fast-BrPiDcRV.webp" />
   <link rel="preload" as="image" href="./assets/stunning-CwRXTGhw.webp" />
@@ -53,18 +56,28 @@
     "description": "Hand-coded websites for service businesses, designed and built by one independent designer-developer."
   }
   </script>
-  <script type="module" crossorigin src="./assets/main-Bzk834pW.js"></script>
-  <link rel="modulepreload" crossorigin href="./assets/NavTheme-Dk7_Ykaz.js">
-  <link rel="stylesheet" crossorigin href="./assets/NavTheme-gW-Dd7IY.css">
+  <script type="module" crossorigin src="./assets/main-BTyaKXd-.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/NavTheme-Ba2Tm9OD.js">
+  <link rel="stylesheet" crossorigin href="./assets/NavTheme-O4pLouxI.css">
 </head>
 
 <body>
 
   <!-- LOADER -->
   <div class="loader" id="loader">
+    <!-- Black background + curved exit wipe -->
+    <svg class="loader__wipe" id="loader-wipe" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path id="loader-wipe-path" d="M 0,0 L 100,0 L 100,100 Q 50,100 0,100 Z" />
+    </svg>
     <div class="loader__inner">
-      <div class="loader__mark-wrap">
-        <img class="loader__mark" id="loader-mark" src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'?%3e%3csvg%20id='b'%20xmlns='http://www.w3.org/2000/svg'%20width='137.41'%20height='80.18'%20viewBox='0%200%20137.41%2080.18'%3e%3cg%20id='c'%3e%3cpath%20d='M73.39,49.43c6.88-.93,14.19,1.35,14.63,9.32.43,7.83-6.9,11.23-13.66,11.51-3.71.16-3.42-.92-3.72-4.43-.26-3.01-.54-6.22-.71-9.22-.21-3.82-.91-6.59,3.46-7.18ZM76.67,63.18c6.4.15,6.17-8.46-.36-7.45l.36,7.45Z'/%3e%3cpath%20d='M101.98,66.6c-5.55-5.08-3.41-18.04,4.71-19,14.77-1.75,14.57,23.74-1.3,20.74-1.05-.2-2.62-1.02-3.41-1.74ZM108.42,54.1c-3.84-.14-4.03,7.08-1.05,7.65,4.72.9,4.79-7.52,1.05-7.65Z'/%3e%3cpath%20d='M66.64,51.56c1.8,1.7,1.69,12.3.99,14.82-1.72,6.26-11.19,8.78-14.68,3.3-1.79-2.81-2.44-9.68-2.56-13.06-.14-4.02,3.71-4.38,6.59-3.03.82,2.26-.11,9.33,1.74,10.67,3.22,2.33,2.81-3.8,2.68-5.52-.12-1.61-1.21-4.45-.53-5.86.55-1.13,4.68-2.35,5.76-1.32Z'/%3e%3cpath%20d='M118.64,68.03c-1.66-1.44.8-4.09,1.19-5.95,1.14-1.08,6.85,3.65,7.56,1.26.46-1.55-4.82-3.08-6.14-4.13-3.58-2.85-2.69-8.41,1.35-10.24,2.96-1.34,4.94-1.21,7.91-.09,3.68,1.39,4.19,2.45,2.28,6.02-1.53,2.85-3.04-.35-4.89-.6-.68-.09-2.14.08-2.2.87-.09,1.17,5,3.13,6.14,4.09,5.22,4.4,1.4,10.94-4.97,11.03-1.75.02-6.94-1.16-8.22-2.27Z'/%3e%3cpath%20d='M17.85,78.71c-.43-.75.54-5.18,1.22-5.63,1.8-.86,3.35.72,5.26.77,1.48.03,2.68-.43,1.6-1.99-4.52-.99-10.78-1.86-8.68-8.31,1.16-3.57,10.27-6.81,12.19-4.07.41.59.15,4.74-.13,5.14-.68.98-6.12-1.33-5.47,1.17.31,1.18,5.02,1.18,6.59,1.93,1.46.7,3.16,3.3,3.28,4.91.5,7-11.18,9.4-15.87,6.1Z'/%3e%3cpath%20d='M48.2,60.25l-4.19,1.38c-.43,2.41,2.58,11.31,1.62,12.9-.48.8-6.01,2.52-6.55.15-.83-3.66-.82-8.11-1.44-11.86l-4.82.03c-.51-1.59-1.88-4.84-.33-6.08.67-.54,5.24-1.44,6.48-1.68,1.15-.23,7.42-1.28,8.07-1.16.29.05.56.08.73.36.16,1.97,1.52,4.03.43,5.96Z'/%3e%3cpath%20d='M96.45,48l.37,19.18c-.51,1.68-4.67,1.54-5.99,1.15-.99-.29-.98-1.59-1.05-2.49-.42-5.44.28-11.47.08-16.97.46-1.53,5.29-1.68,6.59-.87Z'/%3e%3cpath%20d='M79.05.11c1.79-.36,5.15.17,6.32,1.67,1.73,2.22,3.42,8.15,4.93,11.03.45.87,2.01,3.92,2.86,3.91.87-.45,1.64-1.61,2.24-2.39,2.97-3.87,5.22-8.88,8.07-12.51,1.49-1.9,3.64-1.72,5.98-1.41,2.53.33,3.42,1.22,4.38,3.43,3.77,8.62,7.1,28.05,5.4,37.16-.14.74-1.06,1.59-1.75,1.81-1.28.4-8.51-.8-9.84-1.55-2.36-1.32-1.31-4.01-1.53-6.28-.31-3.24-.47-7.59-1.07-10.63-.52-2.61-2.53,1.76-3.01,2.64-1.32,2.4-3.55,8.79-5.71,9.9-5.54,2.84-7.76-6.77-10.95-9.53-.55.34-.46.7-.54,1.23-.23,1.64-.53,3.35-.7,4.98-.23,2.19.12,7.21-1.06,8.87-.95,1.32-6.95,2.47-8.74,2.61-4.07.32-3.83-1.21-3.7-4.76.33-8.9,2.27-30.02,5.88-37.76.58-1.25,1.04-2.11,2.56-2.41Z'/%3e%3cpath%20d='M23.73,2.26c4.74-.42,11.89-.56,12.16,5.74.16,3.78-5.22,14.75-9.95,11.35-1.21-.87-.86-2.68-1.65-2.96-5.16-1.08-14.85,7.68-6.17,10.07,6.5,1.79,15.14.07,19.24,7.37,8.44,15.03-18.97,28.06-30.24,24.56-9.93-3.09-2.02-17.46,4.79-16.14,3.16.61.29,5.65,5.25,4.87,2.67-.42,7.77-2.83,7.35-6.09-.55-4.24-9.38-3.9-12.5-4.55C-1.14,33.75-3.34,21.68,4.66,11.92,9.19,6.38,16.66,2.89,23.73,2.26Z'/%3e%3cpath%20d='M63.8,4.71c3.64-.74,4.15,4.63,4.62,7.29,2.37,13.41,3.08,40.25-17.67,36.47-12.35-2.25-14.19-25.52-10.89-34.69.65-1.79,1.98-2.23,3.73-2.66,9.99-2.44,6.15,5.23,6.45,11.45.13,2.72.98,11.27,5.35,9.95,3.53-1.07,2.8-9.16,2.43-12.05-.44-3.46-2.74-8.37-.67-11.4.86-1.26,5.19-4.06,6.65-4.36Z'/%3e%3cpath%20d='M122.17,43.22c-.33-.3-.8-1.7-.81-2.2,1.03-5.65,1.8-11.38,2.45-17.09s.56-11.91,1.55-17.26c.72-3.86,8.35-2.36,10.01-.6,2.16,2.3,2.16,16.48,1.96,20.03-.15,2.74-2.17,16.91-3.52,18.47-1.44,1.65-10.33-.15-11.64-1.35Z'/%3e%3c/g%3e%3c/svg%3e" alt="SUMI Studios" />
+      <div class="loader__mask loader__mask--wordmark" id="loader-mask-left">
+        <img class="loader__wordmark" id="loader-wordmark-left" src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'?%3e%3csvg%20id='b'%20xmlns='http://www.w3.org/2000/svg'%20width='184.32'%20height='137.16'%20viewBox='0%200%20184.32%20137.16'%3e%3cg%20id='c'%3e%3cpath%20d='M33.66,59.98l-11.7-6.57c-3.49-2.26-5.75-5.95-5.75-10.26v-21.7C7.13,28.37,1.31,36.59,0,45.48v1.77c0,7.6,3.9,14.37,10.47,18.06l11.5,6.77c3.69,2.05,5.95,5.95,5.95,10.06v32.84c0,3.28-2.67,5.75-5.75,5.75h-.07c5.52,3.16,11.83,5.94,18.76,8.27,2.06-3,3.27-6.63,3.27-10.52v-40.23c0-7.59-3.9-14.57-10.47-18.27ZM42.22,8.07c-6,2.07-11.53,4.5-16.48,7.22.12.11.22.23.32.35,1.23,1.03,1.85,2.47,1.85,4.11v27.91l16.22-9.44v-21.96c0-2.93-.69-5.71-1.91-8.19ZM16.21,114.78v-39.2L0,84.81v13.64c2.86,7,8.71,13.45,16.81,18.98-.38-.81-.59-1.71-.59-2.65Z'%20fill='%23ec4a1e'/%3e%3cpath%20d='M76.15.84v114.14c0,3.28-2.67,5.95-5.75,5.95-3.28,0-5.95-2.67-5.95-5.95V2.43c-5.65.97-11.08,2.23-16.22,3.73v112.33c0,5.82,2.71,11.05,6.93,14.48,3.22,2.62,7.31,4.2,11.75,4.2h6.98c1.78,0,3.5-.25,5.13-.73,7.74-2.25,13.35-9.47,13.35-17.95V0c-5.52.03-10.94.32-16.22.84Z'%20fill='%23ec4a1e'/%3e%3cpath%20d='M137.4,5.85l-1.52,13.28c-1.23,11.08-2.26,22.17-2.87,33.25-.62,11.29-1.03,22.37-1.03,33.66h-3.49c0-22.37-1.23-44.75-3.9-66.91l-1.9-16.63C114.38,1.04,105.57.18,96.47.02v137.13h16.42v-10.88c0-26.48-1.64-53.16-4.92-79.43l3.49-.62,10.36,88.28c6.05-1.02,11.84-2.36,17.3-3.96l9.9-84.32,3.49.62c-3.28,26.27-4.93,52.95-4.93,79.43v1.47c6.04-2.24,11.55-4.83,16.42-7.72V17.05c-7.49-4.54-16.51-8.34-26.61-11.2Z'%20fill='%23ec4a1e'/%3e%3cpath%20d='M168.11,19.71v97.7c7.59-5.19,13.2-11.18,16.22-17.68v-62.08c-3.06-6.61-8.67-12.68-16.22-17.94Z'%20fill='%23ec4a1e'/%3e%3c/g%3e%3c/svg%3e" alt="Sumi Studios" />
+      </div>
+      <div class="loader__mask loader__mask--center" id="loader-mask-center">
+        <img class="loader__wordmark-center" id="loader-stacked" src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'?%3e%3csvg%20id='b'%20xmlns='http://www.w3.org/2000/svg'%20width='184.32'%20height='137.16'%20viewBox='0%200%20184.32%20137.16'%3e%3cg%20id='c'%3e%3cpath%20d='M33.66,59.98l-11.7-6.57c-3.49-2.26-5.75-5.95-5.75-10.26v-21.7C7.13,28.37,1.31,36.59,0,45.48v1.77c0,7.6,3.9,14.37,10.47,18.06l11.5,6.77c3.69,2.05,5.95,5.95,5.95,10.06v32.84c0,3.28-2.67,5.75-5.75,5.75h-.07c5.52,3.16,11.83,5.94,18.76,8.27,2.06-3,3.27-6.63,3.27-10.52v-40.23c0-7.59-3.9-14.57-10.47-18.27ZM42.22,8.07c-6,2.07-11.53,4.5-16.48,7.22.12.11.22.23.32.35,1.23,1.03,1.85,2.47,1.85,4.11v27.91l16.22-9.44v-21.96c0-2.93-.69-5.71-1.91-8.19ZM16.21,114.78v-39.2L0,84.81v13.64c2.86,7,8.71,13.45,16.81,18.98-.38-.81-.59-1.71-.59-2.65Z'%20fill='%23ec4a1e'/%3e%3cpath%20d='M76.15.84v114.14c0,3.28-2.67,5.95-5.75,5.95-3.28,0-5.95-2.67-5.95-5.95V2.43c-5.65.97-11.08,2.23-16.22,3.73v112.33c0,5.82,2.71,11.05,6.93,14.48,3.22,2.62,7.31,4.2,11.75,4.2h6.98c1.78,0,3.5-.25,5.13-.73,7.74-2.25,13.35-9.47,13.35-17.95V0c-5.52.03-10.94.32-16.22.84Z'%20fill='%23ec4a1e'/%3e%3cpath%20d='M137.4,5.85l-1.52,13.28c-1.23,11.08-2.26,22.17-2.87,33.25-.62,11.29-1.03,22.37-1.03,33.66h-3.49c0-22.37-1.23-44.75-3.9-66.91l-1.9-16.63C114.38,1.04,105.57.18,96.47.02v137.13h16.42v-10.88c0-26.48-1.64-53.16-4.92-79.43l3.49-.62,10.36,88.28c6.05-1.02,11.84-2.36,17.3-3.96l9.9-84.32,3.49.62c-3.28,26.27-4.93,52.95-4.93,79.43v1.47c6.04-2.24,11.55-4.83,16.42-7.72V17.05c-7.49-4.54-16.51-8.34-26.61-11.2Z'%20fill='%23ec4a1e'/%3e%3cpath%20d='M168.11,19.71v97.7c7.59-5.19,13.2-11.18,16.22-17.68v-62.08c-3.06-6.61-8.67-12.68-16.22-17.94Z'%20fill='%23ec4a1e'/%3e%3c/g%3e%3c/svg%3e" alt="" />
+      </div>
+      <div class="loader__mask loader__mask--wordmark" id="loader-mask-right">
+        <img class="loader__wordmark" id="loader-wordmark-right" src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'?%3e%3csvg%20id='b'%20xmlns='http://www.w3.org/2000/svg'%20width='184.32'%20height='137.16'%20viewBox='0%200%20184.32%20137.16'%3e%3cg%20id='c'%3e%3cpath%20d='M33.66,59.98l-11.7-6.57c-3.49-2.26-5.75-5.95-5.75-10.26v-21.7C7.13,28.37,1.31,36.59,0,45.48v1.77c0,7.6,3.9,14.37,10.47,18.06l11.5,6.77c3.69,2.05,5.95,5.95,5.95,10.06v32.84c0,3.28-2.67,5.75-5.75,5.75h-.07c5.52,3.16,11.83,5.94,18.76,8.27,2.06-3,3.27-6.63,3.27-10.52v-40.23c0-7.59-3.9-14.57-10.47-18.27ZM42.22,8.07c-6,2.07-11.53,4.5-16.48,7.22.12.11.22.23.32.35,1.23,1.03,1.85,2.47,1.85,4.11v27.91l16.22-9.44v-21.96c0-2.93-.69-5.71-1.91-8.19ZM16.21,114.78v-39.2L0,84.81v13.64c2.86,7,8.71,13.45,16.81,18.98-.38-.81-.59-1.71-.59-2.65Z'%20fill='%23ec4a1e'/%3e%3cpath%20d='M76.15.84v114.14c0,3.28-2.67,5.95-5.75,5.95-3.28,0-5.95-2.67-5.95-5.95V2.43c-5.65.97-11.08,2.23-16.22,3.73v112.33c0,5.82,2.71,11.05,6.93,14.48,3.22,2.62,7.31,4.2,11.75,4.2h6.98c1.78,0,3.5-.25,5.13-.73,7.74-2.25,13.35-9.47,13.35-17.95V0c-5.52.03-10.94.32-16.22.84Z'%20fill='%23ec4a1e'/%3e%3cpath%20d='M137.4,5.85l-1.52,13.28c-1.23,11.08-2.26,22.17-2.87,33.25-.62,11.29-1.03,22.37-1.03,33.66h-3.49c0-22.37-1.23-44.75-3.9-66.91l-1.9-16.63C114.38,1.04,105.57.18,96.47.02v137.13h16.42v-10.88c0-26.48-1.64-53.16-4.92-79.43l3.49-.62,10.36,88.28c6.05-1.02,11.84-2.36,17.3-3.96l9.9-84.32,3.49.62c-3.28,26.27-4.93,52.95-4.93,79.43v1.47c6.04-2.24,11.55-4.83,16.42-7.72V17.05c-7.49-4.54-16.51-8.34-26.61-11.2Z'%20fill='%23ec4a1e'/%3e%3cpath%20d='M168.11,19.71v97.7c7.59-5.19,13.2-11.18,16.22-17.68v-62.08c-3.06-6.61-8.67-12.68-16.22-17.94Z'%20fill='%23ec4a1e'/%3e%3c/g%3e%3c/svg%3e" alt="" aria-hidden="true" />
       </div>
     </div>
   </div>
@@ -79,7 +92,7 @@
           <span class="nav__logo-wordmark-line">SUMI</span>
           <span class="nav__logo-wordmark-sub">STUDIOS</span>
         </span>
-        <img class="nav__logo-svg" src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'?%3e%3csvg%20id='b'%20xmlns='http://www.w3.org/2000/svg'%20width='137.41'%20height='80.18'%20viewBox='0%200%20137.41%2080.18'%3e%3cg%20id='c'%3e%3cpath%20d='M73.39,49.43c6.88-.93,14.19,1.35,14.63,9.32.43,7.83-6.9,11.23-13.66,11.51-3.71.16-3.42-.92-3.72-4.43-.26-3.01-.54-6.22-.71-9.22-.21-3.82-.91-6.59,3.46-7.18ZM76.67,63.18c6.4.15,6.17-8.46-.36-7.45l.36,7.45Z'/%3e%3cpath%20d='M101.98,66.6c-5.55-5.08-3.41-18.04,4.71-19,14.77-1.75,14.57,23.74-1.3,20.74-1.05-.2-2.62-1.02-3.41-1.74ZM108.42,54.1c-3.84-.14-4.03,7.08-1.05,7.65,4.72.9,4.79-7.52,1.05-7.65Z'/%3e%3cpath%20d='M66.64,51.56c1.8,1.7,1.69,12.3.99,14.82-1.72,6.26-11.19,8.78-14.68,3.3-1.79-2.81-2.44-9.68-2.56-13.06-.14-4.02,3.71-4.38,6.59-3.03.82,2.26-.11,9.33,1.74,10.67,3.22,2.33,2.81-3.8,2.68-5.52-.12-1.61-1.21-4.45-.53-5.86.55-1.13,4.68-2.35,5.76-1.32Z'/%3e%3cpath%20d='M118.64,68.03c-1.66-1.44.8-4.09,1.19-5.95,1.14-1.08,6.85,3.65,7.56,1.26.46-1.55-4.82-3.08-6.14-4.13-3.58-2.85-2.69-8.41,1.35-10.24,2.96-1.34,4.94-1.21,7.91-.09,3.68,1.39,4.19,2.45,2.28,6.02-1.53,2.85-3.04-.35-4.89-.6-.68-.09-2.14.08-2.2.87-.09,1.17,5,3.13,6.14,4.09,5.22,4.4,1.4,10.94-4.97,11.03-1.75.02-6.94-1.16-8.22-2.27Z'/%3e%3cpath%20d='M17.85,78.71c-.43-.75.54-5.18,1.22-5.63,1.8-.86,3.35.72,5.26.77,1.48.03,2.68-.43,1.6-1.99-4.52-.99-10.78-1.86-8.68-8.31,1.16-3.57,10.27-6.81,12.19-4.07.41.59.15,4.74-.13,5.14-.68.98-6.12-1.33-5.47,1.17.31,1.18,5.02,1.18,6.59,1.93,1.46.7,3.16,3.3,3.28,4.91.5,7-11.18,9.4-15.87,6.1Z'/%3e%3cpath%20d='M48.2,60.25l-4.19,1.38c-.43,2.41,2.58,11.31,1.62,12.9-.48.8-6.01,2.52-6.55.15-.83-3.66-.82-8.11-1.44-11.86l-4.82.03c-.51-1.59-1.88-4.84-.33-6.08.67-.54,5.24-1.44,6.48-1.68,1.15-.23,7.42-1.28,8.07-1.16.29.05.56.08.73.36.16,1.97,1.52,4.03.43,5.96Z'/%3e%3cpath%20d='M96.45,48l.37,19.18c-.51,1.68-4.67,1.54-5.99,1.15-.99-.29-.98-1.59-1.05-2.49-.42-5.44.28-11.47.08-16.97.46-1.53,5.29-1.68,6.59-.87Z'/%3e%3cpath%20d='M79.05.11c1.79-.36,5.15.17,6.32,1.67,1.73,2.22,3.42,8.15,4.93,11.03.45.87,2.01,3.92,2.86,3.91.87-.45,1.64-1.61,2.24-2.39,2.97-3.87,5.22-8.88,8.07-12.51,1.49-1.9,3.64-1.72,5.98-1.41,2.53.33,3.42,1.22,4.38,3.43,3.77,8.62,7.1,28.05,5.4,37.16-.14.74-1.06,1.59-1.75,1.81-1.28.4-8.51-.8-9.84-1.55-2.36-1.32-1.31-4.01-1.53-6.28-.31-3.24-.47-7.59-1.07-10.63-.52-2.61-2.53,1.76-3.01,2.64-1.32,2.4-3.55,8.79-5.71,9.9-5.54,2.84-7.76-6.77-10.95-9.53-.55.34-.46.7-.54,1.23-.23,1.64-.53,3.35-.7,4.98-.23,2.19.12,7.21-1.06,8.87-.95,1.32-6.95,2.47-8.74,2.61-4.07.32-3.83-1.21-3.7-4.76.33-8.9,2.27-30.02,5.88-37.76.58-1.25,1.04-2.11,2.56-2.41Z'/%3e%3cpath%20d='M23.73,2.26c4.74-.42,11.89-.56,12.16,5.74.16,3.78-5.22,14.75-9.95,11.35-1.21-.87-.86-2.68-1.65-2.96-5.16-1.08-14.85,7.68-6.17,10.07,6.5,1.79,15.14.07,19.24,7.37,8.44,15.03-18.97,28.06-30.24,24.56-9.93-3.09-2.02-17.46,4.79-16.14,3.16.61.29,5.65,5.25,4.87,2.67-.42,7.77-2.83,7.35-6.09-.55-4.24-9.38-3.9-12.5-4.55C-1.14,33.75-3.34,21.68,4.66,11.92,9.19,6.38,16.66,2.89,23.73,2.26Z'/%3e%3cpath%20d='M63.8,4.71c3.64-.74,4.15,4.63,4.62,7.29,2.37,13.41,3.08,40.25-17.67,36.47-12.35-2.25-14.19-25.52-10.89-34.69.65-1.79,1.98-2.23,3.73-2.66,9.99-2.44,6.15,5.23,6.45,11.45.13,2.72.98,11.27,5.35,9.95,3.53-1.07,2.8-9.16,2.43-12.05-.44-3.46-2.74-8.37-.67-11.4.86-1.26,5.19-4.06,6.65-4.36Z'/%3e%3cpath%20d='M122.17,43.22c-.33-.3-.8-1.7-.81-2.2,1.03-5.65,1.8-11.38,2.45-17.09s.56-11.91,1.55-17.26c.72-3.86,8.35-2.36,10.01-.6,2.16,2.3,2.16,16.48,1.96,20.03-.15,2.74-2.17,16.91-3.52,18.47-1.44,1.65-10.33-.15-11.64-1.35Z'/%3e%3c/g%3e%3c/svg%3e" alt="SUMI Studios" />
+        <img class="nav__logo-svg" src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'?%3e%3csvg%20id='b'%20xmlns='http://www.w3.org/2000/svg'%20width='184.32'%20height='137.16'%20viewBox='0%200%20184.32%20137.16'%3e%3cg%20id='c'%3e%3cpath%20d='M33.66,59.98l-11.7-6.57c-3.49-2.26-5.75-5.95-5.75-10.26v-21.7C7.13,28.37,1.31,36.59,0,45.48v1.77c0,7.6,3.9,14.37,10.47,18.06l11.5,6.77c3.69,2.05,5.95,5.95,5.95,10.06v32.84c0,3.28-2.67,5.75-5.75,5.75h-.07c5.52,3.16,11.83,5.94,18.76,8.27,2.06-3,3.27-6.63,3.27-10.52v-40.23c0-7.59-3.9-14.57-10.47-18.27ZM42.22,8.07c-6,2.07-11.53,4.5-16.48,7.22.12.11.22.23.32.35,1.23,1.03,1.85,2.47,1.85,4.11v27.91l16.22-9.44v-21.96c0-2.93-.69-5.71-1.91-8.19ZM16.21,114.78v-39.2L0,84.81v13.64c2.86,7,8.71,13.45,16.81,18.98-.38-.81-.59-1.71-.59-2.65Z'%20fill='%23ec4a1e'/%3e%3cpath%20d='M76.15.84v114.14c0,3.28-2.67,5.95-5.75,5.95-3.28,0-5.95-2.67-5.95-5.95V2.43c-5.65.97-11.08,2.23-16.22,3.73v112.33c0,5.82,2.71,11.05,6.93,14.48,3.22,2.62,7.31,4.2,11.75,4.2h6.98c1.78,0,3.5-.25,5.13-.73,7.74-2.25,13.35-9.47,13.35-17.95V0c-5.52.03-10.94.32-16.22.84Z'%20fill='%23ec4a1e'/%3e%3cpath%20d='M137.4,5.85l-1.52,13.28c-1.23,11.08-2.26,22.17-2.87,33.25-.62,11.29-1.03,22.37-1.03,33.66h-3.49c0-22.37-1.23-44.75-3.9-66.91l-1.9-16.63C114.38,1.04,105.57.18,96.47.02v137.13h16.42v-10.88c0-26.48-1.64-53.16-4.92-79.43l3.49-.62,10.36,88.28c6.05-1.02,11.84-2.36,17.3-3.96l9.9-84.32,3.49.62c-3.28,26.27-4.93,52.95-4.93,79.43v1.47c6.04-2.24,11.55-4.83,16.42-7.72V17.05c-7.49-4.54-16.51-8.34-26.61-11.2Z'%20fill='%23ec4a1e'/%3e%3cpath%20d='M168.11,19.71v97.7c7.59-5.19,13.2-11.18,16.22-17.68v-62.08c-3.06-6.61-8.67-12.68-16.22-17.94Z'%20fill='%23ec4a1e'/%3e%3c/g%3e%3c/svg%3e" alt="SUMI Studios" />
       </a>
       <div class="nav__desktop-wrapper">
         <button class="nav__menu-btn" id="menu-toggle" aria-label="Open menu">
@@ -107,24 +120,79 @@
   </header>
 
   <!-- MOBILE MENU -->
-  <div class="menu-overlay" id="menu-overlay"></div>
-  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
-    <button id="mobile-menu-close-pill" class="mobile-menu__close-pill" aria-label="Close menu"></button>
-    <div class="mobile-menu__content">
-      <ul class="mobile-menu__nav">
-        <li><a href="#work" class="mobile-menu__link menu-item">Work</a></li>
-        <li><a href="#services" class="mobile-menu__link menu-item">Services</a></li>
-        <li><a href="#pricing" class="mobile-menu__link menu-item">Pricing</a></li>
-        <li><a href="#faq" class="mobile-menu__link menu-item">FAQ</a></li>
-        <li><a href="#contact" class="mobile-menu__link menu-item">Contact</a></li>
-      </ul>
-      <div class="mobile-menu__actions">
-        <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="mobile-menu__cta menu-item">Book a free call</a>
-        <a href="https://api.whatsapp.com/send/?phone=972585152321&text=Hi%20Nechemya%2C%20I%27d%20like%20to%20discuss%20a%20project.&type=phone_number" target="_blank" rel="noopener noreferrer" class="mobile-menu__whatsapp menu-item" aria-label="WhatsApp">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24">
-            <path fill="#ffffff" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-          </svg>
-        </a>
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Navigation">
+    <div class="mobile-menu__backdrop" aria-hidden="true"></div>
+
+    <div class="mobile-menu__card-wrap" id="mobile-menu-card-wrap">
+      <div class="mobile-menu__card" id="mobile-menu-card">
+
+        <div class="mobile-menu__topbar">
+          <a href="/" class="mobile-menu__top-logo" aria-label="Sumi Studios home">
+            <img src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'?%3e%3csvg%20id='b'%20xmlns='http://www.w3.org/2000/svg'%20width='137.41'%20height='80.18'%20viewBox='0%200%20137.41%2080.18'%3e%3cg%20id='c'%3e%3cpath%20d='M73.39,49.43c6.88-.93,14.19,1.35,14.63,9.32.43,7.83-6.9,11.23-13.66,11.51-3.71.16-3.42-.92-3.72-4.43-.26-3.01-.54-6.22-.71-9.22-.21-3.82-.91-6.59,3.46-7.18ZM76.67,63.18c6.4.15,6.17-8.46-.36-7.45l.36,7.45Z'/%3e%3cpath%20d='M101.98,66.6c-5.55-5.08-3.41-18.04,4.71-19,14.77-1.75,14.57,23.74-1.3,20.74-1.05-.2-2.62-1.02-3.41-1.74ZM108.42,54.1c-3.84-.14-4.03,7.08-1.05,7.65,4.72.9,4.79-7.52,1.05-7.65Z'/%3e%3cpath%20d='M66.64,51.56c1.8,1.7,1.69,12.3.99,14.82-1.72,6.26-11.19,8.78-14.68,3.3-1.79-2.81-2.44-9.68-2.56-13.06-.14-4.02,3.71-4.38,6.59-3.03.82,2.26-.11,9.33,1.74,10.67,3.22,2.33,2.81-3.8,2.68-5.52-.12-1.61-1.21-4.45-.53-5.86.55-1.13,4.68-2.35,5.76-1.32Z'/%3e%3cpath%20d='M118.64,68.03c-1.66-1.44.8-4.09,1.19-5.95,1.14-1.08,6.85,3.65,7.56,1.26.46-1.55-4.82-3.08-6.14-4.13-3.58-2.85-2.69-8.41,1.35-10.24,2.96-1.34,4.94-1.21,7.91-.09,3.68,1.39,4.19,2.45,2.28,6.02-1.53,2.85-3.04-.35-4.89-.6-.68-.09-2.14.08-2.2.87-.09,1.17,5,3.13,6.14,4.09,5.22,4.4,1.4,10.94-4.97,11.03-1.75.02-6.94-1.16-8.22-2.27Z'/%3e%3cpath%20d='M17.85,78.71c-.43-.75.54-5.18,1.22-5.63,1.8-.86,3.35.72,5.26.77,1.48.03,2.68-.43,1.6-1.99-4.52-.99-10.78-1.86-8.68-8.31,1.16-3.57,10.27-6.81,12.19-4.07.41.59.15,4.74-.13,5.14-.68.98-6.12-1.33-5.47,1.17.31,1.18,5.02,1.18,6.59,1.93,1.46.7,3.16,3.3,3.28,4.91.5,7-11.18,9.4-15.87,6.1Z'/%3e%3cpath%20d='M48.2,60.25l-4.19,1.38c-.43,2.41,2.58,11.31,1.62,12.9-.48.8-6.01,2.52-6.55.15-.83-3.66-.82-8.11-1.44-11.86l-4.82.03c-.51-1.59-1.88-4.84-.33-6.08.67-.54,5.24-1.44,6.48-1.68,1.15-.23,7.42-1.28,8.07-1.16.29.05.56.08.73.36.16,1.97,1.52,4.03.43,5.96Z'/%3e%3cpath%20d='M96.45,48l.37,19.18c-.51,1.68-4.67,1.54-5.99,1.15-.99-.29-.98-1.59-1.05-2.49-.42-5.44.28-11.47.08-16.97.46-1.53,5.29-1.68,6.59-.87Z'/%3e%3cpath%20d='M79.05.11c1.79-.36,5.15.17,6.32,1.67,1.73,2.22,3.42,8.15,4.93,11.03.45.87,2.01,3.92,2.86,3.91.87-.45,1.64-1.61,2.24-2.39,2.97-3.87,5.22-8.88,8.07-12.51,1.49-1.9,3.64-1.72,5.98-1.41,2.53.33,3.42,1.22,4.38,3.43,3.77,8.62,7.1,28.05,5.4,37.16-.14.74-1.06,1.59-1.75,1.81-1.28.4-8.51-.8-9.84-1.55-2.36-1.32-1.31-4.01-1.53-6.28-.31-3.24-.47-7.59-1.07-10.63-.52-2.61-2.53,1.76-3.01,2.64-1.32,2.4-3.55,8.79-5.71,9.9-5.54,2.84-7.76-6.77-10.95-9.53-.55.34-.46.7-.54,1.23-.23,1.64-.53,3.35-.7,4.98-.23,2.19.12,7.21-1.06,8.87-.95,1.32-6.95,2.47-8.74,2.61-4.07.32-3.83-1.21-3.7-4.76.33-8.9,2.27-30.02,5.88-37.76.58-1.25,1.04-2.11,2.56-2.41Z'/%3e%3cpath%20d='M23.73,2.26c4.74-.42,11.89-.56,12.16,5.74.16,3.78-5.22,14.75-9.95,11.35-1.21-.87-.86-2.68-1.65-2.96-5.16-1.08-14.85,7.68-6.17,10.07,6.5,1.79,15.14.07,19.24,7.37,8.44,15.03-18.97,28.06-30.24,24.56-9.93-3.09-2.02-17.46,4.79-16.14,3.16.61.29,5.65,5.25,4.87,2.67-.42,7.77-2.83,7.35-6.09-.55-4.24-9.38-3.9-12.5-4.55C-1.14,33.75-3.34,21.68,4.66,11.92,9.19,6.38,16.66,2.89,23.73,2.26Z'/%3e%3cpath%20d='M63.8,4.71c3.64-.74,4.15,4.63,4.62,7.29,2.37,13.41,3.08,40.25-17.67,36.47-12.35-2.25-14.19-25.52-10.89-34.69.65-1.79,1.98-2.23,3.73-2.66,9.99-2.44,6.15,5.23,6.45,11.45.13,2.72.98,11.27,5.35,9.95,3.53-1.07,2.8-9.16,2.43-12.05-.44-3.46-2.74-8.37-.67-11.4.86-1.26,5.19-4.06,6.65-4.36Z'/%3e%3cpath%20d='M122.17,43.22c-.33-.3-.8-1.7-.81-2.2,1.03-5.65,1.8-11.38,2.45-17.09s.56-11.91,1.55-17.26c.72-3.86,8.35-2.36,10.01-.6,2.16,2.3,2.16,16.48,1.96,20.03-.15,2.74-2.17,16.91-3.52,18.47-1.44,1.65-10.33-.15-11.64-1.35Z'/%3e%3c/g%3e%3c/svg%3e" alt="SUMI Studios" class="mobile-menu__top-logo-img" />
+          </a>
+          <button id="mobile-menu-close-pill" class="mobile-menu__close" aria-label="Close menu">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+              <line x1="1.5" y1="1.5" x2="16.5" y2="16.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="16.5" y1="1.5" x2="1.5" y2="16.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <ul class="mobile-menu__nav">
+          <li class="mobile-menu__nav-item">
+            <a href="/" class="mobile-menu__link menu-item">
+              <span class="mobile-menu__link-text">Home</span>
+              <span class="mobile-menu__link-fill" aria-hidden="true">
+                <span class="mobile-menu__link-fill-text">Home</span>
+                <span class="mobile-menu__link-fill-arrow"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M2 13L13 2M13 2H4M13 2V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </span>
+              <span class="mobile-menu__link-arrow-circle" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M2 13L13 2M13 2H4M13 2V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+          </li>
+          <li class="mobile-menu__nav-item">
+            <a href="#work" class="mobile-menu__link menu-item">
+              <span class="mobile-menu__link-text">Work</span>
+              <span class="mobile-menu__link-fill" aria-hidden="true">
+                <span class="mobile-menu__link-fill-text">Work</span>
+                <span class="mobile-menu__link-fill-arrow"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M2 13L13 2M13 2H4M13 2V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </span>
+              <span class="mobile-menu__link-arrow-circle" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M2 13L13 2M13 2H4M13 2V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+          </li>
+          <li class="mobile-menu__nav-item">
+            <a href="#how-it-works" class="mobile-menu__link menu-item">
+              <span class="mobile-menu__link-text">Process</span>
+              <span class="mobile-menu__link-fill" aria-hidden="true">
+                <span class="mobile-menu__link-fill-text">Process</span>
+                <span class="mobile-menu__link-fill-arrow"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M2 13L13 2M13 2H4M13 2V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </span>
+              <span class="mobile-menu__link-arrow-circle" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M2 13L13 2M13 2H4M13 2V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+          </li>
+          <li class="mobile-menu__nav-item">
+            <a href="#contact" class="mobile-menu__link menu-item">
+              <span class="mobile-menu__link-text">Contact</span>
+              <span class="mobile-menu__link-fill" aria-hidden="true">
+                <span class="mobile-menu__link-fill-text">Contact</span>
+                <span class="mobile-menu__link-fill-arrow"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M2 13L13 2M13 2H4M13 2V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </span>
+              <span class="mobile-menu__link-arrow-circle" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M2 13L13 2M13 2H4M13 2V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="mobile-menu__footer">
+          <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="mobile-menu__cta menu-item">
+            <span class="mobile-menu__cta-text">Book a free call</span>
+            <span class="mobile-menu__cta-icon" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M2 15L15 2M15 2H4M15 2V13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+          <a href="https://api.whatsapp.com/send/?phone=972585152321&text=Hi%20Nechemya%2C%20I%27d%20like%20to%20discuss%20a%20project.&type=phone_number" target="_blank" rel="noopener noreferrer" class="mobile-menu__wa menu-item" aria-label="WhatsApp">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+        </div>
+
       </div>
     </div>
   </nav>
@@ -133,7 +201,7 @@
   <main>
 
     <!-- HERO (tall trigger, pinned sticky stage) -->
-    <section class="hero" id="hero" data-nav-theme="light" data-bg="#FFB93E">
+    <section class="hero" id="hero" data-nav-theme="light" data-bg="#ffffff">
       <div class="hero__stage">
         <div class="hero__layout">
           <!-- TV Cat — sits above the card on mobile -->
@@ -141,7 +209,7 @@
             <div class="hero__tv-scene">
               <div class="hero__cat-wrapper hero__cat-wrapper--base">
                 <!-- Removed halo to fix white box issue -->
-                <img class="hero__cat-img" src="./assets/tvonwhite-pFr5_Kus.webp" alt="" fetchpriority="high" decoding="async" />
+                <img class="hero__cat-img" src="./assets/orangetv-kvuoi4ka.webp" alt="" fetchpriority="high" decoding="async" />
               </div>
               <div class="hero__cat-wrapper hero__cat-wrapper--screen">
                 <div class="hero__mouth-slider" id="mouth-slider">
@@ -155,23 +223,31 @@
                 </div>
               </div>
             </div>
-            <h2 class="hero__work-title">Featured Work</h2>
+            <div class="hero__display-word" aria-hidden="true">DESIGN</div>
+            <h2 class="hero__work-title">Let Your Website<br />Do the Talking</h2>
           </article>
 
           <!-- Copy card — sits below the TV on mobile -->
           <article class="hero__copy-card">
-            <p class="hero__kicker">Independent studio · service businesses only</p>
+            <div class="hero__kicker-zone">
+              <p class="hero__kicker">We are Sumi Studios</p>
+            </div>
+            <div class="hero__message">
             <h1 class="hero__pitch-heading">
-              <span class="hero__pitch-line">We build fast, stunning</span>
-              <span class="hero__pitch-line">mobile-ready websites for</span>
-              <span class="hero__pitch-line">service businesses</span>
+              <span class="hero__pitch-line">We design and develop strategic,</span>
+              <span class="hero__pitch-line">beautiful websites that capture</span>
+              <span class="hero__pitch-line">your brand, convert your audience,</span>
+              <span class="hero__pitch-line">and grow with your business.</span>
             </h1>
-            <p class="hero__note">Two-week build. Fixed price. Direct access to the person doing the work.</p>
+            <p class="hero__note">Let Your Website Do the Talking</p>
             <div class="hero__cta-row">
-              <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="hero__pitch-cta">Book a free call</a>
-              <a href="https://api.whatsapp.com/send/?phone=972585152321&text=Hi%20Nechemya%2C%20I%27d%20like%20to%20discuss%20a%20project.&type=phone_number" target="_blank" rel="noopener noreferrer" class="hero__cta-icon" aria-label="WhatsApp">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-              </a>
+                <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="hero__pitch-cta">
+                  <span class="hero__pitch-cta-text">Book a free call</span>
+                </a>
+                <span class="hero__pitch-cta-circle" aria-hidden="true">
+                  <img src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'?%3e%3csvg%20id='b'%20xmlns='http://www.w3.org/2000/svg'%20width='77.81'%20height='77.83'%20viewBox='0%200%2077.81%2077.83'%3e%3cg%20id='c'%3e%3cpolygon%20points='74.59%203.24%2074.59%203.24%2077.79%203.24%2077.79%200%2073.95%200%2073.95%20.02%2020.36%20.02%2020.36%206.46%2066.81%206.46%200%2073.28%204.56%2077.83%2071.37%2011.02%2071.37%2057.48%2077.81%2057.48%2077.81%203.24%2074.59%203.24'%20fill='%23ec4a1e'/%3e%3c/g%3e%3c/svg%3e" alt="" />
+                </span>
+              </div>
             </div>
           </article>
         </div>

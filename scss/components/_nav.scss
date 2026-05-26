@@ -85,11 +85,12 @@ body.nav-has-backing .nav::before {
 
 body.nav-has-backing .nav__inner {
   width: fit-content;
+  margin-inline: auto;
   column-gap: clamp(1.35rem, 3vw, 2.75rem);
   padding: clamp(0.5rem, 0.8vw, 0.7rem) clamp(1rem, 1.5vw, 1.4rem);
   background: $c-cream;
   border: 2px solid $c-ink;
-  border-radius: 10px;
+  border-radius: 14px;
 }
 
 /* ——— Logo ——— */
@@ -511,7 +512,24 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
 
 @media (max-width: 768px) {
   .nav {
-    padding: 0.75rem 1rem;
+    padding: 1.32rem clamp(0.75rem, 2.4vw, 1rem) 0.85rem;
+  }
+
+  body:not(.nav-has-backing) .nav {
+    pointer-events: none;
+  }
+
+  body:not(.nav-has-backing) .nav__inner {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  body:not(.nav-has-backing) .nav__logo {
+    display: none;
+  }
+
+  body:not(.nav-has-backing) .nav__desktop-wrapper {
+    pointer-events: auto;
   }
 
   body.nav-has-backing .nav {
@@ -541,14 +559,26 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
 
   .nav__menu-icon {
     display: flex;
-    width: 28px;
-    height: 22px;
+    width: 42px;
+    height: 24px;
   }
 
   .nav__menu-lines {
     display: block;
-    width: 28px;
-    height: 22px;
+    width: 42px;
+    height: 24px;
+  }
+
+  .nav__menu-line {
+    height: 2px;
+  }
+
+  .nav__menu-line--top {
+    top: 6px;
+  }
+
+  .nav__menu-line--bottom {
+    top: 16px;
   }
 
   .nav__menu-btn.is-open .nav__menu-line {

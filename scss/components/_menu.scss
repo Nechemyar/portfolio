@@ -4,6 +4,9 @@
 .mobile-menu {
   position: fixed;
   inset: 0;
+  left: 8px;
+  right: 8px;
+  max-width: calc(100dvw - 16px);
   background: transparent;
   z-index: 1150;
   pointer-events: none;

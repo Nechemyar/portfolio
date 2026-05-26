@@ -1,47 +1,41 @@
 @use '../base/tokens' as *;
 
+$loader-w: min(28vw, 130px);
+
 .loader {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: $c-accent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background: #000;
   overflow: hidden;
-  border-radius: 0;
-  will-change: transform, border-radius;
-}
-
-.loader.is-done {
-  opacity: 0;
-  pointer-events: none;
+  will-change: transform;
 }
 
 .loader__inner {
   position: relative;
-  z-index: 1;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: min(62vw, 420px);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  height: 100vh;
 }
 
-.loader__mark-wrap {
-  width: 100%;
+.loader__mask {
+  overflow: hidden;
 }
 
-.loader__mark {
-  width: 100%;
+.loader__wordmark,
+.loader__stacked {
+  display: block;
+  width: $loader-w;
   height: auto;
-  filter: brightness(0) invert(1) sepia(9%) saturate(210%) hue-rotate(334deg) brightness(1.05);
-  opacity: 0;
-  transform: translateY(12px) scale(0.96);
-  will-change: transform, opacity;
+  will-change: transform;
 }
 
-@media (max-width: 600px) {
-  .loader__inner {
-    width: min(68vw, 280px);
+@media (max-width: 500px) {
+  .loader__wordmark,
+  .loader__stacked {
+    width: min(34vw, 100px);
   }
 }

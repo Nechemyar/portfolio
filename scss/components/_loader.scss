@@ -9,7 +9,6 @@ $loader-w: min(28vw, 130px);
   overflow: hidden;
 }
 
-// SVG provides the black background and morphing curved exit
 .loader__wipe {
   position: absolute;
   inset: 0;
@@ -32,18 +31,29 @@ $loader-w: min(28vw, 130px);
   height: 100vh;
 }
 
+// position: relative is required — without it overflow:hidden won't clip
+// children that have been promoted to their own composite layers by GSAP
 .loader__mask {
   overflow: hidden;
+  position: relative;
 }
 
-.loader__wordmark,
+.loader__wordmark {
+  display: block;
+  width: $loader-w;
+  height: auto;
+  // aspect-ratio lets the browser compute height before the SVG loads,
+  // so GSAP's yPercent has a real pixel value from the first frame
+  aspect-ratio: 184.32 / 137.16;
+  transform: translateY(100%);
+}
+
 .loader__stacked {
   display: block;
   width: $loader-w;
   height: auto;
-  // Hidden below mask before GSAP runs — prevents any first-frame flash
+  aspect-ratio: 215.78 / 667.32;
   transform: translateY(100%);
-  will-change: transform;
 }
 
 @media (max-width: 500px) {

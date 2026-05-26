@@ -320,7 +320,7 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   display: none;
   position: relative;
   width: 22px;
-  height: 14px;
+  height: 22px;
 }
 
 .nav__menu-line {
@@ -351,7 +351,7 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
 }
 
 .nav__menu-line--top    { top: 4px;  transform: translateX(-14px); }
-.nav__menu-line--bottom { top: 11px; transform: translateX(14px); }
+.nav__menu-line--bottom { top: 16px; transform: translateX(14px); }
 
 .nav.is-ready {
   .nav__menu-line--top,
@@ -385,9 +385,13 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
 
   /* Hide the text wordmark + icon-mark combo; the SVG wordmark
      takes over so the brushwork mark matches the hero illustration. */
+  .nav__inner {
+    grid-template-columns: 1fr auto 1fr;
+  }
+
   .nav__logo {
-    grid-column: 1;
-    justify-self: start;
+    grid-column: 2;
+    justify-self: center;
   }
 
   .nav__logo-mark,
@@ -450,12 +454,12 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
    into an X. Keep the rotations equal-and-opposite so the cross sits
    true. */
 .nav__menu-btn.is-open .nav__menu-line--top {
-  top: 7px;
+  top: 10px;
   transform: rotate(45deg);
 }
 
 .nav__menu-btn.is-open .nav__menu-line--bottom {
-  top: 7px;
+  top: 10px;
   transform: rotate(-45deg);
 }
 
@@ -545,13 +549,13 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
   .nav__menu-icon {
     display: flex;
     width: 28px;
-    height: 16px;
+    height: 22px;
   }
 
   .nav__menu-lines {
     display: block;
     width: 28px;
-    height: 16px;
+    height: 22px;
   }
 
   .nav__menu-btn.is-open .nav__menu-line {

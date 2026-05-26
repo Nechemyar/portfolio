@@ -1,6 +1,6 @@
 @use '../base/tokens' as *;
 
-$loader-w: min(28vw, 130px);
+$loader-w: min(16vw, 75px);
 
 .loader {
   position: fixed;
@@ -12,6 +12,7 @@ $loader-w: min(28vw, 130px);
 .loader__wipe {
   position: absolute;
   inset: 0;
+  z-index: 1;
   width: 100%;
   height: 100%;
 
@@ -27,39 +28,47 @@ $loader-w: min(28vw, 130px);
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: clamp(1.5rem, 4vw, 3.5rem);
+  gap: clamp(3rem, 8vw, 6rem);
   height: 100vh;
+  visibility: hidden;
 }
 
-// clip-path: inset(0) is applied at the compositor level and reliably clips
-// GSAP-animated children even when they are promoted to their own GPU layers.
-// overflow: hidden alone cannot clip composited children.
 .loader__mask {
   position: relative;
-  clip-path: inset(0);
+  overflow: hidden;
+  width: $loader-w;
 }
 
-.loader__wordmark {
-  display: block;
-  width: $loader-w;
-  height: auto;
-  // aspect-ratio lets the browser resolve the height from width alone,
-  // before the SVG file loads, so GSAP reads the correct px value for yPercent
+.loader__mask--wordmark {
   aspect-ratio: 184.32 / 137.16;
-  transform: translateY(100%);
 }
 
-.loader__stacked {
+.loader__mask--center {
+  width: min(45vw, 220px);
+  aspect-ratio: 184.32 / 137.16;
+}
+
+.loader__wordmark,
+.loader__wordmark-center {
   display: block;
-  width: $loader-w;
-  height: auto;
-  aspect-ratio: 215.78 / 667.32;
-  transform: translateY(100%);
+  width: 100%;
+  height: 100%;
+}
+
+.loader__wordmark-center {
+  filter: brightness(0) invert(1);
 }
 
 @media (max-width: 500px) {
-  .loader__wordmark,
-  .loader__stacked {
-    width: min(34vw, 100px);
+  .loader__inner {
+    flex-direction: column;
+  }
+
+  .loader__mask {
+    width: min(20vw, 55px);
+  }
+
+  .loader__mask--center {
+    width: min(50vw, 160px);
   }
 }

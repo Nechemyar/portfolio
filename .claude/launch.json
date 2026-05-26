@@ -4,14 +4,10 @@
     {
       "name": "vite-dev",
       "runtimeExecutable": "npm",
-      "port": 5184,
+      "autoPort": true,
       "runtimeArgs": [
         "run",
-        "dev",
-        "--",
-        "--port",
-        "5184",
-        "--strictPort"
+        "dev"
       ]
     }
   ]

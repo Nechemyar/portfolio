@@ -83,18 +83,19 @@
 .hero__display-word {
   position: absolute;
   left: 50%;
-  bottom: clamp(-2.5rem, -6vw, -1rem);
+  bottom: clamp(-4rem, -10vw, -2rem);
   z-index: 3;
   width: 100%;
   color: #fff;
   font-family: $font-display;
-  font-size: clamp(7.5rem, 27vw, 14rem);
+  font-size: clamp(14rem, 58vw, 22rem);
   font-weight: 400;
   line-height: 0.78;
   text-align: center;
   text-transform: uppercase;
   transform: translateX(-50%);
   white-space: nowrap;
+  padding: 0 clamp(0.3rem, 1vw, 0.5rem);
 }
 
 // --- Hide work title ---
@@ -270,6 +271,6 @@
 
 @media (max-width: 420px) {
   .hero__display-word {
-    font-size: clamp(7rem, 26vw, 9rem);
+    font-size: clamp(12rem, 55vw, 16rem);
   }
 }

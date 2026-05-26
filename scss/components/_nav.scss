@@ -346,8 +346,12 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
     filter: brightness(0) invert(1);
   }
 
-  body.menu-open .nav__menu-line {
-    background: #fff;
+  body.menu-open .nav__menu-label {
+    color: #fff;
+  }
+
+  body.menu-open .nav__cta {
+    color: #fff;
   }
 }
 
@@ -484,18 +488,40 @@ $nav-pill-padding-x: clamp(0.9em, 1.4vw, 1.25em);
 
 .nav__menu-btn {
   height: auto;
-  padding: 0.5rem;
+  padding: 0;
 }
 
 .nav__menu-label {
-  display: inline;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  height: 1.15em;
   font-family: $font-body;
   font-size: clamp(0.85rem, 1.1vw, 1.05rem);
   font-weight: 700;
-  text-transform: none;
+  text-transform: uppercase;
   letter-spacing: 0;
   white-space: nowrap;
-  line-height: 1;
+  line-height: 1.15;
+}
+
+.nav__menu-label-text {
+  display: block;
+  transition: transform 0.4s $ease-out;
+}
+
+.nav__menu-label-text--close {
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+
+.nav__menu-btn.is-open .nav__menu-label-text--open {
+  transform: translateY(-100%);
+}
+
+.nav__menu-btn.is-open .nav__menu-label-text--close {
+  transform: translateY(-100%);
 }
 
 .nav__menu-icon {
@@ -553,44 +579,19 @@ body:not(.nav-has-backing) .nav__cta {
 /* Mobile overrides */
 @media (max-width: 768px) {
   .nav {
-    padding: 1.32rem clamp(0.75rem, 2.4vw, 1rem) 0.85rem;
+    padding: clamp(1rem, 3vw, 1.5rem) clamp(1rem, 4vw, 1.5rem);
+  }
+
+  .nav__inner {
+    align-items: center;
   }
 
   .nav__logo-svg {
-    height: clamp(2rem, 9vw, 2.75rem);
+    height: clamp(2.2rem, 9vw, 2.75rem);
   }
 
-  /* Mobile: hide label, show hamburger */
   .nav__menu-label {
-    display: none;
-  }
-
-  .nav__menu-icon {
-    display: flex;
-    width: 42px;
-    height: 24px;
-  }
-
-  .nav__menu-lines {
-    display: block;
-    width: 42px;
-    height: 24px;
-  }
-
-  .nav__menu-line {
-    height: 2px;
-  }
-
-  .nav__menu-line--top {
-    top: 6px;
-  }
-
-  .nav__menu-line--bottom {
-    top: 16px;
-  }
-
-  body:not(.nav-has-backing) .nav__menu-line {
-    background: #fff;
+    font-size: clamp(0.82rem, 3.2vw, 1rem);
   }
 
   body.nav-has-backing .nav {
@@ -606,6 +607,10 @@ body:not(.nav-has-backing) .nav__cta {
     background: $c-cream;
     border: 2px solid $c-ink;
     border-radius: 10px;
+  }
+
+  .nav__cta {
+    font-size: clamp(0.82rem, 3.2vw, 1rem);
   }
 }
 

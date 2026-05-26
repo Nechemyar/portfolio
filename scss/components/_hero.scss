@@ -83,19 +83,18 @@
 .hero__display-word {
   position: absolute;
   left: 50%;
-  bottom: clamp(-4rem, -10vw, -2rem);
+  bottom: clamp(1rem, 3vw, 2.5rem);
   z-index: 3;
   width: 100%;
   color: #fff;
   font-family: $font-display;
-  font-size: clamp(14rem, 58vw, 22rem);
+  font-size: clamp(16rem, 68vw, 26rem);
   font-weight: 400;
   line-height: 0.78;
   text-align: center;
   text-transform: uppercase;
   transform: translateX(-50%);
   white-space: nowrap;
-  padding: 0 clamp(0.3rem, 1vw, 0.5rem);
 }
 
 // --- Hide work title ---
@@ -200,8 +199,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: clamp(1rem, 3.5vw, 1.4rem);
-  height: clamp(1rem, 3.5vw, 1.4rem);
+  width: clamp(0.7rem, 2.2vw, 1rem);
+  height: clamp(0.7rem, 2.2vw, 1rem);
 }
 
 .hero__pitch-cta-circle img {
@@ -237,8 +236,8 @@
 
 @media (min-width: 769px) {
   .hero__display-word {
-    font-size: clamp(12rem, 17vw, 24rem);
-    bottom: clamp(-3.5rem, -5vw, -1.5rem);
+    font-size: clamp(14rem, 18vw, 28rem);
+    bottom: clamp(1.5rem, 3vw, 3rem);
   }
 
   .hero__kicker {
@@ -271,6 +270,6 @@
 
 @media (max-width: 420px) {
   .hero__display-word {
-    font-size: clamp(12rem, 55vw, 16rem);
+    font-size: clamp(14rem, 65vw, 18rem);
   }
 }

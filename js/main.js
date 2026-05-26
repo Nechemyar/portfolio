@@ -84,12 +84,15 @@ function splitLines(element) {
   });
 }
 
-const splitHeading = document.querySelector('.js-split-lines');
-if (splitHeading) splitLines(splitHeading);
-
-gsap.set('.hero__pitch-line', { clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)', y: 50 });
-
 new Loader(() => {
+  // Split lines exactly when Loader finishes, so fonts are 100% loaded and metrics are exact.
+  const splitHeading = document.querySelector('.js-split-lines');
+  if (splitHeading) {
+    splitLines(splitHeading);
+    gsap.set('.hero__pitch-line', { clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)', y: 50 });
+    gsap.set(splitHeading, { visibility: 'visible' });
+  }
+
   document.documentElement.classList.add('js-loaded');
   document.getElementById('nav')?.classList.add('is-ready');
   document.dispatchEvent(new CustomEvent('hero:ready'));
@@ -129,6 +132,12 @@ new Loader(() => {
     y: 0,
     duration: 1.5,
     ease: 'expo.out',
-    stagger: 0.2
+    stagger: 0.2,
+    onComplete: () => {
+      // Revert to raw text so responsive resizing doesn't have artificial hard breaks
+      if (splitHeading) {
+        splitHeading.innerHTML = splitHeading.textContent;
+      }
+    }
   }, '-=0.8');
 });

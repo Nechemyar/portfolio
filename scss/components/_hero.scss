@@ -133,6 +133,7 @@
   text-transform: none;
   text-align: left;
   max-width: 40ch; /* Makes the paragraph less wide and forces natural text wrapping */
+  visibility: hidden; /* Prevent flash before JS splits and animates it */
 }
 
 .hero__pitch-line {

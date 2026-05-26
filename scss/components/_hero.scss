@@ -131,12 +131,36 @@
 // --- Message box — unwrap, hide pitch heading ---
 
 .hero__message {
-  display: contents;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none; /* Let clicks pass through to things below, unless we make it auto later */
+  padding: 0 clamp(1rem, 5vw, 2rem);
+  padding-bottom: clamp(12rem, 25vh, 16rem); /* Offset to sit in the same center as the kicker */
 }
 
-.hero__pitch-heading,
+.hero__pitch-heading {
+  margin: 0;
+  color: #fff;
+  font-family: $font-body;
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.hero__pitch-line {
+  display: block;
+}
+
 .hero__note {
-  display: none;
+  margin: 1.5rem 0 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: $font-body;
+  font-size: clamp(1rem, 2vw, 1.25rem);
 }
 
 // --- CTA row — arrow + text, bottom right ---

@@ -1,4 +1,5 @@
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 export default class Menu {
   constructor() {
@@ -77,6 +78,9 @@ export default class Menu {
     if (this.isOpen || this.isAnimating) return;
     this.isOpen = true;
     this.isAnimating = true;
+
+    // Lock scroll while menu is open to prevent ScrollTrigger glitches
+    document.body.style.overflow = 'hidden';
 
     this.toggle.classList.add('is-open');
     this.toggle.setAttribute('aria-label', 'Close menu');
@@ -226,6 +230,8 @@ export default class Menu {
       onComplete: () => {
         this._resetClosed();
         this.isAnimating = false;
+        // Refresh ScrollTrigger to recalculate pins after the main container returns to y:0
+        ScrollTrigger.refresh();
       },
     });
 
@@ -297,6 +303,7 @@ export default class Menu {
     this.menu.classList.remove('is-open');
     document.documentElement.classList.remove('menu-open');
     document.body.classList.remove('menu-open');
+    document.body.style.overflow = ''; // Unlock scroll
 
     if (this._isMobile()) {
       gsap.set(this.menu, { y: '-100%', height: '100dvh' });

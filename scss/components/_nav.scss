@@ -61,14 +61,10 @@ body.nav-has-backing .nav::before {
   color: $c-ink;
 }
 
-/* Two-column grid: logo (left) · MENU (right). space-between keeps them
-   at opposite edges in hero state; in pill state they sit inside the
-   narrowed container with the same separation. Grid columns never
-   change so there's no snap on scroll — GSAP animates the width. */
+/* Three-column grid: MENU (left) · logo (centre) · CONTACT (right) */
 .nav__inner {
   display: grid;
-  grid-template-columns: auto auto;
-  justify-content: space-between;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   column-gap: clamp(0.5rem, 2vw, 1.5rem);
   width: 100%;

@@ -25,8 +25,38 @@ export default class Menu {
     this.openWidth = 0;
     this.closeWidth = 0;
 
+    this.handleScroll = this.handleScroll.bind(this);
+    this.handleKeyScroll = this.handleKeyScroll.bind(this);
+
     this._initHidden();
     this.init();
+  }
+
+  handleScroll(e) {
+    if (this.isOpen || this.isAnimating) {
+      e.preventDefault();
+    }
+  }
+
+  handleKeyScroll(e) {
+    if (this.isOpen || this.isAnimating) {
+      const keys = ['Space', 'ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End'];
+      if (keys.includes(e.code)) {
+        e.preventDefault();
+      }
+    }
+  }
+
+  _lockScroll() {
+    window.addEventListener('wheel', this.handleScroll, { passive: false });
+    window.addEventListener('touchmove', this.handleScroll, { passive: false });
+    window.addEventListener('keydown', this.handleKeyScroll, { passive: false });
+  }
+
+  _unlockScroll() {
+    window.removeEventListener('wheel', this.handleScroll, { passive: false });
+    window.removeEventListener('touchmove', this.handleScroll, { passive: false });
+    window.removeEventListener('keydown', this.handleKeyScroll, { passive: false });
   }
 
   _isMobile() {
@@ -75,8 +105,8 @@ export default class Menu {
     this.isOpen = true;
     this.isAnimating = true;
 
-    // Lock scroll while menu is open to prevent ScrollTrigger glitches
-    document.body.style.overflow = 'hidden';
+    // Lock scroll via JS to prevent layout shift
+    this._lockScroll();
 
     this.toggle.classList.add('is-open');
     this.toggle.setAttribute('aria-label', 'Close menu');
@@ -253,7 +283,7 @@ export default class Menu {
     this.menu.classList.remove('is-open');
     document.documentElement.classList.remove('menu-open');
     document.body.classList.remove('menu-open');
-    document.body.style.overflow = ''; // Unlock scroll
+    this._unlockScroll(); // Unlock scroll
 
     gsap.set(this.menu, { y: '-100%', height: '100dvh' });
     gsap.set(this.pageWrap, { y: 0 });

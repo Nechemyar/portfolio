@@ -12,8 +12,27 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Prevent layout shift when scroll is locked by the menu */
-  scrollbar-gutter: stable;
+  /* Custom scrollbar — thin overlay */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
+}
+
+/* Webkit (Chrome / Edge / Safari) custom scrollbar */
+html::-webkit-scrollbar {
+  width: 6px;
+}
+
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4);
 }
 
 body {
@@ -74,24 +93,6 @@ li {
 
 ul {
   list-style: none;
-}
-
-body.menu-open {
-  overflow: hidden;
-}
-
-html.menu-open,
-html.menu-open body {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-@supports (overflow: clip) {
-  html.menu-open,
-  html.menu-open body {
-    overflow-x: clip;
-  }
 }
 
 /* ——— Section Label ——— */

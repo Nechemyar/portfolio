@@ -69,8 +69,12 @@
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
   z-index: 2;
-  -webkit-mask: url('../../assets/images/orangemask.webp') center/contain no-repeat;
-  mask: url('../../assets/images/orangemask.webp') center/contain no-repeat;
+  -webkit-mask: url('../../assets/images/New/orangemask.webp') center/contain no-repeat;
+  mask: url('../../assets/images/New/orangemask.webp') center/contain no-repeat;
+  
+  /* Hardware acceleration to fix scroll lag caused by the mask */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .magic-showcase__cat-img {
@@ -86,6 +90,9 @@
   width: 66%;
   height: 62%;
   overflow: hidden;
+  
+  /* Prevent clipping bugs with translateZ on children */
+  transform: translateZ(0);
 }
 
 .magic-showcase__tv-overlay {
@@ -103,6 +110,7 @@
   height: 100%;
   width: 100%;
   will-change: transform;
+  transform: translateZ(0);
 }
 
 .magic-showcase__slide {

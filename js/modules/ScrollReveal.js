@@ -20,6 +20,7 @@ export default class ScrollReveal {
     if (copyCard) gsap.set(copyCard, { opacity: 0, y: 40 });
 
     // Wait for the loader to finish before animating the hero
+    // We also wait to create general reveals until layout is stable
     document.addEventListener('hero:ready', () => {
       const tl = gsap.timeline();
 
@@ -43,26 +44,29 @@ export default class ScrollReveal {
           ease: 'power4.out',
         }, '-=0.6');
       }
-    });
 
-    // Everything else: reveal on scroll
-    if (reveals.length) {
-      reveals.forEach((el) => {
-        const isHero = el.closest('.hero');
-        if (isHero) return;
+      // Everything else: create reveals ONLY after page layout stabilizes
+      if (reveals.length) {
+        // Force a scroll trigger refresh just in case
+        ScrollTrigger.refresh();
+        
+        reveals.forEach((el) => {
+          const isHero = el.closest('.hero');
+          if (isHero) return;
 
-        gsap.to(el, {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 88%',
-            once: true,
-          },
+          gsap.to(el, {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 88%',
+              once: true,
+            },
+          });
         });
-      });
-    }
+      }
+    });
   }
 }

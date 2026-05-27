@@ -246,39 +246,58 @@
       </div>
     </section>
 
-    
-    <!-- WORK SHOWCASE -->
-    <section class="work-showcase" id="work" data-nav-theme="light" data-bg="#FFB93E">
-      <div class="work-showcase__inner">
-        <div class="work-showcase__header" data-reveal>
-          <span class="work-showcase__label">Work</span>
-          <h2 class="work-showcase__title">Sites that make the business easier to trust.</h2>
+    <!-- MAGIC SHOWCASE (replaces old Work section) -->
+    <section class="magic-showcase" id="work" data-nav-theme="light" data-bg="#ffe5d2">
+      <div class="magic-showcase__inner" data-magic-showcase>
+        <div class="magic-showcase__header">
+          <p class="magic-showcase__subtitle">We create sites that feel like</p>
+          <img src="assets/images/New/magic.svg" alt="MAGIC" class="magic-showcase__title-svg" loading="lazy" />
         </div>
-        <div class="work-showcase__cards" data-work-showcase>
-          <article class="work-showcase__card" data-work-card>
-            <div class="work-showcase__card-img">
-              <img src="assets/images/project-choice.webp" alt="Choice Inventory homepage" loading="lazy" />
+
+        <div class="magic-showcase__tv-wrapper">
+          <div class="hero__tv-scene magic-showcase__tv-scene">
+            <div class="hero__cat-wrapper hero__cat-wrapper--base">
+              <img class="hero__cat-img" src="assets/images/orangetv.webp" alt="" loading="lazy" />
             </div>
-            <div class="work-showcase__card-copy">
-              <span class="work-showcase__card-count">01 / 02</span>
-              <h3>Choice Inventory</h3>
-              <p class="work-showcase__result">Lead-gen site for an inventory team. The path is simple: understand the offer, trust the proof, book the call.</p>
-              <p>Built around one clear action, with enough context for property managers to know what happens next.</p>
-              <a href="projects/choice-inventory.html" class="work-showcase__card-link">View project →</a>
+            <div class="hero__cat-wrapper hero__cat-wrapper--screen">
+              <div class="hero__mouth-slider magic-showcase__slider">
+                <div class="hero__mouth-track magic-showcase__track" data-magic-track>
+                  <img class="hero__mouth-img magic-showcase__slide" src="assets/images/project-choice.webp" alt="Choice Inventory" />
+                  <img class="hero__mouth-img magic-showcase__slide" src="assets/images/project-clinical.webp" alt="Clinical Assessments" />
+                  <div class="magic-showcase__placeholder-slide magic-showcase__slide">
+                    <span>Project 03<br/>Coming Soon</span>
+                  </div>
+                </div>
+                <div class="hero__tv-overlay"></div>
+              </div>
             </div>
-          </article>
-          <article class="work-showcase__card" data-work-card>
-            <div class="work-showcase__card-img">
-              <img src="assets/images/project-clinical.webp" alt="Clinical Assessments homepage" loading="lazy" />
-            </div>
-            <div class="work-showcase__card-copy">
-              <span class="work-showcase__card-count">02 / 02</span>
-              <h3>Clinical Assessments</h3>
-              <p class="work-showcase__result">Clinical practice site with a calmer pace. It helps families understand the service before they reach out.</p>
-              <p>Designed to feel steady and professional without burying the booking path under medical jargon.</p>
-              <a href="projects/clinical-assessments.html" class="work-showcase__card-link">View project →</a>
-            </div>
-          </article>
+          </div>
+        </div>
+
+        <div class="magic-showcase__controls">
+          <div class="magic-showcase__dots" data-magic-dots>
+            <button class="magic-showcase__dot is-active" aria-label="Slide 1"></button>
+            <button class="magic-showcase__dot" aria-label="Slide 2"></button>
+            <button class="magic-showcase__dot" aria-label="Slide 3"></button>
+          </div>
+          
+          <div class="magic-showcase__arrows">
+            <button class="magic-showcase__arrow magic-showcase__arrow--prev" data-magic-prev aria-label="Previous">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              <span>PREV</span>
+            </button>
+            <button class="magic-showcase__arrow magic-showcase__arrow--next" data-magic-next aria-label="Next">
+              <span>NEXT</span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+
+          <div class="magic-showcase__meta">
+            <span class="magic-showcase__count" data-magic-count>01/03</span>
+            <h3 class="magic-showcase__project-name" data-magic-title>Choice Inventory</h3>
+          </div>
+          
+          <a href="projects/choice-inventory.html" class="magic-showcase__cta" data-magic-link>View full project ↗</a>
         </div>
       </div>
     </section>

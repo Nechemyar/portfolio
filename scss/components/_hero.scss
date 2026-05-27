@@ -5,7 +5,7 @@
   width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
-  overflow: hidden; /* Restored to prevent top margin collapse */
+  display: flow-root; /* Creates a BFC to prevent margin collapse without breaking GSAP pin/overflow */
   background: $c-rust;
   z-index: 10;
 }

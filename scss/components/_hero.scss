@@ -5,30 +5,22 @@
   width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
-  display: flow-root; /* Creates a BFC to prevent margin collapse without breaking GSAP pin/overflow */
+  padding-top: 0.1px; /* Bulletproof way to stop top margin collapse from children pushing hero down */
   background: $c-rust;
   z-index: 10;
 }
 
-/* Sharp convex curve divider */
-.hero-divider {
-  position: relative;
-  width: 100%;
-  height: 12vw;
-  overflow: hidden;
-  z-index: 10;
-  margin-top: -1px; /* Prevent sub-pixel seaming */
-}
-
-.hero-divider__curve {
+.hero::after {
+  content: '';
   position: absolute;
-  top: -88vw; /* Drops the bottom edge exactly 12vw down into the container */
+  bottom: 0;
   left: 50%;
-  transform: translateX(-50%);
-  width: 100vw; /* Set to 100 as requested */
-  height: 100vw;
-  background-color: $c-rust;
+  width: 150vw;
+  height: 150vw;
+  background: inherit;
   border-radius: 50%;
+  transform: translate(-50%, 50%);
+  z-index: -1;
 }
 
 .hero__stage {

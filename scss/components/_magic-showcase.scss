@@ -3,8 +3,8 @@
 .magic-showcase {
   background-color: #ffffff;
   color: $c-ink;
-  /* Top padding must clear the 14vw drop of the red hero curve, PLUS add negative space */
-  padding: calc(14vw + 15vh) 0 clamp(4rem, 8vh, 6rem);
+  /* Top padding for negative space below the curve */
+  padding: clamp(6rem, 15vh, 12rem) 0 clamp(4rem, 8vh, 6rem);
   position: relative;
   overflow: hidden;
   z-index: 5; /* Sit below hero which is usually higher z-index */

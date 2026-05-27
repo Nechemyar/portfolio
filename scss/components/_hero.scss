@@ -10,17 +10,16 @@
   z-index: 10;
 }
 
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: -14vw; /* Only sticks out 14vw from the bottom */
-  left: 50%;
-  width: 200vw; /* Massive 200vw width */
-  height: 200vw;
-  background: inherit;
-  border-radius: 50%;
-  transform: translateX(-50%); /* Removed the 50% translateY so it sits at exactly -14vw */
-  z-index: -1;
+/* Sharp convex curve divider using border-radius */
+.hero-divider {
+  position: relative;
+  width: 100%;
+  height: 10vw; /* Small curve drop */
+  background: $c-rust;
+  border-bottom-left-radius: 50% 100%;
+  border-bottom-right-radius: 50% 100%;
+  z-index: 10;
+  margin-top: -1px; /* Prevent sub-pixel seaming */
 }
 
 .hero__stage {

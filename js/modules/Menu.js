@@ -46,14 +46,10 @@ export default class Menu {
       }
     }
 
-    if (this._isMobile()) {
-      gsap.set(this.menu, { y: '-100%', height: '100dvh' });
-      gsap.set(this.linkTexts, { y: '-100%' });
-      if (this.footer) gsap.set(this.footer, { opacity: 0, y: 20 });
-    } else {
-      gsap.set(this.menu, { clearProps: 'clipPath,height,y', visibility: 'hidden' });
-      if (this.backdrop) gsap.set(this.backdrop, { opacity: 0 });
-    }
+    // Always start with the menu hidden above the viewport
+    gsap.set(this.menu, { y: '-100%', height: '100dvh' });
+    gsap.set(this.linkTexts, { y: '-100%' });
+    if (this.footer) gsap.set(this.footer, { opacity: 0, y: 20 });
   }
 
   init() {
@@ -111,14 +107,10 @@ export default class Menu {
       }, '<0.1'); // Start slightly after bracket starts expanding
     }
 
-    if (this._isMobile()) {
-      this._openMobile();
-    } else {
-      this._openDesktop();
-    }
+    this._runOpenTimeline();
   }
 
-  _openMobile() {
+  _runOpenTimeline() {
     if (this.tl) this.tl.kill();
     this.tl = gsap.timeline({
       onComplete: () => { this.isAnimating = false; }
@@ -170,21 +162,6 @@ export default class Menu {
     }
   }
 
-  _openDesktop() {
-    document.documentElement.classList.add('menu-open');
-    document.body.classList.add('menu-open');
-    
-    gsap.set(this.menu, { clearProps: 'clipPath,height,y', visibility: 'visible' });
-    if (this.backdrop) gsap.set(this.backdrop, { opacity: 0 });
-
-    if (this.backdrop) gsap.to(this.backdrop, { opacity: 1, duration: 0.35, ease: 'power2.out' });
-
-    gsap.fromTo(this.menuLinks,
-      { opacity: 0, y: 50 },
-      { opacity: 1, y: 0, duration: 0.55, stagger: 0.07, ease: 'power3.out', delay: 0.1, onComplete: () => { this.isAnimating = false; } }
-    );
-  }
-
   close() {
     if (!this.isOpen || this.isAnimating) return;
     this.isAnimating = true;
@@ -217,14 +194,10 @@ export default class Menu {
       }, '<0.1');
     }
 
-    if (this._isMobile()) {
-      this._closeMobile();
-    } else {
-      this._closeDesktop();
-    }
+    this._runCloseTimeline();
   }
 
-  _closeMobile() {
+  _runCloseTimeline() {
     if (this.tl) this.tl.kill();
     this.tl = gsap.timeline({
       onComplete: () => {
@@ -275,29 +248,6 @@ export default class Menu {
     }, 0.65);
   }
 
-  _closeDesktop() {
-    gsap.to(this.menuLinks, { opacity: 0, y: -30, duration: 0.22, stagger: 0.04, ease: 'power2.in' });
-    if (this.backdrop) {
-      gsap.to(this.backdrop, {
-        opacity: 0, duration: 0.35, delay: 0.15,
-        onComplete: () => {
-          this._resetClosed();
-          this.isAnimating = false;
-        },
-      });
-      // remove menu-open earlier on desktop too
-      setTimeout(() => {
-        document.documentElement.classList.remove('menu-open');
-        document.body.classList.remove('menu-open');
-      }, 150);
-    } else {
-      setTimeout(() => {
-        this._resetClosed();
-        this.isAnimating = false;
-      }, 350);
-    }
-  }
-
   _resetClosed() {
     this.isOpen = false;
     this.menu.classList.remove('is-open');
@@ -305,13 +255,9 @@ export default class Menu {
     document.body.classList.remove('menu-open');
     document.body.style.overflow = ''; // Unlock scroll
 
-    if (this._isMobile()) {
-      gsap.set(this.menu, { y: '-100%', height: '100dvh' });
-      gsap.set(this.pageWrap, { y: 0 });
-      gsap.set(this.linkTexts, { y: '-100%' });
-      if (this.footer) gsap.set(this.footer, { opacity: 0, y: 20 });
-    } else {
-      gsap.set(this.menu, { visibility: 'hidden' });
-    }
+    gsap.set(this.menu, { y: '-100%', height: '100dvh' });
+    gsap.set(this.pageWrap, { y: 0 });
+    gsap.set(this.linkTexts, { y: '-100%' });
+    if (this.footer) gsap.set(this.footer, { opacity: 0, y: 20 });
   }
 }

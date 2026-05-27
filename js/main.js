@@ -51,35 +51,39 @@ gsap.set(wipeElements, { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 10
 function splitLines(element) {
   const words = element.textContent.trim().split(/\s+/);
   element.innerHTML = '';
-  const wordSpans = words.map(word => {
+  
+  // Wrap words in standard inline spans with native text spaces between them
+  words.forEach((word, i) => {
     const span = document.createElement('span');
-    span.style.display = 'inline-block';
-    span.innerText = word + ' ';
+    span.textContent = word;
     element.appendChild(span);
-    return span;
+    if (i < words.length - 1) {
+      element.appendChild(document.createTextNode(' '));
+    }
   });
 
   const lines = [];
   let currentLine = [];
   let currentTop = null;
 
-  wordSpans.forEach(span => {
-    const top = span.offsetTop;
+  const spans = Array.from(element.querySelectorAll('span'));
+  spans.forEach(span => {
+    const top = span.getBoundingClientRect().top;
     if (currentTop === null || top > currentTop + 10) {
       if (currentLine.length) lines.push(currentLine);
       currentTop = top;
       currentLine = [];
     }
-    currentLine.push(span);
+    currentLine.push(span.textContent);
   });
   if (currentLine.length) lines.push(currentLine);
 
   element.innerHTML = '';
-  lines.forEach(lineSpans => {
+  lines.forEach(lineWords => {
     const lineWrapper = document.createElement('span');
     lineWrapper.className = 'hero__pitch-line';
     lineWrapper.style.display = 'block';
-    lineWrapper.innerHTML = lineSpans.map(s => s.innerText).join('');
+    lineWrapper.textContent = lineWords.join(' ');
     element.appendChild(lineWrapper);
   });
 }

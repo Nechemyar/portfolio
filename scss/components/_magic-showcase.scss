@@ -69,8 +69,7 @@
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
   z-index: 2;
-  -webkit-mask: url('../../assets/images/orangemask.webp') center/contain no-repeat;
-  mask: url('../../assets/images/orangemask.webp') center/contain no-repeat;
+  /* Removed heavy image mask to fix Chrome GPU rendering bugs and severe scroll stuttering */
 }
 
 .magic-showcase__cat-img {
@@ -86,13 +85,14 @@
   width: 66%;
   height: 62%;
   overflow: hidden;
+  /* Use native border-radius to curve the slider corners instead of a mask */
+  border-radius: 12px;
 }
 
 .magic-showcase__tv-overlay {
   position: absolute;
   inset: 0;
   background: url('../../assets/images/New/crt overlay.webp') center/cover;
-  mix-blend-mode: overlay;
   opacity: 0.15;
   pointer-events: none;
 }
@@ -102,7 +102,6 @@
   flex-direction: row;
   height: 100%;
   width: 100%;
-  will-change: transform;
 }
 
 .magic-showcase__slide {

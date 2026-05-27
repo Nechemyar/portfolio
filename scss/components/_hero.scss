@@ -7,9 +7,28 @@
   min-height: 100dvh;
   overflow: hidden;
   background: $c-rust;
-  /* Add steeper semi-circle curve to the bottom */
-  border-radius: 0 0 50vw 50vw / 0 0 18vw 18vw;
   z-index: 10;
+}
+
+/* Sharp convex curve divider */
+.hero-divider {
+  position: relative;
+  width: 100%;
+  height: 12vw;
+  overflow: hidden;
+  z-index: 10;
+  margin-top: -1px; /* Prevent sub-pixel seaming */
+}
+
+.hero-divider__curve {
+  position: absolute;
+  top: -88vw; /* Drops the bottom edge exactly 12vw down into the container */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150vw;
+  height: 100vw;
+  background-color: $c-rust;
+  border-radius: 50%;
 }
 
 .hero__stage {

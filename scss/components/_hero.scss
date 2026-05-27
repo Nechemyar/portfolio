@@ -7,8 +7,8 @@
   min-height: 100dvh;
   overflow: hidden;
   background: $c-rust;
-  /* Add semi-circle curve to the bottom */
-  border-radius: 0 0 50vw 50vw / 0 0 8vw 8vw;
+  /* Add steeper semi-circle curve to the bottom */
+  border-radius: 0 0 50vw 50vw / 0 0 18vw 18vw;
   z-index: 10;
 }
 

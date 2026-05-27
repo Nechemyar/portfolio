@@ -249,17 +249,16 @@
     <!-- MAGIC SHOWCASE (Natural Flow) -->
     <section class="magic-showcase" id="work" data-nav-theme="light" data-bg="#ffffff" data-magic-showcase>
       <div class="magic-showcase__inner">
+        <!-- 1. Subtitle at top -->
         <div class="magic-showcase__header">
           <div class="reveal-overflow">
             <p class="magic-showcase__subtitle" data-reveal="fade-up">We create sites that feel like</p>
           </div>
-          <div class="reveal-overflow">
-            <img src="assets/images/New/magic.svg" alt="MAGIC" class="magic-showcase__title-svg" data-reveal="fade-up" style="transition-delay: 0.1s;" />
-          </div>
         </div>
 
+        <!-- 2. TV in center -->
         <div class="magic-showcase__tv-layer">
-          <div class="magic-showcase__tv-wrapper" data-reveal="fade-up" style="transition-delay: 0.2s;">
+          <div class="magic-showcase__tv-wrapper" data-reveal="fade-up" style="transition-delay: 0.1s;">
             <div class="magic-showcase__tv-scene">
               <div class="magic-showcase__cat-wrapper magic-showcase__cat-wrapper--base">
                 <img class="magic-showcase__cat-img" src="assets/images/orangetv.webp" alt="" />
@@ -267,7 +266,8 @@
               <div class="magic-showcase__cat-wrapper magic-showcase__cat-wrapper--screen">
                 <div class="magic-showcase__slider">
                   <div class="magic-showcase__track" data-magic-track>
-                    <img class="magic-showcase__slide" src="assets/images/project-choice.webp" alt="Choice Inventory" />
+                    <!-- Images will flash here via JS -->
+                    <img class="magic-showcase__slide is-active" src="assets/images/project-choice.webp" alt="Choice Inventory" />
                     <img class="magic-showcase__slide" src="assets/images/project-clinical.webp" alt="Clinical Assessments" />
                     <div class="magic-showcase__placeholder-slide magic-showcase__slide">
                       <span>Project 03<br/>Coming Soon</span>
@@ -278,31 +278,12 @@
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="magic-showcase__controls">
-            <div class="magic-showcase__dots" data-magic-dots>
-              <button class="magic-showcase__dot is-active" aria-label="Slide 1"></button>
-              <button class="magic-showcase__dot" aria-label="Slide 2"></button>
-              <button class="magic-showcase__dot" aria-label="Slide 3"></button>
-            </div>
-            
-            <div class="magic-showcase__arrows">
-              <button class="magic-showcase__arrow magic-showcase__arrow--prev" data-magic-prev aria-label="Previous">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                <span>PREV</span>
-              </button>
-              <button class="magic-showcase__arrow magic-showcase__arrow--next" data-magic-next aria-label="Next">
-                <span>NEXT</span>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </button>
-            </div>
-
-            <div class="magic-showcase__meta">
-              <span class="magic-showcase__count" data-magic-count>01/03</span>
-              <h3 class="magic-showcase__project-name" data-magic-title>Choice Inventory</h3>
-            </div>
-            
-            <a href="projects/choice-inventory.html" class="magic-showcase__cta" data-magic-link>View full project ↗</a>
+        <!-- 3. MAGIC Wordmark at bottom -->
+        <div class="magic-showcase__footer">
+          <div class="reveal-overflow">
+            <img src="assets/images/New/magic.svg" alt="MAGIC" class="magic-showcase__title-svg" data-reveal="fade-up" style="transition-delay: 0.2s;" />
           </div>
         </div>
 

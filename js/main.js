@@ -92,6 +92,7 @@ new Loader(() => {
   // Split lines exactly when Loader finishes, so fonts are 100% loaded and metrics are exact.
   const splitHeading = document.querySelector('.js-split-lines');
   if (splitHeading) {
+    splitHeading.dataset.originalText = splitHeading.textContent.trim().replace(/\s+/g, ' ');
     splitLines(splitHeading);
     gsap.set('.hero__pitch-line', { clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)', y: 50 });
     gsap.set(splitHeading, { visibility: 'visible' });
@@ -138,9 +139,10 @@ new Loader(() => {
     ease: 'expo.out',
     stagger: 0.2,
     onComplete: () => {
-      // Revert to raw text so responsive resizing doesn't have artificial hard breaks
+      // Revert to original raw text so responsive resizing doesn't have artificial hard breaks,
+      // and words aren't smashed together by reading textContent of spans without spaces.
       if (splitHeading) {
-        splitHeading.innerHTML = splitHeading.textContent;
+        splitHeading.innerHTML = splitHeading.dataset.originalText;
       }
     }
   }, '-=0.8');

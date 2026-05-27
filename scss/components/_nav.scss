@@ -23,15 +23,26 @@
   transition: color 0.3s ease;
 }
 
-/* Theme Overrides (unless menu is open) */
-body.nav-theme-dark:not(.menu-open) .nav__logo-svg {
+/* Theme Overrides (scoped to nav to prevent full document style recalculation) */
+.nav.theme-dark .nav__logo-svg {
   filter: brightness(0) invert(1);
 }
 
-body.nav-theme-dark:not(.menu-open) .nav__menu-label,
-body.nav-theme-dark:not(.menu-open) .nav__desktop-links a,
-body.nav-theme-dark:not(.menu-open) .nav__cta {
+.nav.theme-dark .nav__menu-label,
+.nav.theme-dark .nav__desktop-links a,
+.nav.theme-dark .nav__cta {
   color: #fff;
+}
+
+/* When the menu is open, the background is always white, so force the nav text back to dark ink */
+html.menu-open .nav.theme-dark .nav__logo-svg {
+  filter: brightness(1) invert(0);
+}
+
+html.menu-open .nav.theme-dark .nav__menu-label,
+html.menu-open .nav.theme-dark .nav__desktop-links a,
+html.menu-open .nav.theme-dark .nav__cta {
+  color: $c-ink;
 }
 
 /* Three-column grid: MENU (left) · logo (centre) · CONTACT (right) */

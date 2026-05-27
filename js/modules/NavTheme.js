@@ -4,12 +4,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 export default class NavTheme {
   constructor() {
     this.sections = document.querySelectorAll('[data-nav-theme]');
-    if (!this.sections.length) return;
+    this.nav = document.getElementById('nav');
+    if (!this.sections.length || !this.nav) return;
 
     // Set initial
     const first = this.sections[0];
     if (first) {
-      document.body.classList.add(`nav-theme-${first.dataset.navTheme}`);
+      this.nav.classList.add(`theme-${first.dataset.navTheme}`);
     }
 
     this.init();
@@ -29,7 +30,7 @@ export default class NavTheme {
   }
 
   setTheme(theme) {
-    document.body.classList.remove('nav-theme-dark', 'nav-theme-light');
-    document.body.classList.add(`nav-theme-${theme}`);
+    this.nav.classList.remove('theme-dark', 'theme-light');
+    this.nav.classList.add(`theme-${theme}`);
   }
 }

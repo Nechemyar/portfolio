@@ -13,7 +13,6 @@ import Faq from './modules/Faq.js';
 import Loader from './modules/Loader.js';
 import BgScroll from './modules/BgScroll.js';
 import MagicCarousel from './modules/MagicCarousel.js';
-import MagicScroll from './modules/MagicScroll.js';
 import HowItWorks from './modules/HowItWorks.js';
 import AboutReveal from './modules/AboutReveal.js';
 
@@ -28,7 +27,6 @@ const navTheme = new NavTheme();
 const faq = new Faq();
 // const bgScroll = new BgScroll();
 const magicCarousel = new MagicCarousel();
-const magicScroll = new MagicScroll();
 const howItWorks = new HowItWorks();
 const aboutReveal = new AboutReveal();
 

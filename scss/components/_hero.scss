@@ -7,6 +7,9 @@
   min-height: 100dvh;
   overflow: hidden;
   background: $c-rust;
+  /* Add semi-circle curve to the bottom */
+  border-radius: 0 0 50vw 50vw / 0 0 8vw 8vw;
+  z-index: 10;
 }
 
 .hero__stage {

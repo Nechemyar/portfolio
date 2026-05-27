@@ -14,7 +14,9 @@
 
 /* Single nav colour system */
 .nav__logo-svg {
-  filter: invert(0);
+  /* Pre-compile the GPU shader for brightness/invert so it doesn't stutter on scroll when theme changes */
+  filter: brightness(1) invert(0);
+  will-change: filter;
 }
 
 .nav__menu-label,

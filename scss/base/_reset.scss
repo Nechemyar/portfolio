@@ -11,6 +11,7 @@ html {
   font-size: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden; /* Prevent horizontal scroll from massive absolute elements */
 
   /* Custom scrollbar — thin overlay */
   scrollbar-width: thin;

@@ -13,13 +13,13 @@
 .hero::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: -14vw; /* Only sticks out 14vw from the bottom */
   left: 50%;
-  width: 150vw;
-  height: 150vw;
+  width: 200vw; /* Massive 200vw width */
+  height: 200vw;
   background: inherit;
   border-radius: 50%;
-  transform: translate(-50%, 50%);
+  transform: translateX(-50%); /* Removed the 50% translateY so it sits at exactly -14vw */
   z-index: -1;
 }
 

@@ -3,11 +3,12 @@
 .magic-showcase {
   background-color: #ffffff;
   color: $c-ink;
-  /* Add massive top padding to compensate for the negative margin tuck under the hero */
-  padding: clamp(16rem, 30vh, 24rem) 0 clamp(4rem, 8vh, 6rem);
+  /* Massive top padding pushes the text far down into the negative space,
+     which also ensures it stays out of viewport on load to fix GSAP masking triggers */
+  padding: clamp(24rem, 40vh, 32rem) 0 clamp(4rem, 8vh, 6rem);
   position: relative;
   overflow: hidden;
-  margin-top: -15vw; /* Tuck under the hero curve */
+  margin-top: -12vw; /* Tuck under the hero curve exactly matching its radius */
   z-index: 5; /* Sit below hero which is usually higher z-index */
 }
 

@@ -47,6 +47,10 @@
   display: flex;
   justify-content: center;
   z-index: 2;
+  
+  /* Force GPU rendering of the entire TV block on page load so it never stutters on scroll */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 /* Reusing TV base styles but overriding positioning for static flow */

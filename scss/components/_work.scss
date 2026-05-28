@@ -19,7 +19,7 @@
   justify-content: center;
   position: relative;
   z-index: 1;
-  gap: clamp(2rem, 5vw, 4rem);
+  gap: clamp(1rem, 3vw, 2rem);
   padding: clamp(6rem, 12vw, 9rem) 0 clamp(5rem, 10vw, 8rem);
 }
 
@@ -28,17 +28,18 @@
   font-family: $font-body;
   font-size: clamp(1rem, 2.5vw, 1.4rem);
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.75);
+  color: #fff;
   text-align: center;
   letter-spacing: 0.01em;
-  margin: 0;
+  margin: 0 0 clamp(1.5rem, 4vw, 3rem);
   padding: 0 $page-padding;
 }
 
 /* MAGIC — wavy image, centered */
 .work__magic-wrap {
-  width: min(88vw, 920px);
+  width: min(70vw, 700px);
   text-align: center;
+  margin-bottom: clamp(3rem, 7vw, 5rem);
 }
 
 .work__magic {
@@ -57,7 +58,6 @@
   display: flex;
   gap: clamp(1.2rem, 2.5vw, 2rem);
   width: max-content;
-  /* Paused by default — JS starts it after stagger reveal */
   animation: tv-scroll 12s linear infinite;
   animation-play-state: paused;
 }
@@ -66,39 +66,48 @@
   animation-play-state: running;
 }
 
-/* TV item — composite: screen behind frame */
+/*
+  TV item composite:
+  - .work__tv-screen: project image, z-index 1, masked by orangemask.webp
+  - .work__tv-frame: orange TV, z-index 2, mix-blend-mode multiply removes white bg
+  The white bg of orangetv.webp becomes transparent via multiply against any
+  non-white surface — since the screen image covers the full item, the TV
+  bezel punches through cleanly.
+*/
 .work__tv-item {
   flex-shrink: 0;
   position: relative;
   width: clamp(200px, 28vw, 300px);
-  /* Clip the screen image to the TV bezel area */
   isolation: isolate;
 }
 
 .work__tv-screen {
   position: absolute;
-  /* Percentages tuned to the orangetv.webp bezel */
-  top: 8%;
-  left: 12%;
-  width: 76%;
-  height: 62%;
-  overflow: hidden;
-  z-index: 0;
+  inset: 0;
+  z-index: 1;
 
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+    mask-image: url('/assets/images/orangemask.webp');
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    -webkit-mask-image: url('/assets/images/orangemask.webp');
+    -webkit-mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
   }
 }
 
 .work__tv-frame {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   height: auto;
   display: block;
+  /* Removes the white background of orangetv.webp — orange body shows through */
+  mix-blend-mode: multiply;
 }
 
 @keyframes tv-scroll {

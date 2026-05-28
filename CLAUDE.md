@@ -11,12 +11,10 @@ Aesthetic: editorial, confident, bold typography, warm palette.
 - GSAP 3.15 + ScrollTrigger + Draggable (animation)
 - Lenis (smooth scroll)
 - SplitType (text splitting)
-- ClashDisplay Variable + DM Sans (fonts)
+- Fonts: BrandelLuchador (self-hosted, display/titles) + Satoshi (Fontshare CDN, body)
 
 ## Source of truth
-- `PLAN.md` for the rebuild roadmap, section specs, and session handoff state. Read this FIRST at session start.
-- `DESIGN_BIBLE.md` for all visual decisions (palette, typography, contrast, cards, nav)
-- `AI_CONTEXT.md` for file architecture and immutable rules
+- `DESIGN_BIBLE.md` is the ONE design doc: palette, fonts, type scale, hero/menu/nav specs, and the reveal animation system. Read it before any visual or motion work. (There is no separate AI_CONTEXT.md or PLAN.md — everything is in the bible.)
 
 ## Key rules
 1. No CSS transitions on GSAP-animated properties

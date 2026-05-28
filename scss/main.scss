@@ -16,6 +16,18 @@
 @use 'components/contact';
 @use 'components/project-page';
 
+/* SVG arch divider — sits at top:0 of each arch section, z-index below content */
+.arch-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--arch-h);
+  display: block;
+  pointer-events: none;
+  z-index: 0;
+}
+
 @media (max-width: 768px) {
   main > section:not(.hero) {
     padding-top: clamp(5.75rem, 18vw, 7rem);

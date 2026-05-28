@@ -7,10 +7,8 @@
   color: #fff;
   z-index: 3;
 
-  border-top-left-radius: 50% var(--arch);
-  border-top-right-radius: 50% var(--arch);
-  margin-top: calc(-1 * var(--arch));
-  padding: calc(var(--arch) + clamp(3.5rem, 7vw, 6rem)) $page-padding clamp(4rem, 8vw, 7rem);
+  margin-top: calc(-1 * var(--arch-h));
+  padding: calc(var(--arch-h) + clamp(3.5rem, 7vw, 6rem)) $page-padding clamp(4rem, 8vw, 7rem);
   overflow: hidden;
 }
 
@@ -21,6 +19,8 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 /* Lead text above the badge */

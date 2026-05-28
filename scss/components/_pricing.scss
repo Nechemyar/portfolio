@@ -7,15 +7,16 @@
   color: $c-ink;
   z-index: 4;
 
-  border-top-left-radius: 50% var(--arch);
-  border-top-right-radius: 50% var(--arch);
-  margin-top: calc(-1 * var(--arch));
-  padding: calc(var(--arch) + clamp(3.5rem, 7vw, 6rem)) $page-padding clamp(4rem, 8vw, 7rem);
+  overflow: hidden;
+  margin-top: calc(-1 * var(--arch-h));
+  padding: calc(var(--arch-h) + clamp(3.5rem, 7vw, 6rem)) $page-padding clamp(4rem, 8vw, 7rem);
 }
 
 .pricing__inner {
   max-width: 900px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .pricing__header {

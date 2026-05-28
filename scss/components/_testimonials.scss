@@ -1,125 +1,160 @@
 @use '../base/tokens' as *;
 
-// ——————————————————————————————————————————————
-// Testimonials — Phase 7
-// ——————————————————————————————————————————————
-// Solid charcoal band for contrast. Two real cards.
-
+/* ── Testimonials — deep purple, WORD badge, quote cards ── */
 .testimonials {
-  background: $c-charcoal; // Hard contrast against global yellow
-  color: $c-cream;
-  padding: clamp(6rem, 10vw, 8rem) $page-padding;
+  position: relative;
+  background: $c-purple;
+  color: #fff;
+  z-index: 3;
+
+  border-top-left-radius: 50% var(--arch);
+  border-top-right-radius: 50% var(--arch);
+  margin-top: calc(-1 * var(--arch));
+  padding: calc(var(--arch) + clamp(3.5rem, 7vw, 6rem)) $page-padding clamp(4rem, 8vw, 7rem);
+  overflow: hidden;
 }
 
 .testimonials__inner {
-  max-width: 1200px;
+  max-width: 780px;
   margin: 0 auto;
-}
-
-.testimonials__header {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: clamp(3rem, 6vw, 5rem);
+  align-items: center;
+  text-align: center;
 }
 
-.testimonials__label {
-  display: inline-flex;
+/* Lead text above the badge */
+.testimonials__pre {
   font-family: $font-body;
-  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
-  font-weight: 800;
-  color: $c-ink;
-  text-transform: uppercase;
-  letter-spacing: 0;
-  padding: 0.45rem 0.7rem;
-  background: $c-yellow;
-  border: 2px solid $c-ink;
-  border-radius: 8px;
-  margin-bottom: $space-24;
-}
-
-.testimonials__title {
-  font-family: $font-display;
-  font-size: clamp(3rem, 5vw, 4.5rem);
+  font-size: clamp(0.9rem, 2.2vw, 1.2rem);
   font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  color: $c-cream;
-  margin: 0;
+  color: rgba(255,255,255,0.65);
+  margin: 0 0 clamp(1.5rem, 3vw, 2.5rem);
 }
 
+/* WORD — circular badge */
+.testimonials__badge {
+  position: relative;
+  width: min(72vw, 340px);
+  aspect-ratio: 1;
+  background: $c-lavender;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.testimonials__badge-word {
+  font-family: $font-display;
+  font-size: clamp(5rem, 17vw, 11rem);
+  font-weight: 400;
+  line-height: 0.85;
+  text-transform: uppercase;
+  color: #fff;
+  letter-spacing: 0;
+}
+
+/* "for it" beneath the badge */
+.testimonials__post {
+  font-family: $font-body;
+  font-size: clamp(0.9rem, 2.2vw, 1.2rem);
+  font-weight: 500;
+  color: rgba(255,255,255,0.65);
+  margin: 0 0 clamp(3rem, 6vw, 5rem);
+}
+
+/* Sub-label */
+.testimonials__label {
+  font-family: $font-body;
+  font-size: $fs-xs;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin: 0 0 $space-24;
+}
+
+/* Quote cards */
 .testimonials__grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: $space-32;
+  display: flex;
+  flex-direction: column;
+  gap: $space-16;
+  width: 100%;
 }
 
 .testimonials__card {
-  background: $c-cream;
-  color: $c-ink;
-  border-radius: 12px;
-  padding: clamp(2rem, 4vw, 3rem);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: $space-32;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: $r-md;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  text-align: left;
+  position: relative;
+}
+
+/* Decorative X mark in corner */
+.testimonials__card::after {
+  content: '✕';
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.3);
+  font-family: $font-body;
 }
 
 .testimonials__quote {
   font-family: $font-body;
-  font-size: clamp(1.2rem, 1.5vw, 1.4rem);
-  font-weight: 500;
-  line-height: 1.5;
-  color: $c-ink;
-  margin: 0;
-  
-  &::before {
-    content: '“';
-    font-family: $font-display;
-    font-size: 2em;
-    line-height: 0;
-    color: $c-rust;
-    vertical-align: -0.2em;
-    margin-right: 4px;
-  }
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: #fff;
+  margin: 0 0 $space-24;
 }
 
 .testimonials__author {
   display: flex;
   align-items: center;
-  gap: $space-16;
-  padding-top: $space-24;
-  border-top: 1px solid rgba(26, 26, 26, 0.1);
+  gap: $space-12;
 }
 
 .testimonials__photo {
-  width: 56px;
-  height: 56px;
-  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.2);
   flex-shrink: 0;
 }
 
 .testimonials__name {
-  font-family: $font-body;
-  font-size: clamp(1rem, 1.2vw, 1.1rem);
-  font-weight: 800;
-  color: $c-ink;
   display: block;
+  font-family: $font-body;
+  font-size: $fs-sm;
+  font-weight: 700;
+  color: #fff;
 }
 
 .testimonials__role {
-  font-family: $font-body;
-  font-size: clamp(0.9rem, 1vw, 0.95rem);
-  color: $c-text-secondary;
-  font-weight: 500;
   display: block;
-  margin-top: 2px;
+  font-family: $font-body;
+  font-size: $fs-xs;
+  font-weight: 500;
+  color: rgba(255,255,255,0.5);
+  margin-top: 0.2em;
 }
 
-@media (max-width: 900px) {
+@media (min-width: 769px) {
   .testimonials__grid {
-    grid-template-columns: 1fr;
-    gap: $space-24;
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .testimonials__card {
+    flex: 1;
+  }
+
+  .testimonials__badge {
+    width: min(45vw, 380px);
   }
 }

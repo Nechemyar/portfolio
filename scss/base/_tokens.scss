@@ -29,6 +29,11 @@ $c-charcoal:   #2C2C2C;  // Dark section backgrounds
 $c-paper:      #F3EDE6;  // Cards sitting on cream, subtle depth
 $c-whatsapp:   #80FF80;  // WhatsApp CTA only
 
+// Section colors — each section gets one bold background
+$c-blue:       #1A33E8;  // Services section — bold royal blue
+$c-purple:     #5422AE;  // Testimonials section — deep purple
+$c-lavender:   #8055C8;  // Accent within purple section (WORD badge ring)
+
 // Semantic aliases
 $c-bg:             $c-yellow;
 $c-text:           $c-ink;
@@ -58,6 +63,10 @@ $r-md: 12px;
 $r-lg: 16px;
 $r-xl: 24px;
 $r-full: 100px;
+
+// Section arch transition (shared between sections that rise over each other)
+// Usage: border-top-left/right-radius: 50% var(--arch); margin-top: calc(-1 * var(--arch));
+:root { --arch: clamp(2.5rem, 5vw, 4.5rem); }
 
 // Transitions & Animation (NON-GSAP only)
 $ease-out: cubic-bezier(0.16, 1, 0.3, 1);

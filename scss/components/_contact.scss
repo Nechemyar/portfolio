@@ -1,84 +1,127 @@
 @use '../base/tokens' as *;
 
-// ——————————————————————————————————————————————
-// Contact — Phase 7
-// ——————————————————————————————————————————————
-// Bold, billboard-style CTA. Background is transparent (inherits yellow).
-
+/* ── Contact — rust bookend, mirrors the hero ── */
 .contact {
-  padding: clamp(6rem, 12vw, 12rem) $page-padding;
-  background: transparent;
-  color: $c-ink;
+  position: relative;
+  background: $c-rust;
+  color: #fff;
+  z-index: 6;
+
+  border-top-left-radius: 50% var(--arch);
+  border-top-right-radius: 50% var(--arch);
+  margin-top: calc(-1 * var(--arch));
+  padding: calc(var(--arch) + clamp(4rem, 9vw, 8rem)) $page-padding clamp(4rem, 8vw, 7rem);
+  overflow: hidden;
   text-align: center;
 }
 
 .contact__inner {
-  max-width: 1000px;
+  max-width: 680px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.contact__title {
-  font-family: $font-display;
-  font-size: clamp(3.5rem, 8vw, 6rem);
-  font-weight: 500;
-  line-height: 0.95;
-  letter-spacing: -0.03em;
+.contact__eyebrow {
+  display: block;
+  font-family: $font-body;
+  font-size: $fs-xs;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
   margin-bottom: $space-24;
+}
+
+.contact__display {
+  font-family: $font-display;
+  font-size: clamp(6rem, 22vw, 20rem);
+  font-weight: 400;
+  line-height: 0.82;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 0 clamp(2rem, 5vw, 4rem);
+  letter-spacing: 0;
 }
 
 .contact__sub {
   font-family: $font-body;
-  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
   font-weight: 500;
-  color: $c-text-secondary;
-  margin-bottom: $space-48;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.5;
+  margin: 0 0 clamp(2.5rem, 5vw, 4rem);
+  max-width: 42ch;
 }
 
 .contact__buttons {
   display: flex;
   flex-wrap: wrap;
+  gap: $space-12;
   justify-content: center;
+}
+
+.contact__btn {
+  display: inline-flex;
   align-items: center;
-  gap: $space-16;
-}
+  gap: 0.4em;
+  padding: 0.75em 1.4em;
+  font-family: $font-body;
+  font-size: $fs-sm;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: $r-sm;
+  border: 2px solid rgba(255,255,255,0.5);
+  color: #fff;
+  background: transparent;
 
-// Adjust primary CTA for Contact section specifically to make it massive
-.contact .btn--primary {
-  font-size: clamp(1.1rem, 1.4vw, 1.3rem);
-  padding: 1rem 2.5rem;
-  background: $c-rust;
-  border-color: $c-ink;
-  
+  &--primary {
+    background: #fff;
+    color: $c-rust;
+    border-color: #fff;
+  }
+
   @media (hover: hover) {
-    &:hover {
-      background: $c-rust-hover;
-    }
+    transition: opacity $duration-fast ease;
+    &:hover { opacity: 0.8; }
   }
 }
 
-.contact .btn--secondary {
-  font-size: clamp(1rem, 1.1vw, 1.1rem);
-  padding: 0.9rem 2rem;
-  background: $c-cream;
-  border-color: $c-ink;
-  
-  @media (hover: hover) {
-    &:hover {
-      background: $c-ink;
-      color: $c-yellow;
-    }
-  }
+/* ── Footer ── */
+.footer {
+  position: relative;
+  background: $c-ink;
+  z-index: 7;
+  padding: $space-24 $page-padding;
 }
 
-@media (max-width: 768px) {
-  .contact__buttons {
-    flex-direction: column;
-    width: 100%;
-    
-    .btn {
-      width: 100%;
-      text-align: center;
-      justify-content: center;
-    }
+.footer__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-12;
+}
+
+.footer__copy,
+.footer__email {
+  font-family: $font-body;
+  font-size: $fs-xs;
+  font-weight: 500;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.04em;
+}
+
+.footer__email {
+  text-decoration: none;
+
+  @media (hover: hover) {
+    transition: color $duration-fast ease;
+    &:hover { color: rgba(255,255,255,0.7); }
   }
 }

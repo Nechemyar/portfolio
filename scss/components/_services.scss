@@ -1,136 +1,122 @@
 @use '../base/tokens' as *;
 
-// ——————————————————————————————————————————————
-// Services / What You Get — Phase 5
-// ——————————————————————————————————————————————
-// Anti-template asymmetric layout. No generic 3-card grids.
-
+/* ── Services — bold royal blue, ME?, eye illustration ── */
 .services {
-  background: transparent;
-  padding: clamp(6rem, 10vw, 8rem) $page-padding;
-  color: $c-ink;
+  position: relative;
+  background: $c-blue;
+  color: #fff;
+  z-index: 2;
+
+  /* arch rises over the yellow work section */
+  border-top-left-radius: 50% var(--arch);
+  border-top-right-radius: 50% var(--arch);
+  margin-top: calc(-1 * var(--arch));
+  padding: calc(var(--arch) + clamp(3.5rem, 7vw, 6rem)) $page-padding clamp(4rem, 8vw, 7rem);
+  overflow: hidden;
 }
 
 .services__inner {
-  max-width: 1200px;
+  max-width: 780px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(4rem, 8vw, 8rem);
-  align-items: start;
-}
-
-// ——————————————————————————————————————————————
-// Header (Left Column on Desktop)
-// ——————————————————————————————————————————————
-.services__header {
-  position: sticky;
-  top: clamp(6rem, 10vw, 8rem);
-}
-
-.services__label {
-  display: inline-flex;
-  font-family: $font-body;
-  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
-  font-weight: 800;
-  color: $c-ink;
-  text-transform: uppercase;
-  letter-spacing: 0;
-  padding: 0.45rem 0.7rem;
-  background: $c-mustard;
-  border: 2px solid $c-ink;
-  border-radius: 8px;
-  margin-bottom: $space-24;
-}
-
-.services__title {
-  font-family: $font-display;
-  font-size: clamp(3rem, 5vw, 4.5rem);
-  font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  margin-bottom: $space-24;
-}
-
-.services__lead {
-  font-family: $font-body;
-  font-size: clamp(1.1rem, 1.4vw, 1.4rem);
-  line-height: 1.5;
-  color: $c-text-secondary;
-  max-width: 420px;
-}
-
-// ——————————————————————————————————————————————
-// Feature List (Right Column on Desktop)
-// ——————————————————————————————————————————————
-.services__list {
   display: flex;
   flex-direction: column;
-  gap: $space-48;
-  padding-top: $space-12; // Visual alignment with title
+  align-items: center;
+  text-align: center;
+}
+
+/* Question build-up */
+.services__pre {
+  font-family: $font-body;
+  font-size: clamp(0.9rem, 2.2vw, 1.2rem);
+  font-weight: 500;
+  color: rgba(255,255,255,0.7);
+  margin: 0 0 $space-4;
+  line-height: 1.5;
+}
+
+.services__hook {
+  font-family: $font-body;
+  font-size: clamp(1.1rem, 2.8vw, 1.55rem);
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 $space-16;
+  line-height: 1.3;
+}
+
+/* ME? — the big display question */
+.services__display {
+  font-family: $font-display;
+  font-size: clamp(8rem, 28vw, 24rem);
+  font-weight: 400;
+  line-height: 0.82;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 0 clamp(2.5rem, 6vw, 5rem);
+  letter-spacing: 0;
+}
+
+/* Eye illustration */
+.services__eye {
+  width: min(85vw, 340px);
+  height: auto;
+  display: block;
+  margin: 0 auto clamp(3rem, 7vw, 5.5rem);
+}
+
+/* Feature list */
+.services__list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 clamp(3rem, 6vw, 5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  border-top: 1px solid rgba(255,255,255,0.15);
 }
 
 .services__item {
-  position: relative;
-  padding-bottom: $space-32;
-  border-bottom: 1px solid rgba(26, 26, 26, 0.15);
-  
-  &:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
-}
-
-.services__item-head {
-  display: flex;
-  align-items: baseline;
-  gap: $space-16;
-  margin-bottom: $space-16;
-}
-
-.services__item-num {
   font-family: $font-body;
-  font-size: clamp(0.8rem, 1vw, 0.9rem);
-  font-weight: 800;
-  color: $c-rust;
-  padding: 0.2em 0.5em;
-  border: 1px solid $c-rust;
-  border-radius: 4px;
-}
-
-.services__item-title {
-  font-family: $font-display;
-  font-size: clamp(1.4rem, 2vw, 2rem);
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
   font-weight: 500;
-  letter-spacing: -0.01em;
+  color: #fff;
+  padding: clamp(0.9rem, 2vw, 1.25rem) 0;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: $space-12;
+
+  &::before {
+    content: '→';
+    font-size: 0.85em;
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
 }
 
-.services__item-desc {
+/* CTA link */
+.services__cta {
   font-family: $font-body;
-  font-size: clamp(1.05rem, 1.2vw, 1.15rem);
-  line-height: 1.6;
-  color: $c-text-secondary;
-  padding-left: clamp(2.5rem, 4vw, 3.5rem); // Indent to align with title text, not number
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  opacity: 0.8;
+
+  @media (hover: hover) {
+    transition: opacity $duration-fast ease;
+    &:hover { opacity: 1; }
+  }
 }
 
-// ——————————————————————————————————————————————
-// Mobile & Tablet
-// ——————————————————————————————————————————————
-@media (max-width: 900px) {
+@media (min-width: 769px) {
   .services__inner {
-    grid-template-columns: 1fr;
-    gap: $space-64;
-  }
-  
-  .services__header {
-    position: static;
-  }
-  
-  .services__title {
-    margin-bottom: $space-16;
-  }
-  
-  .services__item-desc {
-    padding-left: 0; // Remove indent on mobile for readability
+    max-width: 900px;
   }
 }

@@ -1,107 +1,188 @@
 @use '../base/tokens' as *;
+
+/* ── Work — yellow stage, TV, MAGIC ── */
 .work {
-  padding: $space-128 $page-padding;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.work__grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: $space-32;
-}
-
-.work__item {
-  background: $c-bg-elevated;
-  border-radius: $r-lg;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform $duration-fast $ease-out;
-}
-
-.work__item:hover {
-  transform: translateY(-4px);
-}
-
-.work__image {
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
   position: relative;
+  min-height: 100dvh;
+  background: $c-yellow;
+  z-index: 1;
+  overflow: hidden;
 }
 
-.work__image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform $duration-med $ease-out;
-}
-
-.work__item:hover .work__image img {
-  transform: scale(1.03);
-}
-
-.work__video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity $duration-med $ease-out, transform $duration-med $ease-out;
-}
-
-.work__item:hover .work__video {
-  opacity: 1;
-  transform: scale(1.03);
-}
-
-.work__info {
-  padding: $space-32;
+.work__inner {
+  position: relative;
+  min-height: 100dvh;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
 }
 
-.work__meta {
+/* Subtitle */
+.work__subtitle {
+  padding: clamp(5.5rem, 12vw, 8rem) $page-padding 0;
+  font-family: $font-body;
+  font-size: clamp(0.9rem, 2.2vw, 1.2rem);
+  font-weight: 500;
+  color: $c-ink;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* TV area */
+.work__tv-area {
+  position: relative;
   flex: 1;
-}
-
-.work__title {
-  font-family: $font-display;
-  font-size: $fs-xl;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  margin-bottom: 0.15em;
-}
-
-.work__type {
-  font-size: $fs-sm;
-  color: $c-text-secondary;
-}
-
-.work__arrow {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: $c-border;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
-  color: $c-text;
-  flex-shrink: 0;
-  transition: background $duration-fast ease;
+  padding: clamp(1.5rem, 3vw, 3rem) $page-padding;
+  z-index: 2;
 }
 
-.work__item:hover .work__arrow {
-  background: $c-accent;
-  color: $c-bg;
+.work__tv-scene {
+  position: relative;
+  width: min(82vw, 500px);
 }
 
-@media (max-width: 700px) {
-  .work__grid {
-    grid-template-columns: 1fr;
+.work__tv-base {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+.work__tv-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  -webkit-mask: url('../../assets/images/orangemask.webp') center / contain no-repeat;
+  mask: url('../../assets/images/orangemask.webp') center / contain no-repeat;
+  pointer-events: none;
+}
+
+.work__slider {
+  position: absolute;
+  top: 17%;
+  left: 17%;
+  width: 66%;
+  height: 62%;
+  overflow: hidden;
+}
+
+.work__slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  opacity: 0;
+  visibility: hidden;
+
+  &.is-active {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.work__slide--soon {
+  background: $c-charcoal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $font-body;
+  font-size: $fs-sm;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $c-yellow;
+}
+
+.work__tv-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(0,0,0,0) 50%, rgba(0,0,0,0.08) 50%),
+    linear-gradient(90deg, rgba(255,0,0,0.02), rgba(0,255,0,0.01), rgba(0,0,255,0.02));
+  background-size: 100% 4px, 6px 100%;
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.4);
+}
+
+/* MAGIC — ghosted behind the TV */
+.work__display {
+  position: absolute;
+  bottom: clamp(3.5rem, 8vw, 6rem);
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-family: $font-display;
+  font-size: clamp(6rem, 22vw, 24rem);
+  font-weight: 400;
+  line-height: 0.8;
+  text-transform: uppercase;
+  color: $c-ink;
+  opacity: 0.13;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+/* Bottom row */
+.work__perch-row {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(1rem, 2.5vw, 1.5rem) $page-padding;
+  z-index: 5;
+}
+
+.work__counter {
+  font-family: $font-body;
+  font-size: $fs-sm;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: $c-ink;
+  opacity: 0.45;
+}
+
+.work__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.6em 1.2em;
+  background: $c-rust;
+  color: #fff;
+  font-family: $font-body;
+  font-size: $fs-sm;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: $r-sm;
+
+  @media (hover: hover) {
+    transition: background $duration-fast $ease-out;
+    &:hover { background: $c-rust-hover; }
+  }
+}
+
+@media (min-width: 769px) {
+  .work__tv-scene {
+    width: min(52vw, 660px);
+  }
+
+  .work__display {
+    font-size: clamp(12rem, 18vw, 28rem);
+    bottom: clamp(4rem, 8vw, 7rem);
   }
 }

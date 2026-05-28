@@ -1,196 +1,204 @@
 @use '../base/tokens' as *;
 
-// ——————————————————————————————————————————————
-// Pricing — Phase 6
-// ——————————————————————————————————————————————
-// Editorial spec-sheet styling. Background is transparent 
-// (inherits global yellow). Cards are cream.
-
+/* ── Pricing — cream, two-tier, clear hierarchy ── */
 .pricing {
-  padding: clamp(6rem, 10vw, 8rem) $page-padding;
-  background: transparent;
+  position: relative;
+  background: $c-cream;
   color: $c-ink;
+  z-index: 4;
+
+  border-top-left-radius: 50% var(--arch);
+  border-top-right-radius: 50% var(--arch);
+  margin-top: calc(-1 * var(--arch));
+  padding: calc(var(--arch) + clamp(3.5rem, 7vw, 6rem)) $page-padding clamp(4rem, 8vw, 7rem);
 }
 
 .pricing__inner {
-  max-width: 1200px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
 .pricing__header {
-  margin-bottom: clamp(3rem, 6vw, 4rem);
-  max-width: 600px;
+  text-align: center;
+  margin-bottom: clamp(3rem, 6vw, 5rem);
 }
 
-.pricing__label {
-  display: inline-flex;
+.pricing__eyebrow {
+  display: block;
   font-family: $font-body;
-  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
-  font-weight: 800;
-  color: $c-ink;
+  font-size: $fs-xs;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  letter-spacing: 0;
-  padding: 0.45rem 0.7rem;
-  background: $c-mustard;
-  border: 2px solid $c-ink;
-  border-radius: 8px;
+  color: $c-text-secondary;
   margin-bottom: $space-16;
 }
 
 .pricing__title {
   font-family: $font-display;
-  font-size: clamp(3rem, 5vw, 4.5rem);
-  font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  margin-bottom: $space-16;
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  font-weight: 400;
+  line-height: 0.9;
+  text-transform: uppercase;
+  color: $c-ink;
+  margin: 0 0 $space-16;
 }
 
 .pricing__sub {
   font-family: $font-body;
-  font-size: clamp(1.1rem, 1.4vw, 1.4rem);
-  line-height: 1.5;
+  font-size: $fs-base;
   color: $c-text-secondary;
+  max-width: 52ch;
+  margin: 0 auto;
+  line-height: 1.65;
 }
 
+/* Cards */
 .pricing__grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: $space-24;
-  margin-bottom: $space-32;
+  display: flex;
+  flex-direction: column;
+  gap: $space-16;
 }
 
 .pricing__card {
-  position: relative;
-  background: $c-cream;
-  border: 2px solid $c-ink;
-  border-radius: 12px;
-  padding: clamp(2rem, 4vw, 3rem);
+  background: $c-warm-white;
+  border: 2px solid $c-border-visible;
+  border-radius: $r-md;
+  padding: clamp(1.75rem, 4vw, 2.5rem);
   display: flex;
   flex-direction: column;
-  transition: transform $duration-med $ease-out;
-  
-  @media (hover: hover) {
-    &:hover {
-      transform: translateY(-4px);
-    }
-  }
-}
 
-.pricing__card--featured {
-  border: 3px solid $c-rust;
-  
-  // Custom label instead of generic SaaS badge
-  &::before {
-    content: '';
-    position: absolute;
-    top: -3px;
-    left: clamp(2rem, 4vw, 3rem);
-    width: 40px;
-    height: 8px;
-    background: $c-rust;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-  }
-}
+  &--featured {
+    background: $c-ink;
+    color: #fff;
+    border-color: $c-ink;
 
-.pricing__card-header {
-  margin-bottom: $space-32;
-  border-bottom: 1px solid rgba(26, 26, 26, 0.1);
-  padding-bottom: $space-24;
+    .pricing__card-label { color: $c-yellow; }
+    .pricing__card-price { color: #fff; }
+    .pricing__card-fit   { color: rgba(255,255,255,0.6); }
+    .pricing__card-features li { color: rgba(255,255,255,0.85); }
+    .pricing__card-features li::before { color: $c-yellow; }
+  }
 }
 
 .pricing__card-label {
   display: block;
   font-family: $font-body;
-  font-size: clamp(1rem, 1.2vw, 1.1rem);
-  font-weight: 800;
+  font-size: $fs-xs;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: $c-ink;
+  color: $c-text-secondary;
   margin-bottom: $space-8;
 }
 
 .pricing__card-price {
   display: block;
   font-family: $font-display;
-  font-size: clamp(2.5rem, 4vw, 3.5rem);
-  font-weight: 500;
+  font-size: clamp(2.8rem, 7vw, 5rem);
+  font-weight: 400;
+  line-height: 0.9;
+  text-transform: uppercase;
   color: $c-ink;
-  letter-spacing: -0.02em;
-  line-height: 1;
-  margin-bottom: $space-16;
+  margin-bottom: $space-12;
 }
 
 .pricing__card-fit {
-  display: block;
   font-family: $font-body;
-  font-size: clamp(1rem, 1.1vw, 1.05rem);
-  font-weight: 500;
+  font-size: $fs-sm;
   color: $c-text-secondary;
   line-height: 1.5;
+  margin-bottom: $space-24;
+  padding-bottom: $space-24;
+  border-bottom: 1px solid $c-border;
 }
 
 .pricing__card-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 $space-32;
   display: flex;
   flex-direction: column;
   gap: $space-12;
-  margin-bottom: $space-48;
-  flex-grow: 1;
-}
+  flex: 1;
 
-.pricing__card-features li {
-  position: relative;
-  padding-left: 1.5em;
-  font-family: $font-body;
-  font-size: clamp(1.05rem, 1.2vw, 1.1rem);
-  color: $c-ink;
-  line-height: 1.5;
-  font-weight: 500;
-  
-  &::before {
-    content: '—';
-    position: absolute;
-    left: 0;
-    color: $c-rust;
-    font-weight: 700;
-  }
-}
+  li {
+    font-family: $font-body;
+    font-size: $fs-base;
+    color: $c-text;
+    display: flex;
+    align-items: baseline;
+    gap: $space-8;
 
-.pricing__footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: $space-24 clamp(2rem, 4vw, 3rem);
-  background: $c-cream;
-  border: 2px solid $c-ink;
-  border-radius: 12px;
-  font-family: $font-body;
-  font-weight: 600;
-}
-
-.pricing__footer a {
-  color: $c-rust;
-  text-decoration: none;
-  font-weight: 800;
-  
-  @media (hover: hover) {
-    &:hover {
-      text-decoration: underline;
-      text-underline-offset: 4px;
+    &::before {
+      content: '→';
+      font-size: 0.8em;
+      color: $c-rust;
+      flex-shrink: 0;
     }
   }
 }
 
-@media (max-width: 900px) {
-  .pricing__grid {
-    grid-template-columns: 1fr;
-    gap: $space-24;
+/* CTA buttons inside cards */
+.pricing__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8em 1.5em;
+  font-family: $font-body;
+  font-size: $fs-sm;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: $r-sm;
+  border: 2px solid currentColor;
+
+  &--primary {
+    background: $c-rust;
+    color: #fff;
+    border-color: $c-rust;
+
+    @media (hover: hover) {
+      transition: background $duration-fast $ease-out;
+      &:hover { background: $c-rust-hover; border-color: $c-rust-hover; }
+    }
   }
-  
-  .pricing__footer {
-    flex-direction: column;
-    gap: $space-16;
-    align-items: flex-start;
+
+  &--secondary {
+    background: transparent;
+    color: $c-ink;
+    border-color: $c-ink;
+
+    @media (hover: hover) {
+      transition: opacity $duration-fast ease;
+      &:hover { opacity: 0.7; }
+    }
+  }
+}
+
+.pricing__footer {
+  text-align: center;
+  margin-top: $space-32;
+  font-family: $font-body;
+  font-size: $fs-sm;
+  color: $c-text-secondary;
+
+  a {
+    color: $c-ink;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+@media (min-width: 769px) {
+  .pricing__grid {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .pricing__card {
+    flex: 1;
   }
 }

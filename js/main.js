@@ -11,24 +11,18 @@ import HeroScroll from './modules/HeroScroll.js';
 import NavTheme from './modules/NavTheme.js';
 import Faq from './modules/Faq.js';
 import Loader from './modules/Loader.js';
-import BgScroll from './modules/BgScroll.js';
 import MagicReel from './modules/MagicReel.js';
-import HowItWorks from './modules/HowItWorks.js';
-import AboutReveal from './modules/AboutReveal.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Boot modules during loader so content is ready
+// Boot modules
 const smoothScroll = new SmoothScroll();
 const menu = new Menu();
 const scrollReveal = new ScrollReveal();
 const heroScroll = new HeroScroll();
 const navTheme = new NavTheme();
 const faq = new Faq();
-// const bgScroll = new BgScroll();
 const magicReel = new MagicReel();
-const howItWorks = new HowItWorks();
-const aboutReveal = new AboutReveal();
 
 /* Hero paints in its final state — no fade-in choreography. The previous
    entrance animated nav / marquee / gradient / footer in from offset

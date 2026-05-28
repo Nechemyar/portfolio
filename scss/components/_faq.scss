@@ -1,150 +1,134 @@
 @use '../base/tokens' as *;
 
-// ——————————————————————————————————————————————
-// FAQ — Phase 7
-// ——————————————————————————————————————————————
-// Editorial accordion. Background is transparent (inherits global yellow).
-
+/* ── FAQ — dark charcoal, clean accordion ── */
 .faq {
-  padding: clamp(6rem, 10vw, 8rem) $page-padding;
-  background: transparent;
-  color: $c-ink;
+  position: relative;
+  background: $c-charcoal;
+  color: #fff;
+  z-index: 5;
+
+  border-top-left-radius: 50% var(--arch);
+  border-top-right-radius: 50% var(--arch);
+  margin-top: calc(-1 * var(--arch));
+  padding: calc(var(--arch) + clamp(3.5rem, 7vw, 6rem)) $page-padding clamp(4rem, 8vw, 7rem);
 }
 
 .faq__inner {
-  max-width: 1000px;
+  max-width: 780px;
   margin: 0 auto;
 }
 
 .faq__header {
-  margin-bottom: clamp(3rem, 6vw, 4rem);
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
 }
 
-.faq__label {
-  display: inline-flex;
+.faq__eyebrow {
+  display: block;
   font-family: $font-body;
-  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
-  font-weight: 800;
-  color: $c-ink;
+  font-size: $fs-xs;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  letter-spacing: 0;
-  padding: 0.45rem 0.7rem;
-  background: $c-mustard;
-  border: 2px solid $c-ink;
-  border-radius: 8px;
-  margin-bottom: $space-24;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: $space-16;
 }
 
 .faq__title {
   font-family: $font-display;
-  font-size: clamp(3rem, 5vw, 4.5rem);
-  font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 400;
+  line-height: 0.9;
+  text-transform: uppercase;
+  color: #fff;
   margin: 0;
 }
 
-// ——————————————————————————————————————————————
-// Accordion List
-// ——————————————————————————————————————————————
+/* Accordion list */
 .faq__list {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: $space-48;
+  border-top: 1px solid rgba(255,255,255,0.1);
 }
 
 .faq__item {
-  border-bottom: 2px solid $c-ink;
-  
-  &:first-child {
-    border-top: 2px solid $c-ink;
-  }
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 .faq__item summary {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: $space-24 0;
-  font-family: $font-display;
-  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
-  font-weight: 700;
-  cursor: pointer;
   list-style: none;
-  
-  &::-webkit-details-marker {
-    display: none; // Hide default arrow
-  }
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-16;
+  padding: clamp(1.1rem, 2.5vw, 1.5rem) 0;
+  font-family: $font-body;
+  font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+  font-weight: 600;
+  color: #fff;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 
+.faq__item summary::-webkit-details-marker { display: none; }
+
+/* Expand icon */
 .faq__icon {
   position: relative;
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
-  transition: transform $duration-fast $ease-out;
-  
+  color: $c-yellow;
+
   &::before,
   &::after {
     content: '';
     position: absolute;
-    background: $c-ink;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  &::before {
-    width: 2px;
-    height: 100%;
-  }
-  
-  &::after {
+    left: 0;
     width: 100%;
     height: 2px;
+    background: currentColor;
+    transform: translateY(-50%);
+    transition: transform $duration-fast $ease-out, opacity $duration-fast ease;
+  }
+
+  &::after {
+    transform: translateY(-50%) rotate(90deg);
   }
 }
 
-// Open state
-.faq__item[open] .faq__icon {
-  transform: rotate(135deg);
+.faq__item[open] .faq__icon::after {
+  transform: translateY(-50%) rotate(0deg);
+  opacity: 0;
 }
 
 .faq__answer {
-  padding-right: clamp(1rem, 10vw, 4rem);
+  padding: 0 0 clamp(1.25rem, 3vw, 1.75rem);
   overflow: hidden;
-  
-  p {
-    font-family: $font-body;
-    font-size: clamp(1.05rem, 1.2vw, 1.15rem);
-    line-height: 1.6;
-    color: $c-text-secondary;
-    font-weight: 500;
-  }
-  
-  p:last-child {
-    margin-bottom: $space-24;
-  }
 }
 
-// ——————————————————————————————————————————————
-// Footer CTA
-// ——————————————————————————————————————————————
-.faq__cta {
-  text-align: center;
+.faq__answer p {
   font-family: $font-body;
-  font-size: clamp(1.1rem, 1.2vw, 1.2rem);
-  font-weight: 600;
-  
+  font-size: $fs-base;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.65;
+  margin: 0;
+  max-width: 68ch;
+}
+
+/* Footer CTA */
+.faq__cta {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  font-family: $font-body;
+  font-size: $fs-sm;
+  color: rgba(255,255,255,0.45);
+
   a {
-    color: $c-rust;
-    font-weight: 800;
-    
+    color: $c-yellow;
+    font-weight: 700;
+    text-decoration: none;
+
     @media (hover: hover) {
-      &:hover {
-        text-decoration: underline;
-        text-underline-offset: 4px;
-      }
+      &:hover { text-decoration: underline; text-underline-offset: 3px; }
     }
   }
 }

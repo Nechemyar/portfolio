@@ -1,6 +1,6 @@
 @use '../base/tokens' as *;
 
-/* ── Work — magenta stage, tagline, MAGIC wavy image, TV ticker ── */
+/* ── Work — magenta stage ── */
 .work {
   position: relative;
   min-height: 100dvh;
@@ -11,35 +11,76 @@
   flex-direction: column;
 }
 
+/*
+  Layout (top → bottom):
+  1. Tagline — sits in the upper negative space
+  2. TV ticker strip — vertically centred in the section
+  3. MAGIC image — below TVs, z-index lower so TVs sit on top
+*/
 .work__inner {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   position: relative;
-  z-index: 1;
-  gap: clamp(1rem, 3vw, 2rem);
-  padding: clamp(6rem, 12vw, 9rem) 0 clamp(5rem, 10vw, 8rem);
+  /* No justify-content — we use explicit spacing between blocks */
+  padding-top: clamp(7rem, 14vw, 11rem);
+  padding-bottom: clamp(5rem, 10vw, 8rem);
 }
 
-/* Tagline */
+/* ── Tagline ── */
+.work__tagline-clip {
+  overflow: hidden;
+}
+
 .work__tagline {
   font-family: $font-body;
-  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-size: clamp(1.35rem, 5.2vw, 2rem);
   font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: 0;
   color: #fff;
   text-align: center;
-  letter-spacing: 0.01em;
-  margin: 0 0 clamp(1.5rem, 4vw, 3rem);
+  margin: 0;
   padding: 0 $page-padding;
+  display: block;
+
+  @media (min-width: 769px) {
+    font-size: clamp(2rem, 2.8vw, 3.2rem);
+  }
 }
 
-/* MAGIC — wavy image, centered */
+/* ── TV ticker — full width strip, z-index above magic ── */
+.work__tv-ticker {
+  width: 100%;
+  overflow: hidden;
+  /* Space between tagline and TVs */
+  margin-top: clamp(3rem, 8vw, 6rem);
+  position: relative;
+  z-index: 3;
+}
+
+.work__tv-track {
+  display: flex;
+  gap: clamp(1.2rem, 2.5vw, 2rem);
+  will-change: transform;
+}
+
+/* ── MAGIC image — below TVs, behind TV z-index ── */
+.work__magic-clip {
+  overflow: hidden;
+  width: min(72vw, 720px);
+  /* Space between TVs and magic */
+  margin-top: clamp(3rem, 8vw, 6rem);
+  /* padding-bottom absorbs the 14px downward float so bottom edge never clips */
+  padding-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
 .work__magic-wrap {
-  width: min(70vw, 700px);
+  width: 100%;
   text-align: center;
-  margin-bottom: clamp(3rem, 7vw, 5rem);
 }
 
 .work__magic {
@@ -48,31 +89,10 @@
   display: block;
 }
 
-/* TV Ticker strip */
-.work__tv-ticker {
-  width: 100%;
-  overflow: hidden;
-}
-
-.work__tv-track {
-  display: flex;
-  gap: clamp(1.2rem, 2.5vw, 2rem);
-  width: max-content;
-  animation: tv-scroll 12s linear infinite;
-  animation-play-state: paused;
-}
-
-.work__tv-track.is-rolling {
-  animation-play-state: running;
-}
-
 /*
-  TV item composite:
-  - .work__tv-screen: project image, z-index 1, masked by orangemask.webp
-  - .work__tv-frame: orange TV, z-index 2, mix-blend-mode multiply removes white bg
-  The white bg of orangetv.webp becomes transparent via multiply against any
-  non-white surface — since the screen image covers the full item, the TV
-  bezel punches through cleanly.
+  TV composite:
+  - .work__tv-screen: project image masked by orangemask.webp (screen-shaped cutout)
+  - .work__tv-frame: orange TV on top, screen blend removes white bg so bezel shows
 */
 .work__tv-item {
   flex-shrink: 0;
@@ -106,13 +126,7 @@
   width: 100%;
   height: auto;
   display: block;
-  /* Removes the white background of orangetv.webp — orange body shows through */
-  mix-blend-mode: multiply;
-}
-
-@keyframes tv-scroll {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  mix-blend-mode: screen;
 }
 
 @media (min-width: 769px) {

@@ -84,30 +84,22 @@ function splitLines(element) {
 }
 
 new Loader(() => {
-  // Split lines exactly when Loader finishes, so fonts are 100% loaded and metrics are exact.
-  const splitHeading = document.querySelector('.js-split-lines');
-  if (splitHeading) {
-    splitHeading.dataset.originalText = splitHeading.textContent.trim().replace(/\s+/g, ' ');
-    splitLines(splitHeading);
-    gsap.set('.hero__pitch-line', { clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)', y: 50 });
-    gsap.set(splitHeading, { visibility: 'visible' });
-  }
-
   document.documentElement.classList.add('js-loaded');
   document.getElementById('nav')?.classList.add('is-ready');
   document.dispatchEvent(new CustomEvent('hero:ready'));
-  
-  // Hero Entrance Sequence
+
+  // Hero Entrance Sequence — above-the-fold only (WEB / DESIGN, award, TV, nav)
   const tl = gsap.timeline();
-  
-  // 1. DESIGN word wipes up
+
+  // 1. WEB then DESIGN wipe up
   tl.to('.hero__display-word', {
     clipPath: 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)',
     y: 0,
     duration: 1.4,
-    ease: 'expo.out'
+    ease: 'expo.out',
+    stagger: 0.12
   });
-  
+
   // 2. Award and TV Cat wipe up
   tl.to(['.hero__tv-scene', '.hero__award-badge'], {
     clipPath: 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)',
@@ -116,7 +108,6 @@ new Loader(() => {
     ease: 'expo.out',
     stagger: 0.1
   }, '-=1.0');
-
 
   // 3. Nav elements wipe up
   tl.to(['.nav__logo', '.nav__cta--right', '.nav__desktop-wrapper'], {
@@ -127,21 +118,33 @@ new Loader(() => {
     stagger: 0.1
   }, '-=1.1');
 
-  // 4. Paragraph reveals line by line, CTA wipes up after
+  // --- Below-fold pitch: split into lines, reveal with mask wipe on scroll ---
+  const splitHeading = document.querySelector('.js-split-lines');
+  if (splitHeading) {
+    splitHeading.dataset.originalText = splitHeading.textContent.trim().replace(/\s+/g, ' ');
+    splitLines(splitHeading);
+    gsap.set('.hero__pitch-line', { clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)', y: 50 });
+    gsap.set(splitHeading, { visibility: 'visible' });
+  }
   gsap.set('.hero__pitch-cta', { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)', y: 40 });
-  tl.to('.hero__pitch-line', {
+
+  const pitchTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.hero__copy-card',
+      start: 'top 80%',
+      once: true
+    }
+  });
+  pitchTl.to('.hero__pitch-line', {
     clipPath: 'polygon(0% -20%, 100% -20%, 100% 120%, 0% 120%)',
     y: 0,
     duration: 1.2,
     ease: 'expo.out',
-    stagger: 0.1,
-    onComplete: () => {
-      if (splitHeading) {
-        splitHeading.innerHTML = splitHeading.dataset.originalText;
-      }
-    }
-  }, '-=0.8');
-  tl.to('.hero__pitch-cta', {
+    stagger: 0.1
+    /* Don't collapse the split <span>s back to one text run — that reflow
+       caused the mobile scroll jump. The split lines render identically. */
+  });
+  pitchTl.to('.hero__pitch-cta', {
     clipPath: 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)',
     y: 0,
     duration: 1.0,

@@ -70,15 +70,16 @@
   flex-direction: column;
 
   &--featured {
-    background: $c-ink;
-    color: #fff;
+    background: #fff;
+    color: $c-ink;
     border-color: $c-ink;
+    border-width: 2px;
 
-    .pricing__card-label { color: $c-yellow; }
-    .pricing__card-price { color: #fff; }
-    .pricing__card-fit   { color: rgba(255,255,255,0.6); }
-    .pricing__card-features li { color: rgba(255,255,255,0.85); }
-    .pricing__card-features li::before { color: $c-yellow; }
+    .pricing__card-label { color: $c-text-secondary; }
+    .pricing__card-price { color: $c-ink; }
+    .pricing__card-fit   { color: $c-text-secondary; }
+    .pricing__card-features li { color: $c-text; }
+    .pricing__card-features li::before { color: $c-rust; }
   }
 }
 

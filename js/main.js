@@ -36,12 +36,13 @@ const wipeElements = [
   '.hero__display-word',
   '.hero__tv-scene',
   '.hero__award-badge',
-  '.hero__cta-row',
   '.nav__logo',
   '.nav__cta--right',
   '.nav__desktop-wrapper'
 ];
 gsap.set(wipeElements, { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)', y: 40 });
+// Teasers start below their container, slide up into view
+gsap.set('.hero__teaser', { y: 60, opacity: 0 });
 
 // Split text utility to dynamically wrap lines for animation based on screen size
 function splitLines(element) {
@@ -109,14 +110,23 @@ new Loader(() => {
     ease: 'expo.out'
   });
   
-  // 2. Award, CTA, and TV Cat wipe up
-  tl.to(['.hero__tv-scene', '.hero__award-badge', '.hero__cta-row'], {
+  // 2. Award and TV Cat wipe up
+  tl.to(['.hero__tv-scene', '.hero__award-badge'], {
     clipPath: 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)',
     y: 0,
     duration: 1.2,
     ease: 'expo.out',
     stagger: 0.1
   }, '-=1.0');
+
+  // 2b. Teasers slide up with stagger
+  tl.to('.hero__teaser', {
+    y: 0,
+    opacity: 1,
+    duration: 1.0,
+    ease: 'expo.out',
+    stagger: 0.12
+  }, '-=0.9');
 
   // 3. Nav elements wipe up
   tl.to(['.nav__logo', '.nav__cta--right', '.nav__desktop-wrapper'], {
@@ -127,7 +137,8 @@ new Loader(() => {
     stagger: 0.1
   }, '-=1.1');
 
-  // 4. Paragraph reveals line by line last
+  // 4. Paragraph reveals line by line, CTA fades in after
+  gsap.set('.hero__pitch-cta', { opacity: 0, y: 10 });
   tl.to('.hero__pitch-line', {
     clipPath: 'polygon(0% -20%, 100% -20%, 100% 120%, 0% 120%)',
     y: 0,
@@ -135,11 +146,15 @@ new Loader(() => {
     ease: 'expo.out',
     stagger: 0.2,
     onComplete: () => {
-      // Revert to original raw text so responsive resizing doesn't have artificial hard breaks,
-      // and words aren't smashed together by reading textContent of spans without spaces.
       if (splitHeading) {
         splitHeading.innerHTML = splitHeading.dataset.originalText;
       }
     }
   }, '-=0.8');
+  tl.to('.hero__pitch-cta', {
+    opacity: 1,
+    y: 0,
+    duration: 0.7,
+    ease: 'expo.out'
+  }, '-=0.4');
 });

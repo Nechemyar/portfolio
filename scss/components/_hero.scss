@@ -119,7 +119,7 @@
 }
 
 
-// --- Message box — unwrap, hide pitch heading ---
+// --- Message box ---
 
 .hero__message {
   position: absolute;
@@ -129,9 +129,10 @@
   align-items: flex-start;
   justify-content: center;
   text-align: left;
-  pointer-events: none; /* Let clicks pass through to things below, unless we make it auto later */
-  padding: 0 clamp(1rem, 5vw, 4rem); /* Added more padding on the sides to push it in */
-  padding-bottom: clamp(12rem, 25vh, 16rem); /* Offset to sit in the same center as the kicker */
+  pointer-events: none;
+  padding: 0 clamp(1rem, 5vw, 4rem);
+  padding-bottom: clamp(12rem, 25vh, 16rem);
+  gap: clamp(1.25rem, 3vw, 2rem);
 }
 
 .hero__pitch-heading {
@@ -159,27 +160,20 @@
   font-size: clamp(1rem, 2vw, 1.25rem);
 }
 
-// --- CTA row — arrow + text, bottom right ---
-
-.hero__cta-row {
-  position: relative;
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  gap: clamp(0.35rem, 1.2vw, 0.6rem);
-}
+// --- CTA — lives under pitch heading inside .hero__message ---
 
 .hero__pitch-cta {
   display: inline-flex;
   align-items: center;
   gap: 0.55em;
+  align-self: flex-start; /* don't stretch full width */
   background: transparent;
   border: 1.5px solid $c-ink;
-  border-radius: $r-sm; /* 8px — very subtle */
+  border-radius: 4px;
   padding: 0.6em 1.1em;
   color: $c-ink;
   font-family: $font-body;
-  font-size: clamp(0.85rem, 2.8vw, 1rem);
+  font-size: clamp(0.82rem, 2.2vw, 0.95rem);
   font-weight: 700;
   line-height: 1;
   letter-spacing: 0.04em;
@@ -187,14 +181,13 @@
   text-decoration: none;
   pointer-events: auto;
   touch-action: manipulation;
-  transition: background $duration-fast ease, color $duration-fast ease, transform $duration-fast ease;
+  transition: background $duration-fast ease, color $duration-fast ease;
 }
 
 @media (hover: hover) {
   .hero__pitch-cta:hover {
     background: $c-ink;
     color: #fff;
-    transform: translateY(-1px);
   }
 }
 
@@ -203,8 +196,8 @@
 }
 
 .hero__pitch-cta-arrow {
-  width: 1em;
-  height: 1em;
+  width: 0.9em;
+  height: 0.9em;
   flex-shrink: 0;
   display: block;
 }
@@ -224,6 +217,46 @@
   /* But interactive children must receive events */
   a, button {
     pointer-events: auto;
+  }
+}
+
+/* ── Project teasers — peek up from hero bottom ── */
+.hero__teasers {
+  position: absolute;
+  bottom: clamp(6rem, 12vh, 10rem); /* above DESIGN word */
+  right: clamp(1rem, 4vw, 3rem);
+  z-index: 4;
+  display: flex;
+  gap: clamp(0.5rem, 1.5vw, 1rem);
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+.hero__teaser {
+  overflow: hidden;
+  border: 1px solid rgba(26, 26, 26, 0.1);
+  width: clamp(80px, 12vw, 140px);
+  /* Cropped tall — only top portion visible, rest hidden below hero edge */
+  height: clamp(120px, 18vw, 210px);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+  }
+}
+
+/* Second teaser sits slightly higher for stagger */
+.hero__teaser--2 {
+  margin-bottom: clamp(1rem, 3vw, 2rem);
+}
+
+/* Hide on small mobile — not enough room */
+@media (max-width: 480px) {
+  .hero__teasers {
+    display: none;
   }
 }
 

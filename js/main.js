@@ -12,6 +12,7 @@ import NavTheme from './modules/NavTheme.js';
 import Faq from './modules/Faq.js';
 import Loader from './modules/Loader.js';
 import WorkSection from './modules/WorkSection.js';
+import ArchSlider from './modules/ArchSlider.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,6 +24,7 @@ const heroScroll = new HeroScroll();
 const navTheme = new NavTheme();
 const faq = new Faq();
 const workSection = new WorkSection();
+new ArchSlider();
 
 /* Hero paints in its final state — no fade-in choreography. The previous
    entrance animated nav / marquee / gradient / footer in from offset

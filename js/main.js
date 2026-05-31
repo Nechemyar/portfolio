@@ -127,14 +127,14 @@ new Loader(() => {
     stagger: 0.1
   }, '-=1.1');
 
-  // 4. Paragraph reveals line by line, CTA fades in after
-  gsap.set('.hero__pitch-cta', { opacity: 0, y: 10 });
+  // 4. Paragraph reveals line by line, CTA wipes up after
+  gsap.set('.hero__pitch-cta', { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)', y: 40 });
   tl.to('.hero__pitch-line', {
     clipPath: 'polygon(0% -20%, 100% -20%, 100% 120%, 0% 120%)',
     y: 0,
-    duration: 1.5,
+    duration: 1.2,
     ease: 'expo.out',
-    stagger: 0.2,
+    stagger: 0.1,
     onComplete: () => {
       if (splitHeading) {
         splitHeading.innerHTML = splitHeading.dataset.originalText;
@@ -142,9 +142,9 @@ new Loader(() => {
     }
   }, '-=0.8');
   tl.to('.hero__pitch-cta', {
-    opacity: 1,
+    clipPath: 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)',
     y: 0,
-    duration: 0.7,
+    duration: 1.0,
     ease: 'expo.out'
-  }, '-=0.4');
+  }, '-=0.5');
 });

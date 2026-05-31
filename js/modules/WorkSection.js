@@ -12,17 +12,23 @@ export default class WorkSection {
   }
 
   init() {
-    if (this.tagline) gsap.set(this.tagline, { y: '110%' });
-    if (this.magic)   gsap.set(this.magic,   { y: '110%' });
-
     window.addEventListener('load', () => ScrollTrigger.refresh());
 
-    ScrollTrigger.create({
-      trigger: this.section,
-      start: 'top 65%',
-      once: true,
-      onEnter: () => this.reveal(),
-    });
+    gsap.matchMedia().add(
+      // Full motion
+      '(prefers-reduced-motion: no-preference)',
+      () => {
+        if (this.tagline) gsap.set(this.tagline, { y: '110%' });
+        if (this.magic)   gsap.set(this.magic,   { y: '110%' });
+
+        ScrollTrigger.create({
+          trigger: this.section,
+          start: 'top 65%',
+          once: true,
+          onEnter: () => this.reveal(),
+        });
+      }
+    );
   }
 
   reveal() {

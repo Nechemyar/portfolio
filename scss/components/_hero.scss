@@ -145,8 +145,12 @@
   letter-spacing: 0;
   text-transform: none;
   text-align: left;
-  max-width: 40ch; /* Makes the paragraph less wide and forces natural text wrapping */
-  visibility: hidden; /* Prevent flash before JS splits and animates it */
+  max-width: 22ch;
+  visibility: hidden;
+
+  @media (min-width: 769px) {
+    max-width: 26ch;
+  }
 }
 
 .hero__pitch-line {
@@ -220,45 +224,6 @@
   }
 }
 
-/* ── Project teasers — peek up from hero bottom ── */
-.hero__teasers {
-  position: absolute;
-  bottom: clamp(6rem, 12vh, 10rem); /* above DESIGN word */
-  right: clamp(1rem, 4vw, 3rem);
-  z-index: 4;
-  display: flex;
-  gap: clamp(0.5rem, 1.5vw, 1rem);
-  align-items: flex-end;
-  pointer-events: none;
-}
-
-.hero__teaser {
-  overflow: hidden;
-  border: 1px solid rgba(26, 26, 26, 0.1);
-  width: clamp(80px, 12vw, 140px);
-  /* Cropped tall — only top portion visible, rest hidden below hero edge */
-  height: clamp(120px, 18vw, 210px);
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
-    display: block;
-  }
-}
-
-/* Second teaser sits slightly higher for stagger */
-.hero__teaser--2 {
-  margin-bottom: clamp(1rem, 3vw, 2rem);
-}
-
-/* Hide on small mobile — not enough room */
-@media (max-width: 480px) {
-  .hero__teasers {
-    display: none;
-  }
-}
 
 .hero__perch-row {
   display: flex;

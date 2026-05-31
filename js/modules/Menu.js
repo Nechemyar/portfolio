@@ -233,8 +233,8 @@ export default class Menu {
       onComplete: () => {
         this._resetClosed();
         this.isAnimating = false;
-        // Refresh ScrollTrigger to recalculate pins after the main container returns to y:0
-        ScrollTrigger.refresh();
+        // Delay refresh by one frame so Lenis has settled before ST recalculates
+        requestAnimationFrame(() => ScrollTrigger.refresh());
       },
     });
 
@@ -286,7 +286,7 @@ export default class Menu {
     this._unlockScroll(); // Unlock scroll
 
     gsap.set(this.menu, { y: '-100%', height: '100dvh' });
-    gsap.set(this.pageWrap, { y: 0 });
+    gsap.set(this.pageWrap, { y: 0, clearProps: 'willChange' });
     gsap.set(this.linkTexts, { y: '-100%' });
     if (this.footer) gsap.set(this.footer, { opacity: 0, y: 20 });
   }

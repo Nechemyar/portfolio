@@ -41,8 +41,6 @@ const wipeElements = [
   '.nav__desktop-wrapper'
 ];
 gsap.set(wipeElements, { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)', y: 40 });
-// Teasers start below their container, slide up into view
-gsap.set('.hero__teaser', { y: 60, opacity: 0 });
 
 // Split text utility to dynamically wrap lines for animation based on screen size
 function splitLines(element) {
@@ -119,14 +117,6 @@ new Loader(() => {
     stagger: 0.1
   }, '-=1.0');
 
-  // 2b. Teasers slide up with stagger
-  tl.to('.hero__teaser', {
-    y: 0,
-    opacity: 1,
-    duration: 1.0,
-    ease: 'expo.out',
-    stagger: 0.12
-  }, '-=0.9');
 
   // 3. Nav elements wipe up
   tl.to(['.nav__logo', '.nav__cta--right', '.nav__desktop-wrapper'], {

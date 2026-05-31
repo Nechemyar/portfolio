@@ -66,7 +66,9 @@ $r-xl: 24px;
 $r-full: 100px;
 
 // Section arch transition height — used by SVG arch dividers and negative margin-top
+// Mobile override: 53px (set via JS from ArchSlider or media query below)
 :root { --arch-h: 80px; }
+@media (max-width: 768px) { :root { --arch-h: 53px; } }
 
 // Transitions & Animation (NON-GSAP only)
 $ease-out: cubic-bezier(0.16, 1, 0.3, 1);

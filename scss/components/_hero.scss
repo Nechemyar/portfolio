@@ -94,14 +94,9 @@
   font-weight: 400;
   line-height: 0.78;
   text-align: center;
+  text-align: center;
   text-transform: uppercase;
   white-space: nowrap;
-}
-
-// WEB sits above DESIGN, left-aligned, same font + size
-.hero__display-word--web {
-  text-align: left;
-  padding-left: clamp(1rem, 4vw, 2rem);
 }
 
 // --- Hide work title ---
@@ -110,28 +105,38 @@
   display: none;
 }
 
-// --- Copy card — below-fold pitch block ---
+// --- Copy card — transparent overlay ---
 
 .hero__copy-card {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 5;
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: transparent;
+  padding: 0;
 }
 
-// --- Message box — flows under the fold with healthy breathing room ---
+.hero__copy-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+
+// --- Message box ---
 
 .hero__message {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: center;
   text-align: left;
-  padding: clamp(6rem, 22vh, 12rem) clamp(1rem, 5vw, 4rem) clamp(6rem, 18vh, 10rem);
-  gap: clamp(1.5rem, 4vw, 2.5rem);
-
-  // interactive CTA must stay clickable
-  .hero__pitch-cta { pointer-events: auto; }
+  pointer-events: none;
+  padding: 0 clamp(1rem, 5vw, 4rem);
+  padding-bottom: clamp(12rem, 25vh, 16rem);
+  gap: clamp(1.25rem, 3vw, 2rem);
 }
 
 .hero__pitch-heading {

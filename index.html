@@ -62,15 +62,20 @@
 <body>
 
   <!-- LOADER -->
-  <div class="loader" id="loader" aria-hidden="true">
-    <svg class="loader__wipe" id="loader-wipe" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <div class="loader" id="loader">
+    <!-- Black background + curved exit wipe -->
+    <svg class="loader__wipe" id="loader-wipe" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path id="loader-wipe-path" d="M 0,0 L 100,0 L 100,100 Q 50,100 0,100 Z" />
     </svg>
-    <div class="loader__inner" id="loader-inner">
-      <!-- Eye-shaped mask containing SUMI -->
-      <div class="loader__eye" id="loader-eye">
-        <div class="loader__eye-lid" id="loader-eye-lid"></div>
-        <span class="loader__sumi" id="loader-sumi">SUMI</span>
+    <div class="loader__inner">
+      <div class="loader__mask loader__mask--wordmark" id="loader-mask-left">
+        <img class="loader__wordmark" id="loader-wordmark-left" src="assets/images/wordmarknew.svg" alt="Sumi Studios" />
+      </div>
+      <div class="loader__mask loader__mask--center" id="loader-mask-center">
+        <img class="loader__wordmark-center" id="loader-stacked" src="assets/images/wordmarknew.svg" alt="" />
+      </div>
+      <div class="loader__mask loader__mask--wordmark" id="loader-mask-right">
+        <img class="loader__wordmark" id="loader-wordmark-right" src="assets/images/wordmarknew.svg" alt="" aria-hidden="true" />
       </div>
     </div>
   </div>

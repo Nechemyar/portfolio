@@ -172,12 +172,12 @@
 .hero__pitch-cta {
   display: inline-flex;
   align-items: center;
-  gap: 0.5em;
-  background: $c-ink;
-  border: none;
-  border-radius: $r-full;
-  padding: 0.65em 1.4em;
-  color: #fff;
+  gap: 0.55em;
+  background: transparent;
+  border: 1.5px solid $c-ink;
+  border-radius: $r-sm; /* 8px — very subtle */
+  padding: 0.6em 1.1em;
+  color: $c-ink;
   font-family: $font-body;
   font-size: clamp(0.85rem, 2.8vw, 1rem);
   font-weight: 700;
@@ -185,14 +185,15 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
   text-decoration: none;
-  pointer-events: auto; /* ensure tappable even inside pointer-events:none parents */
+  pointer-events: auto;
   touch-action: manipulation;
-  transition: background $duration-fast ease, transform $duration-fast ease;
+  transition: background $duration-fast ease, color $duration-fast ease, transform $duration-fast ease;
 }
 
 @media (hover: hover) {
   .hero__pitch-cta:hover {
-    background: $c-rust;
+    background: $c-ink;
+    color: #fff;
     transform: translateY(-1px);
   }
 }
@@ -201,9 +202,11 @@
   font: inherit;
 }
 
-/* Arrow icon hidden — pill button doesn't need it */
-.hero__pitch-cta-circle {
-  display: none;
+.hero__pitch-cta-arrow {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  display: block;
 }
 
 // --- Bottom Group ---

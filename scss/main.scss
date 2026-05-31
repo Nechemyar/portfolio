@@ -16,16 +16,16 @@
 @use 'components/contact';
 @use 'components/project-page';
 
-/* SVG arch divider — sits at top:0 of each arch section, z-index below content */
-.arch-top {
+/* SVG arch divider — sits at bottom of each section, curves downward into next */
+.arch-bottom {
   position: absolute;
-  top: 0;
+  bottom: calc(-1 * var(--arch-h) + 1px); /* 1px overlap prevents sub-pixel seam */
   left: 0;
   width: 100%;
   height: var(--arch-h);
   display: block;
   pointer-events: none;
-  z-index: 0;
+  z-index: 2; /* above section content so it covers the seam */
 }
 
 @media (max-width: 768px) {

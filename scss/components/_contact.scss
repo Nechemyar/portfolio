@@ -7,8 +7,7 @@
   color: #fff;
   z-index: 6;
 
-  margin-top: calc(-1 * var(--arch-h));
-  padding: calc(var(--arch-h) + clamp(4rem, 9vw, 8rem)) $page-padding clamp(4rem, 8vw, 7rem);
+  padding: clamp(4rem, 9vw, 8rem) $page-padding clamp(4rem, 8vw, 7rem);
   overflow: hidden;
   text-align: center;
 }

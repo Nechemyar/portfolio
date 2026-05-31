@@ -7,9 +7,8 @@
   color: $c-ink;
   z-index: 4;
 
-  overflow: hidden;
-  margin-top: calc(-1 * var(--arch-h));
-  padding: calc(var(--arch-h) + clamp(3.5rem, 7vw, 6rem)) $page-padding clamp(4rem, 8vw, 7rem);
+  overflow: visible;
+  padding: clamp(3.5rem, 7vw, 6rem) $page-padding calc(var(--arch-h) + clamp(4rem, 8vw, 7rem));
 }
 
 .pricing__inner {

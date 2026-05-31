@@ -36,11 +36,13 @@ const wipeElements = [
   '.hero__display-word',
   '.hero__tv-scene',
   '.hero__award-badge',
-  '.nav__logo',
   '.nav__cta--right',
   '.nav__desktop-wrapper'
 ];
 gsap.set(wipeElements, { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)', y: 40 });
+/* .nav__logo is NOT wiped in — the loader's SUMI wordmark morphs directly
+   onto it, so it must sit stationary at its resting position for a seamless
+   handoff when the loader fades out. */
 
 // Split text utility to dynamically wrap lines for animation based on screen size
 function splitLines(element) {
@@ -118,8 +120,8 @@ new Loader(() => {
   }, '-=1.0');
 
 
-  // 3. Nav elements wipe up
-  tl.to(['.nav__logo', '.nav__cta--right', '.nav__desktop-wrapper'], {
+  // 3. Nav elements wipe up (logo excluded — it was handed off from the loader)
+  tl.to(['.nav__cta--right', '.nav__desktop-wrapper'], {
     clipPath: 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)',
     y: 0,
     duration: 1.2,

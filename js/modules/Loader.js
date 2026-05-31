@@ -2,78 +2,88 @@ import gsap from 'gsap';
 
 export default class Loader {
   constructor(onComplete) {
-    this.loader    = document.getElementById('loader');
-    this.wipePath  = document.getElementById('loader-wipe-path');
-    this.wLeft     = document.getElementById('loader-wordmark-left');
-    this.wRight    = document.getElementById('loader-wordmark-right');
-    this.stacked   = document.getElementById('loader-stacked');
-    this.maskLeft  = document.getElementById('loader-mask-left');
-    this.maskRight = document.getElementById('loader-mask-right');
+    this.wipePath = document.getElementById('loader-wipe-path');
+    this.logo     = document.getElementById('loader-logo');
+    this.wordmark = document.getElementById('loader-wordmark');
+    this.letters  = document.querySelectorAll('.loader__letter');
     this.onComplete = onComplete;
-
     this.init();
   }
 
-  _setPath(top, bottom, curve) {
-    const d = `M 0,${top} L 100,${top} L 100,${bottom} Q 50,${bottom - curve} 0,${bottom} Z`;
-    this.wipePath.setAttribute('d', d);
-  }
-
   init() {
-    document.body.style.overflow = 'hidden';
+    // Curved wipe path for a given progress (0–1). 0 = full panel, 1 = lifted off.
+    const buildPath = (p) => {
+      const topY = 100 * (1 - p);
+      const ctrlY = topY + 12; // convex bulge at the bottom edge
+      return `M 0,0 L 100,0 L 100,${topY} Q 50,${ctrlY} 0,${topY} Z`;
+    };
+    gsap.set(this.wipePath, { attr: { d: buildPath(0) } });
 
-    const imgs = [this.wLeft, this.wRight, this.stacked];
-    Promise.all(
-      imgs.map(img =>
-        img.complete ? Promise.resolve() : img.decode().catch(() => {})
-      )
-    ).then(() => {
-      requestAnimationFrame(() => this._buildTimeline());
+    // Letters start hidden, dropped slightly — they rise in one at a time
+    gsap.set(this.letters, { autoAlpha: 0, yPercent: 60 });
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        document.querySelector('.loader')?.remove();
+        if (this.onComplete) this.onComplete();
+      }
     });
+
+    tl
+      // 1 — SUMI letters rise in, one at a time
+      .to(this.letters, {
+        autoAlpha: 1,
+        yPercent: 0,
+        duration: 0.55,
+        ease: 'power3.out',
+        stagger: 0.12
+      })
+      // 2 — hold a beat
+      .to({}, { duration: 0.35 })
+      // 3 — shrink + slide up so the loader logo lands exactly on the nav logo
+      .add(() => this.morphToNav(), 'morph')
+      .to(this.logo, {
+        duration: 0.9,
+        ease: 'power3.inOut',
+        x: () => this._dx,
+        y: () => this._dy,
+        scale: () => this._scale
+      }, 'morph')
+      // 4 — wipe lifts the red panel away to reveal the page underneath.
+      //     The real nav logo sits in the exact same spot, so it's seamless.
+      .to({}, {
+        duration: 1.0,
+        ease: 'power2.inOut',
+        onUpdate: function () {
+          gsap.set(document.getElementById('loader-wipe-path'),
+            { attr: { d: buildPath(this.progress()) } });
+        }
+      }, 'morph+=0.45')
+      // logo fades out just before the wipe fully clears, handing off to the real nav logo
+      .to(this.logo, { autoAlpha: 0, duration: 0.2 }, 'morph+=1.1');
   }
 
-  _buildTimeline() {
-    this.loader.querySelector('.loader__inner').style.visibility = 'visible';
-    const proxy = { top: 0, bottom: 100, curve: 0 };
+  // Measure the nav logo and the loader logo, compute the transform delta so
+  // the loader wordmark scales/translates to overlap the nav logo precisely.
+  morphToNav() {
+    // .nav__logo sits at its resting position (it's excluded from the hero
+    // entrance wipe), so we can measure it directly.
+    const navLogo = document.querySelector('.nav__logo-svg') || document.querySelector('.nav__logo');
+    if (!navLogo) { this._dx = 0; this._dy = -window.innerHeight * 0.35; this._scale = 0.4; return; }
 
-    gsap.timeline()
-      // Step 1 — wordmarks stagger in left-to-right
-      .fromTo(this.wLeft,
-        { yPercent: 100 },
-        { yPercent: 0, duration: 0.7, ease: 'power4.out' }
-      )
-      .fromTo(this.wRight,
-        { yPercent: 100 },
-        { yPercent: 0, duration: 0.7, ease: 'power4.out' },
-        '<0.12'
-      )
-      // Step 2 — stacked logo follows quickly
-      .fromTo(this.stacked,
-        { yPercent: 100 },
-        { yPercent: 0, duration: 0.5, ease: 'power4.out' },
-        '-=0.3'
-      )
-      // Step 3 — wordmarks exit: mask clips from bottom up (logos stay still)
-      .fromTo([this.maskLeft, this.maskRight],
-        { clipPath: 'inset(0 0 0% 0)' },
-        { clipPath: 'inset(0 0 100% 0)', duration: 0.5, ease: 'power3.inOut' }
-      )
-      // Step 4 — brief hold
-      .to({}, { duration: 0.25 })
-      // Step 5 — wipe starts, stacked logo vanishes 0.3s in
-      .to(proxy, {
-        top: -120,
-        bottom: -20,
-        curve: 24,
-        duration: 0.9,
-        ease: 'power4.inOut',
-        onUpdate: () => this._setPath(proxy.top, proxy.bottom, proxy.curve),
-        onComplete: () => {
-          this.loader.style.display = 'none';
-          document.body.style.overflow = '';
-          if (this.onComplete) this.onComplete();
-        },
-      }, 'wipe')
-      .set(this.stacked, { autoAlpha: 0 }, 'wipe+=0.4');
+    const navRect  = navLogo.getBoundingClientRect();
+    const logoRect = this.wordmark.getBoundingClientRect();
+
+    // Scale loader wordmark down to the nav logo's height
+    this._scale = navRect.height / logoRect.height;
+
+    // Centre-to-centre delta (logo is centered via translate(-50%,-50%))
+    const navCx  = navRect.left + navRect.width / 2;
+    const navCy  = navRect.top + navRect.height / 2;
+    const logoCx = logoRect.left + logoRect.width / 2;
+    const logoCy = logoRect.top + logoRect.height / 2;
+
+    this._dx = navCx - logoCx;
+    this._dy = navCy - logoCy;
   }
 }

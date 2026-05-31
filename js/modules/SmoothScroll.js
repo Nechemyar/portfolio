@@ -4,12 +4,18 @@ import Lenis from 'lenis';
 
 export default class SmoothScroll {
   constructor() {
+    // On touch devices, Lenis smooth scroll conflicts with native momentum
+    // scroll — when the finger lifts, both systems fight and cause a jump.
+    // Use native scroll on touch; Lenis only on pointer (desktop) devices.
+    const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
     this.lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
-      smoothWheel: true,
+      smoothWheel: !isTouch,
+      smoothTouch: false,
     });
 
     // Sync Lenis scroll position with GSAP ScrollTrigger

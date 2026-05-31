@@ -5,10 +5,10 @@
   position: relative;
   background: $c-rust;
   z-index: 1;
-  overflow: visible; /* allow arch bottom SVG to overflow */
+  overflow: visible; /* must be visible so .arch-bottom SVG shows below */
   display: flex;
   flex-direction: column;
-  padding-bottom: var(--arch-h); /* room for the arch bump */
+  padding-bottom: var(--arch-h);
 }
 
 .work__inner {
@@ -38,30 +38,27 @@
   display: block;
 }
 
-/* ── Project cards — staggered portrait layout ── */
+/* ── Project cards ── */
 .work__cards {
   display: flex;
-  gap: clamp(1rem, 2.5vw, 1.5rem);
+  flex-direction: column;
+  gap: clamp(2.5rem, 6vw, 3.5rem); /* generous gap between cards on mobile */
   width: 100%;
   max-width: 780px;
-  /* On mobile: stack vertically */
-  flex-direction: column;
 }
 
 .work__card {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0;
   text-decoration: none;
   color: #fff;
-  flex: 1;
 }
 
 .work__card-img-wrap {
   overflow: hidden;
-  border-radius: $r-md;
-  /* Portrait — taller than wide */
-  aspect-ratio: 3 / 4;
+  border-radius: 0; /* no rounded corners */
+  aspect-ratio: 4 / 5; /* slightly less tall than before */
   background: rgba(0, 0, 0, 0.2);
 }
 
@@ -76,20 +73,31 @@
   }
 }
 
+/* Mobile shows mobile screenshot, desktop shows desktop screenshot */
+.work__card-img--mobile  { display: block; }
+.work__card-img--desktop { display: none; }
+
+@media (min-width: 769px) {
+  .work__card-img--mobile  { display: none; }
+  .work__card-img--desktop { display: block; }
+}
+
 @media (hover: hover) {
   .work__card:hover .work__card-img {
     transform: scale(1.04);
   }
 }
 
+/* Meta row — line sits UNDER the project name */
 .work__card-meta {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 0.5rem;
-  padding: 0 0.1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  padding-top: 0.6rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  /* Hard white line under the name row */
+  border-bottom: 1px solid #fff;
 }
 
 .work__card-name {
@@ -101,12 +109,17 @@
   color: #fff;
   display: flex;
   align-items: center;
-  gap: 0.4em;
+  gap: 0.5em;
 
+  /* Thicker, solid white dot */
   &::before {
-    content: '•';
-    font-size: 0.6em;
-    color: rgba(255, 255, 255, 0.45);
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #fff;
+    flex-shrink: 0;
   }
 }
 
@@ -114,7 +127,7 @@
   font-family: $font-body;
   font-size: $fs-xs;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.5);
   white-space: nowrap;
 }
 
@@ -123,12 +136,19 @@
   .work__cards {
     flex-direction: row;
     align-items: flex-start;
-    max-width: 860px;
+    gap: clamp(1rem, 2.5vw, 1.5rem);
   }
 
-  /* Card 2 pushed down to create the stagger */
+  .work__card {
+    flex: 1;
+  }
+
   .work__card:nth-child(2) {
     margin-top: clamp(3rem, 8vw, 6rem);
+  }
+
+  .work__card-img-wrap {
+    aspect-ratio: 3 / 4;
   }
 }
 

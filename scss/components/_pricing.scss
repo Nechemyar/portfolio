@@ -9,6 +9,7 @@
 
   overflow: visible;
   padding: clamp(3.5rem, 7vw, 6rem) $page-padding calc(var(--arch-h) + clamp(4rem, 8vw, 7rem));
+  /* pricing__inner has overflow:hidden for card borders — isolate it */
 }
 
 .pricing__inner {

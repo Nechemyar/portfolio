@@ -4,11 +4,16 @@
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: $c-rust;
   overflow: hidden;
+  /* No background here — the ONLY red is the animated SVG path below. If the
+     container itself were red, the sweeping wipe would be invisible (a static
+     red layer behind it). Keeping it transparent lets the page show through
+     as the curved panel sweeps up. */
+  background: transparent;
 }
 
-/* Red panel + curved exit wipe (covers the page until the morph finishes) */
+/* The red panel itself: a full-screen SVG whose path is the rust fill.
+   Animating the path's top/bottom edges up = the visible "circular wipe". */
 .loader__wipe {
   position: absolute;
   inset: 0;
@@ -17,21 +22,22 @@
   z-index: 1;
 }
 
-.loader__wipe-path,
+.loader__wipe path,
 #loader-wipe-path {
   fill: $c-rust;
 }
 
-/* The logo is absolutely centered so JS can measure it and the nav logo,
-   then tween the delta for a seamless morph into the header. */
+/* Logo centered with GSAP (xPercent/yPercent + left/top 50%), NOT a CSS
+   transform — GSAP owns the transform so it can morph x/y/scale cleanly.
+   Hidden from first paint (autoAlpha:0 via JS would still flash one frame),
+   so we start it invisible here and the timeline reveals it. */
 .loader__logo {
   position: absolute;
   top: 50%;
   left: 50%;
   z-index: 2;
-  transform: translate(-50%, -50%);
-  transform-origin: center center;
-  will-change: transform;
+  will-change: transform, opacity, clip-path;
+  visibility: hidden; /* nothing on screen until the timeline wipes it up */
 }
 
 .loader__wordmark {

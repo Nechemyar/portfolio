@@ -10,7 +10,7 @@ export default class Loader {
   }
 
   // The red panel: a rect with a curved bottom edge. Both edges sweep up and
-  // off the screen (the "circular wipe"). curve bulges the bottom edge down.
+  // off the screen (the visible "circular wipe"). curve bulges the bottom edge.
   _setPath(top, bottom, curve) {
     const d = `M 0,${top} L 100,${top} L 100,${bottom} Q 50,${bottom - curve} 0,${bottom} Z`;
     this.wipePath.setAttribute('d', d);
@@ -19,7 +19,23 @@ export default class Loader {
   init() {
     document.body.style.overflow = 'hidden';
 
-    // Wait for the wordmark img to load so getBoundingClientRect is accurate.
+    // Lock the start state IMMEDIATELY (before any paint) so there's never a
+    // frame where the logo shows un-clipped — that frame was the "glitch up".
+    // Centering is done HERE via GSAP (xPercent/yPercent) so the later morph
+    // can animate x/y/scale without fighting a CSS transform.
+    gsap.set(this.logo, {
+      xPercent: -50,
+      yPercent: -50,
+      x: 0,
+      y: 30,
+      scale: 1,
+      autoAlpha: 1,                 // visibility handled by clip-path below
+      clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)'
+    });
+    this.logo.style.visibility = 'visible'; // release the CSS hidden state
+    this._setPath(0, 100, 0);              // red panel covers everything
+
+    // Wait for the wordmark img so getBoundingClientRect is accurate.
     const ready = this.wordmark.complete
       ? Promise.resolve()
       : new Promise(res => { this.wordmark.onload = res; this.wordmark.onerror = res; });
@@ -28,19 +44,10 @@ export default class Loader {
   }
 
   _buildTimeline() {
-    // Logo starts clipped from below (mask wipe up, same as rest of site)
-    gsap.set(this.logo, {
-      clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)',
-      y: 30
-    });
-
-    // Red panel covers the whole screen to start
-    this._setPath(0, 100, 0);
-
-    // proxy drives the curved panel sweeping up and off
     const proxy = { top: 0, bottom: 100, curve: 0 };
 
     const tl = gsap.timeline({
+      defaults: { ease: 'power3.inOut' },
       onComplete: () => {
         document.getElementById('loader')?.remove();
         document.body.style.overflow = '';
@@ -49,7 +56,7 @@ export default class Loader {
     });
 
     tl
-      // 1 — logo wipes up from the bottom (same mask reveal as the site)
+      // 1 — logo wipes up from nothing (same mask reveal as the rest of site)
       .to(this.logo, {
         clipPath: 'polygon(0% -10%, 100% -10%, 100% 110%, 0% 110%)',
         y: 0,
@@ -58,20 +65,19 @@ export default class Loader {
       })
       // 2 — hold so the logo reads
       .to({}, { duration: 0.5 })
-      // 3 — measure the nav logo, then morph the loader logo to its centre
-      //     (page horizontal centre + header vertical position) and scale.
-      //     The 'morph' label anchors the wipe + fade so they stay in sync.
+      // 3 — measure the nav logo, anchor the morph point
       .add(() => this._measureMorph())
       .addLabel('morph')
+      // 3a — morph: logo travels to page-centre-top + scales to nav size.
+      //      Deltas are ADDED to the -50/-50 centering already in place.
       .to(this.logo, {
-        duration: 0.9,
-        ease: 'power3.inOut',
         x: () => this._dx,
         y: () => this._dy,
-        scale: () => this._scale
+        scale: () => this._scale,
+        duration: 1.0
       }, 'morph')
-      // 4 — the curved red panel sweeps up and off, revealing the page.
-      //     Starts alongside the morph so the logo rides up with the red.
+      // 4 — the curved red panel sweeps up and off AS the logo morphs.
+      //     This is the circular wipe; it's the only red on screen now.
       .to(proxy, {
         top: -120,
         bottom: -20,
@@ -80,47 +86,46 @@ export default class Loader {
         ease: 'power4.inOut',
         onUpdate: () => this._setPath(proxy.top, proxy.bottom, proxy.curve)
       }, 'morph')
-      // 5 — logo stays opaque (sitting in the red) until the wipe's bottom
-      //     edge has swept past the nav position, then fades INTO the red so
-      //     the real nav logo takes over seamlessly. Tied to when the panel's
-      //     bottom edge clears the top of the screen.
+      // 5 — logo fades INTO the red after the wipe edge has passed the nav,
+      //     handing off to the real (static) nav logo seamlessly.
       .to(this.logo, {
         autoAlpha: 0,
-        duration: 0.3,
+        duration: 0.35,
         ease: 'power1.in'
-      }, 'morph+=0.75');
+      }, 'morph+=0.7');
   }
 
   _measureMorph() {
-    // Horizontal: always the page centre (the nav logo lives in the centre
-    // grid column, so its horizontal centre IS the viewport centre).
+    // Horizontal target: the page centre. The nav logo lives in the centre
+    // grid column, so its horizontal centre IS the viewport centre.
     const pageCx = window.innerWidth / 2;
 
-    // Vertical + scale: measure whichever nav logo variant is actually
-    // visible (mobile shows .nav__logo-svg; desktop shows the icon+wordmark
-    // combo inside .nav__logo). Fall back to the container.
-    const navSvg   = document.querySelector('.nav__logo-svg');
-    const navEl    = (navSvg && navSvg.offsetParent !== null)
-      ? navSvg
-      : document.querySelector('.nav__logo');
+    // Vertical + scale: measure whichever nav logo variant is actually shown
+    // (mobile = .nav__logo-svg, desktop = icon+wordmark inside .nav__logo).
+    const navSvg = document.querySelector('.nav__logo-svg');
+    const svgVisible = navSvg && navSvg.getClientRects().length > 0;
+    const navEl = svgVisible ? navSvg : document.querySelector('.nav__logo');
+
     const navRect  = navEl ? navEl.getBoundingClientRect() : null;
     const logoRect = this.wordmark.getBoundingClientRect();
 
     if (!navRect || logoRect.height === 0) {
-      // Fallback: slide up to roughly the header
-      this._dx    = 0;
-      this._dy    = -window.innerHeight * 0.40;
+      // Fallback: slide up to roughly the header, centred horizontally
+      this._dx = 0;
+      this._dy = -(window.innerHeight / 2) + 40;
       this._scale = 0.35;
       return;
     }
 
     this._scale = navRect.height / logoRect.height;
 
+    // logoRect is the CURRENT (centred) position. The delta moves its centre
+    // to (pageCx, nav centre). Because xPercent/yPercent already offset by
+    // -50%, x/y are the translation of the element's centre point.
     const navCy  = navRect.top   + navRect.height / 2;
     const logoCx = logoRect.left + logoRect.width  / 2;
     const logoCy = logoRect.top  + logoRect.height / 2;
 
-    // Land on page centre horizontally, nav logo centre vertically
     this._dx = pageCx - logoCx;
     this._dy = navCy  - logoCy;
   }

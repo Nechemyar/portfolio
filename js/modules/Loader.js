@@ -144,5 +144,12 @@ export default class Loader {
     // Nav logo centre as a % of viewport height — the wipe's bottom edge must
     // pass this value before the loader logo is allowed to fade.
     this._navPct = (navCy / window.innerHeight) * 100;
+
+    console.log('[Loader morph]', {
+      navEl: navEl?.className,
+      navRect: { top: navRect.top, h: navRect.height, cy: navCy },
+      logoRect: { top: logoRect.top, h: logoRect.height, cy: logoCy },
+      dx: this._dx, dy: this._dy, scale: this._scale, navPct: this._navPct
+    });
   }
 }

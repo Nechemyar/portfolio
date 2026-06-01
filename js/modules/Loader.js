@@ -55,6 +55,15 @@ export default class Loader {
       }
     });
 
+    // Fade is triggered POSITIONALLY (not on a fixed time offset) the instant
+    // the wipe's bottom edge sweeps above the nav logo — see _setPath below.
+    this._faded = false;
+    const fadeLogo = () => {
+      if (this._faded) return;
+      this._faded = true;
+      gsap.to(this.logo, { autoAlpha: 0, duration: 0.3, ease: 'power1.in' });
+    };
+
     tl
       // 1 — logo wipes up from nothing (same mask reveal as the rest of site)
       .to(this.logo, {
@@ -78,21 +87,23 @@ export default class Loader {
       }, 'morph')
       // 4 — the curved red panel sweeps up and off AS the logo morphs.
       //     This is the circular wipe; it's the only red on screen now.
+      //     The fade fires from here, the moment the edge clears the nav.
       .to(proxy, {
         top: -120,
         bottom: -20,
         curve: 24,
         duration: 1.1,
         ease: 'power4.inOut',
-        onUpdate: () => this._setPath(proxy.top, proxy.bottom, proxy.curve)
-      }, 'morph')
-      // 5 — logo fades INTO the red after the wipe edge has passed the nav,
-      //     handing off to the real (static) nav logo seamlessly.
-      .to(this.logo, {
-        autoAlpha: 0,
-        duration: 0.35,
-        ease: 'power1.in'
-      }, 'morph+=0.7');
+        onUpdate: () => {
+          this._setPath(proxy.top, proxy.bottom, proxy.curve);
+          // The wipe's edge is curved: at the horizontal centre (where the nav
+          // logo sits) the red reaches down to (bottom - curve/2). Fade only
+          // once THAT point rises above the nav logo — i.e. the red has truly
+          // swept past the menu position. Avoids the early white flash.
+          const edgeAtCentre = proxy.bottom - proxy.curve / 2;
+          if (edgeAtCentre <= this._navPct) fadeLogo();
+        }
+      }, 'morph');
   }
 
   _measureMorph() {
@@ -114,6 +125,7 @@ export default class Loader {
       this._dx = 0;
       this._dy = -(window.innerHeight / 2) + 40;
       this._scale = 0.35;
+      this._navPct = 8; // ~top of viewport
       return;
     }
 
@@ -128,5 +140,9 @@ export default class Loader {
 
     this._dx = pageCx - logoCx;
     this._dy = navCy  - logoCy;
+
+    // Nav logo centre as a % of viewport height — the wipe's bottom edge must
+    // pass this value before the loader logo is allowed to fade.
+    this._navPct = (navCy / window.innerHeight) * 100;
   }
 }

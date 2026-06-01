@@ -71,6 +71,11 @@
   display: block;
 }
 
+.work__card-img--choice {
+  transform: scale(1.15);
+  transform-origin: top center;
+}
+
 /* Mobile shows mobile screenshot, desktop shows desktop screenshot */
 .work__card-img--mobile  { display: block; }
 .work__card-img--desktop { display: none; }

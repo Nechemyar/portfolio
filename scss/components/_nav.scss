@@ -87,16 +87,11 @@ html.menu-open .nav.theme-dark .nav__cta {
   height: clamp(38px, 11vw, 56px);
   width: auto;
   object-fit: contain;
-  /* Fade/lift in from a slight offset — drives the entrance
-     animation when the Loader removes its initial state. */
-  opacity: 0;
-  transform: translateY(-6px);
-  transition: opacity 0.7s $ease-out 0.1s, transform 0.7s $ease-out 0.1s, filter 0.3s ease;
-}
-
-.nav.is-ready .nav__logo-svg {
+  /* No entrance animation: the loader's SUMI wordmark morphs directly onto
+     this logo and hands off, so it must already sit at its resting state.
+     Animating it here would make it look like it jumped after the handoff. */
   opacity: 1;
-  transform: translateY(0);
+  transition: filter 0.3s ease;
 }
 
 .nav__logo-wordmark {

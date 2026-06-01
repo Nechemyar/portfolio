@@ -9,11 +9,11 @@ export default class Loader {
     this.init();
   }
 
-  // Curved bottom-edge path. progress 0 = full red panel, 1 = panel gone.
-  _buildPath(p) {
-    const topY  = 100 * (1 - p);
-    const ctrlY = topY + 12;
-    return `M 0,0 L 100,0 L 100,${topY} Q 50,${ctrlY} 0,${topY} Z`;
+  // The red panel: a rect with a curved bottom edge. Both edges sweep up and
+  // off the screen (the "circular wipe"). curve bulges the bottom edge down.
+  _setPath(top, bottom, curve) {
+    const d = `M 0,${top} L 100,${top} L 100,${bottom} Q 50,${bottom - curve} 0,${bottom} Z`;
+    this.wipePath.setAttribute('d', d);
   }
 
   init() {
@@ -34,8 +34,11 @@ export default class Loader {
       y: 30
     });
 
-    // Keep the wipe panel covering the full screen initially
-    this.wipePath.setAttribute('d', this._buildPath(0));
+    // Red panel covers the whole screen to start
+    this._setPath(0, 100, 0);
+
+    // proxy drives the curved panel sweeping up and off
+    const proxy = { top: 0, bottom: 100, curve: 0 };
 
     const tl = gsap.timeline({
       onComplete: () => {
@@ -46,7 +49,7 @@ export default class Loader {
     });
 
     tl
-      // 1 — logo wipes up from the bottom
+      // 1 — logo wipes up from the bottom (same mask reveal as the site)
       .to(this.logo, {
         clipPath: 'polygon(0% -10%, 100% -10%, 100% 110%, 0% 110%)',
         y: 0,
@@ -55,43 +58,55 @@ export default class Loader {
       })
       // 2 — hold so the logo reads
       .to({}, { duration: 0.5 })
-      // 3 — measure nav logo position, then tween loader logo to match
+      // 3 — measure the nav logo, then morph the loader logo to its centre
+      //     (page horizontal centre + header vertical position) and scale
       .add(() => this._measureMorph())
       .to(this.logo, {
-        duration: 0.85,
+        duration: 0.9,
         ease: 'power3.inOut',
         x: () => this._dx,
         y: () => this._dy,
         scale: () => this._scale
       }, 'morph')
-      // 4 — while morphing, start lifting the red panel (slightly delayed
-      //     so the logo is visibly en-route before the background moves)
-      .to({ p: 0 }, {
-        p: 1,
-        duration: 1.0,
-        ease: 'power2.inOut',
-        onUpdate: function () {
-          const path = document.getElementById('loader-wipe-path');
-          const topY  = 100 * (1 - this.targets()[0].p);
-          const ctrlY = topY + 12;
-          path.setAttribute('d',
-            `M 0,0 L 100,0 L 100,${topY} Q 50,${ctrlY} 0,${topY} Z`);
-        }
-      }, 'morph+=0.3')
-      // 5 — fade loader logo out just as wipe clears, handing off to real nav logo
-      .to(this.logo, { autoAlpha: 0, duration: 0.15 }, 'morph+=1.0');
+      // 4 — the curved red panel sweeps up and off, revealing the page.
+      //     Starts alongside the morph so the logo rides up with the red.
+      .to(proxy, {
+        top: -120,
+        bottom: -20,
+        curve: 24,
+        duration: 1.1,
+        ease: 'power4.inOut',
+        onUpdate: () => this._setPath(proxy.top, proxy.bottom, proxy.curve)
+      }, 'morph')
+      // 5 — logo stays opaque (sitting in the red) until the wipe's bottom
+      //     edge has swept past the nav position, then fades INTO the red so
+      //     the real nav logo takes over seamlessly. Tied to when the panel's
+      //     bottom edge clears the top of the screen.
+      .to(this.logo, {
+        autoAlpha: 0,
+        duration: 0.3,
+        ease: 'power1.in'
+      }, 'morph+=0.75');
   }
 
   _measureMorph() {
-    // .nav__logo-svg is the real logo in the header — it sits at its
-    // resting position (excluded from the hero entrance clip).
-    const navEl   = document.querySelector('.nav__logo-svg') || document.querySelector('.nav__logo');
-    const navRect  = navEl  ? navEl.getBoundingClientRect()        : null;
+    // Horizontal: always the page centre (the nav logo lives in the centre
+    // grid column, so its horizontal centre IS the viewport centre).
+    const pageCx = window.innerWidth / 2;
+
+    // Vertical + scale: measure whichever nav logo variant is actually
+    // visible (mobile shows .nav__logo-svg; desktop shows the icon+wordmark
+    // combo inside .nav__logo). Fall back to the container.
+    const navSvg   = document.querySelector('.nav__logo-svg');
+    const navEl    = (navSvg && navSvg.offsetParent !== null)
+      ? navSvg
+      : document.querySelector('.nav__logo');
+    const navRect  = navEl ? navEl.getBoundingClientRect() : null;
     const logoRect = this.wordmark.getBoundingClientRect();
 
     if (!navRect || logoRect.height === 0) {
-      // Fallback: slide up-left to approximate nav position
-      this._dx    = -window.innerWidth  * 0.35;
+      // Fallback: slide up to roughly the header
+      this._dx    = 0;
       this._dy    = -window.innerHeight * 0.40;
       this._scale = 0.35;
       return;
@@ -99,12 +114,12 @@ export default class Loader {
 
     this._scale = navRect.height / logoRect.height;
 
-    const navCx  = navRect.left  + navRect.width  / 2;
     const navCy  = navRect.top   + navRect.height / 2;
     const logoCx = logoRect.left + logoRect.width  / 2;
     const logoCy = logoRect.top  + logoRect.height / 2;
 
-    this._dx = navCx - logoCx;
-    this._dy = navCy - logoCy;
+    // Land on page centre horizontally, nav logo centre vertically
+    this._dx = pageCx - logoCx;
+    this._dy = navCy  - logoCy;
   }
 }

@@ -59,8 +59,10 @@ export default class Loader {
       // 2 — hold so the logo reads
       .to({}, { duration: 0.5 })
       // 3 — measure the nav logo, then morph the loader logo to its centre
-      //     (page horizontal centre + header vertical position) and scale
+      //     (page horizontal centre + header vertical position) and scale.
+      //     The 'morph' label anchors the wipe + fade so they stay in sync.
       .add(() => this._measureMorph())
+      .addLabel('morph')
       .to(this.logo, {
         duration: 0.9,
         ease: 'power3.inOut',

@@ -4,7 +4,7 @@
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: $c-red;
+  background: $c-rust;
   overflow: hidden;
 }
 
@@ -19,7 +19,7 @@
 
 .loader__wipe-path,
 #loader-wipe-path {
-  fill: $c-red;
+  fill: $c-rust;
 }
 
 /* The logo is absolutely centered so JS can measure it and the nav logo,
@@ -39,9 +39,6 @@
   /* Big on the loader; JS shrinks it to the nav logo height during the morph */
   height: clamp(3rem, 12vw, 6rem);
   width: auto;
-}
-
-/* Each SUMI letter starts clipped from below; JS wipes them up one at a time */
-.loader__letter {
-  // animated via GSAP (clip-path) — no CSS transition
+  /* wordmarknew.svg is rust-coloured — invert makes it white on the red bg */
+  filter: brightness(0) invert(1);
 }

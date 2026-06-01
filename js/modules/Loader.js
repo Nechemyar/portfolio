@@ -55,15 +55,6 @@ export default class Loader {
       }
     });
 
-    // Fade is triggered POSITIONALLY (not on a fixed time offset) the instant
-    // the wipe's bottom edge sweeps above the nav logo — see _setPath below.
-    this._faded = false;
-    const fadeLogo = () => {
-      if (this._faded) return;
-      this._faded = true;
-      gsap.to(this.logo, { autoAlpha: 0, duration: 0.3, ease: 'power1.in' });
-    };
-
     tl
       // 1 — logo wipes up from nothing (same mask reveal as the rest of site)
       .to(this.logo, {
@@ -77,79 +68,67 @@ export default class Loader {
       // 3 — measure the nav logo, anchor the morph point
       .add(() => this._measureMorph())
       .addLabel('morph')
-      // 3a — morph: logo travels to page-centre-top + scales to nav size.
-      //      Deltas are ADDED to the -50/-50 centering already in place.
+      // 3a — morph: logo travels to the nav logo's exact spot + scale, then
+      //      STAYS there (visible) so it sits on top of the real nav logo.
       .to(this.logo, {
         x: () => this._dx,
         y: () => this._dy,
         scale: () => this._scale,
         duration: 1.0
       }, 'morph')
-      // 4 — the curved red panel sweeps up and off AS the logo morphs.
-      //     This is the circular wipe; it's the only red on screen now.
-      //     The fade fires from here, the moment the edge clears the nav.
+      // 4 — once the morph has landed, the curved red panel sweeps up and off,
+      //     revealing the page. The logo is already parked on the nav spot, so
+      //     it doesn't get frozen mid-travel by an early fade.
       .to(proxy, {
         top: -120,
         bottom: -20,
         curve: 24,
-        duration: 1.1,
+        duration: 1.0,
         ease: 'power4.inOut',
-        onUpdate: () => {
-          this._setPath(proxy.top, proxy.bottom, proxy.curve);
-          // The wipe's edge is curved: at the horizontal centre (where the nav
-          // logo sits) the red reaches down to (bottom - curve/2). Fade only
-          // once THAT point rises above the nav logo — i.e. the red has truly
-          // swept past the menu position. Avoids the early white flash.
-          const edgeAtCentre = proxy.bottom - proxy.curve / 2;
-          if (edgeAtCentre <= this._navPct) fadeLogo();
-        }
-      }, 'morph');
+        onUpdate: () => this._setPath(proxy.top, proxy.bottom, proxy.curve)
+      }, 'morph+=0.7')
+      // 5 — fade the loader logo into the red only AFTER the wipe's edge has
+      //     swept above the nav position, handing off to the real nav logo.
+      .to(this.logo, {
+        autoAlpha: 0,
+        duration: 0.3,
+        ease: 'power1.in'
+      }, 'morph+=1.25');
   }
 
   _measureMorph() {
-    // Horizontal target: the page centre. The nav logo lives in the centre
-    // grid column, so its horizontal centre IS the viewport centre.
-    const pageCx = window.innerWidth / 2;
-
-    // Vertical + scale: measure whichever nav logo variant is actually shown
-    // (mobile = .nav__logo-svg, desktop = icon+wordmark inside .nav__logo).
+    // Target the REAL logo image inside the nav. Prefer the visible variant:
+    // mobile shows .nav__logo-svg; desktop shows the icon+wordmark combo, so
+    // fall back to the .nav__logo container which always sits at top-centre.
     const navSvg = document.querySelector('.nav__logo-svg');
-    const svgVisible = navSvg && navSvg.getClientRects().length > 0;
+    const svgVisible = navSvg && navSvg.getClientRects().length > 0
+      && getComputedStyle(navSvg).display !== 'none';
     const navEl = svgVisible ? navSvg : document.querySelector('.nav__logo');
 
     const navRect  = navEl ? navEl.getBoundingClientRect() : null;
     const logoRect = this.wordmark.getBoundingClientRect();
 
-    if (!navRect || logoRect.height === 0) {
-      // Fallback: slide up to roughly the header, centred horizontally
+    if (!navRect || navRect.height === 0 || logoRect.height === 0) {
+      // Fallback: slide up to the header band, centred horizontally
       this._dx = 0;
-      this._dy = -(window.innerHeight / 2) + 40;
-      this._scale = 0.35;
-      this._navPct = 8; // ~top of viewport
+      this._dy = -(window.innerHeight / 2) + 44;
+      this._scale = 0.4;
+      this._navPct = 6;
       return;
     }
 
     this._scale = navRect.height / logoRect.height;
 
-    // logoRect is the CURRENT (centred) position. The delta moves its centre
-    // to (pageCx, nav centre). Because xPercent/yPercent already offset by
-    // -50%, x/y are the translation of the element's centre point.
+    // Both rects are measured in the SAME (current/centred) state, so the
+    // delta between their centres is exactly how far the loader logo must
+    // travel to land on the nav logo. xPercent/yPercent:-50 means x/y move
+    // the element's centre point.
+    const navCx  = navRect.left  + navRect.width  / 2;
     const navCy  = navRect.top   + navRect.height / 2;
     const logoCx = logoRect.left + logoRect.width  / 2;
     const logoCy = logoRect.top  + logoRect.height / 2;
 
-    this._dx = pageCx - logoCx;
-    this._dy = navCy  - logoCy;
-
-    // Nav logo centre as a % of viewport height — the wipe's bottom edge must
-    // pass this value before the loader logo is allowed to fade.
-    this._navPct = (navCy / window.innerHeight) * 100;
-
-    console.log('[Loader morph]', {
-      navEl: navEl?.className,
-      navRect: { top: navRect.top, h: navRect.height, cy: navCy },
-      logoRect: { top: logoRect.top, h: logoRect.height, cy: logoCy },
-      dx: this._dx, dy: this._dy, scale: this._scale, navPct: this._navPct
-    });
+    this._dx = navCx - logoCx;
+    this._dy = navCy - logoCy;
   }
 }

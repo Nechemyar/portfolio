@@ -6,54 +6,45 @@
   top: 0;
   left: 0;
   width: 100%;
-  /* Sits above the mobile menu overlay (1150) so logo + X stay visible
-     when the backdrop is open. */
   z-index: 1200;
   padding: clamp(0.55rem, 1vw, 0.85rem) clamp(1rem, 3.5vw, 2.5rem);
+}
 
-  /* Frosted glass: ::before = blur + tint panel, ::after = gradient fade tail */
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    pointer-events: none;
-    z-index: -1;
-  }
+/* Premium frosted-glass bar + gradient bleed.
+   Technique: one oversized ::before covers the bar height + ~80px tail.
+   The background is a gradient that goes opaque→transparent top→bottom —
+   this creates the fade without using mask (mask+backdrop-filter is broken
+   in Safari). backdrop-filter blurs whatever is behind the whole zone.
+   z-index: 0 keeps it in the same stacking context so blur actually fires. */
+.nav::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* Bar height (~60px) + 80px tail = 140px total bleed zone */
+  height: 140px;
+  z-index: 0;
+  pointer-events: none;
+  backdrop-filter: blur(24px) saturate(1.6);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  /* Gradient tint: opaque at top, zero at bottom — the fade IS the background */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.18) 0%,
+    rgba(0, 0, 0, 0.10) 40%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
 
-  /* The blur + semi-transparent tint — this is what you actually see */
-  &::before {
-    height: 100%;
-    backdrop-filter: blur(20px) saturate(1.8);
-    -webkit-backdrop-filter: blur(20px) saturate(1.8);
-    /* Warm white tint — visible frosted glass, not just invisible blur */
-    background: rgba(255, 253, 249, 0.78);
-  }
-
-  /* Gradient tail that bleeds below the bar and fades to nothing */
-  &::after {
-    /* Starts where ::before ends, bleeds ~60px further down */
-    top: 100%;
-    height: 60px;
-    background: linear-gradient(
-      to bottom,
-      rgba(255, 253, 249, 0.55) 0%,
-      rgba(255, 253, 249, 0) 100%
-    );
-    /* Backdrop-filter on ::after for the bleed zone too */
-    backdrop-filter: blur(10px) saturate(1.4);
-    -webkit-backdrop-filter: blur(10px) saturate(1.4);
-    /* Fade the blur out using opacity across the tail */
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
-  }
+/* Nav inner content must sit above the ::before blur layer */
+.nav__inner {
+  position: relative;
+  z-index: 1;
 }
 
 /* Kill frosted glass when menu is open — full white overlay handles the bg */
-html.menu-open .nav::before,
-html.menu-open .nav::after {
+html.menu-open .nav::before {
   display: none;
 }
 

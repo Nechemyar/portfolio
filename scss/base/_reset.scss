@@ -42,7 +42,7 @@ body {
   font-size: $fs-base;
   font-weight: 400;
   line-height: 1.65;
-  overflow-x: hidden;
+  overflow-x: clip; /* clip instead of hidden — doesn't create a stacking context, so backdrop-filter works */
   cursor: url('/assets/images/cursor-default.svg') 4 4, auto;
 }
 

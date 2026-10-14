@@ -30,10 +30,10 @@ export default class WorkSection {
       if (this.magic)   gsap.set(this.magic,   { y: '110%' });
 
       // Cards start hidden, each on its own y track
-      if (this.cards.length) {
-        gsap.set(this.cards[0], { y: 80, opacity: 0 });
-        gsap.set(this.cards[1], { y: 140, opacity: 0 }); // more offset = more stagger feel
-      }
+      // Even (right-column) cards start further down = more stagger feel
+      this.cards.forEach((card, i) => {
+        gsap.set(card, { y: i % 2 ? 140 : 80, opacity: 0 });
+      });
 
       ScrollTrigger.create({
         trigger: this.section,
@@ -41,6 +41,17 @@ export default class WorkSection {
         once: true,
         onEnter: () => this.reveal(),
       });
+
+      // Cards past the first row reveal as they scroll in, in pairs
+      for (let i = 2; i < this.cards.length; i += 2) {
+        const row = [...this.cards].slice(i, i + 2);
+        ScrollTrigger.create({
+          trigger: row[0],
+          start: 'top 85%',
+          once: true,
+          onEnter: () => gsap.to(row, { y: 0, opacity: 1, duration: 1.1, ease: 'expo.out', stagger: 0.35 }),
+        });
+      }
     });
   }
 
@@ -56,7 +67,7 @@ export default class WorkSection {
     if (this.cards.length) {
       tl.to(this.cards[0], { y: 0, opacity: 1, duration: 1.1 }, '-=0.5');
       // Card 2 has natural CSS margin-top stagger; animate from its offset position
-      tl.to(this.cards[1], { y: 0, opacity: 1, duration: 1.1 }, '-=0.85');
+      if (this.cards[1]) tl.to(this.cards[1], { y: 0, opacity: 1, duration: 1.1 }, '-=0.85');
     }
 
     // 3. Magic wipes up last

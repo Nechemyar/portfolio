@@ -138,17 +138,17 @@
 /* ── Desktop: side by side, card 2 staggered down ── */
 @media (min-width: 769px) {
   .work__cards {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: clamp(1rem, 2.5vw, 1.5rem);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: clamp(2.5rem, 5vw, 4rem) clamp(1rem, 2.5vw, 1.5rem);
   }
 
-  .work__card {
-    flex: 1;
-  }
-
-  .work__card:nth-child(2) {
+  /* Right column sits lower; the negative bottom margin keeps the next row
+     tucked up under the left card instead of inheriting the offset. */
+  .work__card:nth-child(even) {
     margin-top: clamp(3rem, 8vw, 6rem);
+    margin-bottom: calc(-1 * clamp(3rem, 8vw, 6rem));
   }
 
   .work__card-img-wrap {

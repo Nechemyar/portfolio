@@ -174,4 +174,5 @@
   width: 100%;
   height: auto;
   display: block;
+  filter: invert(1); /* artwork is white-on-transparent; flip to ink so it reads on the white section */
 }

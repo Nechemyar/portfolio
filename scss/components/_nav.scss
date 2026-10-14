@@ -29,26 +29,26 @@
   }
 
   i:nth-child(1) {
-    backdrop-filter: blur(1px);
     -webkit-backdrop-filter: blur(1px);
+    backdrop-filter: blur(1px);
     mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
     -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
   }
   i:nth-child(2) {
-    backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
     mask-image: linear-gradient(to bottom, #000 0%, #000 40%, transparent 75%);
     -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 40%, transparent 75%);
   }
   i:nth-child(3) {
-    backdrop-filter: blur(7px);
     -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(7px);
     mask-image: linear-gradient(to bottom, #000 0%, #000 25%, transparent 55%);
     -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 25%, transparent 55%);
   }
   i:nth-child(4) {
-    backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
     mask-image: linear-gradient(to bottom, #000 0%, transparent 35%);
     -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 35%);
   }

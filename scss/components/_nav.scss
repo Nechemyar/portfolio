@@ -10,31 +10,48 @@
   padding: clamp(0.55rem, 1vw, 0.85rem) clamp(1rem, 3.5vw, 2.5rem);
 }
 
-/* Premium frosted-glass bar + gradient bleed.
-   Technique: one oversized ::before covers the bar height + ~80px tail.
-   The background is a gradient that goes opaque→transparent top→bottom —
-   this creates the fade without using mask (mask+backdrop-filter is broken
-   in Safari). backdrop-filter blurs whatever is behind the whole zone.
-   z-index: 0 keeps it in the same stacking context so blur actually fires. */
-.nav::before {
-  content: '';
+/* Progressive blur behind the bar. Four stacked layers, each masked to a
+   shorter band, so the blur is strongest at the very top and eases to zero
+   with no visible edge or tint as content scrolls underneath. */
+.nav__blur {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  /* Bar height (~60px) + 80px tail = 140px total bleed zone */
-  height: 140px;
+  height: 130px;
   z-index: 0;
   pointer-events: none;
-  backdrop-filter: blur(24px) saturate(1.6);
-  -webkit-backdrop-filter: blur(24px) saturate(1.6);
-  /* Gradient tint: opaque at top, zero at bottom — the fade IS the background */
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.18) 0%,
-    rgba(0, 0, 0, 0.10) 40%,
-    rgba(0, 0, 0, 0) 100%
-  );
+
+  i {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+
+  i:nth-child(1) {
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+  }
+  i:nth-child(2) {
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 40%, transparent 75%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 40%, transparent 75%);
+  }
+  i:nth-child(3) {
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 25%, transparent 55%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 25%, transparent 55%);
+  }
+  i:nth-child(4) {
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    mask-image: linear-gradient(to bottom, #000 0%, transparent 35%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 35%);
+  }
 }
 
 /* Nav inner content must sit above the ::before blur layer */
@@ -44,7 +61,7 @@
 }
 
 /* Kill frosted glass when menu is open — full white overlay handles the bg */
-html.menu-open .nav::before {
+html.menu-open .nav__blur {
   display: none;
 }
 

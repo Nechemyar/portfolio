@@ -1,6 +1,6 @@
 @use '../base/tokens' as *;
 
-/* Trust — the first screen after the reel. A white sheet with rounded top
+/* Trust — the first screen after the reel. Centred, no eyebrow label. A white sheet with rounded top
    corners that slides up over the held hero (see .intro in _hero.scss) and
    carries straight on into the white work section. Sizes are multiples of
    the nav label, like the hero. */
@@ -22,33 +22,43 @@
   padding: $space-96 $page-padding;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: calc(#{$fs-nav} * 2.25);
-}
-
-.trust__eyebrow {
-  margin: 0;
-  color: $c-text-tertiary;
-  font-family: $font-body;
-  font-size: $fs-nav;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  text-align: center;
 }
 
 .trust__line {
   margin: 0;
-  max-width: 19ch;
+  max-width: 20ch; /* the <br> sets the break; room so SplitText wraps the same */
   color: $c-ink;
   font-family: $font-body;
   font-size: calc(#{$fs-nav} * 2.25);
   font-weight: 400;
   line-height: 1.04;
   letter-spacing: -0.04em;
-  text-wrap: balance;
 
   @media (min-width: 641px) {
     font-size: $fs-hero-title-mobile; /* 3.375× nav, one step under the hero title */
   }
+}
+
+/* One plain sentence on what Sumi does (the hero title doesn't say it).
+   Centred, so keep it to three lines at most. */
+.trust__what {
+  margin: 0;
+  max-width: 40ch;
+  color: $c-text-secondary;
+  font-family: $font-body;
+  font-size: calc(#{$fs-nav} * 1.5);
+  font-weight: 400;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+/* Keeps "a website." together so small phones break the line the same way
+   before and after SplitText. */
+.trust__keep {
+  white-space: nowrap;
 }
 
 .trust__accent {

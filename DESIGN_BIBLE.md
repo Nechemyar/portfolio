@@ -249,11 +249,15 @@ snapping (NN/g: scrolljacking hurts most when it changes scroll speed while
 people read). The sticky ends with `.intro`, so later sections never stack on
 the hero. Lives in `js/modules/TrustPanel.js`.
 
-The trust line (Satoshi 400, 2.25 × nav on mobile, 3.375 × on desktop, max
-19ch, left-aligned) rises word by word through SplitText line masks, the same
-reveal as the hero title, when the sheet passes 55% of the screen. Copy:
-*"Anyone can make a website now. Trust still takes a person who sweats the
-small stuff."* with "Trust" in `$c-rust`. Reduced motion: no recede, no reveal.
+Centred, no eyebrow label (small-caps labels read as AI to him). The trust
+line (Satoshi 400, 2.25 × nav on mobile, 3.375 × on desktop, max 20ch, break set by a <br>) is
+*"AI can build you a website. It can't build you trust."* with "trust." in
+`$c-rust`. Under it, one plain sentence on what Sumi does (`.trust__what`,
+1.5 × nav, `$c-text-secondary`, max 40ch, three lines at most because it's
+centred), since the hero title doesn't say it (NN/g: say what you do at a
+glance). The line's words rise through SplitText line masks, then the
+sentence's lines follow, when the sheet passes 55% of the screen. Reduced
+motion: no recede, no reveal.
 Research and the options he chose from: the "After the Reel" artifact,
 copy in `/mnt/project-files/sumi/scroll-story/`.
 

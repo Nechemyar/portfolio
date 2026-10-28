@@ -35,9 +35,9 @@ const ORDER = ['sun', 'wisp', 'corner']; // far to near
 // layer's centre. Phone first; wide screens get smaller art.
 const GEO = {
   phone: {
-    sun: { w: 0.30, x: 0.10, y: 0.09 },
+    sun: { w: 0.24, x: 0.11, y: 0.075 },
     // just under the sun, its top lapping the disc
-    wisp: { w: 0.62, x: -0.06, y: 0.245, h: 0.09 },
+    wisp: { w: 0.56, x: -0.06, y: 0.175, h: 0.075 },
     // turned so its tail runs along the top, not down into the words
     corner: { w: 0.56, r: -0.16, y: -0.07, rot: 18 }
   },

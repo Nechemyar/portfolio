@@ -44,7 +44,7 @@
   flex-direction: column;
   gap: clamp(2.5rem, 6vw, 3.5rem); /* generous gap between cards on mobile */
   width: 100%;
-  max-width: 780px;
+  max-width: 1040px;
 }
 
 .work__card {
@@ -55,42 +55,59 @@
   color: $c-ink;
 }
 
-.work__card-img-wrap {
+/* The stage: one tile per project, the phone rising out of its bottom edge
+   and cropped by it (Apple's App Store pages show phones this way). No
+   shadow; the frame is Apple's own iPhone 17 Pro artwork. */
+.work__stage {
+  position: relative;
   overflow: hidden;
-  border-radius: 0;
   aspect-ratio: 4 / 5;
-  background: $c-paper;
-  border: 1px solid rgba(26, 26, 26, 0.08);
+  border-radius: $r-xl;
+  /* The hero's sky, cut into a tile, with the same washi grain over it. */
+  background: linear-gradient(180deg, $c-sky, $c-sky-pale);
+  isolation: isolate;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('/ink/washi.jpg') center / cover;
+    mix-blend-mode: multiply;
+    opacity: 0.25;
+    pointer-events: none;
+  }
 }
 
-.work__card-img {
+.work__phone {
+  position: absolute;
+  left: 50%;
+  top: 13%;
+  width: 64%;
+  aspect-ratio: 703 / 1411;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+/* The screen cut-out in the frame artwork, measured from Apple's PNG:
+   x 100-1305 of 1406, y 101-2720 of 2822. */
+.work__screen {
+  position: absolute;
+  left: 7.11%;
+  top: 3.58%;
+  width: 85.78%;
+  height: 92.84%;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 14.2% / 6.55%;
+  background: $c-stage;
+}
+
+.work__frame {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: top; /* always show top of screenshot — menu visible */
-  display: block;
-}
-
-.work__card-img--choice {
-  transform: scale(1.15);
-  transform-origin: top center;
-}
-
-/* Mobile shows mobile screenshot, desktop shows desktop screenshot */
-.work__card-img--mobile  { display: block; }
-.work__card-img--desktop { display: none; }
-
-@media (min-width: 769px) {
-  .work__card-img--mobile  { display: none; }
-  .work__card-img--desktop { display: block; }
-
-  /* Hover scale desktop only */
-  .work__card-img {
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .work__card:hover .work__card-img {
-    transform: scale(1.04);
-  }
+  pointer-events: none;
 }
 
 /* Meta row — line sits UNDER the project name */
@@ -151,7 +168,7 @@
     margin-bottom: calc(-1 * clamp(3rem, 8vw, 6rem));
   }
 
-  .work__card-img-wrap {
+  .work__stage {
     aspect-ratio: 3 / 4;
   }
 }

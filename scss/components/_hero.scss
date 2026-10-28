@@ -295,11 +295,13 @@
   --card-w: min(calc(100vw - var(--reel-edge) * 2), calc((100svh - var(--reel-top) - var(--reel-edge)) * 1024 / 2110));
   --ring-in: 0;                       /* footage inset, share of card width (0: no frame) */
   --frame: none;
+  --reel-from: 0.86;                  /* starts small with wide margins, opens out as it rises */
   height: 180vh;
   height: 180svh;
   margin-top: calc(-1 * (var(--reel-peek) + var(--reel-top)));
 
   @media (min-width: 760px) {
+    --reel-from: 0.9;
     --card-w: min(calc(100vw - var(--reel-edge) * 2), calc((100svh - var(--reel-top) - var(--reel-edge)) * 1536 / 920));
     --reel-peek: 34svh;
     --frame: none;
@@ -347,8 +349,13 @@
   position: relative;
   width: var(--card-w);
   aspect-ratio: 1024 / 2110;
+  transform: scale(var(--reel-from)); /* InkStory scrubs it to 1; set here so it never jumps */
   transform-origin: 50% 0;
   will-change: transform;
+
+  @media (prefers-reduced-motion: reduce) {
+    transform: none;
+  }
 
   @media (min-width: 760px) {
     aspect-ratio: 1536 / 920;
@@ -361,7 +368,13 @@
   inset: calc(var(--card-w) * var(--ring-in));
   overflow: hidden;
   border-radius: clamp(14px, calc(var(--card-w) * 0.02), 24px);
-  background: rgba($c-indigo-deep, 0.25);
+  /* the reel's first frame, so the card is solid from the first paint and
+     the video takes over with no pop */
+  background: $c-indigo-deep url('/reel/poster-m.webp') center / cover no-repeat;
+
+  @media (min-width: 760px) {
+    background-image: url('/reel/poster.webp');
+  }
 }
 
 .reel__frame {

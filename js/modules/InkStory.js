@@ -53,9 +53,11 @@ export default class InkStory {
         .to(s.wisp, { x: () => -vw() * 0.7, duration: 100 }, 0)
         .to(s.sun, { x: () => -vw() * 0.14, duration: 100 }, 0);
 
-      // 2. the reel card, peeking under the hero, opens out a touch as it
-      //    rises into place (scale only)
-      tl.fromTo(this.card, { scale: 0.94 }, { scale: 1, duration: 77, ease: 'power1.out' }, 0);
+      // 2. the reel card, peeking under the hero with wide margins, opens out
+      //    to full width as it rises into place (scale only; the start
+      //    scale lives in CSS as --reel-from so first paint matches)
+      const from = parseFloat(getComputedStyle(this.card).getPropertyValue('--reel-from')) || 0.9;
+      tl.fromTo(this.card, { scale: from }, { scale: 1, duration: 77, ease: 'power1.out' }, 0);
 
       // 3. the clouds close in and the sun sets
       tl.to(s.wisp, { x: () => -vw() * 0.04, y: () => vh() * (phone ? 0.36 : 0.24), duration: 87 }, 170)

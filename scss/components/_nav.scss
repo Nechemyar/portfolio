@@ -95,6 +95,16 @@
   z-index: 1;
 }
 
+/* Over the hero reel the bar has no blur (NavTheme.js); it fades back in
+   once the trust sheet reaches the nav. */
+.nav__blur {
+  transition: opacity 0.4s ease;
+}
+
+.nav--clear .nav__blur {
+  opacity: 0;
+}
+
 /* Kill frosted glass when menu is open — full white overlay handles the bg */
 html.menu-open .nav__blur {
   display: none;

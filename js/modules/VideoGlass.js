@@ -23,14 +23,14 @@ void main(){
   float bevel=min(size.y*.5,16.);
   float t=clamp(1.-e/bevel,0.,1.);
   float bend=t*t*t;                                              // curve hard only near the rim
-  vec2 src=c+q*.9 - n*bend*14.;                                  // slight lens zoom + rim refraction
-  vec2 ca=n*bend*1.2;                                            // chromatic split at the rim
+  vec2 src=c+q*.9 - n*bend*18.;                                  // slight lens zoom + rim refraction
+  vec2 ca=n*bend*2.4;                                            // chromatic split at the rim
   // Frost comes from sampling a low-res copy with linear filtering, so one tap per channel is enough.
   vec3 col=vec3(S(src+ca).r,S(src).g,S(src-ca).b);
   float l=dot(col,vec3(.2126,.7152,.0722));
   col=mix(vec3(l),col,1.25);                                     // a touch more saturation, like iOS
-  col=col*.62;                                                   // match the hero scrim
-  col=mix(col,vec3(.08),.25);                                    // smoky tint keeps white text legible
+  col=col*.74;                                                   // a little brighter than the scrim around it
+  col=mix(col,vec3(.08),.08);                                    // the faintest smoke keeps white text legible
   col=mix(vec3(.3),col,ready);                                   // before the first frame
   float rim=smoothstep(1.6,0.,e);
   float light=.45+.55*max(dot(n,normalize(vec2(-.6,-1.))),0.);   // light from the top

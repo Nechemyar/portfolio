@@ -11,6 +11,7 @@ export default class NavTheme {
     const first = this.sections[0];
     if (first) {
       this.nav.classList.add(`theme-${first.dataset.navTheme}`);
+      this.nav.classList.toggle('nav--clear', first.id === 'hero');
     }
 
     this.init();
@@ -23,14 +24,16 @@ export default class NavTheme {
       ScrollTrigger.create({
         trigger: section,
         start: 'top 80px', // Trigger when section hits just below the nav
-        onEnter: () => this.setTheme(theme),
-        onEnterBack: () => this.setTheme(theme),
+        onEnter: () => this.setTheme(theme, section),
+        onEnterBack: () => this.setTheme(theme, section),
       });
     });
   }
 
-  setTheme(theme) {
+  setTheme(theme, section) {
     this.nav.classList.remove('theme-dark', 'theme-light');
     this.nav.classList.add(`theme-${theme}`);
+    // No blur over the reel: it smears the footage under the bar.
+    if (section) this.nav.classList.toggle('nav--clear', section.id === 'hero');
   }
 }

@@ -37,7 +37,6 @@ new TrustPanel();
 
 // Hidden start states for the elements the hero entrance wipes in
 const wipeElements = [
-  '.hero__line',
   '.hero__base-right',
   '.hero__sub',
   '.nav__cta--right',
@@ -80,7 +79,7 @@ new Loader(() => {
     }, 'frame');
 
   // 2. Bottom row wipes up, mirroring the nav
-  tl.to(['.hero__line', '.hero__base-right'], {
+  tl.to('.hero__base-right', {
     clipPath: wipeIn,
     y: 0,
     duration: 1.2,

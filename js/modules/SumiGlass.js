@@ -32,7 +32,7 @@ export default class SumiGlass {
     // userAgentData exists only in Chromium; iOS Chrome is WebKit and lacks it.
     const chromium = navigator.userAgentData?.brands?.some((b) => b.brand === 'Chromium');
     if (chromium) {
-      this.glass = createLiquidGlass(this.el, { shape: 'pill', refraction: 85, blur: 4, light: 70, pointer: false });
+      this.glass = createLiquidGlass(this.el, { shape: 'pill', refraction: 100, blur: 1, light: 70, pointer: false });
       this.el.dataset.glass = 'svg';
       // the displacement map is built on the next frame
       this.ready = new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));

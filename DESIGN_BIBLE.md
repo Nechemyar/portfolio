@@ -142,7 +142,7 @@ to:   { clipPath: 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)', y: 0,
 
 Hero sequence order (overlapping with negative offsets):
 1. `.nav__cta--right`, `.nav__desktop-wrapper` — 1.2s, stagger 0.1, at 0
-2. `.hero__line`, `.hero__base-right` — 1.2s, stagger 0.1, at +0.15s
+2. `.hero__base-right` — 1.2s, at +0.15s
 3. Title words (SplitText, line masks) — `yPercent` 115 → 0, 1.8s, stagger 0.08, at +0.55s (lands last)
 
 Text-line variant (tighter clip):
@@ -204,14 +204,20 @@ Layers (back → front):
   (accessibility modes), Settle (filters, case arc, hold to pay, paid screen).
   It is HTML motion design over frame-exact recordings of the live sites,
   rendered with HyperFrames; generators and takes live in
-  `/mnt/project-files/sumi/reel/loop/`. Desktop cut only for now; the phone
-  gets its own centred cut.
+  `/mnt/project-files/sumi/reel/loop/`. Portrait screens get their own cut
+  (`reel-m.webm` / `reel-m.mp4`, 720×1560, chosen by `media="(orientation:
+  portrait)"` on the sources): the camera works close and every click lands
+  above the title or below the CTA. It keeps the cursor (his pick over a
+  finger dot).
 - **Scrim** (`.hero__reel::after`): a fixed dark overlay so white type reads over
   any footage or colour: black 55% at the top, 42% through the middle with a
   soft 32% radial behind the title, 60% at the bottom (darkened for the real
   reel, whose sites are mostly light). Every hero element is
-  white (`$c-warm-white`; bottom line at 78%), and the hero is
-  `data-nav-theme="dark"` so the nav is white over it.
+  white (`$c-warm-white`), and the hero is
+  `data-nav-theme="dark"` so the nav is white over it. Over the hero the nav's
+  top blur is hidden (`.nav--clear`, set by `NavTheme.js` when the active
+  section is `#hero`) because a frosted band over moving footage looks odd; it
+  fades back in once the trust sheet takes over.
 - **Title** (`.hero__title`, `h1`, Satoshi 400): `$fs-hero-title` (5.0625 × nav
   label, ~80px at 1440) and `$fs-hero-title-mobile` (3.375 ×, ~44px at 390),
   `line-height: 0.98`, `letter-spacing: -0.045em`, centred, `max-width: 13ch`.
@@ -224,8 +230,10 @@ Layers (back → front):
 - **CTA** (`.hero__cta` in `.hero__cta-slot`, 2026-10-28): "Book a free call ↗"
   as a muted liquid glass pill under the title, quieter than the rust buttons
   (premium sites keep a hero CTA but tone it down). Nav-label type (700,
-  uppercase, +0.06em), height `max(44px, 3.375 × nav label)`, smoky dark tint
-  with white text so it reads over any footage. `js/modules/SumiGlass.js` picks the
+  uppercase, +0.06em), height `max(44px, 3.375 × nav label)`. Light glass,
+  not smoked: a 5% white tint, refraction 100 and blur 1 so the bending of the
+  footage behind it shows, with a soft text shadow keeping the white label
+  readable. A dark tint was tried and it flattened the refraction. `js/modules/SumiGlass.js` picks the
   renderer: Chromium gets SVG refraction via backdrop-filter
   (`js/vendor/liquid-glass-web`, MIT); Safari, Firefox and iOS Chrome get
   `VideoGlass.js`, a small WebGL canvas inside the button that refracts the
@@ -233,14 +241,14 @@ Layers (back → front):
   over 4 ms. Until the reel has sources those browsers keep the frost.
   Reduced transparency gets a solid ink pill. Research and benchmarks: the Hero
   Glass Lab artifact and `/mnt/project-files/sumi/hero-glass/`.
-- **Bottom row** (`.hero__base`): mirrors the nav's height and gutter. Left: one
-  line at nav size, weight 400, white at 78%: *"For businesses that give a
-  damn. Designed and built by me."* (never "hand-coded"). Right: "See my work ↓" at
-  nav-label style. The glass CTA above is the hero's only booking prompt; the
+- **Bottom row** (`.hero__base`): mirrors the nav's height and gutter. Only
+  "See my work ↓" at nav-label style, on the right; the left line was dropped
+  once the subheading existed (it repeated it). Never say "hand-coded" anywhere;
+  use "Designed and built by me". The glass CTA above is the hero's only booking prompt; the
   big booking moment still comes after the work section.
 
 Entrance (in `js/main.js`): the frame builds first and the title lands last.
-Nav wipes up (1.2s), bottom row wipes up (+0.15s), then the title: GSAP
+Nav wipes up (1.2s), See my work wipes up (+0.15s), then the title: GSAP
 SplitText splits it into words inside line masks and the words rise
 (`yPercent` 115 → 0, 1.8s, `expo.out`, stagger 0.08) starting at +0.55s. The
 split reverts when done. The CTA is `visibility: hidden` until it wipes up,

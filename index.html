@@ -149,9 +149,12 @@
         <!-- The reel: a 27s seamless loop of the real sites (Choice, Clinical, JSense,
              Settle), HTML motion design rendered with HyperFrames. HeroReel.js loads it
              after the loader, pauses it off screen, and skips it for reduced motion and
-             Save-Data. Desktop cut for now; the phone gets its own centred cut later. -->
+             Save-Data. Portrait screens get the phone cut (reel-m), framed so every click
+             lands above the title or below the button. -->
         <video class="hero__video" muted loop playsinline preload="none">
           <source data-src="/reel/reel.webm" type="video/webm" media="(min-width: 800px)" />
+          <source data-src="/reel/reel-m.webm" type="video/webm" media="(orientation: portrait)" />
+          <source data-src="/reel/reel-m.mp4" type="video/mp4" media="(orientation: portrait)" />
           <source data-src="/reel/reel-720.webm" type="video/webm" />
           <source data-src="/reel/reel-720.mp4" type="video/mp4" />
         </video>
@@ -165,7 +168,6 @@
       </div>
 
       <div class="hero__base">
-        <p class="hero__line">For businesses that give a damn. Designed and built by me.</p>
         <div class="hero__base-right">
           <button class="hero__pause" type="button" aria-label="Pause background video" hidden>
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
@@ -183,7 +185,7 @@
     <section class="trust" id="trust" data-nav-theme="light" data-bg="#fff">
       <div class="trust__inner">
         <p class="trust__line js-trust-line">AI can build you <span class="trust__keep">a website.</span><br> It can&rsquo;t build you <span class="trust__accent">trust.</span></p>
-        <p class="trust__what js-trust-what">I&rsquo;m Nechemya. I design and hand-code websites for small businesses, and you deal with me from the first call to launch day.</p>
+        <p class="trust__what js-trust-what">I&rsquo;m Nechemya. I design and build websites and apps for small businesses, and you deal with me from the first call to launch day.</p>
       </div>
     </section>
     </div>

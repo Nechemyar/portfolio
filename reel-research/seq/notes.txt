@@ -1,0 +1,91 @@
+Reel image-sequence takes (captured 2026-10-28, scripts/capture-seq.mjs in sumi-reel)
+=====================================================================================
+
+Format: 2880x1800 (1440x900 CSS at deviceScaleFactor 2), 30 fps, H.264 CRF 16, yuv420p.
+No cursor is drawn. <take>.cursor.json has per-frame {f, x, y, down, scrollY} in CSS px
+(multiply by 2 for frame pixels), plus "marks" (the action times listed below).
+
+How it was captured (deterministic, not screen recording):
+- Playwright's fake clock, paused, so JS time (rAF, timers, GSAP, counters) only moves when
+  stepped. Each frame steps exactly 1/30 s.
+- Every CSS animation, CSS transition and element.animate() in every frame/iframe is paused
+  and seeked to (virtual time - time first seen). Finished ones are finish()ed so the page's
+  own chaining (animationend / .finished) still runs.
+- The mouse is the real Playwright mouse (hover, drag, press-and-hold all behave as for a
+  user), eased, at most ~60 CSS px per frame.
+- Each take starts with 0.5 s of still frames. Every take was checked frame by frame on
+  contact sheets: the totals roll, the rows fade, the gauge segments draw in, the cards rise,
+  and the hold fill grows.
+
+1. choice-slider.mp4 (17.0 s). choiceinventory.co.uk/pricing, calculator iframe
+   0.0  still
+   1.8  mouse down on the Number of Bedrooms thumb (Studio)
+   2.0  drag right (real mouse drag, not a scripted value change)
+   3.6  release at 4 bedrooms. The total rolls £114 -> £132 -> £168 -> £186 during the drag
+   6.0  click Furnished (-> £216)
+   8.5  click Additional rooms on
+   11.0 click the + on the room counter (-> £240)
+   13.5 click Check-in (-> £282, the same end value as the old take)
+   17.0 end, cursor parked beside the total
+   The page is pre-scrolled so the calculator fills the frame. The "Pricing" heading above
+   it is just clipped at the top.
+
+2. clinical-team.mp4 (9.5 s). clinicalassessments.co.uk/team/ (Meet The Team)
+   0.0  still at the top of the page
+   0.5  smooth scroll down 620 px (2.6 s). The 3-card grid glides up into view (Elementor fadeInUp)
+   5.1  cursor arrives on Dr. Ruth M. Deutsch: grey panel fades in (0.2 s), photo scales (0.5 s)
+   7.6  moves to Rochelle Silbiger. The first card eases back and the second animates in
+   9.5  end
+   The cursor starts in the left margin so its path never brushes the other cards.
+   SURPRISING: on the live site the grids' fadeInUp fires on page load, because the second
+   grid's top edge sits at y=874, just inside a 900 px tall window. So a normal scroll never
+   shows the glide. For these takes the grids below the first one were put back into their
+   pre-reveal state (elementor-invisible), and an IntersectionObserver adds Elementor's own
+   "animated fadeInUp" classes when they enter the view. The animation is the site's real CSS.
+   Only the trigger moment is ours.
+
+2b. clinical-team-scroll.mp4 (7.4 s). Same page, plain scroll 0 -> bottom over 6 s, no hover.
+   The second grid (Ruth / Rochelle / Gabi, then Esther) glides in at about 2.3-3.0 s. The page
+   bottoms out at about 1490 px, so the footer edge appears at the very end.
+
+3. settle-dash.mp4 (10.4 s). settle.nechemyar.workers.dev/?demo
+   0.0  still, dashboard on "All 6"
+   1.57 click "Pending": the list drops from 6 rows to 1 (Flat 2, 47 Ashworth Road)
+   3.73 click "Agreed": the list swaps to 2 rows (4 Lordship Park, 9 Kyverdale Road)
+        These two make the biggest change. "In review" and "Needs you" barely change the list.
+   6.20 click the 4 Lordship Park row. The case opens and the "Due to Tom £1,880" arc draws in
+        segment by segment (about 0.9 s in total, staggered), along with the stepper tick and the cards rising
+   10.4 end (cursor drifted to the hero, nothing hovered)
+   Note: the property is "4 Lordship Park", not "1".
+
+3b. settle-dash-open.mp4 (6.0 s). Same start, but at 1.8 s the cursor clicks Open on the
+   "£1,880 to Tom / 2 days overdue" to-do card.
+   WHAT OPEN DOES: it opens the 4 Lordship Park case page, exactly like clicking the row,
+   with the same gauge draw. It does work. The first to-do card is "11 messages" and its
+   button ("Quick reply") uses the same button class (button.need-btn), so a script that
+   clicks "the first card button" opens the Quick reply panel instead. That is the likely
+   reason nothing seemed to happen before.
+
+4. settle-paid.mp4 (19.1 s). ONE continuous take, from the dashboard to the bill settling.
+   Its first 9.4 s are identical to settle-dash, so it can replace takes 3 + 4 without a cut.
+   0.0-9.4  same as settle-dash (pills, row click, gauge draws)
+   10.77 cursor on "Mark as paid", mouse down and held
+         The hold fill sweeps across the button (CSS, 0.9 s), then a tick pops and a ring pulses
+   11.85-12.35 the red payment card morphs to full screen (clip-path inset() animation, 0.52 s)
+         while its red tint fades to the purple "Marked as paid" screen
+   12.37 the cursor releases (still holding until "Marked as paid" exists)
+   12.37-13.2 the winged bill flies in (mo-land 0.62 s) and the title, subtitle, Tom Reid row
+         and Done button rise in one after another. A "Saved" toast appears at the bottom left.
+   13.2-19.1 the bill keeps flapping (looping animation) on the settled screen
+   No page scroll was needed: Mark as paid sits at y~680 at 1440x900. scrollY is 0 throughout
+   (logged in cursor.json anyway).
+   FYI: the reveal is not a circle on the live site. It is the red card's rounded rectangle
+   growing to full screen. That is the site's real animation and it plays smoothly here.
+   FRAMING: the "Due to Tom" gauge card and the Mark as paid card sit in the right column
+   (x ~1041-1393 CSS). To have them centred, crop/zoom around x~1217 in the composite. The
+   page layout itself can't be shifted.
+
+Side effects: none. Nothing was submitted, booked or sent. Settle ?demo makes its own
+POST /api/suggest calls on load (AI reply suggestions, the same as in the earlier takes),
+and clinicalassessments sends Google Analytics beacons. Each take used a fresh browser
+context, so the demo state starts clean every time.

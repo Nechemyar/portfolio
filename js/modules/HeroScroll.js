@@ -24,8 +24,15 @@ export default class HeroScroll {
     // others — never touch items[0] here, to avoid a one-frame flash.
     for (let i = 1; i < items.length; i++) gsap.set(items[i], { opacity: 0 });
 
+    // Skip the cuts while the hero is scrolled away so they don't keep
+    // repainting a layer nobody can see.
+    let visible = true;
+    const slider = items[0].closest('.hero__mouth-slider') || items[0].parentElement;
+    new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; }).observe(slider);
+
     let currentIndex = 0;
     setInterval(() => {
+      if (!visible) return;
       gsap.set(items[currentIndex], { opacity: 0 });
       currentIndex = (currentIndex + 1) % items.length;
       gsap.set(items[currentIndex], { opacity: 1 });

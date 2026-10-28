@@ -76,12 +76,19 @@ export default class WorkSection {
         y: '0%',
         duration: 1.2,
         onComplete: () => {
-          gsap.to(this.magic, {
+          const bob = gsap.to(this.magic, {
             y: 14,
             duration: 3.0,
             ease: 'sine.inOut',
             repeat: -1,
             yoyo: true,
+          });
+          // Endless loop: only tick it while the wave is on screen
+          ScrollTrigger.create({
+            trigger: this.magic,
+            start: 'top bottom',
+            end: 'bottom top',
+            onToggle: (self) => (self.isActive ? bob.resume() : bob.pause()),
           });
         },
       }, '-=0.6');

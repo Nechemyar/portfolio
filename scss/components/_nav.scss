@@ -12,7 +12,12 @@
 
 /* Progressive blur behind the bar. Four stacked layers, each masked to a
    shorter band, so the blur is strongest at the very top and eases to zero
-   with no visible edge or tint as content scrolls underneath. */
+   with no visible edge or tint as content scrolls underneath.
+
+   Each layer is only as tall as the band its mask leaves visible. Blur cost
+   scales with the area being filtered, so trimming the invisible part of
+   each layer makes the same picture cheaper to paint. The mask stops are
+   rescaled so every layer fades out at exactly the same pixel as before. */
 .nav__blur {
   position: absolute;
   top: 0;
@@ -24,33 +29,74 @@
 
   i {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
     display: block;
   }
 
   i:nth-child(1) {
+    height: 130px;
     -webkit-backdrop-filter: blur(1px);
     backdrop-filter: blur(1px);
     mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
     -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
   }
   i:nth-child(2) {
+    height: 98px; /* 75% of 130 */
     -webkit-backdrop-filter: blur(3px);
     backdrop-filter: blur(3px);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 40%, transparent 75%);
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 40%, transparent 75%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 53%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 53%, transparent 100%);
   }
   i:nth-child(3) {
+    height: 72px; /* 55% of 130 */
     -webkit-backdrop-filter: blur(7px);
     backdrop-filter: blur(7px);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 25%, transparent 55%);
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 25%, transparent 55%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%);
   }
   i:nth-child(4) {
+    height: 46px; /* 35% of 130 */
     -webkit-backdrop-filter: blur(14px);
     backdrop-filter: blur(14px);
-    mask-image: linear-gradient(to bottom, #000 0%, transparent 35%);
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 35%);
+    mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
+  }
+}
+
+/* Lighter tiers, switched on by BlurQuality.js only when the machine can't
+   keep up with the four-layer stack. Fewer layers is the big saving: every
+   backdrop-filter is its own offscreen pass over what's behind it. */
+.nav__blur--lite {
+  i:nth-child(1),
+  i:nth-child(3) {
+    display: none;
+  }
+  i:nth-child(2) {
+    height: 100px;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%);
+  }
+  i:nth-child(4) {
+    height: 52px;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+}
+
+.nav__blur--min {
+  i:nth-child(n + 2) {
+    display: none;
+  }
+  i:nth-child(1) {
+    height: 78px;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 30%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 30%, transparent 100%);
   }
 }
 

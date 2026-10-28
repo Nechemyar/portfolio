@@ -24,17 +24,10 @@ import gsap from 'gsap';
 const ART = {
   sun: '/ink/sun.webp',
   wisp: '/ink/wisp.webp',
-  puff: '/ink/puff.webp',
-  corner: '/ink/corner.webp',
-  bank: '/ink/bank.webp'
+  corner: '/ink/corner.webp'
 };
 const PAPER = '/ink/washi.jpg';
-const ORDER = ['sun', 'wisp', 'puff', 'corner', 'bank']; // far to near
-// In front of the reel card: these are DOM images in .intro__front (above
-// the card), placed by the same maths and moved in the same frame, so the
-// card can peek out from under the clouds and be revealed as they part.
-// Their washi is baked into the files.
-const FRONT = ['puff', 'bank'];
+const ORDER = ['sun', 'wisp', 'corner']; // far to near
 
 // Resting places, as fractions of the canvas: w width, x left or r right,
 // y top or b bottom, h an optional height cap (so short phones don't grow
@@ -45,22 +38,18 @@ const GEO = {
     sun: { w: 0.30, x: 0.10, y: 0.09 },
     // just under the sun, its top lapping the disc
     wisp: { w: 0.62, x: -0.06, y: 0.245, h: 0.09 },
-    puff: { w: 0.40, r: -0.10, y: 0.66 },
     // turned so its tail runs along the top, not down into the words
-    corner: { w: 0.56, r: -0.16, y: -0.07, rot: 18 },
-    bank: { w: 1.70, x: -0.35, b: -0.07, h: 0.38 }
+    corner: { w: 0.56, r: -0.16, y: -0.07, rot: 18 }
   },
   wide: {
     sun: { w: 0.10, x: 0.16, y: 0.14 },
     wisp: { w: 0.34, x: -0.08, y: 0.22 },
-    puff: { w: 0.16, r: 0.08, y: 0.58 },
-    corner: { w: 0.40, r: -0.10, y: -0.10 },
-    bank: { w: 1.04, x: -0.02, b: -0.44 }
+    corner: { w: 0.40, r: -0.10, y: -0.10 }
   }
 };
 
 // idle drift per layer: px amplitude and seconds per swing
-const DRIFT = { sun: [0, 1], wisp: [14, 11], puff: [10, 9], corner: [8, 13], bank: [6, 15] };
+const DRIFT = { sun: [0, 1], wisp: [14, 11], corner: [8, 13] };
 
 // The sky wash, as linear RGB 0–1: the ground graded from top to horizon the
 // way a printer wipes the block, and the deeper bokashi band along the top.
@@ -142,7 +131,6 @@ export default class InkSky {
   constructor() {
     this.intro = document.querySelector('.intro');
     this.canvas = document.querySelector('.intro__sky');
-    this.front = document.querySelector('.intro__front');
     this.cta = document.querySelector('.hero__cta');
     this.ok = false;
     this.ready = Promise.resolve();
@@ -221,20 +209,7 @@ export default class InkSky {
       img.onerror = resolve;
       img.src = src;
     });
-    // a front layer is an <img> in .intro__front, not a texture
-    const dom = (key) => new Promise((resolve) => {
-      const img = new Image();
-      img.alt = '';
-      img.decoding = 'async';
-      img.onload = () => {
-        this.tex[key] = { el: img, aspect: img.naturalWidth / img.naturalHeight };
-        resolve();
-      };
-      img.onerror = resolve;
-      img.src = ART[key];
-      this.front.append(img);
-    });
-    const jobs = ORDER.map((k) => (this.front && FRONT.includes(k) ? dom(k) : one(k, ART[k], true)));
+    const jobs = ORDER.map((k) => one(k, ART[k], true));
     jobs.push(one('paper', PAPER, false));
     return Promise.all(jobs).then(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
   }
@@ -306,8 +281,7 @@ export default class InkSky {
     for (const key of ORDER) {
       const T = this.tex[key];
       const st = this.state[key];
-      if (!T) continue;
-      if (st.a <= 0.001 && !T.el) continue;
+      if (!T || st.a <= 0.001) continue;
       const r = this.place(key);
       const [amp, period] = DRIFT[key];
       const drift = this.reduced || !amp ? 0 : Math.sin((time / period) * Math.PI * 2) * amp;
@@ -315,10 +289,6 @@ export default class InkSky {
       const h = r.h * st.s;
       const x = r.x + (r.w - w) / 2 + st.x + drift;
       const y = r.y + (r.h - h) / 2 + st.y;
-      if (T.el) {
-        this.placeFront(T, r, x, y, st.s, st.a);
-        continue;
-      }
       const rot = r.rot || 0;
       if (!rot && (y > this.vh || y + h < 0 || x > this.vw || x + w < 0)) continue;
       gl.bindTexture(gl.TEXTURE_2D, T.t);
@@ -365,20 +335,6 @@ export default class InkSky {
     gl.uniform4f(this.pComp.u.uPill, 0, 0, 0, 0);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
     gl.activeTexture(gl.TEXTURE0);
-  }
-
-  // A front layer: its size changes only on resize or scale, so most
-  // frames write a transform and nothing else.
-  placeFront(T, r, x, y, scale, a) {
-    const s = T.el.style;
-    const w = `${r.w}px`;
-    if (s.width !== w) {
-      s.width = w;
-      s.height = `${r.h}px`;
-    }
-    s.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
-    const o = `${a}`;
-    if (s.opacity !== o) s.opacity = o;
   }
 
   // The button's place in canvas px, once its glass is on and it's on

@@ -11,10 +11,10 @@
   background: linear-gradient($c-sky, $c-sky-pale);
   color: $c-sky-type;
 
-  /* back to front: sky, reel card, near clouds, the hero and trust words */
+  /* back to front: sky, the reel, the hero and trust words */
   > section {
     position: relative;
-    z-index: 3;
+    z-index: 2;
   }
 
   > .reel {
@@ -36,39 +36,6 @@
   margin-bottom: -100lvh;
 }
 
-/* The near clouds (bank and puff), above the reel card so it can peek out
-   from under them. Sticky like the sky, so they hold still with it. */
-.intro__front {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  height: 100vh;
-  height: 100lvh;
-  margin-bottom: -100vh;
-  margin-bottom: -100lvh;
-  overflow: hidden;
-  pointer-events: none;
-
-  img {
-    position: absolute;
-    left: 0;
-    top: 0;
-    max-width: none;
-    transform-origin: 0 0;
-    opacity: 0;
-    will-change: transform;
-  }
-}
-
-.intro.no-gl .intro__front {
-  display: none;
-}
-
-/* No WebGL: the bank of clouds as a plain picture under the hero. */
-.intro.no-gl .hero {
-  background: url('/ink/bank.webp') 50% 100% / max(170vw, 900px) auto no-repeat;
-}
-
 /* The white sections slide on like a sheet with rounded corners, the sky
    showing round them. */
 .intro + section {
@@ -86,7 +53,7 @@
   height: 100svh;
 }
 
-/* The words sit in the open sky between the corner clouds and the bank. */
+/* The words sit in the open sky under the sun and the corner clouds. */
 .hero__center {
   position: absolute;
   left: 0;

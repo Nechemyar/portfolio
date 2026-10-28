@@ -8,7 +8,7 @@
 // its section at any screen size:
 //   0–100    the clouds part round the rising card
 //   0–77     the reel card rises from under the hero and opens out a touch
-//   170–257  the clouds close back in and the sun sets behind the bank,
+//   170–257  the clouds close back in and the sun sets,
 //            arriving as the trust line reaches the middle
 // The sky moves by tweening InkSky.state (drawn in WebGL, no DOM paint); the
 // card moves by scale only.
@@ -50,28 +50,24 @@ export default class InkStory {
 
       // 1. the clouds part
       tl.to(s.corner, { x: () => vw() * 0.32, y: () => -vh() * 0.3, duration: 100 }, 0)
-        .to(s.bank, { y: () => vh() * 0.38, duration: 100 }, 0)
         .to(s.wisp, { x: () => -vw() * 0.7, duration: 100 }, 0)
-        .to(s.puff, { x: () => vw() * 0.6, duration: 100 }, 0)
         .to(s.sun, { x: () => -vw() * 0.14, duration: 100 }, 0);
 
       // 2. the reel card, peeking under the hero, opens out a touch as it
       //    rises into place (scale only)
       tl.fromTo(this.card, { scale: 0.94 }, { scale: 1, duration: 77, ease: 'power1.out' }, 0);
 
-      // 3. the clouds close in and the sun sets behind the bank
-      tl.to(s.bank, { y: () => -vh() * 0.04, duration: 87 }, 170)
-        .to(s.wisp, { x: () => -vw() * 0.04, y: () => vh() * (phone ? 0.36 : 0.24), duration: 87 }, 170)
-        .to(s.puff, { x: 0, y: () => vh() * 0.08, duration: 87 }, 170)
+      // 3. the clouds close in and the sun sets
+      tl.to(s.wisp, { x: () => -vw() * 0.04, y: () => vh() * (phone ? 0.36 : 0.24), duration: 87 }, 170)
         .to(s.corner, { x: () => vw() * 0.14, y: () => -vh() * 0.1, duration: 87 }, 170)
-        .to(s.sun, { x: 0, y: () => vh() * 0.6, s: 1.12, duration: 87 }, 170);
+        .to(s.sun, { x: 0, y: () => vh() * 0.95, s: 1.12, duration: 87 }, 170);
     });
   }
 
   // Printed one block at a time: sun, far clouds, near clouds.
   printIn() {
     const s = this.sky.state;
-    const layers = [s.sun, s.wisp, s.puff, s.corner, s.bank];
+    const layers = [s.sun, s.wisp, s.corner];
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       gsap.set(layers, { a: 1 });
       return;

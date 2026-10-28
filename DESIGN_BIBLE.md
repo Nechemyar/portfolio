@@ -208,7 +208,7 @@ the sky showing round them.
 **The sky** (`.intro__sky` canvas, `js/modules/InkSky.js`, WebGL1)
 - The canvas is sticky for the whole intro, at 100lvh.
 - **Art.** Painted with Codex in a woodblock style and keyed to alpha. It lives
-  in `public/ink/`: `sun`, `wisp`, `puff`, `corner`, `bank` and `washi`.
+  in `public/ink/`: `sun`, `wisp`, `corner` and `washi`.
   Prompts and the full set are on branch `claude/project-thread-w80ans` in
   `reel-research/ink-art/`.
 - **Pass 1** draws the ground as a sky wash, graded from `$c-sky` at the top
@@ -223,7 +223,7 @@ the sky showing round them.
   Paper and grain are done in the shader, not as CSS blend layers, because
   they're free there.
 - **Layout.** Resting places are set per breakpoint in `GEO`, as fractions of
-  the canvas. On phones the wisp and bank have height caps (`h`) so short
+  the canvas. On phones the wisp has a height cap (`h`) so short
   screens don't grow the art down into the words, and the corner cloud is
   small and turned 18° (`rot`) so it lies level along the top: he found it
   too slanted. No cloud may cross
@@ -231,17 +231,17 @@ the sky showing round them.
 - **Drift.** Each layer drifts a few px on a slow sine. There is no drift for
   reduced motion.
 - **DPR.** Capped at 1.5 on phones and 2 on wide screens.
-- **No WebGL.** The bank shows as a CSS background and the CTA keeps its frost.
+- **No WebGL.** The CSS sky gradient shows and the CTA keeps its frost.
 
 **The story** (`js/modules/InkStory.js`)
 One scrubbed GSAP timeline (`scrub: 0.6`) runs from the top of the intro to its
 bottom, measured in svh of scroll (about 257 in all) so every beat lands on
 its section:
-- **0–100:** the clouds part. The corner goes up and right, the bank drops, the
-  wisp and puff go out to the sides, and the sun slides left.
+- **0–100:** the clouds part. The corner goes up and right, the wisp goes out
+  to the left, and the sun slides left.
 - **0–77:** the reel card rises from under the hero and opens out a touch
   (scale only).
-- **170–257:** the clouds close back in and the sun sets behind the bank,
+- **170–257:** the clouds close back in and the sun sets,
   arriving as the trust line reaches the middle.
 
 The sky moves by tweening `InkSky.state`, so nothing in the DOM repaints.
@@ -265,15 +265,14 @@ clouds, then near clouds, 1.1s each, 0.14s stagger) while the nav builds.
   frames with `--frame` and `--frame-mask` on `.reel`. No card edge and no
   shadow: he rejected the washi scroll with rods as fake (2026-10-28), then
   asked for a cloud frame.
-- **Peek.** `.reel` is pulled up so the frame's top shows from under the
-  near clouds at the bottom of the first screen (`--reel-peek`). The clouds
-  part as it scrolls up, opening out from 0.94 scale, then it holds under
+- **Peek.** `.reel` is pulled up so the frame's top shows at the bottom of
+  the first screen (`--reel-peek`). The clouds part as it scrolls up, opening out from 0.94 scale, then it holds under
   the menu bar (`--reel-top`) while the sky moves round it. Side margin
   `--reel-edge` (8px on phones).
-- **Layers.** Back to front: the sky canvas, the reel, the near clouds
-  (bank and puff, as `<img>`s in `.intro__front`, placed by InkSky with the
-  same maths in the same frame, washi baked into the files), then the hero
-  and trust words. `.intro` isolates its stacking.
+- **Layers.** Back to front: the sky canvas, the reel, then the hero and
+  trust words. `.intro` isolates its stacking. He had the bottom bank of
+  clouds removed (2026-10-28), so the frame's top simply peeks up at the
+  bottom of the first screen.
 - **Sources.** Phones get `reel-m` (portrait). Wide screens get `reel.webm`
   (1200px and up) or `reel-720` (16:9).
 - **Loading.** `HeroReel.js` loads the video after the loader, fades it in and
@@ -291,7 +290,7 @@ asked for the kanji to go.
   - Size `$fs-hero-title` on desktop and `$fs-hero-title-mobile` on phones.
   - `line-height: 0.98`, `letter-spacing: -0.045em`, centred, `max-width: 13ch`.
   - The whole group is centred at 50% (46% on wide screens), in the open sky
-    between the corner clouds and the bank.
+    under the sun and the corner clouds.
   - Copy: *"Building what AI can't."* BrandelLuchador is used only in the menu.
 - **Subheading** (`.hero__sub`): *"Websites and apps you can't one-shot."*
   - Size 1.625 × the nav label (1.375 × on phones), at 92% opacity.

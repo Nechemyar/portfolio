@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex" />
 <title>Hero Lab · Sumi</title>
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
-<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" />
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" />
 <style>
 /* Hero lab: one hero, Satoshi only, every size a multiple of the nav label (m). */
 :root{
@@ -28,7 +28,7 @@
   --s-sub:calc(var(--m) * 1.5);
   --s-head:calc(var(--m) * 5.0625);
   --gap:calc(var(--m) * 1.5);
-  --head-w:500;
+  --head-w:400;
 }
 @media (max-width:640px){ :root{ --s-head:calc(var(--m) * 3.375); --s-sub:calc(var(--m) * 1.375) } }
 *{box-sizing:border-box;margin:0}
@@ -58,12 +58,12 @@ body{font-family:var(--font);background:var(--white);color:var(--ink);font-size:
 .reel-note span{display:block;font-weight:500;letter-spacing:.02em;text-transform:none;margin-top:2px}
 
 .center{position:absolute;inset:0;display:grid;place-items:center;padding:0 var(--nav-px);z-index:2}
-h1{font-size:var(--s-head);font-weight:var(--head-w);line-height:.98;letter-spacing:-0.035em;max-width:13ch;text-align:center;text-wrap:balance}
+h1{font-size:var(--s-head);font-weight:var(--head-w);line-height:.98;letter-spacing:-0.045em;max-width:13ch;text-align:center;text-wrap:balance}
 
 /* bottom row mirrors the nav: same side gutter, same distance from the edge */
 .base{position:absolute;left:0;right:0;bottom:0;height:var(--nav-h);padding:var(--nav-py) var(--nav-px);z-index:3;
   display:flex;align-items:center;justify-content:space-between;gap:calc(var(--m)*2)}
-.base p{font-size:var(--m);font-weight:500;line-height:1.35;color:var(--text-2);max-width:36ch}
+.base p{font-size:var(--m);font-weight:400;line-height:1.35;color:var(--text-2);max-width:36ch}
 .btn{height:var(--pill-h);padding:0 var(--pill-px);display:inline-flex;align-items:center;gap:.6em;border-radius:8px;background:var(--ink);color:var(--white);
   font-size:var(--m);font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;flex-shrink:0}
 .btn svg{width:.9em;height:.9em}
@@ -136,12 +136,12 @@ h1{font-size:var(--s-head);font-weight:var(--head-w);line-height:.98;letter-spac
       <p>When the footage exists, every shot keeps the middle calm and a soft radial shade sits behind the headline. NN/g says to design for the worst frame and to hit 4.5:1 contrast for normal text and 3:1 for large text. The bottom corners get a light floor fade for the same reason.</p>
       <p class="src"><a href="https://www.apple.com/newsroom/2025/06/apple-introduces-a-delightful-and-elegant-new-software-design/">Apple newsroom, new design</a> · <a href="https://www.nngroup.com/articles/text-over-images/">NN/g, text over images</a></p></div></li>
     <li><span class="n">2</span><div><h3>Headline alone in the middle</h3></div><div>
-      <p>Satoshi Medium, 5.06m on desktop (about 80px at 1440 wide) and 3.4m on phones (about 44px). Material 3's largest display style is about 4× its label size, and Apple's Large Title is about 2.6× its footnote, so 5× the menu label leads clearly without shouting. Tight tracking (−0.035em) and line height just under 1 make it read as one shape over the video. Try 700 and 900 in the bar.</p>
-      <p>It's the only thing in the centre, so the eye has one place to land.</p>
-      <p class="src"><a href="https://m3.material.io/styles/typography/type-scale-tokens">Material 3 type scale</a> · <a href="https://developer.apple.com/design/human-interface-guidelines/typography">Apple HIG, typography</a></p></div></li>
+      <p>Satoshi Regular (400), 5.06m on desktop (about 80px at 1440 wide) and 3.4m on phones (about 44px), tracking −0.045em, line height just under 1. This matches what the premium sites in the reference set below actually do: hero lines between 40 and 80px, weight 300 to 400, tight negative tracking, and about 4.5 to 5× the nav label. Oura sets theirs at 80px, weight 300, −0.05em. Not one of them uses bold for the hero line. Light, large type reads as more expensive than heavy type. Try 300 to 700 in the bar.</p>
+      <p>Material 3's largest display style is about 4× its label size, so 5× the menu label sits right in that range. It's the only thing in the centre, so the eye has one place to land.</p>
+      <p class="src">Reference captures below · <a href="https://m3.material.io/styles/typography/type-scale-tokens">Material 3 type scale</a> · <a href="https://developer.apple.com/design/human-interface-guidelines/typography">Apple HIG, typography</a></p></div></li>
     <li><span class="n">3</span><div><h3>Bottom left: what you do</h3></div><div>
       <p>The headline is a hook, so this line says the service in plain words. NN/g's first homepage guideline is a tagline that says what the company does. Their research also shows that defining yourself by a technology ("powered by AI") doesn't tell people what they get, and "What AI can't build" has the same problem without this line beside it.</p>
-      <p>Left side because attention leans left: NN/g measured about 80% of viewing time on the left half of the page. Set at the menu size (1m), weight 500, held to 36 characters so it breaks into two short lines.</p>
+      <p>Left side because attention leans left: NN/g measured about 80% of viewing time on the left half of the page. Set at the menu size (1m), regular weight like the corner text on Lucid and Polestar, held to 36 characters so it breaks into two short lines.</p>
       <p class="src"><a href="https://www.nngroup.com/articles/top-ten-guidelines-for-homepage-usability/">NN/g, homepage guidelines</a> · <a href="https://www.nngroup.com/articles/powered-by-ai-is-not-a-value-proposition/">NN/g, "Powered by AI"</a> · <a href="https://www.nngroup.com/articles/horizontal-attention-leans-left/">NN/g, attention leans left</a></p></div></li>
     <li><span class="n">4</span><div><h3>Bottom right: see the work, not book a call</h3></div><div>
       <p>No booking button in the hero. Someone paying £2k+ for a website wants to see your work before they talk to you, and pushing a booking button at them first jumps that step. NN/g watched this happen with "Get Started" buttons: people clicked them before they understood the offer, or stopped looking for information because the button made them think there wasn't any. The MarketingExperiments test that moved a CTA below the fold and added more explanation got 74% more conversions. Their speaker Michael Aagaard's point was that a CTA belongs at the right moment in the visitor's thinking. No fixed rule decides it.</p>
@@ -155,7 +155,13 @@ h1{font-size:var(--s-head);font-weight:var(--head-w);line-height:.98;letter-spac
     <li><span class="n">+</span><div><h3>The video, when it lands</h3></div><div>
       <p>Muted, inline, looping. A poster frame shows until it plays, and it only starts loading while the loader runs. web.dev notes that the first frame can count as the page's main paint, so a light poster keeps the speed score healthy. WebM first with MP4 as the fallback, audio stripped. One continuous reel, not a slideshow: Baymard found most people never see past the first slide of a rotating hero.</p>
       <p class="src"><a href="https://web.dev/learn/performance/video-performance">web.dev, video performance</a> · <a href="https://baymard.com/blog/homepage-carousel">Baymard, homepage carousels</a></p></div></li>
+    <li><span class="n">+</span><div><h3>Pause control</h3></div><div>
+      <p>Once the reel is in, a small pause button goes in next to "See the work", the way Porsche does it. WCAG 2.2.2 requires a way to pause anything that moves for more than five seconds.</p>
+      <p class="src"><a href="https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html">WCAG 2.2.2, pause, stop, hide</a></p></div></li>
   </ol>
+  <h2 style="margin-top:calc(var(--m)*5)">The reference set</h2>
+  <p>Eight full-screen media heroes, captured live with their real type measured: Porsche, Arc'teryx, Lucid, Oura, Polestar, Rivian, Basic/Dept and Darkroom. Porsche and Basic/Dept are closest to this layout: reel behind, menu on top, small items in the bottom corners. Polestar uses one family and one weight across the whole hero, which is the case for Satoshi on its own.</p>
+  <img src="refs.webp" alt="Hero screenshots from Porsche, Arc'teryx, Lucid, Oura, Polestar, Rivian, Basic/Dept and Darkroom" style="width:100%;height:auto;border-radius:12px;display:block" loading="lazy" />
 </section>
 </main>
 
@@ -180,7 +186,7 @@ const sub=$('#sub'), subPin=sub.querySelector('.pin').outerHTML;
 function group(el,items,on){items.forEach((t,i)=>{const b=document.createElement('button');b.textContent=t;b.setAttribute('aria-pressed',i===0);
   b.onclick=()=>{el.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');on(i)};el.appendChild(b)})}
 group($('#lines'),['A','B','C','D','E'],i=>{head.innerHTML=lines[i][0]+pin;sub.innerHTML=lines[i][1]+subPin});
-group($('#weights'),['500','700','900'],i=>document.documentElement.style.setProperty('--head-w',[500,700,900][i]));
+group($('#weights'),['400','300','500','700'],i=>document.documentElement.style.setProperty('--head-w',[400,300,500,700][i]));
 const pair=(a,b,fa,fb)=>{a.onclick=()=>{a.setAttribute('aria-pressed','true');b.setAttribute('aria-pressed','false');fa()};b.onclick=()=>{b.setAttribute('aria-pressed','true');a.setAttribute('aria-pressed','false');fb()}};
 pair($('#cDown'),$('#cBtn'),()=>hero.classList.remove('with-btn'),()=>hero.classList.add('with-btn'));
 $('#why').onclick=e=>{const on=document.body.classList.toggle('why-on');e.target.setAttribute('aria-pressed',on)};

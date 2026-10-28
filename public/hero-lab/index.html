@@ -36,7 +36,7 @@ html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 body{font-family:var(--font);background:var(--white);color:var(--ink);font-size:16px;line-height:1.5}
 
 /* ---------- lab controls (not part of the design) ---------- */
-.lab{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:50;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:center;
+.lab{position:fixed;left:50%;top:calc(var(--nav-h) + 6px);transform:translateX(-50%);z-index:50;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:center;
   max-width:calc(100vw - 24px);padding:8px 12px;border-radius:12px;background:rgba(26,26,26,.92);color:#eee;font-size:12px;backdrop-filter:blur(10px)}
 .lab b{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#aaa;font-weight:700}
 .lab .g{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
@@ -51,38 +51,31 @@ body{font-family:var(--font);background:var(--white);color:var(--ink);font-size:
 .nav .r{justify-self:end}
 .nav img{height:clamp(2rem,4vw,2.6rem);display:block}
 
-/* ---------- hero ---------- */
-.hero{position:relative;height:calc(100vh - 9vh);min-height:560px;padding:var(--nav-h) var(--nav-px) 0}
-.frame{position:relative;height:100%;border-radius:clamp(10px,1.2vw,16px);overflow:hidden;background:var(--reel);display:grid;place-items:center}
-.hero.bleed{padding:0}
-.hero.bleed .frame{border-radius:0}
-.reel-note{position:absolute;left:calc(var(--m)*1.25);top:calc(var(--m)*1.25);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3)}
+/* ---------- hero: reel fills the screen, nav on top, headline centred, two small anchors in the bottom corners ---------- */
+.hero{position:relative;height:100vh;min-height:560px;overflow:hidden}
+.reel{position:absolute;inset:0;background:var(--reel)}
+.reel-note{position:absolute;left:50%;bottom:calc(var(--nav-h) + var(--m));transform:translateX(-50%);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);text-align:center;white-space:nowrap}
 .reel-note span{display:block;font-weight:500;letter-spacing:.02em;text-transform:none;margin-top:2px}
 
-.copy{position:relative;z-index:2;display:grid;justify-items:center;text-align:center;gap:var(--gap);padding:0 var(--nav-px);max-width:100%}
-.eyebrow{font-size:var(--s-label);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-2);display:inline-flex;align-items:center;gap:.55em}
-.eyebrow img{width:.95em;height:.95em}
-h1{font-size:var(--s-head);font-weight:var(--head-w);line-height:.98;letter-spacing:-0.035em;max-width:13ch;text-wrap:balance}
-h1 .soft{color:var(--text-3)}
-.sub{font-size:var(--s-sub);font-weight:500;line-height:1.3;letter-spacing:-0.01em;color:var(--text-2);max-width:32ch;text-wrap:balance}
-.ctas{display:flex;align-items:center;gap:calc(var(--m)*1.5);flex-wrap:wrap;justify-content:center;margin-top:calc(var(--m)*0.5)}
+.center{position:absolute;inset:0;display:grid;place-items:center;padding:0 var(--nav-px);z-index:2}
+h1{font-size:var(--s-head);font-weight:var(--head-w);line-height:.98;letter-spacing:-0.035em;max-width:13ch;text-align:center;text-wrap:balance}
+
+/* bottom row mirrors the nav: same side gutter, same distance from the edge */
+.base{position:absolute;left:0;right:0;bottom:0;height:var(--nav-h);padding:var(--nav-py) var(--nav-px);z-index:3;
+  display:flex;align-items:center;justify-content:space-between;gap:calc(var(--m)*2)}
+.base p{font-size:var(--m);font-weight:500;line-height:1.35;color:var(--text-2);max-width:36ch}
 .btn{height:var(--pill-h);padding:0 var(--pill-px);display:inline-flex;align-items:center;gap:.6em;border-radius:8px;background:var(--ink);color:var(--white);
-  font-size:var(--m);font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none}
+  font-size:var(--m);font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;flex-shrink:0}
 .btn svg{width:.9em;height:.9em}
-.tlink{font-size:var(--m);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;min-height:44px;border-bottom:1.5px solid currentColor;line-height:1;padding-top:2px;min-height:0;padding-bottom:4px}
 @media (hover:hover){ .btn:hover{background:var(--rust)} }
 .cta-rust .btn{background:var(--rust)}
 @media (hover:hover){ .cta-rust .btn:hover{background:var(--rust-hover)} }
-
-.proof{position:absolute;left:0;right:0;bottom:calc(var(--m)*1.5);z-index:2;display:flex;justify-content:center;gap:calc(var(--m)*2.25);flex-wrap:wrap;padding:0 var(--nav-px);
-  font-size:var(--s-label);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3)}
-.proof span:first-child{font-weight:500;text-transform:none;letter-spacing:0}
-
-/* next section peeking, so the hero never reads as the bottom of the page */
-.peek{padding:calc(var(--m)*3) var(--nav-px) 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--nav-px)}
-.peek div{aspect-ratio:4/3;border-radius:clamp(10px,1.2vw,16px);background:var(--paper)}
-.peek div:nth-child(2){margin-top:12vh}
-@media (max-width:640px){ .peek{grid-template-columns:1fr} .peek div:nth-child(2){margin-top:0} .proof{gap:calc(var(--m)*1.25)} .proof span:first-child{flex-basis:100%;text-align:center} }
+@media (max-width:640px){
+  .reel-note{bottom:auto;top:calc(var(--nav-h) + 60px)}
+  .base{height:auto;padding-bottom:calc(var(--nav-py) + 1.25rem);flex-direction:column;align-items:stretch;gap:1rem}
+  .base p{max-width:none;font-size:calc(var(--m)*1.125)}
+  .btn{justify-content:center}
+}
 
 /* ---------- why pins ---------- */
 .pin{display:none;position:absolute;z-index:5;width:22px;height:22px;border-radius:50%;background:var(--rust);color:#fff;font:700 11px/22px var(--font);text-align:center}
@@ -111,60 +104,47 @@ h1 .soft{color:var(--text-3)}
 
 <main>
 <section class="hero cta-rust" id="hero">
-  <div class="frame">
-    <div class="reel-note">Video reel<span>12s loop · muted · grey until it's made</span></div>
-    <span class="pin" style="left:calc(var(--m)*1.25 + 170px);top:calc(var(--m)*1.1)">1</span>
+  <div class="reel" aria-hidden="true"></div>
+  <div class="reel-note">Video reel, full screen<span>loop · muted · grey until it&rsquo;s made</span></div>
+  <span class="pin" style="left:calc(50% + 110px);bottom:calc(var(--nav-h) + var(--m) + 12px)">1</span>
 
-    <div class="copy">
-      <div class="eyebrow" style="position:relative"><img src="star.svg" alt="" />Web design &amp; development<span class="pin" style="right:-30px;top:-4px">2</span></div>
-      <h1 id="head" style="position:relative">What AI can’t build.<span class="pin" style="right:-26px;top:0">3</span></h1>
-      <p class="sub" id="sub" style="position:relative">Websites for businesses that give a damn. Designed and hand-coded by me, built to bring you enquiries.<span class="pin" style="right:-26px;top:0">4</span></p>
-      <div class="ctas" style="position:relative">
-        <a class="btn" href="#">Book a free call
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
-        <a class="tlink" href="#">See the work</a>
-        <span class="pin" style="right:-30px;top:0">5</span>
-      </div>
-    </div>
-
-    <div class="proof"><span>Recent work:</span><span>Choice Inventory</span><span>Clinical Assessments</span><span>JSense</span>
-      </div>
-    <span class="pin" style="left:50%;bottom:calc(var(--m)*4)">6</span>
+  <div class="center">
+    <h1 id="head" style="position:relative">What AI can&rsquo;t build.<span class="pin" style="right:-26px;top:0">2</span></h1>
   </div>
+
+  <div class="base">
+    <p id="sub" style="position:relative">Websites for businesses that give a damn. Designed and hand-coded by me.<span class="pin" style="right:-26px;top:-6px">3</span></p>
+    <a class="btn" href="#" style="position:relative">Book a free call
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg><span class="pin" style="left:-30px;top:-6px">4</span></a>
+  </div>
+  <span class="pin" style="left:var(--nav-px);top:calc(var(--nav-h) - 8px)">5</span>
 </section>
-<div class="peek" aria-hidden="true" style="position:relative"><div></div><div></div><span class="pin" style="left:var(--nav-px);top:calc(var(--m)*1.6)">7</span></div>
 
 <section class="notes" id="notes">
   <h2>Why every piece is where it is</h2>
   <p>Satoshi throughout. BrandelLuchador stays in the menu only. Every size is a multiple of the nav label, so the hero and the menu bar always scale together. Turn on "Why" in the bar below to see the numbers on the hero.</p>
   <ol>
-    <li><span class="n">1</span><div><h3>Reel in a frame</h3></div><div>
-      <p>The video sits in a rounded frame that starts under the nav and lines up with MENU and CONTACT. The nav stays on clean white above it, so the controls and the content read as two separate layers. That's the same idea Apple built iOS 26 around: controls sit in their own layer above the content. Full-bleed is one click away in the bar if you want to compare.</p>
-      <p>When the video exists, the centre of every shot stays calm and a soft radial shade sits behind the text. NN/g's rule is to design for the worst frame, and to hit 4.5:1 contrast for normal text and 3:1 for large text.</p>
+    <li><span class="n">1</span><div><h3>Reel fills the screen</h3></div><div>
+      <p>The video is the whole background, edge to edge, with nothing else competing. The nav and the two corner items float on top of it as their own layer, which is the idea Apple's iOS 26 design is built on: controls sit in a layer above the content.</p>
+      <p>When the footage exists, every shot keeps the middle calm and a soft radial shade sits behind the headline. NN/g says to design for the worst frame and to hit 4.5:1 contrast for normal text and 3:1 for large text. The bottom corners get a light floor fade for the same reason.</p>
       <p class="src"><a href="https://www.apple.com/newsroom/2025/06/apple-introduces-a-delightful-and-elegant-new-software-design/">Apple newsroom, new design</a> · <a href="https://www.nngroup.com/articles/text-over-images/">NN/g, text over images</a></p></div></li>
-    <li><span class="n">2</span><div><h3>Eyebrow says what you do</h3></div><div>
-      <p>The strapline is a hook, so a plain label above it says the service in four words. NN/g's first homepage guideline is a tagline that says what the company does. A clever line on its own leaves people guessing.</p>
-      <p>Same size, weight and tracking as the nav labels (1m, 700, caps), so it reads as part of the same system.</p>
-      <p class="src"><a href="https://www.nngroup.com/articles/top-ten-guidelines-for-homepage-usability/">NN/g, top 10 homepage guidelines</a></p></div></li>
-    <li><span class="n">3</span><div><h3>Headline in Satoshi Medium</h3></div><div>
-      <p>5.06m on desktop (about 80px at 1440 wide) and 3.4m on phones (about 44px). That's two 1.5× steps below the old display sizes, which matters because Satoshi is far wider than BrandelLuchador. For reference, Material 3's largest display style is about 4× its label size, and Apple's Large Title is about 2.6× its footnote. Big enough to lead, small enough to stay on two lines.</p>
-      <p>Weight 500 with tight tracking (−0.035em) and line height just under 1. Heavy weights at this size look like a poster; medium with tight tracking is what reads as premium. Apple's guidance is to build hierarchy with size and weight from a small set of styles. Try 700 and 900 in the bar.</p>
+    <li><span class="n">2</span><div><h3>Headline alone in the middle</h3></div><div>
+      <p>Satoshi Medium, 5.06m on desktop (about 80px at 1440 wide) and 3.4m on phones (about 44px). Material 3's largest display style is about 4× its label size, and Apple's Large Title is about 2.6× its footnote, so 5× the menu label leads clearly without shouting. Tight tracking (−0.035em) and line height just under 1 make it read as one shape over the video. Try 700 and 900 in the bar.</p>
+      <p>It's the only thing in the centre, so the eye has one place to land.</p>
       <p class="src"><a href="https://m3.material.io/styles/typography/type-scale-tokens">Material 3 type scale</a> · <a href="https://developer.apple.com/design/human-interface-guidelines/typography">Apple HIG, typography</a></p></div></li>
-    <li><span class="n">4</span><div><h3>Subline does the selling</h3></div><div>
-      <p>NN/g makes the point that naming a technology isn't a value proposition. The person reading has to work out what they get. "What AI can’t build" defines you against AI, so the subline has to say the outcome in plain words: who it's for, who builds it, and what it does for them.</p>
-      <p>1.5m, weight 500, held to 32 characters wide so it breaks into two even lines. Baymard puts comfortable reading at 50 to 75 characters for body text. A hero subline should be shorter than that.</p>
-      <p class="src"><a href="https://www.nngroup.com/articles/powered-by-ai-is-not-a-value-proposition/">NN/g, "Powered by AI" is not a value proposition</a> · <a href="https://baymard.com/blog/line-length-readability">Baymard, line length</a></p></div></li>
-    <li><span class="n">5</span><div><h3>One button, one link</h3></div><div>
-      <p>The button is exactly the nav pill: same height (38 to 48px), padding and label style. That also clears Apple's 44pt and Material's 48dp minimum touch targets at desktop sizes. Rust fill, because it's the one action that matters. "See the work" is a quieter text link for people who aren't ready yet, so they aren't forced to choose between booking and leaving.</p>
+    <li><span class="n">3</span><div><h3>Bottom left: what you do</h3></div><div>
+      <p>The headline is a hook, so this line says the service in plain words. NN/g's first homepage guideline is a tagline that says what the company does. Their research also shows that defining yourself by a technology ("powered by AI") doesn't tell people what they get, and "What AI can't build" has the same problem without this line beside it.</p>
+      <p>Left side because attention leans left: NN/g measured about 80% of viewing time on the left half of the page. Set at the menu size (1m), weight 500, held to 36 characters so it breaks into two short lines.</p>
+      <p class="src"><a href="https://www.nngroup.com/articles/top-ten-guidelines-for-homepage-usability/">NN/g, homepage guidelines</a> · <a href="https://www.nngroup.com/articles/powered-by-ai-is-not-a-value-proposition/">NN/g, "Powered by AI"</a> · <a href="https://www.nngroup.com/articles/horizontal-attention-leans-left/">NN/g, attention leans left</a></p></div></li>
+    <li><span class="n">4</span><div><h3>Bottom right: the one action</h3></div><div>
+      <p>Book a free call, built exactly like the nav pill: same height (38 to 48px), padding and label. That clears Apple's 44pt and Material's 48dp touch targets at desktop sizes. Bottom right is where people finish reading a screen, so the action sits where the eye ends up. Rust fill because it's the only filled thing on the screen.</p>
       <p class="src"><a href="https://www.nngroup.com/articles/top-ten-guidelines-for-homepage-usability/">NN/g, clear starting points for the top tasks</a></p></div></li>
-    <li><span class="n">6</span><div><h3>Proof at the bottom edge</h3></div><div>
-      <p>Real client names sit in the hero itself. NN/g's guidelines say to show real content, not describe it, and this is the cheapest trust signal you have. These can become logos or tiny thumbnails later. Muted grey so they don't compete with the button.</p>
-      <p class="src"><a href="https://www.nngroup.com/articles/top-ten-guidelines-for-homepage-usability/">NN/g, show examples of real content</a></p></div></li>
-    <li><span class="n">7</span><div><h3>Hero stops short of the fold</h3></div><div>
-      <p>The hero is 91% of the screen height, so the top of the work section peeks in. NN/g's eye-tracking found 57% of viewing time goes to the first screen and 74% to the first two. A full-screen hero with nothing below it reads as the end of the page (they call it a false floor). The peek tells people to scroll without needing an arrow.</p>
-      <p class="src"><a href="https://www.nngroup.com/articles/scrolling-and-attention/">NN/g, scrolling and attention</a> · <a href="https://www.nngroup.com/articles/page-fold-manifesto/">NN/g, the fold manifesto</a></p></div></li>
+    <li><span class="n">5</span><div><h3>Mirrored top and bottom bars</h3></div><div>
+      <p>The bottom row is the same height and side gutter as the nav, so the screen has a frame: two bars at the edges and one headline in the middle. That's the visual balance you asked for. Light on top (MENU, logo, CONTACT), light on the bottom (one line, one button), and nothing between them but the video and the headline.</p>
+      <p>Full screen does risk a "false floor" where people think the page ends there, which NN/g warns about. Having real content pinned to the bottom edge helps, and the work section should start straight after with no gap. They found 57% of viewing time goes to the first screen and 74% to the first two, so the second screen still matters.</p>
+      <p class="src"><a href="https://www.nngroup.com/articles/page-fold-manifesto/">NN/g, the fold manifesto</a> · <a href="https://www.nngroup.com/articles/scrolling-and-attention/">NN/g, scrolling and attention</a></p></div></li>
     <li><span class="n">+</span><div><h3>The video, when it lands</h3></div><div>
-      <p>Muted, inline, looping. A poster frame shows until it plays, and it only starts loading once the loader is running. web.dev notes that the first frame can count as the page's main paint, so a light poster keeps the speed score healthy. WebM first with MP4 as the fallback, audio stripped. No auto-rotating carousel of slides. Baymard found most people never see past the first slide, so one continuous reel is the better choice.</p>
+      <p>Muted, inline, looping. A poster frame shows until it plays, and it only starts loading while the loader runs. web.dev notes that the first frame can count as the page's main paint, so a light poster keeps the speed score healthy. WebM first with MP4 as the fallback, audio stripped. One continuous reel, not a slideshow: Baymard found most people never see past the first slide of a rotating hero.</p>
       <p class="src"><a href="https://web.dev/learn/performance/video-performance">web.dev, video performance</a> · <a href="https://baymard.com/blog/homepage-carousel">Baymard, homepage carousels</a></p></div></li>
   </ol>
 </section>
@@ -173,7 +153,6 @@ h1 .soft{color:var(--text-3)}
 <div class="lab" role="toolbar" aria-label="Lab options">
   <b>Line</b><div class="g" id="lines"></div>
   <b>Weight</b><div class="g" id="weights"></div>
-  <b>Frame</b><div class="g"><button id="fInset" aria-pressed="true">Inset</button><button id="fBleed" aria-pressed="false">Full bleed</button></div>
   <b>CTA</b><div class="g"><button id="cRust" aria-pressed="true">Rust</button><button id="cInk" aria-pressed="false">Ink</button></div>
   <button id="why" aria-pressed="false">Why</button>
 </div>
@@ -182,9 +161,9 @@ h1 .soft{color:var(--text-3)}
 const $=s=>document.querySelector(s), hero=$('#hero'), head=$('#head');
 const pin=head.querySelector('.pin').outerHTML;
 const lines=[
-  ["What AI can’t build.","Websites for businesses that give a damn. Designed and hand-coded by me, built to bring you enquiries."],
-  ["Building what AI can’t.","Websites for businesses that give a damn. Designed and hand-coded by me, built to bring you enquiries."],
-  ["Websites AI can’t fake.","For businesses that give a damn. Designed and hand-coded by one person, built to bring you enquiries."],
+  ["What AI can’t build.","Websites for businesses that give a damn. Designed and hand-coded by me."],
+  ["Building what AI can’t.","Websites for businesses that give a damn. Designed and hand-coded by me."],
+  ["Websites AI can’t fake.","For businesses that give a damn. Designed and hand-coded by one person."],
   ["Built by a person, not a prompt.","Websites for businesses that give a damn, designed to bring you enquiries."],
   ["Websites that bring in work.","Designed and hand-coded by me. The part AI can’t do."]
 ];
@@ -194,7 +173,6 @@ function group(el,items,on){items.forEach((t,i)=>{const b=document.createElement
 group($('#lines'),['A','B','C','D','E'],i=>{head.innerHTML=lines[i][0]+pin;sub.innerHTML=lines[i][1]+subPin});
 group($('#weights'),['500','700','900'],i=>document.documentElement.style.setProperty('--head-w',[500,700,900][i]));
 const pair=(a,b,fa,fb)=>{a.onclick=()=>{a.setAttribute('aria-pressed','true');b.setAttribute('aria-pressed','false');fa()};b.onclick=()=>{b.setAttribute('aria-pressed','true');a.setAttribute('aria-pressed','false');fb()}};
-pair($('#fInset'),$('#fBleed'),()=>hero.classList.remove('bleed'),()=>hero.classList.add('bleed'));
 pair($('#cRust'),$('#cInk'),()=>hero.classList.add('cta-rust'),()=>hero.classList.remove('cta-rust'));
 $('#why').onclick=e=>{const on=document.body.classList.toggle('why-on');e.target.setAttribute('aria-pressed',on)};
 </script>

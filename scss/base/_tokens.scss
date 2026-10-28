@@ -58,6 +58,19 @@ $space-128: 8rem;
 $space-192: 12rem;
 $page-padding: clamp(1.25rem, 4vw, 4rem);
 
+// Nav metrics. The hero sizes everything off the nav label ($fs-nav), so the
+// hero and the menu bar always scale together.
+$fs-nav: clamp(0.78rem, 1vw, 0.95rem);
+$nav-pad-y: clamp(0.55rem, 1vw, 0.85rem);
+$nav-pad-x: clamp(1rem, 3.5vw, 2.5rem);
+
+// Hero scale: 1.5x steps off the nav label
+$fs-hero-title: calc(#{$fs-nav} * 5.0625);        // ~80px at 1440
+$fs-hero-title-mobile: calc(#{$fs-nav} * 3.375);  // ~44px at 390
+
+// Reel placeholder until the video exists
+$c-reel: #D9D6D1;
+
 // Radius
 $r-sm: 8px;
 $r-md: 12px;

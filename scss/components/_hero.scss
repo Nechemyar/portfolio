@@ -1,159 +1,77 @@
 @use '../base/tokens' as *;
 
+/* Hero: the reel fills the screen, the nav floats on top, the title sits
+   alone in the centre, and a bottom row mirrors the nav (same height and
+   gutter) with one line on the left and one link on the right. Every size
+   is a multiple of the nav label ($fs-nav). */
+
+$hero-nav-h: calc(clamp(38px, 3.6vw, 48px) + #{$nav-pad-y} * 2 + 2rem);
+
 .hero {
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  /* svh = small viewport height: the STABLE viewport with the mobile
-     toolbar shown. dvh resizes live as the toolbar collapses/expands on
-     scroll, which reflowed the hero and made the page jump when the finger
-     lifted. svh holds a fixed height so nothing shifts mid-scroll. */
-  min-height: 100svh;
-  padding-top: 0.1px;
-  background: #fff;
-  z-index: 10;
-}
-
-.hero-divider {
-  position: relative;
-  width: 100%;
-  height: 50vh;
-  background: #fff;
-  border-bottom-left-radius: 50% 100%;
-  border-bottom-right-radius: 50% 100%;
-  z-index: 10;
-  margin-top: -1px;
-}
-
-.hero__stage {
-  position: relative;
-  z-index: 2;
-  width: 100%;
   height: 100vh;
-  height: 100svh; /* stable viewport — see note on .hero above */
+  /* svh: the stable viewport with the mobile toolbar shown, so the hero
+     doesn't reflow when the toolbar collapses mid-scroll. */
+  height: 100svh;
+  min-height: 34rem;
   overflow: hidden;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-}
-
-.hero__layout {
-  position: relative;
-  width: 100%;
-  flex: 1;
-}
-
-// --- Work card — full bleed red, no panels ---
-
-.hero__work-card {
-  position: absolute;
-  inset: 0;
-  background: transparent;
-  overflow: visible;
-  mask: none;
-  -webkit-mask: none;
-
-  &::before,
-  &::after {
-    content: none;
-  }
-}
-
-// --- TV scene — award badge only ---
-
-.hero__tv-scene {
-  display: block;
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  &::before,
-  &::after {
-    content: none;
-  }
-}
-
-// Hide all TV sub-elements
-.hero__cat-wrapper,
-.hero__cat-img,
-.hero__mouth-slider,
-.hero__mouth-track,
-.hero__mouth-img,
-.hero__tv-overlay {
-  display: none;
-}
-
-// --- DESIGN — giant ink text at bottom ---
-
-.hero__display-word {
-  position: relative;
-  z-index: 3;
-  width: 100%;
+  background: $c-reel;
   color: $c-ink;
-  font-family: $font-display;
-  font-size: clamp(10rem, 75vw, 35rem);
-  font-weight: 400;
-  line-height: 0.78;
-  text-align: center;
-  text-align: center;
-  text-transform: uppercase;
-  white-space: nowrap;
+  z-index: 10;
 }
 
-// --- Hide work title ---
+/* --- Reel --- */
 
-.hero__work-title {
-  display: none;
-}
-
-// --- Copy card — transparent overlay ---
-
-.hero__copy-card {
+.hero__reel {
   position: absolute;
   inset: 0;
-  z-index: 5;
-  display: flex;
-  flex-direction: column;
-  background: transparent;
-  padding: 0;
+  background: $c-reel;
 }
 
-.hero__copy-card > * {
-  position: relative;
+.hero__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;               /* shown by HeroReel once it can play */
+}
+
+.hero__video.is-playing {
+  opacity: 1;
+}
+
+/* --- Title --- */
+
+.hero__center {
+  position: absolute;
+  inset: 0;
   z-index: 2;
-}
-
-
-// --- Message box ---
-
-.hero__message {
-  position: absolute;
-  inset: 0;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  text-align: left;
+  gap: calc(#{$fs-nav} * 1.5);
+  padding: 0 $nav-pad-x;
   pointer-events: none;
-  padding: 0 clamp(1rem, 5vw, 4rem);
-  padding-bottom: clamp(12rem, 25vh, 16rem);
-  gap: clamp(1.25rem, 3vw, 2rem);
 }
 
-.hero__pitch-heading {
+.hero__title {
   margin: 0;
+  max-width: 13ch;
   color: $c-ink;
   font-family: $font-body;
-  font-size: clamp(1.35rem, 5.2vw, 2rem);
-  font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: 0;
+  font-size: $fs-hero-title-mobile;
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  text-align: center;
   text-transform: none;
-  text-align: left;
-  max-width: 22ch;
-  visibility: hidden;
+  text-wrap: balance;
+  visibility: hidden;      /* revealed by the entrance once lines are split */
 
-  @media (min-width: 769px) {
-    max-width: 26ch;
+  @media (min-width: 641px) {
+    font-size: $fs-hero-title;
   }
 }
 
@@ -161,146 +79,98 @@
   display: block;
 }
 
-.hero__note {
-  margin: 1.5rem 0 0;
-  color: rgba(26, 26, 26, 0.6);
-  font-family: $font-body;
-  font-size: clamp(1rem, 2vw, 1.25rem);
-}
-
-// --- CTA — lives under pitch heading inside .hero__message ---
-
-.hero__pitch-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55em;
-  align-self: flex-start; /* don't stretch full width */
-  background: transparent;
-  border: 1.5px solid $c-ink;
-  border-radius: 4px;
-  padding: 0.6em 1.1em;
-  color: $c-ink;
-  font-family: $font-body;
-  font-size: clamp(0.82rem, 2.2vw, 0.95rem);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  text-decoration: none;
+/* Empty until the glass CTA lands; takes no space while empty. */
+.hero__cta-slot {
   pointer-events: auto;
-  touch-action: manipulation;
-  transition: background $duration-fast ease, color $duration-fast ease;
-}
 
-@media (hover: hover) {
-  .hero__pitch-cta:hover {
-    background: $c-ink;
-    color: #fff;
+  &:empty {
+    display: none;
   }
 }
 
-.hero__pitch-cta-text {
-  font: inherit;
-}
+/* --- Bottom row --- */
 
-.hero__pitch-cta-arrow {
-  width: 0.9em;
-  height: 0.9em;
-  flex-shrink: 0;
-  display: block;
-}
-
-// --- Bottom Group ---
-
-.hero__bottom-layer {
+.hero__base {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 6;
+  z-index: 3;
+  min-height: $hero-nav-h;
+  padding: $nav-pad-y $nav-pad-x;
   display: flex;
-  flex-direction: column;
-  pointer-events: none; /* layer itself transparent */
-
-  /* But interactive children must receive events */
-  a, button {
-    pointer-events: auto;
-  }
-}
-
-
-.hero__perch-row {
-  display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: flex-end;
-  width: 100%;
-  padding: 0 clamp(1.2rem, 4vw, 2rem);
-  padding-bottom: clamp(1.5rem, 3vh, 3rem);
+  gap: calc(#{$fs-nav} * 2);
 }
 
-.hero__award-badge {
-  width: clamp(4.5rem, 16vw, 6rem);
-  aspect-ratio: 251.83 / 120.93;
-  background: url('../../assets/images/New/Award.svg') center / contain no-repeat;
-  filter: brightness(0); /* dark on white bg */
-}
+.hero__line {
+  margin: 0;
+  max-width: 36ch;
+  color: $c-text-secondary;
+  font-family: $font-body;
+  font-size: $fs-nav;
+  font-weight: 400;
+  line-height: 1.35;
 
-// --- Hidden elements ---
-
-.hero__cta-icon,
-.hero__cta-icon svg,
-.hero__gradient,
-.hero__footer,
-.marquee,
-.hero__intro-eyebrow,
-.hero__headline,
-.hero__sticker,
-.hero__intro-eyebrow-inner,
-.hero__intro-eyebrow-line,
-.hero__cta,
-.hero__eyebrow,
-.hero__eyebrow-star,
-.hero__footer-link,
-.hero__footer-chevron,
-.hero__footer-tagline,
-.hero__platform {
-  display: none;
-}
-
-// --- Desktop ---
-
-@media (min-width: 769px) {
-  .hero__display-word {
-    font-size: clamp(20rem, 25vw, 40rem);
-  }
-
-
-  .hero__pitch-heading {
-    font-size: clamp(2rem, 2.8vw, 3.2rem);
-  }
-
-  .hero__award-badge {
-    width: clamp(5.5rem, 7vw, 8rem);
-  }
-
-  .hero__cta-row {
-    gap: 0.65rem;
-  }
-
-  .hero__pitch-cta {
-    font-size: clamp(1rem, 1.3vw, 1.25rem);
-  }
-
-  .hero__pitch-cta-circle {
-    width: clamp(1.2rem, 1.5vw, 1.6rem);
-    height: clamp(1.2rem, 1.5vw, 1.6rem);
+  @media (max-width: 640px) {
+    max-width: 24ch;
   }
 }
 
-// --- Small mobile ---
+.hero__base-right {
+  display: flex;
+  align-items: center;
+  gap: calc(#{$fs-nav} * 1.25);
+  flex-shrink: 0;
+}
 
-@media (max-width: 420px) {
-  .hero__display-word {
-    font-size: clamp(8rem, 70vw, 22rem);
+.hero__down {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  min-height: 44px;
+  color: $c-ink;
+  font-family: $font-body;
+  font-size: $fs-nav;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  touch-action: manipulation;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+  }
+}
+
+/* WCAG 2.2.2: a way to pause motion that runs longer than 5 seconds. */
+.hero__pause {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: $r-full;
+  background: transparent;
+  color: $c-ink;
+  cursor: pointer;
+
+  &[hidden] {
+    display: none;
+  }
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (hover: hover) {
+  .hero__down:hover {
+    color: $c-rust;
   }
 }

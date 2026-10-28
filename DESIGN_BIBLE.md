@@ -141,10 +141,9 @@ to:   { clipPath: 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)', y: 0,
 ```
 
 Hero sequence order (overlapping with negative offsets):
-1. `.hero__display-word` — 1.4s
-2. `.hero__tv-scene`, `.hero__award-badge`, `.hero__cta-row` — 1.2s, stagger 0.1, `-=1.0`
-3. `.nav__logo`, `.nav__cta--right`, `.nav__desktop-wrapper` — 1.2s, stagger 0.1, `-=1.1`
-4. `.hero__pitch-line` (text lines) — 1.5s, stagger 0.2, `-=0.8`
+1. `.hero__pitch-line` (title lines) — 1.4s, stagger 0.1
+2. `.nav__cta--right`, `.nav__desktop-wrapper` — 1.2s, stagger 0.1, `-=1.1`
+3. `.hero__line`, `.hero__base-right` — 1.2s, stagger 0.1, `-=1.0`
 
 Text-line variant (tighter clip):
 ```
@@ -187,35 +186,33 @@ and wipe it up on enter. The fade is the legacy path; the wipe is the standard.
 
 ## 7. Hero spec
 
-The current hero is a full-bleed **rust (`#ec4a1e`)** stage. Section carries
-`data-nav-theme="dark"` and `data-bg="#ec4a1e"`. `min-height: 100vh/100dvh`.
+Full-screen reel hero (2026-10-28). Section carries `data-nav-theme="light"`.
+`height: 100svh`. Every size is a multiple of the nav label `$fs-nav`
+(`clamp(0.78rem, 1vw, 0.95rem)`), stepping by 1.5×, so the hero and the menu
+bar scale together. Research notes and sources: `/hero-lab/` on the
+`claude/project-thread-djm481` preview branch.
 
-**Mobile hero is the approved reference.** Match its simplicity and clarity.
+Layers (back → front):
+- **Reel** (`.hero__reel` / `.hero__video`): fills the whole hero. `$c-reel`
+  grey until the video exists. Add `<source data-src>` children (WebM, then MP4)
+  and a poster; `js/modules/HeroReel.js` attaches them after `hero:ready`, fades
+  the video in once it plays, pauses it off screen, and skips it for
+  reduced-motion and Save-Data. The pause button (WCAG 2.2.2) appears only when a
+  reel is loaded. Keep the centre of every shot calm so the title stays legible.
+- **Title** (`.hero__title`, `h1`, Satoshi 400): `$fs-hero-title` (5.0625 × nav
+  label, ~80px at 1440) and `$fs-hero-title-mobile` (3.375 ×, ~44px at 390),
+  `line-height: 0.98`, `letter-spacing: -0.045em`, centred, `max-width: 13ch`.
+  Copy: *"What AI can't build."* BrandelLuchador is not used in the hero; it
+  stays in the menu.
+- **CTA slot** (`.hero__cta-slot`): under the title, empty for now (glass CTA
+  being designed). Anything placed in it wipes up in the entrance.
+- **Bottom row** (`.hero__base`): mirrors the nav's height and gutter. Left: one
+  line at nav size, weight 400, `$c-text-secondary`. Right: "See the work ↓" at
+  nav-label style. Booking is not in the hero; the fixed nav CONTACT covers it and
+  the big booking moment comes after the work section.
 
-Elements (top → bottom):
-- **Pitch heading** (`.hero__pitch-heading`, `h1`, Satoshi, weight 500, white):
-  mobile `clamp(1.35rem, 5.2vw, 2rem)`, desktop `clamp(2rem, 2.8vw, 3.2rem)`,
-  `line-height: 1.1`, `max-width: 40ch`, left-aligned, vertically centered with a
-  bottom offset. Copy: *"We design and develop strategic, beautiful websites that
-  capture your brand, convert your audience, and grow with your business."*
-- **Award badge** (`.hero__award-badge`, bottom-left): `Award.svg`, rendered
-  white via `brightness(0) invert(1)`.
-- **CTA** (`.hero__cta-row`, bottom-right): a *text link* "Book a free call" with
-  an arrow circle — white, uppercase, weight 700, `letter-spacing: 0.04em`. Not a
-  filled pill in the hero.
-- **"DESIGN" word** (`.hero__display-word`, bottom, BrandelLuchador 400, white):
-  base `clamp(10rem, 75vw, 35rem)`, desktop `clamp(20rem, 25vw, 40rem)`, ≤420px
-  `clamp(8rem, 70vw, 22rem)`, `line-height: 0.78`, uppercase, `white-space: nowrap`.
-- **Marquee** (`.marquee`): "WEB DESIGN" + star, scrolling.
-
-### Open / not-yet-final (do NOT enshrine as decided)
-- **Bottom curve divider** (`.hero-divider`): currently 50vh, `border-radius:
-  50% / 100%`. The shape is *wrong* and unresolved — treat as a work in progress,
-  not a locked decision. Revisit before documenting a final value.
-- **Desktop hero layout**: not finalized. Mobile is the reference; the desktop
-  composition still needs work.
-
----
+Entrance (in `js/main.js`): title lines wipe up (1.4s, stagger 0.1), nav wipes
+(`-=1.1`), bottom row wipes (`-=1.0`), then anything in the CTA slot.
 
 ## 8. Navigation
 

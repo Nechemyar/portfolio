@@ -30,15 +30,6 @@
   <!-- Heading font preload -->
   <link rel="preload" as="font" href="assets/fonts/BrandelLuchador-Regular.woff2" type="font/woff2" crossorigin />
 
-  <!-- LCP image preload — preload the hero composition so the first paint
-       has both the screen content (visible through the mask window) and the
-       hero foreground. -->
-  <link rel="preload" as="image" href="assets/images/orangetv.webp" fetchpriority="high" />
-  <link rel="preload" as="image" href="assets/images/New/choice best.webp" fetchpriority="high" />
-  <link rel="preload" as="image" href="assets/images/fast.webp" />
-  <link rel="preload" as="image" href="assets/images/stunning.webp" />
-  <link rel="preload" as="image" href="assets/images/mobile.webp" />
-  <link rel="preload" as="image" href="assets/images/websites.webp" />
 
   <!-- CSS -->
   <link rel="stylesheet" href="scss/main.scss" />
@@ -147,98 +138,33 @@
   <!-- MAIN -->
   <main>
 
-    <!-- HERO (tall trigger, pinned sticky stage) -->
-    <section class="hero" id="hero" data-nav-theme="light" data-bg="#fff">
-      <div class="hero__stage">
-        <div class="hero__layout">
-          <!-- TV Cat — sits above the card on mobile -->
-          <article class="hero__work-card" aria-label="Featured work preview">
-            <div class="hero__tv-scene">
-              <div class="hero__cat-wrapper hero__cat-wrapper--base">
-                <!-- Removed halo to fix white box issue -->
-                <img class="hero__cat-img" src="assets/images/orangetv.webp" alt="" fetchpriority="high" decoding="async" />
-              </div>
-              <div class="hero__cat-wrapper hero__cat-wrapper--screen">
-                <div class="hero__mouth-slider" id="mouth-slider">
-                  <div class="hero__mouth-track" id="mouth-track">
-                    <img class="hero__mouth-img hero__mouth-img--first" src="assets/images/New/choice best.webp" alt="Choice Inventory" fetchpriority="high" decoding="async" />
-                    <img class="hero__mouth-img" src="assets/images/project-clinical.webp" alt="Clinical Assessments" decoding="async" />
-                    <img class="hero__mouth-img" src="assets/images/New/choice best.webp" alt="" />
-                    <img class="hero__mouth-img" src="assets/images/project-clinical.webp" alt="" />
-                  </div>
-                  <div class="hero__tv-overlay"></div>
-                </div>
-              </div>
-            </div>
-            <h2 class="hero__work-title">Let Your Website<br />Do the Talking</h2>
-          </article>
+    <!-- HERO — full-screen reel behind, title centred, two small anchors in the bottom corners.
+         Sizing and reasoning: /hero-lab/ on the preview branch and DESIGN_BIBLE.md §7. -->
+    <section class="hero" id="hero" data-nav-theme="light" data-bg="#D9D6D1">
+      <div class="hero__reel" aria-hidden="true">
+        <!-- Reel goes here. Add <source data-src="..."> children (WebM first, then MP4)
+             and a poster; HeroReel.js loads it after the loader and pauses it off screen. -->
+        <video class="hero__video" muted loop playsinline preload="none"></video>
+      </div>
 
-          <!-- Copy card — pitch text + CTA directly underneath -->
-          <article class="hero__copy-card">
-            <div class="hero__message">
-              <h1 class="hero__pitch-heading js-split-lines">
-                We design and develop strategic, beautiful websites that capture your brand, convert your audience, and grow with your business.
-              </h1>
-              <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="hero__pitch-cta">
-                <span class="hero__pitch-cta-text">Book a free call</span>
-                <svg class="hero__pitch-cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
-                  <line x1="7" y1="17" x2="17" y2="7"></line>
-                  <polyline points="7 7 17 7 17 17"></polyline>
-                </svg>
-              </a>
-            </div>
-          </article>
+      <div class="hero__center">
+        <h1 class="hero__title js-split-lines">What AI can&rsquo;t build.</h1>
+        <!-- Slot for the glass CTA under the title (being designed separately). -->
+        <div class="hero__cta-slot" data-slot="hero-cta"></div>
+      </div>
 
-          <!-- Bottom group: award + DESIGN word -->
-          <div class="hero__bottom-layer">
-            <div class="hero__perch-row">
-              <div class="hero__award-badge"></div>
-            </div>
-            <div class="hero__display-word" aria-hidden="true">DESIGN</div>
-          </div>
+      <div class="hero__base">
+        <p class="hero__line">Websites for businesses that give a damn. Designed and hand-coded by me.</p>
+        <div class="hero__base-right">
+          <button class="hero__pause" type="button" aria-label="Pause background video" hidden>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+          </button>
+          <a href="#work" class="hero__down">See the work
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" aria-hidden="true"><line x1="12" y1="4" x2="12" y2="19"/><polyline points="6 13 12 19 18 13"/></svg>
+          </a>
         </div>
-
-        <!-- GIANT MARQUEE -->
-        <div class="marquee" id="marquee">
-          <div class="marquee__track">
-            <div class="marquee__content">
-              <div class="marquee__item">
-                <span class="marquee__text">WEB DESIGN</span>
-                <img src="assets/images/star.svg" alt="star" class="marquee__star-img" />
-              </div>
-              <div class="marquee__item">
-                <span class="marquee__text">WEB DESIGN</span>
-                <img src="assets/images/star.svg" alt="star" class="marquee__star-img" />
-              </div>
-            </div>
-            <div class="marquee__content" aria-hidden="true">
-              <div class="marquee__item">
-                <span class="marquee__text">WEB DESIGN</span>
-                <img src="assets/images/star.svg" alt="star" class="marquee__star-img" />
-              </div>
-              <div class="marquee__item">
-                <span class="marquee__text">WEB DESIGN</span>
-                <img src="assets/images/star.svg" alt="star" class="marquee__star-img" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- HERO FOOTER — three columns on PC (eyebrow flanks the
-             CTA), CTA-only centered on mobile -->
-        <div class="hero__gradient"></div>
-        <div class="hero__footer">
-          <span class="hero__eyebrow">
-            <img class="hero__eyebrow-star" src="assets/images/star.svg" alt="" />
-            I make websites for businesses that give a damn
-          </span>
-          <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="hero__cta">Book a free call</a>
-          <a href="#work" class="hero__footer-link hero__footer-link--right">EXPLORE WORK <svg class="hero__footer-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
-        </div>
-
       </div>
     </section>
-
-
 
     <!-- WORK — continuous red from hero, tagline + cards + MAGIC -->
     <section class="work" id="work" data-nav-theme="light" data-bg="#fff">

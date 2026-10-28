@@ -14,6 +14,7 @@ import Loader from './modules/Loader.js';
 import WorkSection from './modules/WorkSection.js';
 import ArchSlider from './modules/ArchSlider.js';
 import BlurQuality from './modules/BlurQuality.js';
+import HeroReel from './modules/HeroReel.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,6 +28,7 @@ const faq = new Faq();
 const workSection = new WorkSection();
 new ArchSlider();
 new BlurQuality();
+new HeroReel();
 
 /* Hero paints in its final state — no fade-in choreography. The previous
    entrance animated nav / marquee / gradient / footer in from offset
@@ -35,9 +37,8 @@ new BlurQuality();
    Showing the hero immediately at full opacity sidesteps the issue. */
 // Setup initial hidden states for hero elements
 const wipeElements = [
-  '.hero__display-word',
-  '.hero__tv-scene',
-  '.hero__award-badge',
+  '.hero__line',
+  '.hero__base-right',
   '.nav__cta--right',
   '.nav__desktop-wrapper'
 ];
@@ -103,40 +104,13 @@ new Loader(() => {
   
   // Hero Entrance Sequence
   const tl = gsap.timeline();
-  
-  // 1. DESIGN word wipes up
-  tl.to('.hero__display-word', {
-    clipPath: 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)',
-    y: 0,
-    duration: 1.4,
-    ease: 'expo.out'
-  });
-  
-  // 2. Award and TV Cat wipe up
-  tl.to(['.hero__tv-scene', '.hero__award-badge'], {
-    clipPath: 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)',
-    y: 0,
-    duration: 1.2,
-    ease: 'expo.out',
-    stagger: 0.1
-  }, '-=1.0');
+  const wipeIn = 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)';
 
-
-  // 3. Nav elements wipe up (logo excluded — it was handed off from the loader)
-  tl.to(['.nav__cta--right', '.nav__desktop-wrapper'], {
-    clipPath: 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)',
-    y: 0,
-    duration: 1.2,
-    ease: 'expo.out',
-    stagger: 0.1
-  }, '-=1.1');
-
-  // 4. Paragraph reveals line by line, CTA wipes up after
-  gsap.set('.hero__pitch-cta', { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)', y: 40 });
+  // 1. Title wipes up line by line
   tl.to('.hero__pitch-line', {
     clipPath: 'polygon(0% -20%, 100% -20%, 100% 120%, 0% 120%)',
     y: 0,
-    duration: 1.2,
+    duration: 1.4,
     ease: 'expo.out',
     stagger: 0.1,
     onComplete: () => {
@@ -144,11 +118,30 @@ new Loader(() => {
         splitHeading.innerHTML = splitHeading.dataset.originalText;
       }
     }
-  }, '-=0.8');
-  tl.to('.hero__pitch-cta', {
-    clipPath: 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)',
+  });
+
+  // 2. Nav elements wipe up (logo excluded — it was handed off from the loader)
+  tl.to(['.nav__cta--right', '.nav__desktop-wrapper'], {
+    clipPath: wipeIn,
     y: 0,
-    duration: 1.0,
-    ease: 'expo.out'
-  }, '-=0.5');
+    duration: 1.2,
+    ease: 'expo.out',
+    stagger: 0.1
+  }, '-=1.1');
+
+  // 3. Bottom row wipes up, mirroring the nav
+  tl.to(['.hero__line', '.hero__base-right'], {
+    clipPath: wipeIn,
+    y: 0,
+    duration: 1.2,
+    ease: 'expo.out',
+    stagger: 0.1
+  }, '-=1.0');
+
+  // 4. Anything placed in the CTA slot under the title
+  const slotted = document.querySelectorAll('.hero__cta-slot > *');
+  if (slotted.length) {
+    gsap.set(slotted, { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)', y: 40 });
+    tl.to(slotted, { clipPath: wipeIn, y: 0, duration: 1.0, ease: 'expo.out' }, '-=1.1');
+  }
 });

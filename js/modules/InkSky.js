@@ -29,7 +29,7 @@ const ART = {
   bank: '/ink/bank.webp'
 };
 const PAPER = '/ink/washi.jpg';
-const ORDER = ['sun', 'wisp', 'puff', 'corner', 'bank']; // far to near
+const ORDER = ['wisp', 'sun', 'puff', 'corner', 'bank']; // far to near: the wisp passes behind the sun
 // In front of the reel card: these are DOM images in .intro__front (above
 // the card), placed by the same maths and moved in the same frame, so the
 // card can peek out from under the clouds and be revealed as they part.
@@ -43,7 +43,7 @@ const FRONT = ['puff', 'bank'];
 const GEO = {
   phone: {
     sun: { w: 0.30, x: 0.10, y: 0.14 },
-    wisp: { w: 0.62, x: -0.22, y: 0.20, h: 0.11 },
+    wisp: { w: 0.62, x: -0.08, y: 0.21, h: 0.11 },
     puff: { w: 0.40, r: -0.10, y: 0.66 },
     // turned so its tail runs along the top, not down into the words
     corner: { w: 0.56, r: -0.16, y: -0.07, rot: 18 },

@@ -184,11 +184,12 @@ and wipe it up on enter. The fade is the legacy path; the wipe is the standard.
 
 ---
 
-## 7. Hero spec: the indigo ink intro (2026-10-28)
+## 7. Hero spec: the ink-print sky intro (2026-10-28)
 
-The hero, the reel and the trust line are one scroll over a printed indigo
-sky, in the style of a Japanese woodblock print. It leans into the name (sumi
-is ink). Nechemya picked indigo over a gold-ink version. Every size is a
+The hero, the reel and the trust line are one scroll over a printed sky, in
+the style of a Japanese woodblock print. It leans into the name (sumi is
+ink). Nechemya picked indigo over a gold-ink version, then found the indigo
+ground too heavy and asked for a lighter sky-blue wash. Every size is a
 multiple of the nav label `$fs-nav` (`clamp(0.78rem, 1vw, 0.95rem)`),
 stepping by 1.5×, so the intro and the menu bar scale together. Mock and
 references: the "Sumi Ink Clouds" artifact, with a copy in
@@ -210,17 +211,21 @@ the sky showing round them.
   in `public/ink/`: `sun`, `wisp`, `puff`, `corner`, `bank` and `washi`.
   Prompts and the full set are on branch `claude/project-thread-w80ans` in
   `reel-research/ink-art/`.
-- **Pass 1** draws the indigo ground (`$c-indigo`) with soft ink unevenness,
-  then the layers from far to near.
+- **Pass 1** draws the ground as a sky wash, graded from `$c-sky` at the top
+  to `$c-sky-pale` at the horizon (`SKY` in InkSky.js), with soft ink
+  unevenness, then the layers from far to near.
 - **Pass 2** composites, in this order:
   1. The glass CTA.
-  2. The bokashi band: the printer's darker wipe along the top 36% of the sky.
+  2. The bokashi band: the printer's deeper blue wipe (`$c-indigo`) along the
+     top 36% of the sky. It also keeps the white nav readable.
   3. Washi multiplied at 24%, so fibres show through the ink.
   4. Fine grain.
   Paper and grain are done in the shader, not as CSS blend layers, because
   they're free there.
 - **Layout.** Resting places are set per breakpoint in `GEO`, as fractions of
-  the canvas.
+  the canvas. On phones the wisp, corner and bank have height caps (`h`) so
+  short screens don't grow the art down into the words. No cloud may cross
+  the title (his feedback).
 - **Drift.** Each layer drifts a few px on a slow sine. There is no drift for
   reduced motion.
 - **DPR.** Capped at 1.5 on phones and 2 on wide screens.
@@ -241,6 +246,12 @@ bottom, measured in svh so every beat lands on its section:
 
 The sky moves by tweening `InkSky.state`, so nothing in the DOM repaints.
 
+The hero is held sticky (`.intro.is-held`) and its words leave 1:1 with the
+scroll through a separate `scrub: true` tween, not native scrolling. The
+glass is drawn in the sky canvas, so natively scrolled words slid a frame
+ahead of their glass on phones (he saw the button text "move"). InkSky calls
+`ScrollTrigger.update()` before each frame so words and glass move together.
+
 The entrance prints the sky in one block at a time (`printIn`: sun, then far
 clouds, then near clouds, 1.1s each, 0.14s stagger) while the nav builds.
 
@@ -260,16 +271,18 @@ clouds, then near clouds, 1.1s each, 0.14s stagger) while the nav builds.
 The reel is a 27s seamless loop of the real sites, rendered with HyperFrames.
 Its sources are in `/mnt/project-files/sumi/reel/loop/`.
 
-**Type.** All type on the sky is `$c-washi` (cream) with a soft indigo text
-shadow. There are no symbols or seals: he asked for the kanji to go.
+**Type.** All type on the sky is printed in ink, `$c-indigo-deep`, with a
+soft pale halo (`$c-sky-glow`). Cream type was too weak on the lighter sky.
+The nav stays white on the bokashi band. There are no symbols or seals: he
+asked for the kanji to go.
 - **Title** (`.hero__title`, `h1`, Satoshi 400):
   - Size `$fs-hero-title` on desktop and `$fs-hero-title-mobile` on phones.
   - `line-height: 0.98`, `letter-spacing: -0.045em`, centred, `max-width: 13ch`.
-  - The whole group is centred at 47% (46% on wide screens), in the open sky
+  - The whole group is centred at 50% (46% on wide screens), in the open sky
     between the corner clouds and the bank.
   - Copy: *"Building what AI can't."* BrandelLuchador is used only in the menu.
 - **Subheading** (`.hero__sub`): *"Websites and apps you can't one-shot."*
-  - Size 1.625 × the nav label (1.375 × on phones), at 80% opacity.
+  - Size 1.625 × the nav label (1.375 × on phones), at 85% opacity.
   - It sits 1.25 × the nav label under the title.
 - **CTA** (`.hero__cta`): "Book a free call ↗", a light glass pill.
   - Type matches the nav label, and the height is `max(44px, 3.375 × nav label)`.
@@ -295,7 +308,7 @@ The last screen of the intro sits on the sky, centred, with no eyebrow label.
 - **The line** (Satoshi 400, 2.25 × the nav label on phones and 3.375 × on
   desktop, max 20ch, break set by a `<br>`): *"AI can build you a website.
   It can't build you trust."* "trust." is in `$c-rust`.
-- **The sentence under it** (`.trust__what`, 1.5 × the nav label, cream at 80%,
+- **The sentence under it** (`.trust__what`, 1.5 × the nav label, ink at 85%,
   max 40ch): one plain sentence on what Sumi does.
 - **Reveal.** The line's words rise through line masks, then the sentence follows
   (`TrustPanel.js`).

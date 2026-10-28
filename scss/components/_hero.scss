@@ -1,14 +1,14 @@
 @use '../base/tokens' as *;
 
 /* Intro: the hero, the reel and the trust line scroll over one printed
-   indigo sky. The sky is a WebGL canvas (InkSky.js), sticky for the whole
+   sky wash. The sky is a WebGL canvas (InkSky.js), sticky for the whole
    intro; InkStory.js tells the story on scroll. Every size is a multiple of
    the nav label ($fs-nav), like the menu bar. */
 
 .intro {
   position: relative;
-  background: $c-indigo;
-  color: $c-washi;
+  background: linear-gradient($c-sky, $c-sky-pale);
+  color: $c-indigo-deep;
 
   > section {
     position: relative;
@@ -52,14 +52,24 @@
   height: 100svh;
 }
 
-/* The words sit a little above the middle, in the open sky between the
-   corner clouds and the bank. */
+/* Held still like the sky while InkStory scrolls the words out with a GSAP
+   transform. The glass is drawn in the sky canvas, so if the browser
+   scrolled the words natively they would slide a frame ahead of their glass
+   on phones. The reel and trust sections pass over it. */
+.intro.is-held > .hero {
+  position: sticky;
+  top: 0;
+  pointer-events: none;
+}
+
+/* The words sit in the open sky between the corner clouds and the bank.
+   Centred with `translate` so InkStory can move them with a GSAP transform. */
 .hero__center {
   position: absolute;
   left: 0;
   right: 0;
-  top: 47%;
-  transform: translateY(-50%);
+  top: 50%;
+  translate: 0 -50%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -74,7 +84,7 @@
 .hero__title {
   margin: 0;
   max-width: 13ch;
-  color: $c-washi;
+  color: $c-indigo-deep;
   font-family: $font-body;
   font-size: $fs-hero-title-mobile;
   font-weight: 400;
@@ -83,7 +93,7 @@
   text-align: center;
   text-transform: none;
   text-wrap: balance;
-  text-shadow: 0 1px 18px rgba($c-indigo-deep, 0.55);
+  text-shadow: 0 0 22px $c-sky-glow;
   visibility: hidden;      /* revealed by the entrance once lines are split */
 
   @media (min-width: 641px) {
@@ -94,14 +104,14 @@
 /* Subheading: what Sumi actually makes, one quiet line under the title. */
 .hero__sub {
   margin: calc(#{$fs-nav} * 1.25) 0 0;
-  color: rgba($c-washi, 0.8);
+  color: rgba($c-indigo-deep, 0.85);
   font-family: $font-body;
   font-size: calc(#{$fs-nav} * 1.375);
   font-weight: 400;
   line-height: 1.3;
   letter-spacing: -0.01em;
   text-align: center;
-  text-shadow: 0 1px 14px rgba($c-indigo-deep, 0.55);
+  text-shadow: 0 0 18px $c-sky-glow;
 
   @media (min-width: 641px) {
     font-size: calc(#{$fs-nav} * 1.625);
@@ -126,7 +136,7 @@
 }
 
 /* --- CTA: liquid glass pill under the title ---
-   Light glass with cream type: it bends the clouds behind it (drawn by
+   Light glass with ink type: it bends the clouds behind it (drawn by
    InkSky in WebGL). Hidden until the entrance wipes it in, once its glass is
    built. SumiGlass.js picks the renderer per browser; these styles are the
    frost every browser starts from and falls back to. Height and type match
@@ -141,7 +151,7 @@
   height: max(44px, calc(#{$fs-nav} * 3.375));
   padding: 0 calc(#{$fs-nav} * 1.5);
   border-radius: $r-full;
-  color: $c-washi;
+  color: $c-indigo-deep;
   font-family: $font-body;
   font-size: $fs-nav;
   font-weight: 700;
@@ -204,7 +214,7 @@
 
   &.is-gl,
   &.lg-host {
-    text-shadow: 0 1px 8px rgba($c-indigo-deep, 0.5);
+    text-shadow: 0 0 10px $c-sky-glow;
   }
 
   @media (prefers-reduced-transparency: reduce) {
@@ -458,7 +468,7 @@
   border: 0;
   border-radius: $r-full;
   background: transparent;
-  color: $c-washi;
+  color: $c-indigo-deep;
   cursor: pointer;
 
   &[hidden] {

@@ -1,0 +1,11 @@
+{
+  "name": "Sumi Studios",
+  "short_name": "Sumi",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#ec4a1e",
+  "background_color": "#f39e38",
+  "display": "standalone"
+}

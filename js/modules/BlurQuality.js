@@ -6,15 +6,17 @@
   filter pass over whatever is behind the bar, repainted on every scroll
   frame. Fast GPUs don't notice; weaker laptops drop to ~20fps. So we watch
   real frame times while things move under the bar, and if they're
-  consistently slow we step the blur down a tier (four layers → two → one).
+  consistently slow we step the blur down from four layers to two. There's
+  no one-layer tier: a single masked blur shows content doubling through the
+  fade and reads as cheap.
   The choice is kept for the rest of the visit so later pages start on the
   right tier.
 */
-const TIERS = ['', 'nav__blur--lite', 'nav__blur--min'];
+const TIERS = ['', 'nav__blur--lite'];
 const STORE_KEY = 'sumi:blur-tier';
 const WINDOW = 40;          // moving frames per verdict
 const SLOW_MS = 19;         // mean frame time that counts as struggling (<~52fps)
-const MAX_WINDOWS = 4;      // stop measuring after this many verdicts
+const MAX_WINDOWS = 6;      // stop measuring after this many verdicts
 
 export default class BlurQuality {
   constructor() {
@@ -60,12 +62,12 @@ export default class BlurQuality {
       this.samples = [];
       this.windows++;
 
-      if (mean > SLOW_MS && this.tier < TIERS.length - 1) {
+      // One smooth window isn't proof: the entrance can be light while real
+      // scrolling over images is heavy, so keep sampling a few windows.
+      if (mean > SLOW_MS) {
         this.tier++;
         this.apply();
         try { sessionStorage.setItem(STORE_KEY, String(this.tier)); } catch (e) {}
-      } else if (mean <= SLOW_MS) {
-        return this.stop();
       }
 
       if (this.tier === TIERS.length - 1 || this.windows >= MAX_WINDOWS) return this.stop();

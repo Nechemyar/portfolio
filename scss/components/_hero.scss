@@ -310,21 +310,28 @@
   }
 }
 
-/* --- Reel: the footage straight on the sky ---
-   A rounded card, nearly the full screen, no frame and no shadow (a scroll
-   prop read as fake). Its top peeks out from under the near clouds at the
-   bottom of the first screen; they part as it scrolls up, and it holds
-   while the sky moves round it.
-   The portrait cut on phones, 16:9 on wide screens. Thin side margins (8px
-   on phones) so the work fills the screen. */
+/* --- Reel: the footage in a frame of printed clouds ---
+   A ring of woodblock clouds (painted with Codex, like the sky) with the
+   reel masked into its window: tall on phones with the portrait cut, wide
+   on desktop. No card edge, no shadow (a scroll prop read as fake). It
+   peeks out from under the near clouds at the bottom of the first screen;
+   they part as it scrolls up, and it holds while the sky moves round it.
+   Thin side margins (8px on phones). Swap a frame by changing --frame. */
 
 .reel {
   --reel-top: calc(#{$fs-nav} * 5);   /* clears the menu bar once held */
-  --reel-peek: 30svh;                 /* the card's top, under the clouds */
+  --reel-peek: 30svh;                 /* the frame's top, under the clouds */
   --reel-edge: clamp(8px, 1vw, 16px); /* side margin */
+  --frame: url('/ink/frames/F3a.webp');
+  --frame-mask: url('/ink/frames/F3a-mask.png');
   height: 180vh;
   height: 180svh;
   margin-top: calc(-1 * (var(--reel-peek) + var(--reel-top)));
+
+  @media (min-width: 760px) {
+    --frame: url('/ink/frames/F4b.webp');
+    --frame-mask: url('/ink/frames/F4b-mask.png');
+  }
 }
 
 .reel__pin {
@@ -339,17 +346,32 @@
 }
 
 .reel__card {
-  width: calc(100vw - var(--reel-edge) * 2);
-  height: min(calc((100vw - var(--reel-edge) * 2) * 1.62), calc(100svh - var(--reel-top) - var(--reel-edge)));
-  overflow: hidden;
-  border-radius: $r-xl;
-  background: rgba($c-indigo-deep, 0.25);
+  position: relative;
+  width: min(calc(100vw - var(--reel-edge) * 2), calc((100svh - var(--reel-top) - var(--reel-edge)) * 2 / 3));
+  aspect-ratio: 2 / 3;
   transform-origin: 50% 0;
   will-change: transform;
 
   @media (min-width: 760px) {
-    height: min(calc((100vw - var(--reel-edge) * 2) * 9 / 16), calc(100svh - var(--reel-top) - var(--reel-edge)));
+    width: min(calc(100vw - var(--reel-edge) * 2), calc((100svh - var(--reel-top) - var(--reel-edge)) * 3 / 2));
+    aspect-ratio: 3 / 2;
   }
+}
+
+/* the footage, cut to the frame's window */
+.reel__window {
+  position: absolute;
+  inset: 0;
+  background: rgba($c-indigo-deep, 0.25);
+  -webkit-mask: var(--frame-mask) 0 0 / 100% 100% no-repeat;
+  mask: var(--frame-mask) 0 0 / 100% 100% no-repeat;
+}
+
+.reel__frame {
+  position: absolute;
+  inset: 0;
+  background: var(--frame) 0 0 / 100% 100% no-repeat;
+  pointer-events: none;
 }
 
 .hero__video {

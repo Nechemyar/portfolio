@@ -155,20 +155,23 @@
         </div>
       </section>
 
-      <!-- The reel, straight on the sky: a rounded card (portrait cut on phones,
-           16:9 on wide screens) that peeks out from under the near clouds and
-           rises as they part.
+      <!-- The reel, framed in a ring of printed clouds (tall on phones, wide on
+           desktop), masked into the frame's window. It peeks out from under
+           the near clouds and rises as they part.
            HeroReel.js loads it after the loader and pauses it off screen. -->
       <section class="reel" id="reel" data-nav-theme="dark" aria-label="Recent work">
         <div class="reel__pin">
           <div class="reel__card">
-            <video class="hero__video" muted loop playsinline preload="none" aria-hidden="true">
-              <source data-src="/reel/reel-m.webm" type="video/webm" media="(max-width: 759px)" />
-              <source data-src="/reel/reel-m.mp4" type="video/mp4" media="(max-width: 759px)" />
-              <source data-src="/reel/reel.webm" type="video/webm" media="(min-width: 1200px)" />
-              <source data-src="/reel/reel-720.webm" type="video/webm" />
-              <source data-src="/reel/reel-720.mp4" type="video/mp4" />
-            </video>
+            <div class="reel__window">
+              <video class="hero__video" muted loop playsinline preload="none" aria-hidden="true">
+                <source data-src="/reel/reel-m.webm" type="video/webm" media="(max-width: 759px)" />
+                <source data-src="/reel/reel-m.mp4" type="video/mp4" media="(max-width: 759px)" />
+                <source data-src="/reel/reel.webm" type="video/webm" media="(min-width: 1200px)" />
+                <source data-src="/reel/reel-720.webm" type="video/webm" />
+                <source data-src="/reel/reel-720.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <span class="reel__frame" aria-hidden="true"></span>
           </div>
           <button class="hero__pause" type="button" aria-label="Pause the reel" hidden>
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>

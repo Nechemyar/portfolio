@@ -256,15 +256,21 @@ The entrance prints the sky in one block at a time (`printIn`: sun, then far
 clouds, then near clouds, 1.1s each, 0.14s stagger) while the nav builds.
 
 **The reel** (`.reel__card`)
-- **Card.** The footage sits straight on the sky as a rounded card (`$r-xl`),
-  nearly the full screen: its edges line up with the menu bar (`$nav-pad-x`).
-  No frame and no shadow. He rejected the washi scroll with rods as fake
-  (2026-10-28).
-- **Peek.** `.reel` is pulled up so the card's top shows from under the
+- **Frame.** The footage is masked into the window of a ring of printed
+  clouds, painted with Codex in the same woodblock style as the sky
+  (`public/ink/frames/`; prompts and raws on branch `claude/project-thread-w80ans`
+  in `reel-research/ink-art/frames/`). Phones use a tall frame (2:3), wide
+  screens a wide one (3:2). Each frame has a window mask (`-mask.png`) that
+  tucks the video under the inner cloud edge but never past the ring. Swap
+  frames with `--frame` and `--frame-mask` on `.reel`. No card edge and no
+  shadow: he rejected the washi scroll with rods as fake (2026-10-28), then
+  asked for a cloud frame.
+- **Peek.** `.reel` is pulled up so the frame's top shows from under the
   near clouds at the bottom of the first screen (`--reel-peek`). The clouds
   part as it scrolls up, opening out from 0.94 scale, then it holds under
-  the menu bar (`--reel-top`) while the sky moves round it.
-- **Layers.** Back to front: the sky canvas, the reel card, the near clouds
+  the menu bar (`--reel-top`) while the sky moves round it. Side margin
+  `--reel-edge` (8px on phones).
+- **Layers.** Back to front: the sky canvas, the reel, the near clouds
   (bank and puff, as `<img>`s in `.intro__front`, placed by InkSky with the
   same maths in the same frame, washi baked into the files), then the hero
   and trust words. `.intro` isolates its stacking.

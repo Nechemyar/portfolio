@@ -273,14 +273,20 @@ clouds, then near clouds, 1.1s each, 0.14s stagger) while the nav builds.
   trust words. `.intro` isolates its stacking. He had the bottom bank of
   clouds removed (2026-10-28), so the frame's top simply peeks up at the
   bottom of the first screen.
-- **Sources.** Phones get `reel-m` (portrait). Wide screens get `reel.webm`
-  (1200px and up) or `reel-720` (16:9).
+- **Sources.** Phones get `reel-m` (9:16, 720x1280). Wide screens get `reel.webm`
+  (1200px and up) or `reel-720` (16:9). Each has a poster (`poster-m.webp`,
+  `poster.webp`) that is its exact first frame, so the card is solid from the
+  first paint.
 - **Loading.** `HeroReel.js` loads the video after the loader, fades it in and
   pauses it off screen.
 - **Pause.** A pause button sits at the bottom of the held card (WCAG 2.2.2).
 
-The reel is a 27s seamless loop of the real sites, rendered with HyperFrames.
-Its sources are in `/mnt/project-files/sumi/reel/loop/`.
+Both reels are seamless loops of the real sites (Choice, Clinical, JSense,
+Settle), cut to the pacing research and rendered with HyperFrames: desktop
+17.6s, phone 17.2s. Same arrow cursor in both, hard cuts inside a site, 0.2s/0.45s
+whips leftward between sites, and the Choice total lifting off onto the sky as
+the payoff. The phone file starts 0.45s in so frame 0 (the poster) is sharp,
+not mid-whip. Sources and scripts: `/mnt/project-files/sumi/reel/v4/`.
 
 **Type.** All type on the sky is white (`$c-sky-type`) with a soft blue
 shadow (`$c-sky-shade`). He tried ink-blue type on the sky wash and preferred

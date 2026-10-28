@@ -35,3 +35,29 @@ Timings read from the 10 fps sheets are accurate to about ±0.1 s.
 - Phone takes: real touch input, a reaction within 1–3 frames, about 0.35–0.5 s before the next input, and no taps on labels.
 - Pre-scroll so that every target is already on screen. The longest single beat should be about 2 s, at the slider drag or a hold-to-confirm.
 - The editor can crop each beat 1.5–2.5x onto the area in use and cut 0.3–0.4 s after each input.
+
+## Answers to Nechemya's questions (from the measurements above)
+
+**Should the items be off the site, on their own, or show the actual site?** Both, and each has its own job.
+- Isolate a component when the beat is about one feature. Screen Studio spends about 40% of its UI time on real panels lifted off the app, floating on a brand gradient. Our candidates are the Choice price total, the Settle gauge and the JSense panel.
+- Show the whole site when the beat is about the site itself: its layout, scroll motion and polish. Humaan's showreel is about 70% whole-page footage.
+- Suggested mix for our reel: open on whole-site shots so people see real work, cut into isolated components for the "look what it does" moments, and finish with a fan of phone mockups (about 2 s) as the "and on mobile" beat.
+
+**What should the mouse do?**
+- Travel fast and short: 0.1–0.4 s to the target, with no long glides across the screen.
+- Pause 0.3–0.7 s before clicking, so the eye lands on the target. Use a hover state there if the site has one, like Arc's tooltip at 0.4 s.
+- It looks big because the shot is cropped 2–2.5x, which puts a normal cursor at 4–8% of frame width.
+- Phone films show a finger, not an arrow. A soft touch dot that briefly shrinks on each tap is the honest stand-in.
+
+**When should it click, and when should it transition?**
+- Click only on something that changes the screen within 1–3 frames. Every input in the sampled films produces a visible change within 0.1–0.4 s.
+- Cut 0.3–0.4 s after the click, and open the next shot on the result. Don't hold while an animation finishes, unless that animation is the point, like the Settle bill or the gauge.
+- Keep each beat to 0.8–1.5 s and never longer than about 3 s. The fast films' median shots are 0.53 s (Screen Studio), 0.69 s (Humaan) and 1.16 s (Arc).
+
+**How should it transition?**
+- Use hard cuts by default; nearly every cut in these films is one.
+- Save one long push into the screen (about 2.8 s in Screen Studio) for the moment the reel goes from brand to product, and use it once.
+- Whip-blurs of about 0.3 s work between two phone shots (Arc Search).
+- Within one product, a punch-in that follows the cursor (2–2.5x) replaces most cuts.
+
+**How fast overall?** The fast films cut 15–40 times a minute. A 30 s hero reel at that pace has 12–20 beats, which works out to about 3–5 beats per site for four sites.

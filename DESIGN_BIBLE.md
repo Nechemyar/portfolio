@@ -199,9 +199,17 @@ Layers (back → front):
   the video in once it plays, pauses it off screen, and skips it for
   reduced-motion and Save-Data. The pause button (WCAG 2.2.2) appears only when a
   reel is loaded. Keep the centre of every shot calm so the title stays legible.
+  The reel (2026-10-28) is a 27s seamless loop in `public/reel/`: Choice (slider
+  drag, price roll, toggles), Clinical (Meet the team glide and hover), JSense
+  (accessibility modes), Settle (filters, case arc, hold to pay, paid screen).
+  It is HTML motion design over frame-exact recordings of the live sites,
+  rendered with HyperFrames; generators and takes live in
+  `/mnt/project-files/sumi/reel/loop/`. Desktop cut only for now; the phone
+  gets its own centred cut.
 - **Scrim** (`.hero__reel::after`): a fixed dark overlay so white type reads over
-  any footage or colour: black 45% at the top, 30% through the middle with a
-  soft 30% radial behind the title, 55% at the bottom. Every hero element is
+  any footage or colour: black 55% at the top, 42% through the middle with a
+  soft 32% radial behind the title, 60% at the bottom (darkened for the real
+  reel, whose sites are mostly light). Every hero element is
   white (`$c-warm-white`; bottom line at 78%), and the hero is
   `data-nav-theme="dark"` so the nav is white over it.
 - **Title** (`.hero__title`, `h1`, Satoshi 400): `$fs-hero-title` (5.0625 × nav
@@ -209,6 +217,10 @@ Layers (back → front):
   `line-height: 0.98`, `letter-spacing: -0.045em`, centred, `max-width: 13ch`.
   Copy: *"Building what AI can't."* BrandelLuchador is not used in the hero; it
   stays in the menu.
+- **Subheading** (`.hero__sub`): *"Websites and apps you can't one-shot."*
+  Satoshi 400 at 1.625 × nav label (1.375 × on phones), white at 82%,
+  1.25 × nav label under the title. The CTA sits 2.5 × nav label below it.
+  It wipes up 0.7s after the title starts.
 - **CTA** (`.hero__cta` in `.hero__cta-slot`, 2026-10-28): "Book a free call ↗"
   as a muted liquid glass pill under the title, quieter than the rust buttons
   (premium sites keep a hero CTA but tone it down). Nav-label type (700,
@@ -222,7 +234,8 @@ Layers (back → front):
   Reduced transparency gets a solid ink pill. Research and benchmarks: the Hero
   Glass Lab artifact and `/mnt/project-files/sumi/hero-glass/`.
 - **Bottom row** (`.hero__base`): mirrors the nav's height and gutter. Left: one
-  line at nav size, weight 400, white at 78%. Right: "See the work ↓" at
+  line at nav size, weight 400, white at 78%: *"For businesses that give a
+  damn. Designed and built by me."* (never "hand-coded"). Right: "See my work ↓" at
   nav-label style. The glass CTA above is the hero's only booking prompt; the
   big booking moment still comes after the work section.
 

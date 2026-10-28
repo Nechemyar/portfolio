@@ -146,10 +146,10 @@
     <section class="hero" id="hero" data-nav-theme="dark" data-bg="#D9D6D1">
       <div class="hero__stage">
       <div class="hero__reel" aria-hidden="true">
-        <!-- TEMPORARY stand-in reel (slow pans over project shots) so the glass CTA
-             can be judged over moving content. Swap the three files in public/reel/
-             for the real reel. HeroReel.js loads it after the loader, pauses it off
-             screen, and skips it for reduced motion and Save-Data. -->
+        <!-- The reel: a 27s seamless loop of the real sites (Choice, Clinical, JSense,
+             Settle), HTML motion design rendered with HyperFrames. HeroReel.js loads it
+             after the loader, pauses it off screen, and skips it for reduced motion and
+             Save-Data. Desktop cut for now; the phone gets its own centred cut later. -->
         <video class="hero__video" muted loop playsinline preload="none">
           <source data-src="/reel/reel.webm" type="video/webm" media="(min-width: 800px)" />
           <source data-src="/reel/reel-720.webm" type="video/webm" />
@@ -159,17 +159,18 @@
 
       <div class="hero__center">
         <h1 class="hero__title">Building what AI can&rsquo;t.</h1>
+        <p class="hero__sub">Websites and apps you can&rsquo;t one-shot.</p>
         <!-- Glass CTA. SumiGlass.js picks the renderer; main.js wipes it in. -->
         <div class="hero__cta-slot" data-slot="hero-cta"><a class="hero__cta" href="#contact"><span class="hero__cta-label">Book a free call</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a></div>
       </div>
 
       <div class="hero__base">
-        <p class="hero__line">Websites for businesses that give a damn. Designed and hand-coded by me.</p>
+        <p class="hero__line">For businesses that give a damn. Designed and built by me.</p>
         <div class="hero__base-right">
           <button class="hero__pause" type="button" aria-label="Pause background video" hidden>
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
           </button>
-          <a href="#work" class="hero__down">See the work
+          <a href="#work" class="hero__down">See my work
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" aria-hidden="true"><line x1="12" y1="4" x2="12" y2="19"/><polyline points="6 13 12 19 18 13"/></svg>
           </a>
         </div>

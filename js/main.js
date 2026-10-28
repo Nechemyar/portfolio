@@ -39,6 +39,7 @@ new TrustPanel();
 const wipeElements = [
   '.hero__line',
   '.hero__base-right',
+  '.hero__sub',
   '.nav__cta--right',
   '.nav__desktop-wrapper'
 ];
@@ -96,6 +97,9 @@ new Loader(() => {
       onComplete: () => split.revert()
     }, 'title');
   }
+
+  // The subheading follows the title up, before the CTA
+  tl.to('.hero__sub', { clipPath: wipeIn, y: 0, duration: 1.2 }, 'title+=0.7');
 
   // 4. The CTA comes last, once the title has landed AND its glass is fully
   //    built, so it never shows as frost and then switches to glass.

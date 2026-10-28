@@ -58,3 +58,7 @@ Japanese ukiyo-e woodblock print of clouds made of tightly wound spiral swirls, 
 ```
 
 All six takes use the same prompt; T1 came back at 1254 x 1254 (Codex upscales squares).
+
+## Rose and navy recolour (`rose/`)
+
+These are the same six frames recoloured to the palette of a pink Hokusai print Nechemya shared as a reference: navy #3D4466 for the dark ink, coral rose #D8697A, pale pink #F1B5B8 and cream #F5EAE2. A blue frame blends into the sky-blue site and its clouds, and this one reads as a frame. I did no new generation for it. `recolor.py` maps each pixel's luminance onto these inks, keeping the shapes, the grain and the alpha: `python -I recolor.py cut rose rose T1a ...`. `rose/preview-on-sky.png` shows T3a in blue next to T3a and T3b in rose, all on sky blue.

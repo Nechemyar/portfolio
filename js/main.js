@@ -16,6 +16,7 @@ import WorkSection from './modules/WorkSection.js';
 import ArchSlider from './modules/ArchSlider.js';
 import BlurQuality from './modules/BlurQuality.js';
 import HeroReel from './modules/HeroReel.js';
+import TrustPanel from './modules/TrustPanel.js';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -30,6 +31,7 @@ const workSection = new WorkSection();
 new ArchSlider();
 new BlurQuality();
 new HeroReel();
+new TrustPanel();
 
 // Hidden start states for the elements the hero entrance wipes in
 const wipeElements = [

@@ -218,6 +218,27 @@ SplitText splits it into words inside line masks and the words rise
 split reverts when done. Anything in the CTA slot follows at title +0.6s.
 Reduced motion jumps to the end state.
 
+### 7.1 Leaving the hero: the trust sheet (2026-10-28)
+
+The hero is `position: sticky` inside `.intro`, so it holds while the first
+section after it (`.trust`, white, `$r-xl` top corners) slides up over it like
+a sheet. As the sheet rises the hero stage (`.hero__stage`) eases back the way
+the view behind an iOS sheet does: `scale 1 → 0.92`, `borderRadius 0 → 24px`,
+and `.hero__dim` (ink) `0 → 0.55`, with the ink `.hero` background showing
+round the corners. Scrubbed (`scrub: 0.6`) from the sheet's top hitting the
+bottom of the screen to it reaching the top. Native scroll speed, no pin, no
+snapping (NN/g: scrolljacking hurts most when it changes scroll speed while
+people read). The sticky ends with `.intro`, so later sections never stack on
+the hero. Lives in `js/modules/TrustPanel.js`.
+
+The trust line (Satoshi 400, 2.25 × nav on mobile, 3.375 × on desktop, max
+19ch, left-aligned) rises word by word through SplitText line masks, the same
+reveal as the hero title, when the sheet passes 55% of the screen. Copy:
+*"Anyone can make a website now. Trust still takes a person who sweats the
+small stuff."* with "Trust" in `$c-rust`. Reduced motion: no recede, no reveal.
+Research and the options he chose from: the "After the Reel" artifact,
+copy in `/mnt/project-files/sumi/scroll-story/`.
+
 ## 8. Navigation
 
 - Fixed, `z-index: 1200` (above the menu overlay so logo + button stay visible).

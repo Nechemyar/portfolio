@@ -16,9 +16,36 @@ $hero-nav-h: calc(clamp(38px, 3.6vw, 48px) + #{$nav-pad-y} * 2 + 2rem);
   height: 100svh;
   min-height: 34rem;
   overflow: hidden;
-  background: $c-reel;
+  /* Ink behind the stage: when the trust screen slides over, the stage
+     scales back and this shows round its corners (iOS sheet behaviour). */
+  background: $c-ink;
   color: $c-ink;
   z-index: 10;
+}
+
+/* Holds the hero while the trust screen slides over it. The sticky ends
+   with .intro, so nothing after the trust screen sits on top of the hero. */
+.intro > .hero {
+  position: sticky;
+  top: 0;
+}
+
+/* Everything the recede animation scales/rounds as one piece (TrustPanel.js). */
+.hero__stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: $c-reel;
+  transform-origin: 50% 0%;
+}
+
+.hero__dim {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background: $c-ink;
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* --- Reel --- */

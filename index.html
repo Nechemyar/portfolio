@@ -140,7 +140,11 @@
 
     <!-- HERO — full-screen reel behind, title centred, two small anchors in the bottom corners.
          Sizing and reasoning: /hero-lab/ on the preview branch and DESIGN_BIBLE.md §7. -->
+    <!-- INTRO — the hero holds (sticky) while the trust screen slides up over it
+         like a sheet; the hero eases back behind it. TrustPanel.js. -->
+    <div class="intro">
     <section class="hero" id="hero" data-nav-theme="light" data-bg="#D9D6D1">
+      <div class="hero__stage">
       <div class="hero__reel" aria-hidden="true">
         <!-- Reel goes here. Add <source data-src="..."> children (WebM first, then MP4)
              and a poster; HeroReel.js loads it after the loader and pauses it off screen. -->
@@ -164,7 +168,18 @@
           </a>
         </div>
       </div>
+      <div class="hero__dim" aria-hidden="true"></div>
+      </div>
     </section>
+
+    <!-- TRUST — first screen after the reel. One line, then the work. -->
+    <section class="trust" id="trust" data-nav-theme="light" data-bg="#fff">
+      <div class="trust__inner">
+        <p class="trust__eyebrow">The difference</p>
+        <p class="trust__line js-trust-line">Anyone can make a website now. <span class="trust__accent">Trust</span> still takes a person who sweats the small stuff.</p>
+      </div>
+    </section>
+    </div>
 
     <!-- WORK — continuous red from hero, tagline + cards + MAGIC -->
     <section class="work" id="work" data-nav-theme="light" data-bg="#fff">

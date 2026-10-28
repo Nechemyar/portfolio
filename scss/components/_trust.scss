@@ -1,0 +1,62 @@
+@use '../base/tokens' as *;
+
+/* Trust — the first screen after the reel. A white sheet with rounded top
+   corners that slides up over the held hero (see .intro in _hero.scss) and
+   carries straight on into the white work section. Sizes are multiples of
+   the nav label, like the hero. */
+
+.trust {
+  position: relative;
+  z-index: 11;
+  /* Most of a screen, so the line gets the stage to itself while the next
+     section's first line peeks in below as a cue to keep going. */
+  min-height: 80svh;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: $r-xl $r-xl 0 0;
+}
+
+.trust__inner {
+  width: 100%;
+  padding: $space-96 $page-padding;
+  display: flex;
+  flex-direction: column;
+  gap: calc(#{$fs-nav} * 2.25);
+}
+
+.trust__eyebrow {
+  margin: 0;
+  color: $c-text-tertiary;
+  font-family: $font-body;
+  font-size: $fs-nav;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.trust__line {
+  margin: 0;
+  max-width: 19ch;
+  color: $c-ink;
+  font-family: $font-body;
+  font-size: calc(#{$fs-nav} * 2.25);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+
+  @media (min-width: 641px) {
+    font-size: $fs-hero-title-mobile; /* 3.375× nav, one step under the hero title */
+  }
+}
+
+.trust__accent {
+  color: $c-rust;
+}
+
+/* SplitText line masks: room below so descenders aren't clipped. */
+.trust__row-mask {
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}

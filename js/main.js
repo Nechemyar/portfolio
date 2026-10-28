@@ -4,6 +4,7 @@
 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SplitText } from 'gsap/SplitText';
 import SmoothScroll from './modules/SmoothScroll.js';
 import Menu from './modules/Menu.js';
 import ScrollReveal from './modules/ScrollReveal.js';
@@ -16,7 +17,7 @@ import ArchSlider from './modules/ArchSlider.js';
 import BlurQuality from './modules/BlurQuality.js';
 import HeroReel from './modules/HeroReel.js';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 // Boot modules
 const smoothScroll = new SmoothScroll();
@@ -30,12 +31,7 @@ new ArchSlider();
 new BlurQuality();
 new HeroReel();
 
-/* Hero paints in its final state — no fade-in choreography. The previous
-   entrance animated nav / marquee / gradient / footer in from offset
-   positions, but the stage colour underneath those elements isn't an
-   exact match for the page, so the staged fade revealed colour seams.
-   Showing the hero immediately at full opacity sidesteps the issue. */
-// Setup initial hidden states for hero elements
+// Hidden start states for the elements the hero entrance wipes in
 const wipeElements = [
   '.hero__line',
   '.hero__base-right',
@@ -47,101 +43,64 @@ gsap.set(wipeElements, { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 10
    onto it, so it must sit stationary at its resting position for a seamless
    handoff when the loader fades out. */
 
-// Split text utility to dynamically wrap lines for animation based on screen size
-function splitLines(element) {
-  const words = element.textContent.trim().split(/\s+/);
-  element.innerHTML = '';
-  
-  // Wrap words in standard inline spans with native text spaces between them
-  words.forEach((word, i) => {
-    const span = document.createElement('span');
-    span.textContent = word;
-    element.appendChild(span);
-    if (i < words.length - 1) {
-      element.appendChild(document.createTextNode(' '));
-    }
-  });
-
-  const lines = [];
-  let currentLine = [];
-  let currentTop = null;
-
-  const spans = Array.from(element.querySelectorAll('span'));
-  spans.forEach(span => {
-    const top = span.getBoundingClientRect().top;
-    if (currentTop === null || top > currentTop + 10) {
-      if (currentLine.length) lines.push(currentLine);
-      currentTop = top;
-      currentLine = [];
-    }
-    currentLine.push(span.textContent);
-  });
-  if (currentLine.length) lines.push(currentLine);
-
-  element.innerHTML = '';
-  lines.forEach(lineWords => {
-    const lineWrapper = document.createElement('span');
-    lineWrapper.className = 'hero__pitch-line';
-    lineWrapper.style.display = 'block';
-    lineWrapper.textContent = lineWords.join(' ');
-    element.appendChild(lineWrapper);
-  });
-}
-
 new Loader(() => {
-  // Split lines exactly when Loader finishes, so fonts are 100% loaded and metrics are exact.
-  const splitHeading = document.querySelector('.js-split-lines');
-  if (splitHeading) {
-    splitHeading.dataset.originalText = splitHeading.textContent.trim().replace(/\s+/g, ' ');
-    splitLines(splitHeading);
-    gsap.set('.hero__pitch-line', { clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)', y: 50 });
-    gsap.set(splitHeading, { visibility: 'visible' });
+  // Split the title once the loader is done, so fonts are loaded and the
+  // line breaks are final. Each line gets an overflow mask; the words rise
+  // inside it (transform only, so it stays on the compositor).
+  const title = document.querySelector('.hero__title');
+  const split = title
+    ? SplitText.create(title, { type: 'lines, words', mask: 'lines', linesClass: 'hero__title-line' })
+    : null;
+  if (split) {
+    gsap.set(split.words, { yPercent: 115, willChange: 'transform' });
+    gsap.set(title, { visibility: 'visible' });
   }
 
   document.documentElement.classList.add('js-loaded');
   document.getElementById('nav')?.classList.add('is-ready');
   document.dispatchEvent(new CustomEvent('hero:ready'));
-  
-  // Hero Entrance Sequence
-  const tl = gsap.timeline();
+
+  // Hero entrance. The frame builds first (nav, then the bottom row) and the
+  // title lands last, so the eye finishes on the one thing that matters.
   const wipeIn = 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)';
+  const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
 
-  // 1. Title wipes up line by line
-  tl.to('.hero__pitch-line', {
-    clipPath: 'polygon(0% -20%, 100% -20%, 100% 120%, 0% 120%)',
-    y: 0,
-    duration: 1.4,
-    ease: 'expo.out',
-    stagger: 0.1,
-    onComplete: () => {
-      if (splitHeading) {
-        splitHeading.innerHTML = splitHeading.dataset.originalText;
-      }
-    }
-  });
+  // 1. Nav wipes up (logo excluded — it was handed off from the loader)
+  tl.addLabel('frame', 0)
+    .to(['.nav__cta--right', '.nav__desktop-wrapper'], {
+      clipPath: wipeIn,
+      y: 0,
+      duration: 1.2,
+      stagger: 0.1
+    }, 'frame');
 
-  // 2. Nav elements wipe up (logo excluded — it was handed off from the loader)
-  tl.to(['.nav__cta--right', '.nav__desktop-wrapper'], {
-    clipPath: wipeIn,
-    y: 0,
-    duration: 1.2,
-    ease: 'expo.out',
-    stagger: 0.1
-  }, '-=1.1');
-
-  // 3. Bottom row wipes up, mirroring the nav
+  // 2. Bottom row wipes up, mirroring the nav
   tl.to(['.hero__line', '.hero__base-right'], {
     clipPath: wipeIn,
     y: 0,
     duration: 1.2,
-    ease: 'expo.out',
     stagger: 0.1
-  }, '-=1.0');
+  }, 'frame+=0.15');
 
-  // 4. Anything placed in the CTA slot under the title
+  // 3. Title last: words rise through their line masks, slow and soft
+  tl.addLabel('title', 'frame+=0.55');
+  if (split) {
+    tl.to(split.words, {
+      yPercent: 0,
+      duration: 1.8,
+      stagger: { each: 0.08 },
+      onComplete: () => split.revert()
+    }, 'title');
+  }
+
+  // 4. Anything placed in the CTA slot settles in under the title
   const slotted = document.querySelectorAll('.hero__cta-slot > *');
   if (slotted.length) {
     gsap.set(slotted, { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)', y: 40 });
-    tl.to(slotted, { clipPath: wipeIn, y: 0, duration: 1.0, ease: 'expo.out' }, '-=1.1');
+    tl.to(slotted, { clipPath: wipeIn, y: 0, duration: 1.2 }, 'title+=0.6');
+  }
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    tl.progress(1);
   }
 });

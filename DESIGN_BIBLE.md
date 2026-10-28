@@ -141,9 +141,9 @@ to:   { clipPath: 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)', y: 0,
 ```
 
 Hero sequence order (overlapping with negative offsets):
-1. `.hero__pitch-line` (title lines) — 1.4s, stagger 0.1
-2. `.nav__cta--right`, `.nav__desktop-wrapper` — 1.2s, stagger 0.1, `-=1.1`
-3. `.hero__line`, `.hero__base-right` — 1.2s, stagger 0.1, `-=1.0`
+1. `.nav__cta--right`, `.nav__desktop-wrapper` — 1.2s, stagger 0.1, at 0
+2. `.hero__line`, `.hero__base-right` — 1.2s, stagger 0.1, at +0.15s
+3. Title words (SplitText, line masks) — `yPercent` 115 → 0, 1.8s, stagger 0.08, at +0.55s (lands last)
 
 Text-line variant (tighter clip):
 ```
@@ -202,7 +202,7 @@ Layers (back → front):
 - **Title** (`.hero__title`, `h1`, Satoshi 400): `$fs-hero-title` (5.0625 × nav
   label, ~80px at 1440) and `$fs-hero-title-mobile` (3.375 ×, ~44px at 390),
   `line-height: 0.98`, `letter-spacing: -0.045em`, centred, `max-width: 13ch`.
-  Copy: *"What AI can't build."* BrandelLuchador is not used in the hero; it
+  Copy: *"AI can't build trust."* BrandelLuchador is not used in the hero; it
   stays in the menu.
 - **CTA slot** (`.hero__cta-slot`): under the title, empty for now (glass CTA
   being designed). Anything placed in it wipes up in the entrance.
@@ -211,8 +211,12 @@ Layers (back → front):
   nav-label style. Booking is not in the hero; the fixed nav CONTACT covers it and
   the big booking moment comes after the work section.
 
-Entrance (in `js/main.js`): title lines wipe up (1.4s, stagger 0.1), nav wipes
-(`-=1.1`), bottom row wipes (`-=1.0`), then anything in the CTA slot.
+Entrance (in `js/main.js`): the frame builds first and the title lands last.
+Nav wipes up (1.2s), bottom row wipes up (+0.15s), then the title: GSAP
+SplitText splits it into words inside line masks and the words rise
+(`yPercent` 115 → 0, 1.8s, `expo.out`, stagger 0.08) starting at +0.55s. The
+split reverts when done. Anything in the CTA slot follows at title +0.6s.
+Reduced motion jumps to the end state.
 
 ## 8. Navigation
 

@@ -20,6 +20,8 @@ export default class SumiGlass {
   constructor() {
     this.el = document.querySelector('.hero__cta');
     this.video = document.querySelector('.hero__video');
+    // The entrance waits on this so the CTA never shows a half-built glass.
+    this.ready = Promise.resolve();
     if (!this.el) return;
 
     if (window.matchMedia('(prefers-reduced-transparency: reduce)').matches) {
@@ -30,8 +32,10 @@ export default class SumiGlass {
     // userAgentData exists only in Chromium; iOS Chrome is WebKit and lacks it.
     const chromium = navigator.userAgentData?.brands?.some((b) => b.brand === 'Chromium');
     if (chromium) {
-      this.glass = createLiquidGlass(this.el, { shape: 'pill', refraction: 85, blur: 2, light: 70, pointer: false });
+      this.glass = createLiquidGlass(this.el, { shape: 'pill', refraction: 85, blur: 4, light: 70, pointer: false });
       this.el.dataset.glass = 'svg';
+      // the displacement map is built on the next frame
+      this.ready = new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
       return;
     }
 
@@ -41,6 +45,7 @@ export default class SumiGlass {
       return;
     }
     this.glass = new VideoGlass(this.el, this.video);
+    this.ready = this.glass.ready;
     if (!this.glass.ok) this.el.dataset.glass = 'frost';
   }
 }

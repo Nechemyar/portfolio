@@ -199,6 +199,11 @@ Layers (back → front):
   the video in once it plays, pauses it off screen, and skips it for
   reduced-motion and Save-Data. The pause button (WCAG 2.2.2) appears only when a
   reel is loaded. Keep the centre of every shot calm so the title stays legible.
+- **Scrim** (`.hero__reel::after`): a fixed dark overlay so white type reads over
+  any footage or colour: black 45% at the top, 30% through the middle with a
+  soft 30% radial behind the title, 55% at the bottom. Every hero element is
+  white (`$c-warm-white`; bottom line at 78%), and the hero is
+  `data-nav-theme="dark"` so the nav is white over it.
 - **Title** (`.hero__title`, `h1`, Satoshi 400): `$fs-hero-title` (5.0625 × nav
   label, ~80px at 1440) and `$fs-hero-title-mobile` (3.375 ×, ~44px at 390),
   `line-height: 0.98`, `letter-spacing: -0.045em`, centred, `max-width: 13ch`.
@@ -207,18 +212,17 @@ Layers (back → front):
 - **CTA** (`.hero__cta` in `.hero__cta-slot`, 2026-10-28): "Book a free call ↗"
   as a muted liquid glass pill under the title, quieter than the rust buttons
   (premium sites keep a hero CTA but tone it down). Nav-label type (700,
-  uppercase, +0.06em), height `max(44px, 3.375 × nav label)`, milky white tint
-  so ink text reads over any footage. `js/modules/SumiGlass.js` picks the
+  uppercase, +0.06em), height `max(44px, 3.375 × nav label)`, smoky dark tint
+  with white text so it reads over any footage. `js/modules/SumiGlass.js` picks the
   renderer: Chromium gets SVG refraction via backdrop-filter
   (`js/vendor/liquid-glass-web`, MIT); Safari, Firefox and iOS Chrome get
   `VideoGlass.js`, a small WebGL canvas inside the button that refracts the
   reel behind it, and it drops back to the CSS frost if its first 60 frames run
   over 4 ms. Until the reel has sources those browsers keep the frost.
-  Reduced transparency gets a solid pill. Research and benchmarks: the Hero
-  Glass Lab artifact and `/mnt/project-files/sumi/hero-glass/`. It wipes up in
-  the entrance like anything in the slot.
+  Reduced transparency gets a solid ink pill. Research and benchmarks: the Hero
+  Glass Lab artifact and `/mnt/project-files/sumi/hero-glass/`.
 - **Bottom row** (`.hero__base`): mirrors the nav's height and gutter. Left: one
-  line at nav size, weight 400, `$c-text-secondary`. Right: "See the work ↓" at
+  line at nav size, weight 400, white at 78%. Right: "See the work ↓" at
   nav-label style. The glass CTA above is the hero's only booking prompt; the
   big booking moment still comes after the work section.
 
@@ -226,7 +230,10 @@ Entrance (in `js/main.js`): the frame builds first and the title lands last.
 Nav wipes up (1.2s), bottom row wipes up (+0.15s), then the title: GSAP
 SplitText splits it into words inside line masks and the words rise
 (`yPercent` 115 → 0, 1.8s, `expo.out`, stagger 0.08) starting at +0.55s. The
-split reverts when done. Anything in the CTA slot follows at title +0.6s.
+split reverts when done. The CTA is `visibility: hidden` until it wipes up,
+and it waits for both title +1.4s and `SumiGlass.ready` (glass fully built and
+showing its first frame, capped at 2.5s), so it never appears as frost first
+and then swaps to glass.
 Reduced motion jumps to the end state.
 
 ### 7.1 Leaving the hero: the trust sheet (2026-10-28)

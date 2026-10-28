@@ -29,8 +29,9 @@ void main(){
   vec3 col=vec3(S(src+ca).r,S(src).g,S(src-ca).b);
   float l=dot(col,vec3(.2126,.7152,.0722));
   col=mix(vec3(l),col,1.25);                                     // a touch more saturation, like iOS
-  col=mix(col,vec3(1.),.16);                                     // milky tint keeps ink text legible
-  col=mix(vec3(.93),col,ready);                                  // before the first frame: soft white
+  col=col*.62;                                                   // match the hero scrim
+  col=mix(col,vec3(.08),.25);                                    // smoky tint keeps white text legible
+  col=mix(vec3(.3),col,ready);                                   // before the first frame
   float rim=smoothstep(1.6,0.,e);
   float light=.45+.55*max(dot(n,normalize(vec2(-.6,-1.))),0.);   // light from the top
   float sheen=smoothstep(.0,.55,1.-p.y/size.y)*.12;
@@ -44,16 +45,18 @@ export default class VideoGlass {
   constructor(el, video, { maxDpr = 2, budgetMs = 4, onFallback } = {}) {
     this.el = el; this.video = video; this.maxDpr = maxDpr;
     this.budgetMs = budgetMs; this.onFallback = onFallback; this.costs = [];
+    // Resolves once real glass is on screen (first video frame) or it fell back.
+    this.ready = new Promise((r) => { this.resolveReady = r; });
     const canvas = this.canvas = document.createElement('canvas');
     canvas.setAttribute('aria-hidden', 'true');
     canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border-radius:inherit;z-index:0;pointer-events:none';
     const gl = this.gl = canvas.getContext('webgl', { premultipliedAlpha: true, alpha: true, antialias: false, powerPreference: 'low-power' });
-    if (!gl) return;                      // keep the CSS frost
+    if (!gl) { this.resolveReady(); return; }  // keep the CSS frost
     const sh = (t, s) => { const o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); return o; };
     const pr = gl.createProgram();
     gl.attachShader(pr, sh(gl.VERTEX_SHADER, VERT)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, FRAG));
     gl.linkProgram(pr); gl.useProgram(pr);
-    if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) return;
+    if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) { this.resolveReady(); return; }
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
     const loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
@@ -91,6 +94,7 @@ export default class VideoGlass {
     this.el.dataset.glass = fallback ? 'frost (slow device)' : 'frost';
     this.gl?.getExtension('WEBGL_lose_context')?.loseContext();
     if (fallback && this.onFallback) this.onFallback();
+    this.resolveReady();
   }
   draw() {
     const { gl, el, video, canvas } = this;
@@ -129,6 +133,7 @@ export default class VideoGlass {
       ctx.fillStyle = '#D9D6D1'; ctx.fillRect(0, 0, PW, PH);
       if (sw > 0 && sh > 0) ctx.drawImage(video, sx, sy, sw, sh, dx, dy, dw, dh);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, crop);
+      if (!this.hasFrame) requestAnimationFrame(() => this.resolveReady());
       this.hasFrame = true;
     }
     gl.uniform2f(this.u.size, r.width, r.height);

@@ -32,7 +32,7 @@ const workSection = new WorkSection();
 new ArchSlider();
 new BlurQuality();
 new HeroReel();
-new SumiGlass();
+const sumiGlass = new SumiGlass();
 new TrustPanel();
 
 // Hidden start states for the elements the hero entrance wipes in
@@ -97,15 +97,24 @@ new Loader(() => {
     }, 'title');
   }
 
-  // 4. Anything placed in the CTA slot settles in under the title
+  // 4. The CTA comes last, once the title has landed AND its glass is fully
+  //    built, so it never shows as frost and then switches to glass.
+  //    (.hero__cta starts hidden in CSS so nothing shows before this.)
   const slotted = document.querySelectorAll('.hero__cta-slot > *');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (slotted.length) {
-    gsap.set(slotted, { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)', y: 40 });
-    // clearProps: once in, drop the clip so the CTA's glass shadow isn't cut square at its sides
-    tl.to(slotted, { clipPath: wipeIn, y: 0, duration: 1.2, clearProps: 'clipPath' }, 'title+=0.6');
+    gsap.set(slotted, { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)', y: 40, visibility: 'visible' });
+    // clearProps: once in, drop the clip so the glass shadow isn't cut square at its sides
+    const ctaIn = () => gsap.to(slotted, { clipPath: wipeIn, y: 0, duration: 1.2, ease: 'expo.out', clearProps: 'clipPath' });
+    const glassReady = Promise.race([sumiGlass.ready, new Promise((r) => setTimeout(r, 2500))]);
+    if (reduced) {
+      glassReady.then(() => gsap.set(slotted, { clipPath: 'none', y: 0 }));
+    } else {
+      tl.call(() => glassReady.then(ctaIn), null, 'title+=1.4');
+    }
   }
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (reduced) {
     tl.progress(1);
   }
 });

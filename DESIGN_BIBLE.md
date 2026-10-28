@@ -235,15 +235,13 @@ the sky showing round them.
 
 **The story** (`js/modules/InkStory.js`)
 One scrubbed GSAP timeline (`scrub: 0.6`) runs from the top of the intro to its
-bottom, measured in svh so every beat lands on its section:
-- **0–125:** the clouds part. The corner goes up and right, the bank drops, the
+bottom, measured in svh of scroll (about 257 in all) so every beat lands on
+its section:
+- **0–100:** the clouds part. The corner goes up and right, the bank drops, the
   wisp and puff go out to the sides, and the sun slides left.
-- **105–210:** the scroll unrolls.
-  - Phones get a hanging scroll (kakejiku) that unrolls downward. It uses a
-    curtain made of two opposite `yPercent` tweens, so it is transform only.
-  - Wide screens get a handscroll (emakimono) that opens from the middle, with
-    a `clip-path` on the sheet and the rods sliding out.
-- **270–370:** the clouds close back in and the sun sets behind the bank,
+- **0–77:** the reel card rises from under the hero and opens out a touch
+  (scale only).
+- **170–257:** the clouds close back in and the sun sets behind the bank,
   arriving as the trust line reaches the middle.
 
 The sky moves by tweening `InkSky.state`, so nothing in the DOM repaints.
@@ -257,18 +255,20 @@ button text "move"; inside the button they can't come apart.
 The entrance prints the sky in one block at a time (`printIn`: sun, then far
 clouds, then near clouds, 1.1s each, 0.14s stagger) while the nav builds.
 
-**The reel** (`.reel__scroll`)
-- **Paper.** The footage fills a sheet of washi with torn edges. `InkStory.deckle`
-  draws the edge as an SVG mask (slow waves plus a fine tooth, softened) on both
-  the paper and the picture. It is redrawn on resize.
-- **Texture.** Soft bands of light make the hanging paper look not quite flat.
-  The washi is multiplied back over the footage at 45%, so it reads as printed.
-- **Rods.** Lacquer with brass caps, plus a cord on the hanging scroll.
-- **Sources.** Phones get `reel-m` (720×1560, `max-width: 759px`). Wide screens
-  get `reel.webm` (1200px and up) or `reel-720`.
+**The reel** (`.reel__card`)
+- **Card.** The footage sits straight on the sky as a rounded card (`$r-xl`),
+  nearly the full screen: its edges line up with the menu bar (`$nav-pad-x`).
+  No frame and no shadow. He rejected the washi scroll with rods as fake
+  (2026-10-28).
+- **Peek.** `.reel` is pulled up so the card's top shows over the clouds at
+  the bottom of the first screen (`--reel-peek`). It scrolls up, opening out
+  from 0.94 scale, then holds under the menu bar (`--reel-top`) while the
+  sky moves round it.
+- **Sources.** Phones get `reel-m` (portrait). Wide screens get `reel.webm`
+  (1200px and up) or `reel-720` (16:9).
 - **Loading.** `HeroReel.js` loads the video after the loader, fades it in and
   pauses it off screen.
-- **Pause.** A pause button sits under the scroll (WCAG 2.2.2).
+- **Pause.** A pause button sits at the bottom of the held card (WCAG 2.2.2).
 
 The reel is a 27s seamless loop of the real sites, rendered with HyperFrames.
 Its sources are in `/mnt/project-files/sumi/reel/loop/`.

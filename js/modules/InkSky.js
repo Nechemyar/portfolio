@@ -2,7 +2,7 @@
 // InkSky — the printed sky behind the intro
 // ——————————————————————————————————————————————
 // One WebGL canvas, sticky inside .intro, so it holds still while the hero,
-// the reel scroll and the trust line pass over it, then leaves with the
+// the reel card and the trust line pass over it, then leaves with the
 // intro's last pixel. The art is Japanese woodblock-style cloud layers
 // (painted with Codex, cut out to alpha); this file only places and draws
 // them. InkStory.js moves them on scroll by tweening this.state.

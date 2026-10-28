@@ -1,11 +1,11 @@
 // ——————————————————————————————————————————————
-// HeroReel — the reel on the washi scroll
+// HeroReel — the reel card under the hero
 // ——————————————————————————————————————————————
 // The <video> ships with <source data-src> children and preload="none", so
 // nothing downloads during first paint. Sources are attached once the loader
 // hands off (hero:ready), the video fades in when it can play, and it pauses
 // whenever it is off screen. Reduced-motion and Save-Data visitors keep the
-// bare paper.
+// empty card.
 
 export default class HeroReel {
   constructor() {

@@ -153,30 +153,19 @@
         </div>
       </section>
 
-      <!-- The reel on a scroll of washi: a hanging scroll on phones, a handscroll
-           on wide screens. The footage fills the paper; both have torn edges.
+      <!-- The reel, straight on the sky: a rounded card (portrait cut on phones,
+           16:9 on wide screens) that grows into place as the clouds part.
            HeroReel.js loads it after the loader and pauses it off screen. -->
       <section class="reel" id="reel" data-nav-theme="dark" aria-label="Recent work">
         <div class="reel__pin">
-          <div class="reel__scroll">
-            <svg class="reel__cord" viewBox="0 0 60 48" fill="none" aria-hidden="true"><path d="M4 46 L30 6 L56 46"/><circle cx="30" cy="5" r="3"/></svg>
-            <div class="reel__sheet">
-              <div class="reel__paper">
-                <div class="reel__picture">
-                  <video class="hero__video" muted loop playsinline preload="none" aria-hidden="true">
-                    <source data-src="/reel/reel-m.webm" type="video/webm" media="(max-width: 759px)" />
-                    <source data-src="/reel/reel-m.mp4" type="video/mp4" media="(max-width: 759px)" />
-                    <source data-src="/reel/reel.webm" type="video/webm" media="(min-width: 1200px)" />
-                    <source data-src="/reel/reel-720.webm" type="video/webm" />
-                    <source data-src="/reel/reel-720.mp4" type="video/mp4" />
-                  </video>
-                </div>
-              </div>
-            </div>
-            <span class="reel__rod reel__rod--top" aria-hidden="true"></span>
-            <span class="reel__rod reel__rod--bottom" aria-hidden="true"></span>
-            <span class="reel__rod reel__rod--left" aria-hidden="true"></span>
-            <span class="reel__rod reel__rod--right" aria-hidden="true"></span>
+          <div class="reel__card">
+            <video class="hero__video" muted loop playsinline preload="none" aria-hidden="true">
+              <source data-src="/reel/reel-m.webm" type="video/webm" media="(max-width: 759px)" />
+              <source data-src="/reel/reel-m.mp4" type="video/mp4" media="(max-width: 759px)" />
+              <source data-src="/reel/reel.webm" type="video/webm" media="(min-width: 1200px)" />
+              <source data-src="/reel/reel-720.webm" type="video/webm" />
+              <source data-src="/reel/reel-720.mp4" type="video/mp4" />
+            </video>
           </div>
           <button class="hero__pause" type="button" aria-label="Pause the reel" hidden>
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>

@@ -143,6 +143,8 @@
          DESIGN_BIBLE.md §7. -->
     <div class="intro">
       <canvas class="intro__sky" aria-hidden="true"></canvas>
+      <!-- The near clouds, in front of the reel card (InkSky.js places them). -->
+      <div class="intro__front" aria-hidden="true"></div>
 
       <section class="hero" id="hero" data-nav-theme="dark">
         <div class="hero__center">
@@ -154,7 +156,8 @@
       </section>
 
       <!-- The reel, straight on the sky: a rounded card (portrait cut on phones,
-           16:9 on wide screens) that grows into place as the clouds part.
+           16:9 on wide screens) that peeks out from under the near clouds and
+           rises as they part.
            HeroReel.js loads it after the loader and pauses it off screen. -->
       <section class="reel" id="reel" data-nav-theme="dark" aria-label="Recent work">
         <div class="reel__pin">

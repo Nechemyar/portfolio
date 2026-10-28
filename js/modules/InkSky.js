@@ -30,6 +30,11 @@ const ART = {
 };
 const PAPER = '/ink/washi.jpg';
 const ORDER = ['sun', 'wisp', 'puff', 'corner', 'bank']; // far to near
+// In front of the reel card: these are DOM images in .intro__front (above
+// the card), placed by the same maths and moved in the same frame, so the
+// card can peek out from under the clouds and be revealed as they part.
+// Their washi is baked into the files.
+const FRONT = ['puff', 'bank'];
 
 // Resting places, as fractions of the canvas: w width, x left or r right,
 // y top or b bottom, h an optional height cap (so short phones don't grow
@@ -136,6 +141,7 @@ export default class InkSky {
   constructor() {
     this.intro = document.querySelector('.intro');
     this.canvas = document.querySelector('.intro__sky');
+    this.front = document.querySelector('.intro__front');
     this.cta = document.querySelector('.hero__cta');
     this.ok = false;
     this.ready = Promise.resolve();
@@ -214,7 +220,20 @@ export default class InkSky {
       img.onerror = resolve;
       img.src = src;
     });
-    const jobs = ORDER.map((k) => one(k, ART[k], true));
+    // a front layer is an <img> in .intro__front, not a texture
+    const dom = (key) => new Promise((resolve) => {
+      const img = new Image();
+      img.alt = '';
+      img.decoding = 'async';
+      img.onload = () => {
+        this.tex[key] = { el: img, aspect: img.naturalWidth / img.naturalHeight };
+        resolve();
+      };
+      img.onerror = resolve;
+      img.src = ART[key];
+      this.front.append(img);
+    });
+    const jobs = ORDER.map((k) => (this.front && FRONT.includes(k) ? dom(k) : one(k, ART[k], true)));
     jobs.push(one('paper', PAPER, false));
     return Promise.all(jobs).then(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
   }
@@ -286,7 +305,8 @@ export default class InkSky {
     for (const key of ORDER) {
       const T = this.tex[key];
       const st = this.state[key];
-      if (!T || st.a <= 0.001) continue;
+      if (!T) continue;
+      if (st.a <= 0.001 && !T.el) continue;
       const r = this.place(key);
       const [amp, period] = DRIFT[key];
       const drift = this.reduced || !amp ? 0 : Math.sin((time / period) * Math.PI * 2) * amp;
@@ -294,6 +314,10 @@ export default class InkSky {
       const h = r.h * st.s;
       const x = r.x + (r.w - w) / 2 + st.x + drift;
       const y = r.y + (r.h - h) / 2 + st.y;
+      if (T.el) {
+        this.placeFront(T, r, x, y, st.s, st.a);
+        continue;
+      }
       const rot = r.rot || 0;
       if (!rot && (y > this.vh || y + h < 0 || x > this.vw || x + w < 0)) continue;
       gl.bindTexture(gl.TEXTURE_2D, T.t);
@@ -340,6 +364,20 @@ export default class InkSky {
     gl.uniform4f(this.pComp.u.uPill, 0, 0, 0, 0);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
     gl.activeTexture(gl.TEXTURE0);
+  }
+
+  // A front layer: its size changes only on resize or scale, so most
+  // frames write a transform and nothing else.
+  placeFront(T, r, x, y, scale, a) {
+    const s = T.el.style;
+    const w = `${r.w}px`;
+    if (s.width !== w) {
+      s.width = w;
+      s.height = `${r.h}px`;
+    }
+    s.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
+    const o = `${a}`;
+    if (s.opacity !== o) s.opacity = o;
   }
 
   // The button's place in canvas px, once its glass is on and it's on

@@ -7,11 +7,17 @@
 
 .intro {
   position: relative;
+  isolation: isolate;     /* its layers stack among themselves only */
   background: linear-gradient($c-sky, $c-sky-pale);
   color: $c-sky-type;
 
+  /* back to front: sky, reel card, near clouds, the hero and trust words */
   > section {
     position: relative;
+    z-index: 3;
+  }
+
+  > .reel {
     z-index: 1;
   }
 }
@@ -28,6 +34,34 @@
   height: 100lvh;
   margin-bottom: -100vh;
   margin-bottom: -100lvh;
+}
+
+/* The near clouds (bank and puff), above the reel card so it can peek out
+   from under them. Sticky like the sky, so they hold still with it. */
+.intro__front {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  height: 100vh;
+  height: 100lvh;
+  margin-bottom: -100vh;
+  margin-bottom: -100lvh;
+  overflow: hidden;
+  pointer-events: none;
+
+  img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    max-width: none;
+    transform-origin: 0 0;
+    opacity: 0;
+    will-change: transform;
+  }
+}
+
+.intro.no-gl .intro__front {
+  display: none;
 }
 
 /* No WebGL: the bank of clouds as a plain picture under the hero. */
@@ -278,14 +312,15 @@
 
 /* --- Reel: the footage straight on the sky ---
    A rounded card, nearly the full screen, no frame and no shadow (a scroll
-   prop read as fake). Its top peeks up over the clouds at the bottom of the
-   first screen, then it scrolls up and holds while the sky moves round it.
+   prop read as fake). Its top peeks out from under the near clouds at the
+   bottom of the first screen; they part as it scrolls up, and it holds
+   while the sky moves round it.
    The portrait cut on phones, 16:9 on wide screens. Card edges line up with
    the menu bar's ($nav-pad-x). */
 
 .reel {
   --reel-top: calc(#{$fs-nav} * 5);   /* clears the menu bar once held */
-  --reel-peek: 14svh;                 /* how much shows under the hero */
+  --reel-peek: 30svh;                 /* the card's top, under the clouds */
   height: 180vh;
   height: 180svh;
   margin-top: calc(-1 * (var(--reel-peek) + var(--reel-top)));

@@ -260,10 +260,14 @@ clouds, then near clouds, 1.1s each, 0.14s stagger) while the nav builds.
   nearly the full screen: its edges line up with the menu bar (`$nav-pad-x`).
   No frame and no shadow. He rejected the washi scroll with rods as fake
   (2026-10-28).
-- **Peek.** `.reel` is pulled up so the card's top shows over the clouds at
-  the bottom of the first screen (`--reel-peek`). It scrolls up, opening out
-  from 0.94 scale, then holds under the menu bar (`--reel-top`) while the
-  sky moves round it.
+- **Peek.** `.reel` is pulled up so the card's top shows from under the
+  near clouds at the bottom of the first screen (`--reel-peek`). The clouds
+  part as it scrolls up, opening out from 0.94 scale, then it holds under
+  the menu bar (`--reel-top`) while the sky moves round it.
+- **Layers.** Back to front: the sky canvas, the reel card, the near clouds
+  (bank and puff, as `<img>`s in `.intro__front`, placed by InkSky with the
+  same maths in the same frame, washi baked into the files), then the hero
+  and trust words. `.intro` isolates its stacking.
 - **Sources.** Phones get `reel-m` (portrait). Wide screens get `reel.webm`
   (1200px and up) or `reel-720` (16:9).
 - **Loading.** `HeroReel.js` loads the video after the loader, fades it in and

@@ -278,8 +278,8 @@
 }
 
 /* --- Reel: the footage on a rounded card under the hero ---
-   Sized to the video's own shape (1:2.06 on phones for the 1:2.17 phone
-   cut, 5:3 on desktop for 16:9), so nothing is cropped. No frame by
+   9:16 on phones, so it fills the width (8px margins) and still fits the
+   screen once held; 5:3 on desktop for the 16:9 cut. No frame by
    default: he turned down every frame so far. The thin printed cloud
    rings stay as options (.reel--gold, .reel--rose, .reel--sky), where
    the footage tucks a few px under the curls. No shadow. A big slice
@@ -288,14 +288,14 @@
 
 .reel {
   --reel-top: calc(#{$fs-nav} * 5);   /* clears the menu bar once held */
-  --reel-peek: 40svh;                 /* the frame's top on the first screen: a big
-                                         slice shows, so the page never looks finished
-                                         above the fold (NN/g, illusion of completeness) */
+  --reel-peek: 34svh;                 /* a third of the first screen: enough to show it
+                                         carries on (NN/g, illusion of completeness), with
+                                         clear air under the button */
   --reel-edge: clamp(8px, 1vw, 16px); /* side margin */
-  --card-w: min(calc(100vw - var(--reel-edge) * 2), calc((100svh - var(--reel-top) - var(--reel-edge)) * 1024 / 2110));
+  --card-w: min(calc(100vw - var(--reel-edge) * 2), calc((100svh - var(--reel-top) - var(--reel-edge)) * 9 / 16));
   --ring-in: 0;                       /* footage inset, share of card width (0: no frame) */
   --frame: none;
-  --reel-from: 0.86;                  /* starts small with wide margins, opens out as it rises */
+  --reel-from: 0.96;                  /* starts nearly full width, opens out the last bit as it rises */
   height: 180vh;
   height: 180svh;
   margin-top: calc(-1 * (var(--reel-peek) + var(--reel-top)));
@@ -348,7 +348,7 @@
 .reel__card {
   position: relative;
   width: var(--card-w);
-  aspect-ratio: 1024 / 2110;
+  aspect-ratio: 9 / 16;
   transform: scale(var(--reel-from)); /* InkStory scrubs it to 1; set here so it never jumps */
   transform-origin: 50% 0;
   will-change: transform;

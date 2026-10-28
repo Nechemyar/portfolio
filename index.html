@@ -146,9 +146,15 @@
     <section class="hero" id="hero" data-nav-theme="light" data-bg="#D9D6D1">
       <div class="hero__stage">
       <div class="hero__reel" aria-hidden="true">
-        <!-- Reel goes here. Add <source data-src="..."> children (WebM first, then MP4)
-             and a poster; HeroReel.js loads it after the loader and pauses it off screen. -->
-        <video class="hero__video" muted loop playsinline preload="none"></video>
+        <!-- TEMPORARY stand-in reel (slow pans over project shots) so the glass CTA
+             can be judged over moving content. Swap the three files in public/reel/
+             for the real reel. HeroReel.js loads it after the loader, pauses it off
+             screen, and skips it for reduced motion and Save-Data. -->
+        <video class="hero__video" muted loop playsinline preload="none">
+          <source data-src="/reel/reel.webm" type="video/webm" media="(min-width: 800px)" />
+          <source data-src="/reel/reel-720.webm" type="video/webm" />
+          <source data-src="/reel/reel-720.mp4" type="video/mp4" />
+        </video>
       </div>
 
       <div class="hero__center">

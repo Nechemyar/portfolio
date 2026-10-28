@@ -184,103 +184,122 @@ and wipe it up on enter. The fade is the legacy path; the wipe is the standard.
 
 ---
 
-## 7. Hero spec
+## 7. Hero spec: the indigo ink intro (2026-10-28)
 
-Full-screen reel hero (2026-10-28). Section carries `data-nav-theme="light"`.
-`height: 100svh`. Every size is a multiple of the nav label `$fs-nav`
-(`clamp(0.78rem, 1vw, 0.95rem)`), stepping by 1.5×, so the hero and the menu
-bar scale together. Research notes and sources: `/hero-lab/` on the
-`claude/project-thread-djm481` preview branch.
+The hero, the reel and the trust line are one scroll over a printed indigo
+sky, in the style of a Japanese woodblock print. It leans into the name (sumi
+is ink). Nechemya picked indigo over a gold-ink version. Every size is a
+multiple of the nav label `$fs-nav` (`clamp(0.78rem, 1vw, 0.95rem)`),
+stepping by 1.5×, so the intro and the menu bar scale together. Mock and
+references: the "Sumi Ink Clouds" artifact, with a copy in
+`/mnt/project-files/sumi/ink-clouds/`.
 
-Layers (back → front):
-- **Reel** (`.hero__reel` / `.hero__video`): fills the whole hero. `$c-reel`
-  grey until the video exists. Add `<source data-src>` children (WebM, then MP4)
-  and a poster; `js/modules/HeroReel.js` attaches them after `hero:ready`, fades
-  the video in once it plays, pauses it off screen, and skips it for
-  reduced-motion and Save-Data. The pause button (WCAG 2.2.2) appears only when a
-  reel is loaded. Keep the centre of every shot calm so the title stays legible.
-  The reel (2026-10-28) is a 27s seamless loop in `public/reel/`: Choice (slider
-  drag, price roll, toggles), Clinical (Meet the team glide and hover), JSense
-  (accessibility modes), Settle (filters, case arc, hold to pay, paid screen).
-  It is HTML motion design over frame-exact recordings of the live sites,
-  rendered with HyperFrames; generators and takes live in
-  `/mnt/project-files/sumi/reel/loop/`. Portrait screens get their own cut
-  (`reel-m.webm` / `reel-m.mp4`, 720×1560, chosen by `media="(orientation:
-  portrait)"` on the sources): the camera works close and every click lands
-  above the title or below the CTA. It keeps the cursor (his pick over a
-  finger dot).
-- **Scrim** (`.hero__reel::after`): a fixed dark overlay so white type reads over
-  any footage or colour: black 55% at the top, 42% through the middle with a
-  soft 32% radial behind the title, 60% at the bottom (darkened for the real
-  reel, whose sites are mostly light). Every hero element is
-  white (`$c-warm-white`), and the hero is
-  `data-nav-theme="dark"` so the nav is white over it. Over the hero the nav's
-  top blur is hidden (`.nav--clear`, set by `NavTheme.js` when the active
-  section is `#hero`) because a frosted band over moving footage looks odd; it
-  fades back in once the trust sheet takes over.
-- **Title** (`.hero__title`, `h1`, Satoshi 400): `$fs-hero-title` (5.0625 × nav
-  label, ~80px at 1440) and `$fs-hero-title-mobile` (3.375 ×, ~44px at 390),
-  `line-height: 0.98`, `letter-spacing: -0.045em`, centred, `max-width: 13ch`.
-  Copy: *"Building what AI can't."* BrandelLuchador is not used in the hero; it
-  stays in the menu.
+**Structure** (`.intro`, three sections):
+- `.hero` (100svh)
+- `.reel` (270svh, its scroll held by CSS sticky)
+- `.trust` (100svh)
+
+All three are `data-nav-theme="dark"` (white nav), and the nav's top blur is
+hidden over the whole intro (`.nav--clear`, set in `NavTheme.js`). The next
+section slides on like a sheet: `-$r-xl` margin and `$r-xl` top corners, with
+the sky showing round them.
+
+**The sky** (`.intro__sky` canvas, `js/modules/InkSky.js`, WebGL1)
+- The canvas is sticky for the whole intro, at 100lvh.
+- **Art.** Painted with Codex in a woodblock style and keyed to alpha. It lives
+  in `public/ink/`: `sun`, `wisp`, `puff`, `corner`, `bank` and `washi`.
+  Prompts and the full set are on branch `claude/project-thread-w80ans` in
+  `reel-research/ink-art/`.
+- **Pass 1** draws the indigo ground (`$c-indigo`) with soft ink unevenness,
+  then the layers from far to near.
+- **Pass 2** composites, in this order:
+  1. The glass CTA.
+  2. The bokashi band: the printer's darker wipe along the top 36% of the sky.
+  3. Washi multiplied at 24%, so fibres show through the ink.
+  4. Fine grain.
+  Paper and grain are done in the shader, not as CSS blend layers, because
+  they're free there.
+- **Layout.** Resting places are set per breakpoint in `GEO`, as fractions of
+  the canvas.
+- **Drift.** Each layer drifts a few px on a slow sine. There is no drift for
+  reduced motion.
+- **DPR.** Capped at 1.5 on phones and 2 on wide screens.
+- **No WebGL.** The bank shows as a CSS background and the CTA keeps its frost.
+
+**The story** (`js/modules/InkStory.js`)
+One scrubbed GSAP timeline (`scrub: 0.6`) runs from the top of the intro to its
+bottom, measured in svh so every beat lands on its section:
+- **0–125:** the clouds part. The corner goes up and right, the bank drops, the
+  wisp and puff go out to the sides, and the sun slides left.
+- **105–210:** the scroll unrolls.
+  - Phones get a hanging scroll (kakejiku) that unrolls downward. It uses a
+    curtain made of two opposite `yPercent` tweens, so it is transform only.
+  - Wide screens get a handscroll (emakimono) that opens from the middle, with
+    a `clip-path` on the sheet and the rods sliding out.
+- **270–370:** the clouds close back in and the sun sets behind the bank,
+  arriving as the trust line reaches the middle.
+
+The sky moves by tweening `InkSky.state`, so nothing in the DOM repaints.
+
+The entrance prints the sky in one block at a time (`printIn`: sun, then far
+clouds, then near clouds, 1.1s each, 0.14s stagger) while the nav builds.
+
+**The reel** (`.reel__scroll`)
+- **Paper.** The footage fills a sheet of washi with torn edges. `InkStory.deckle`
+  draws the edge as an SVG mask (slow waves plus a fine tooth, softened) on both
+  the paper and the picture. It is redrawn on resize.
+- **Texture.** Soft bands of light make the hanging paper look not quite flat.
+  The washi is multiplied back over the footage at 45%, so it reads as printed.
+- **Rods.** Lacquer with brass caps, plus a cord on the hanging scroll.
+- **Sources.** Phones get `reel-m` (720×1560, `max-width: 759px`). Wide screens
+  get `reel.webm` (1200px and up) or `reel-720`.
+- **Loading.** `HeroReel.js` loads the video after the loader, fades it in and
+  pauses it off screen.
+- **Pause.** A pause button sits under the scroll (WCAG 2.2.2).
+
+The reel is a 27s seamless loop of the real sites, rendered with HyperFrames.
+Its sources are in `/mnt/project-files/sumi/reel/loop/`.
+
+**Type.** All type on the sky is `$c-washi` (cream) with a soft indigo text
+shadow. There are no symbols or seals: he asked for the kanji to go.
+- **Title** (`.hero__title`, `h1`, Satoshi 400):
+  - Size `$fs-hero-title` on desktop and `$fs-hero-title-mobile` on phones.
+  - `line-height: 0.98`, `letter-spacing: -0.045em`, centred, `max-width: 13ch`.
+  - The whole group is centred at 47% (46% on wide screens), in the open sky
+    between the corner clouds and the bank.
+  - Copy: *"Building what AI can't."* BrandelLuchador is used only in the menu.
 - **Subheading** (`.hero__sub`): *"Websites and apps you can't one-shot."*
-  Satoshi 400 at 1.625 × nav label (1.375 × on phones), white at 82%,
-  1.25 × nav label under the title. The CTA sits 2.5 × nav label below it.
-  It wipes up 0.7s after the title starts.
-- **CTA** (`.hero__cta` in `.hero__cta-slot`, 2026-10-28): "Book a free call ↗"
-  as a muted liquid glass pill under the title, quieter than the rust buttons
-  (premium sites keep a hero CTA but tone it down). Nav-label type (700,
-  uppercase, +0.06em), height `max(44px, 3.375 × nav label)`. Light glass,
-  not smoked: a 5% white tint, refraction 100 and blur 1 so the bending of the
-  footage behind it shows, with a soft text shadow keeping the white label
-  readable. A dark tint was tried and it flattened the refraction. `js/modules/SumiGlass.js` picks the
-  renderer: Chromium gets SVG refraction via backdrop-filter
-  (`js/vendor/liquid-glass-web`, MIT); Safari, Firefox and iOS Chrome get
-  `VideoGlass.js`, a small WebGL canvas inside the button that refracts the
-  reel behind it, and it drops back to the CSS frost if its first 60 frames run
-  over 4 ms. Until the reel has sources those browsers keep the frost.
-  Reduced transparency gets a solid ink pill. Research and benchmarks: the Hero
-  Glass Lab artifact and `/mnt/project-files/sumi/hero-glass/`.
-- **Bottom row** (`.hero__base`): mirrors the nav's height and gutter. Only
-  "See my work ↓" at nav-label style, on the right; the left line was dropped
-  once the subheading existed (it repeated it). Never say "hand-coded" anywhere;
-  use "Designed and built by me". The glass CTA above is the hero's only booking prompt; the
-  big booking moment still comes after the work section.
+  - Size 1.625 × the nav label (1.375 × on phones), at 80% opacity.
+  - It sits 1.25 × the nav label under the title.
+- **CTA** (`.hero__cta`): "Book a free call ↗", a light glass pill.
+  - Type matches the nav label, and the height is `max(44px, 3.375 × nav label)`.
+  - `SumiGlass.js` lets InkSky draw the glass in its shader whenever WebGL is
+    up, so it bends the clouds the same way in every browser.
+  - The rim refracts with a small colour split. Light falls only on the edges
+    facing it (top left), with a bevel and no full white border.
+  - Without WebGL, Chromium gets liquid-glass-web and everything else gets
+    frost. Reduced transparency gets a solid pill.
+  - Never darken the glass itself to help legibility.
 
-Entrance (in `js/main.js`): the frame builds first and the title lands last.
-Nav wipes up (1.2s), See my work wipes up (+0.15s), then the title: GSAP
-SplitText splits it into words inside line masks and the words rise
-(`yPercent` 115 → 0, 1.8s, `expo.out`, stagger 0.08) starting at +0.55s. The
-split reverts when done. The CTA is `visibility: hidden` until it wipes up,
-and it waits for both title +1.4s and `SumiGlass.ready` (glass fully built and
-showing its first frame, capped at 2.5s), so it never appears as frost first
-and then swaps to glass.
-Reduced motion jumps to the end state.
+**Entrance** (`js/main.js`):
+- The nav wipes up while the sky prints in.
+- At +0.55s the title's words rise through SplitText line masks (1.8s,
+  `expo.out`, stagger 0.08), and the subheading follows.
+- The CTA waits for both the title (+1.4s) and the glass being ready (capped at
+  2.5s), so it never shows as frost first.
+- Reduced motion jumps to the end state.
 
-### 7.1 Leaving the hero: the trust sheet (2026-10-28)
+### 7.1 The trust line
 
-The hero is `position: sticky` inside `.intro`, so it holds while the first
-section after it (`.trust`, white, `$r-xl` top corners) slides up over it like
-a sheet. As the sheet rises the hero stage (`.hero__stage`) eases back the way
-the view behind an iOS sheet does: `scale 1 → 0.92`, `borderRadius 0 → 24px`,
-and `.hero__dim` (ink) `0 → 0.55`, with the ink `.hero` background showing
-round the corners. Scrubbed (`scrub: 0.6`) from the sheet's top hitting the
-bottom of the screen to it reaching the top. Native scroll speed, no pin, no
-snapping (NN/g: scrolljacking hurts most when it changes scroll speed while
-people read). The sticky ends with `.intro`, so later sections never stack on
-the hero. Lives in `js/modules/TrustPanel.js`.
-
-Centred, no eyebrow label (small-caps labels read as AI to him). The trust
-line (Satoshi 400, 2.25 × nav on mobile, 3.375 × on desktop, max 20ch, break set by a <br>) is
-*"AI can build you a website. It can't build you trust."* with "trust." in
-`$c-rust`. Under it, one plain sentence on what Sumi does (`.trust__what`,
-1.5 × nav, `$c-text-secondary`, max 40ch, three lines at most because it's
-centred), since the hero title doesn't say it (NN/g: say what you do at a
-glance). The line's words rise through SplitText line masks, then the
-sentence's lines follow, when the sheet passes 55% of the screen. Reduced
-motion: no recede, no reveal.
-Research and the options he chose from: the "After the Reel" artifact,
-copy in `/mnt/project-files/sumi/scroll-story/`.
+The last screen of the intro sits on the sky, centred, with no eyebrow label.
+- **The line** (Satoshi 400, 2.25 × the nav label on phones and 3.375 × on
+  desktop, max 20ch, break set by a `<br>`): *"AI can build you a website.
+  It can't build you trust."* "trust." is in `$c-rust`.
+- **The sentence under it** (`.trust__what`, 1.5 × the nav label, cream at 80%,
+  max 40ch): one plain sentence on what Sumi does.
+- **Reveal.** The line's words rise through line masks, then the sentence follows
+  (`TrustPanel.js`).
+- The clouds close in round it as it arrives.
 
 ## 8. Navigation
 

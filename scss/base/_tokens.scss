@@ -68,8 +68,12 @@ $nav-pad-x: clamp(1rem, 3.5vw, 2.5rem);
 $fs-hero-title: calc(#{$fs-nav} * 5.0625);        // ~80px at 1440
 $fs-hero-title-mobile: calc(#{$fs-nav} * 3.375);  // ~44px at 390
 
-// Reel placeholder until the video exists
-$c-reel: #D9D6D1;
+// Intro: the printed indigo sky (art in public/ink, drawn by InkSky.js)
+$c-indigo:      #173f66;  // sky ground
+$c-indigo-deep: #0f2d4d;  // bokashi band, shadows on the sky
+$c-washi:       #F3EAD3;  // type on the sky, the cream of the clouds
+$c-lacquer:     #1a1410;  // scroll rods
+$c-brass:       #c9a45a;  // rod caps
 
 // Radius
 $r-sm: 8px;

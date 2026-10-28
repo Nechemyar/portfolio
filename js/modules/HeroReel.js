@@ -1,12 +1,11 @@
 // ——————————————————————————————————————————————
-// HeroReel — the full-screen background video
+// HeroReel — the reel on the washi scroll
 // ——————————————————————————————————————————————
 // The <video> ships with <source data-src> children and preload="none", so
 // nothing downloads during first paint. Sources are attached once the loader
 // hands off (hero:ready), the video fades in when it can play, and it pauses
-// whenever the hero is off screen. Reduced-motion and Save-Data visitors keep
-// the still background. With no sources yet, this does nothing and the grey
-// placeholder shows.
+// whenever it is off screen. Reduced-motion and Save-Data visitors keep the
+// bare paper.
 
 export default class HeroReel {
   constructor() {
@@ -51,7 +50,7 @@ export default class HeroReel {
       this.pauseBtn.hidden = false;
       this.pauseBtn.addEventListener('click', () => {
         this.userPaused = !this.userPaused;
-        this.pauseBtn.setAttribute('aria-label', this.userPaused ? 'Play background video' : 'Pause background video');
+        this.pauseBtn.setAttribute('aria-label', this.userPaused ? 'Play the reel' : 'Pause the reel');
         this.sync();
       });
     }

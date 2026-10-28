@@ -1,104 +1,80 @@
 @use '../base/tokens' as *;
 
-/* Hero: the reel fills the screen, the nav floats on top, the title sits
-   alone in the centre, and a bottom row mirrors the nav (same height and
-   gutter) with one line on the left and one link on the right. Every size
-   is a multiple of the nav label ($fs-nav). */
+/* Intro: the hero, the reel and the trust line scroll over one printed
+   indigo sky. The sky is a WebGL canvas (InkSky.js), sticky for the whole
+   intro; InkStory.js tells the story on scroll. Every size is a multiple of
+   the nav label ($fs-nav), like the menu bar. */
 
-$hero-nav-h: calc(clamp(38px, 3.6vw, 48px) + #{$nav-pad-y} * 2 + 2rem);
+.intro {
+  position: relative;
+  background: $c-indigo;
+  color: $c-washi;
+
+  > section {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+/* Holds still for the whole intro, then leaves with its last pixel. lvh so it
+   still covers the screen when the mobile toolbar collapses. */
+.intro__sky {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100vh;
+  height: 100lvh;
+  margin-bottom: -100vh;
+  margin-bottom: -100lvh;
+}
+
+/* No WebGL: the bank of clouds as a plain picture under the hero. */
+.intro.no-gl .hero {
+  background: url('/ink/bank.webp') 50% 100% / max(170vw, 900px) auto no-repeat;
+}
+
+/* The white sections slide on like a sheet with rounded corners, the sky
+   showing round them. */
+.intro + section {
+  margin-top: -$r-xl;
+  border-radius: $r-xl $r-xl 0 0;
+  z-index: 2;
+}
+
+/* --- Hero --- */
 
 .hero {
-  position: relative;
-  width: 100%;
   height: 100vh;
   /* svh: the stable viewport with the mobile toolbar shown, so the hero
      doesn't reflow when the toolbar collapses mid-scroll. */
   height: 100svh;
-  min-height: 34rem;
-  overflow: hidden;
-  /* Ink behind the stage: when the trust screen slides over, the stage
-     scales back and this shows round its corners (iOS sheet behaviour). */
-  background: $c-ink;
-  color: $c-ink;
-  z-index: 10;
 }
 
-/* Holds the hero while the trust screen slides over it. The sticky ends
-   with .intro, so nothing after the trust screen sits on top of the hero. */
-.intro > .hero {
-  position: sticky;
-  top: 0;
-}
-
-/* Everything the recede animation scales/rounds as one piece (TrustPanel.js). */
-.hero__stage {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  background: $c-reel;
-  transform-origin: 50% 0%;
-}
-
-.hero__dim {
-  position: absolute;
-  inset: 0;
-  z-index: 4;
-  background: $c-ink;
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* --- Reel --- */
-
-.hero__reel {
-  position: absolute;
-  inset: 0;
-  background: $c-reel;
-
-  /* Scrim: the reel can be any colour, so it is always darkened enough for
-     white type. Heavier behind the title and along the top and bottom bars,
-     lighter in between so the footage still reads. */
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(ellipse 85% 70% at 50% 48%, rgba(0, 0, 0, 0.32), rgba(0, 0, 0, 0) 100%),
-      linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.42) 18%, rgba(0, 0, 0, 0.42) 72%, rgba(0, 0, 0, 0.6) 100%);
-  }
-}
-
-.hero__video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  opacity: 0;               /* shown by HeroReel once it can play */
-}
-
-.hero__video.is-playing {
-  opacity: 1;
-}
-
-/* --- Title --- */
-
+/* The words sit a little above the middle, in the open sky between the
+   corner clouds and the bank. */
 .hero__center {
   position: absolute;
-  inset: 0;
-  z-index: 2;
+  left: 0;
+  right: 0;
+  top: 47%;
+  transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   padding: 0 $nav-pad-x;
   pointer-events: none;
+
+  @media (min-width: 760px) {
+    top: 46%;
+  }
 }
 
 .hero__title {
   margin: 0;
   max-width: 13ch;
-  color: $c-warm-white;
+  color: $c-washi;
   font-family: $font-body;
   font-size: $fs-hero-title-mobile;
   font-weight: 400;
@@ -107,6 +83,7 @@ $hero-nav-h: calc(clamp(38px, 3.6vw, 48px) + #{$nav-pad-y} * 2 + 2rem);
   text-align: center;
   text-transform: none;
   text-wrap: balance;
+  text-shadow: 0 1px 18px rgba($c-indigo-deep, 0.55);
   visibility: hidden;      /* revealed by the entrance once lines are split */
 
   @media (min-width: 641px) {
@@ -117,13 +94,14 @@ $hero-nav-h: calc(clamp(38px, 3.6vw, 48px) + #{$nav-pad-y} * 2 + 2rem);
 /* Subheading: what Sumi actually makes, one quiet line under the title. */
 .hero__sub {
   margin: calc(#{$fs-nav} * 1.25) 0 0;
-  color: rgba($c-warm-white, 0.82);
+  color: rgba($c-washi, 0.8);
   font-family: $font-body;
   font-size: calc(#{$fs-nav} * 1.375);
   font-weight: 400;
   line-height: 1.3;
   letter-spacing: -0.01em;
   text-align: center;
+  text-shadow: 0 1px 14px rgba($c-indigo-deep, 0.55);
 
   @media (min-width: 641px) {
     font-size: calc(#{$fs-nav} * 1.625);
@@ -148,8 +126,9 @@ $hero-nav-h: calc(clamp(38px, 3.6vw, 48px) + #{$nav-pad-y} * 2 + 2rem);
 }
 
 /* --- CTA: liquid glass pill under the title ---
-   Muted on purpose: smoky glass with white text, quieter than the rust
-   buttons. Hidden until the entrance wipes it in, once its glass is built. SumiGlass.js picks the renderer per browser; these styles are the
+   Light glass with cream type: it bends the clouds behind it (drawn by
+   InkSky in WebGL). Hidden until the entrance wipes it in, once its glass is
+   built. SumiGlass.js picks the renderer per browser; these styles are the
    frost every browser starts from and falls back to. Height and type match
    the nav label; it never drops below a 44px tap target. */
 
@@ -162,7 +141,7 @@ $hero-nav-h: calc(clamp(38px, 3.6vw, 48px) + #{$nav-pad-y} * 2 + 2rem);
   height: max(44px, calc(#{$fs-nav} * 3.375));
   padding: 0 calc(#{$fs-nav} * 1.5);
   border-radius: $r-full;
-  color: $c-warm-white;
+  color: $c-washi;
   font-family: $font-body;
   font-size: $fs-nav;
   font-weight: 700;
@@ -221,7 +200,11 @@ $hero-nav-h: calc(clamp(38px, 3.6vw, 48px) + #{$nav-pad-y} * 2 + 2rem);
      WebGL one so the two read as one button. */
   &.lg-host {
     --lg-tint: rgba(255, 255, 255, 0.05);
-    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+  }
+
+  &.is-gl,
+  &.lg-host {
+    text-shadow: 0 1px 8px rgba($c-indigo-deep, 0.5);
   }
 
   @media (prefers-reduced-transparency: reduce) {
@@ -279,67 +262,194 @@ $hero-nav-h: calc(clamp(38px, 3.6vw, 48px) + #{$nav-pad-y} * 2 + 2rem);
   }
 }
 
-/* --- Bottom row --- */
+/* --- Reel: the footage on a scroll of washi ---
+   Phones: a hanging scroll (kakejiku) that unrolls downward, with the
+   portrait cut of the reel. Wide screens: a handscroll (emakimono) that opens
+   from the middle, with the 16:9 cut. The footage fills the paper; paper and
+   footage both get torn edges (masks drawn by InkStory.js). */
 
-.hero__base {
+.reel {
+  height: 270vh;
+  height: 270svh;
+}
+
+.reel__pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reel__scroll {
+  position: relative;
+  width: 78vw;
+  margin-top: calc(#{$fs-nav} * 3);
+
+  @media (min-width: 760px) {
+    width: min(80vw, 1120px, calc((100svh - 13rem) * 16 / 9));
+    margin-top: calc(#{$fs-nav} * 2);
+  }
+}
+
+.reel__sheet {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1 / 1.62;
+  will-change: transform;
+
+  @media (min-width: 760px) {
+    aspect-ratio: 16 / 9;
+    will-change: clip-path;
+  }
+}
+
+.reel__paper {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 3;
-  min-height: $hero-nav-h;
-  padding: $nav-pad-y $nav-pad-x;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: calc(#{$fs-nav} * 2);
-}
+  inset: 0;
+  background: #efe4c8 url('/ink/washi.jpg') center / cover;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  will-change: transform;
 
-.hero__line {
-  margin: 0;
-  max-width: 36ch;
-  color: rgba($c-warm-white, 0.78);
-  font-family: $font-body;
-  font-size: $fs-nav;
-  font-weight: 400;
-  line-height: 1.35;
+  /* hanging paper is never flat: slow, uneven waves of light across it */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    mix-blend-mode: soft-light;
+    background:
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.16) 0 7%, rgba(90, 64, 30, 0.1) 13%, rgba(255, 255, 255, 0.16) 21%),
+      repeating-linear-gradient(90deg, rgba(90, 64, 30, 0) 0 11%, rgba(90, 64, 30, 0.08) 17%, rgba(90, 64, 30, 0) 29%);
 
-  @media (max-width: 640px) {
-    max-width: 24ch;
+    @media (min-width: 760px) {
+      background:
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.14) 0 9%, rgba(90, 64, 30, 0.09) 16%, rgba(255, 255, 255, 0.14) 26%),
+        repeating-linear-gradient(90deg, rgba(90, 64, 30, 0) 0 8%, rgba(90, 64, 30, 0.07) 12%, rgba(90, 64, 30, 0) 21%);
+    }
   }
 }
 
-.hero__base-right {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: calc(#{$fs-nav} * 1.25);
-  flex-shrink: 0;
+.reel__picture {
+  position: absolute;
+  inset: 7% 6% 6%;
+  overflow: hidden;
+  background: #e6dcc2;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+
+  @media (min-width: 760px) {
+    inset: 5% 3.5%;
+  }
+
+  /* printed on the paper: the washi multiplied back over the footage */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: url('/ink/washi.jpg') center / cover;
+    mix-blend-mode: multiply;
+    opacity: 0.45;
+  }
 }
 
-.hero__down {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5em;
-  min-height: 44px;
-  color: $c-warm-white;
-  font-family: $font-body;
-  font-size: $fs-nav;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  text-decoration: none;
-  touch-action: manipulation;
+.hero__video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;               /* shown by HeroReel once it can play */
+}
 
-  svg {
-    width: 1em;
-    height: 1em;
-    flex-shrink: 0;
+.hero__video.is-playing {
+  opacity: 1;
+}
+
+/* Lacquered rods with brass caps */
+.reel__rod {
+  position: absolute;
+  border-radius: 9px;
+  background: linear-gradient(var(--rod-dir, 180deg), #000 0%, $c-lacquer 30%, #3a2c22 50%, $c-lacquer 70%, #000 100%);
+  box-shadow: 0 6px 12px -6px rgba($c-indigo-deep, 0.8);
+  will-change: transform;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    border-radius: 4px;
+    background: linear-gradient(var(--rod-dir, 180deg), #7a5d2c, $c-brass 45%, #f1dca6 55%, #8a6a31);
   }
+}
+
+.reel__rod--top {
+  left: -2%;
+  right: -2%;
+  top: -10px;
+  height: 12px;
+  border-radius: 3px;
+
+  &::before,
+  &::after { display: none; }
+}
+
+.reel__rod--bottom {
+  left: -5%;
+  right: -5%;
+  bottom: -11px;
+  height: 18px;
+
+  &::before { left: -12px; top: 1px; width: 14px; height: 16px; }
+  &::after { right: -12px; top: 1px; width: 14px; height: 16px; }
+}
+
+.reel__rod--left,
+.reel__rod--right {
+  display: none;
+  top: -4%;
+  bottom: -4%;
+  width: 18px;
+  --rod-dir: 90deg;
+
+  &::before { left: 1px; top: -14px; width: 16px; height: 16px; }
+  &::after { left: 1px; bottom: -14px; width: 16px; height: 16px; }
+}
+
+.reel__rod--left { left: -12px; }
+.reel__rod--right { right: -12px; }
+
+.reel__cord {
+  position: absolute;
+  left: 50%;
+  top: -56px;
+  width: 60px;
+  height: 48px;
+  transform: translateX(-50%);
+  stroke: $c-lacquer;
+  stroke-width: 1.6;
+
+  circle { fill: $c-lacquer; }
+}
+
+@media (min-width: 760px) {
+  .reel__rod--top,
+  .reel__rod--bottom,
+  .reel__cord { display: none; }
+
+  .reel__rod--left,
+  .reel__rod--right { display: block; }
 }
 
 /* WCAG 2.2.2: a way to pause motion that runs longer than 5 seconds. */
 .hero__pause {
+  position: absolute;
+  left: 50%;
+  bottom: calc(#{$nav-pad-y} + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
   display: inline-grid;
   place-items: center;
   width: 44px;
@@ -348,7 +458,7 @@ $hero-nav-h: calc(clamp(38px, 3.6vw, 48px) + #{$nav-pad-y} * 2 + 2rem);
   border: 0;
   border-radius: $r-full;
   background: transparent;
-  color: $c-warm-white;
+  color: $c-washi;
   cursor: pointer;
 
   &[hidden] {
@@ -358,11 +468,5 @@ $hero-nav-h: calc(clamp(38px, 3.6vw, 48px) + #{$nav-pad-y} * 2 + 2rem);
   svg {
     width: 14px;
     height: 14px;
-  }
-}
-
-@media (hover: hover) {
-  .hero__down:hover {
-    color: $c-rust;
   }
 }

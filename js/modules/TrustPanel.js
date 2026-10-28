@@ -1,11 +1,9 @@
 // ——————————————————————————————————————————————
-// TrustPanel — the hand-off from the reel to the first screen after it
+// TrustPanel — the trust line
 // ——————————————————————————————————————————————
-// The hero is sticky inside .intro, so it holds while the white trust screen
-// slides up over it. As the sheet rises, the hero stage eases back like the
-// view behind an iOS sheet: it scales down, rounds its corners and dims.
-// Scrubbed to the scroll at native speed (no pin, no snapping). The trust
-// line then rises through line masks, the same reveal as the hero title.
+// The last screen of the intro. The line rises through line masks, the same
+// reveal as the hero title, then the sentence under it. (The sky around it
+// is InkStory.js.)
 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -16,27 +14,11 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 export default class TrustPanel {
   constructor() {
     this.panel = document.querySelector('.trust');
-    this.stage = document.querySelector('.hero__stage');
-    if (!this.panel || !this.stage) return;
+    if (!this.panel) return;
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    this.initRecede();
     document.fonts.ready.then(() => this.initLine());
-  }
-
-  initRecede() {
-    gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: {
-        trigger: this.panel,
-        start: 'top bottom',
-        end: 'top top',
-        scrub: 0.6
-      }
-    })
-      .to(this.stage, { scale: 0.92, borderRadius: 24, duration: 1 }, 0)
-      .to('.hero__dim', { opacity: 0.55, duration: 1 }, 0);
   }
 
   initLine() {

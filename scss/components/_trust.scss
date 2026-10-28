@@ -1,20 +1,14 @@
 @use '../base/tokens' as *;
 
-/* Trust — the first screen after the reel. Centred, no eyebrow label. A white sheet with rounded top
-   corners that slides up over the held hero (see .intro in _hero.scss) and
-   carries straight on into the white work section. Sizes are multiples of
-   the nav label, like the hero. */
+/* Trust — the last screen of the intro, on the sky. The clouds close back in
+   round it and the sun sets behind the bank (InkStory.js). Centred, no
+   eyebrow label. Sizes are multiples of the nav label, like the hero. */
 
 .trust {
-  position: relative;
-  z-index: 11;
-  /* Most of a screen, so the line gets the stage to itself while the next
-     section's first line peeks in below as a cue to keep going. */
-  min-height: 80svh;
+  height: 100vh;
+  height: 100svh;
   display: flex;
   align-items: center;
-  background: #fff;
-  border-radius: $r-xl $r-xl 0 0;
 }
 
 .trust__inner {
@@ -30,7 +24,8 @@
 .trust__line {
   margin: 0;
   max-width: 20ch; /* the <br> sets the break; room so SplitText wraps the same */
-  color: $c-ink;
+  color: $c-washi;
+  text-shadow: 0 1px 18px rgba($c-indigo-deep, 0.55);
   font-family: $font-body;
   font-size: calc(#{$fs-nav} * 2.25);
   font-weight: 400;
@@ -47,7 +42,8 @@
 .trust__what {
   margin: 0;
   max-width: 40ch;
-  color: $c-text-secondary;
+  color: rgba($c-washi, 0.8);
+  text-shadow: 0 1px 14px rgba($c-indigo-deep, 0.55);
   font-family: $font-body;
   font-size: calc(#{$fs-nav} * 1.5);
   font-weight: 400;

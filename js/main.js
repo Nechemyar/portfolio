@@ -18,6 +18,8 @@ import BlurQuality from './modules/BlurQuality.js';
 import HeroReel from './modules/HeroReel.js';
 import SumiGlass from './modules/SumiGlass.js';
 import TrustPanel from './modules/TrustPanel.js';
+import InkSky from './modules/InkSky.js';
+import InkStory from './modules/InkStory.js';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -32,12 +34,13 @@ const workSection = new WorkSection();
 new ArchSlider();
 new BlurQuality();
 new HeroReel();
-const sumiGlass = new SumiGlass();
+const inkSky = new InkSky();
+const inkStory = new InkStory(inkSky);
+const sumiGlass = new SumiGlass(inkSky);
 new TrustPanel();
 
 // Hidden start states for the elements the hero entrance wipes in
 const wipeElements = [
-  '.hero__base-right',
   '.hero__sub',
   '.nav__cta--right',
   '.nav__desktop-wrapper'
@@ -64,8 +67,9 @@ new Loader(() => {
   document.getElementById('nav')?.classList.add('is-ready');
   document.dispatchEvent(new CustomEvent('hero:ready'));
 
-  // Hero entrance. The frame builds first (nav, then the bottom row) and the
-  // title lands last, so the eye finishes on the one thing that matters.
+  // Hero entrance. The sky prints in block by block and the nav builds while
+  // it does; the title lands last, so the eye finishes on the one thing that
+  // matters.
   const wipeIn = 'polygon(0% -50%, 100% -50%, 100% 150%, 0% 150%)';
   const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
 
@@ -78,13 +82,8 @@ new Loader(() => {
       stagger: 0.1
     }, 'frame');
 
-  // 2. Bottom row wipes up, mirroring the nav
-  tl.to('.hero__base-right', {
-    clipPath: wipeIn,
-    y: 0,
-    duration: 1.2,
-    stagger: 0.1
-  }, 'frame+=0.15');
+  // 2. The sky prints in: sun, far clouds, near clouds (InkStory.printIn)
+  tl.call(() => inkStory.printIn?.(), null, 'frame');
 
   // 3. Title last: words rise through their line masks, slow and soft
   tl.addLabel('title', 'frame+=0.55');

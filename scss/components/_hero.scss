@@ -315,12 +315,13 @@
    prop read as fake). Its top peeks out from under the near clouds at the
    bottom of the first screen; they part as it scrolls up, and it holds
    while the sky moves round it.
-   The portrait cut on phones, 16:9 on wide screens. Card edges line up with
-   the menu bar's ($nav-pad-x). */
+   The portrait cut on phones, 16:9 on wide screens. Thin side margins (8px
+   on phones) so the work fills the screen. */
 
 .reel {
   --reel-top: calc(#{$fs-nav} * 5);   /* clears the menu bar once held */
   --reel-peek: 30svh;                 /* the card's top, under the clouds */
+  --reel-edge: clamp(8px, 1vw, 16px); /* side margin */
   height: 180vh;
   height: 180svh;
   margin-top: calc(-1 * (var(--reel-peek) + var(--reel-top)));
@@ -338,8 +339,8 @@
 }
 
 .reel__card {
-  width: calc(100vw - #{$nav-pad-x} * 2);
-  height: min(calc((100vw - #{$nav-pad-x} * 2) * 1.62), calc(100svh - var(--reel-top) - #{$nav-pad-x}));
+  width: calc(100vw - var(--reel-edge) * 2);
+  height: min(calc((100vw - var(--reel-edge) * 2) * 1.62), calc(100svh - var(--reel-top) - var(--reel-edge)));
   overflow: hidden;
   border-radius: $r-xl;
   background: rgba($c-indigo-deep, 0.25);
@@ -347,7 +348,7 @@
   will-change: transform;
 
   @media (min-width: 760px) {
-    height: min(calc((100vw - #{$nav-pad-x} * 2) * 9 / 16), calc(100svh - var(--reel-top) - #{$nav-pad-x}));
+    height: min(calc((100vw - var(--reel-edge) * 2) * 9 / 16), calc(100svh - var(--reel-top) - var(--reel-edge)));
   }
 }
 

@@ -24,8 +24,8 @@
 .trust__line {
   margin: 0;
   max-width: 20ch; /* the <br> sets the break; room so SplitText wraps the same */
-  color: $c-indigo-deep;
-  text-shadow: 0 0 22px $c-sky-glow;
+  color: $c-sky-type;
+  text-shadow: 0 1px 16px $c-sky-shade;
   font-family: $font-body;
   font-size: calc(#{$fs-nav} * 2.25);
   font-weight: 400;
@@ -42,8 +42,8 @@
 .trust__what {
   margin: 0;
   max-width: 40ch;
-  color: rgba($c-indigo-deep, 0.85);
-  text-shadow: 0 0 18px $c-sky-glow;
+  color: rgba($c-sky-type, 0.92);
+  text-shadow: 0 1px 14px $c-sky-shade;
   font-family: $font-body;
   font-size: calc(#{$fs-nav} * 1.5);
   font-weight: 400;

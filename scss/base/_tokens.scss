@@ -72,8 +72,9 @@ $fs-hero-title-mobile: calc(#{$fs-nav} * 3.375);  // ~44px at 390
 $c-sky:         #4a86c3;  // sky ground at the top
 $c-sky-pale:    #9ec6e4;  // sky ground at the horizon
 $c-indigo:      #1e518d;  // bokashi band along the top
-$c-indigo-deep: #0f2d4d;  // type on the sky, printed in ink
-$c-sky-glow:    rgba(225, 238, 248, 0.45); // soft halo that lifts type off the clouds
+$c-indigo-deep: #0f2d4d;  // ink: shadows on the sky
+$c-sky-type:    #ffffff;  // type on the sky
+$c-sky-shade:   rgba(20, 60, 110, 0.55); // soft shadow that lifts type off the clouds
 $c-washi:       #F3EAD3;  // type on the sky, the cream of the clouds
 $c-lacquer:     #1a1410;  // scroll rods
 $c-brass:       #c9a45a;  // rod caps

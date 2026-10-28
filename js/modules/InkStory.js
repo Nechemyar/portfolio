@@ -24,7 +24,6 @@ export default class InkStory {
     this.scroll = document.querySelector('.reel__scroll');
     if (!this.intro || !this.scroll) return;
 
-    this.center = this.intro.querySelector('.hero__center');
     this.sheet = this.scroll.querySelector('.reel__sheet');
     this.paper = this.scroll.querySelector('.reel__paper');
     this.picture = this.scroll.querySelector('.reel__picture');
@@ -47,19 +46,6 @@ export default class InkStory {
     const vw = () => this.sky.vw || window.innerWidth;
     const vh = () => this.sky.vh || window.innerHeight;
     const mm = gsap.matchMedia();
-
-    // The hero words leave with the scroll, 1:1, but moved by GSAP in the
-    // same frame as the sky (and the glass drawn in it), not by the browser.
-    // Not decorative motion, so reduced motion keeps it too.
-    if (this.center) {
-      const hero = this.center.parentElement;
-      this.intro.classList.add('is-held');
-      gsap.to(this.center, {
-        y: () => -hero.offsetHeight,
-        ease: 'none',
-        scrollTrigger: { trigger: this.intro, start: 'top top', end: () => `+=${hero.offsetHeight}`, scrub: true, invalidateOnRefresh: true }
-      });
-    }
 
     mm.add({
       phone: '(max-width: 759px)',

@@ -11,7 +11,8 @@
 //  1. Scene: a sky-blue wash, deeper at the top, with uneven ink (low
 //     noise), the sun, then the cloud layers far to near, into a buffer.
 //  2. Composite: the glass CTA bends the buffer (rim refraction, light on
-//     the edges facing the light only, a bevel, no full white border), then
+//     the edges facing the light only, a bevel, no full white border; copied
+//     into the button itself, see glassPatch), then
 //     the printer's bokashi band darkens the top of the sky, washi paper is
 //     multiplied over everything so the fibres show through the ink, and a
 //     little grain. Doing paper and grain here costs nothing extra, where
@@ -19,7 +20,6 @@
 // No WebGL: .intro keeps its CSS ground and the CTA keeps its frost.
 
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const ART = {
   sun: '/ink/sun.webp',
@@ -33,13 +33,15 @@ const ORDER = ['sun', 'wisp', 'puff', 'corner', 'bank']; // far to near
 
 // Resting places, as fractions of the canvas: w width, x left or r right,
 // y top or b bottom, h an optional height cap (so short phones don't grow
-// the art down into the words). Phone first; wide screens get smaller art.
+// the art down into the words), rot a turn in degrees, clockwise, about the
+// layer's centre. Phone first; wide screens get smaller art.
 const GEO = {
   phone: {
     sun: { w: 0.30, x: 0.10, y: 0.14 },
     wisp: { w: 0.62, x: -0.22, y: 0.20, h: 0.11 },
     puff: { w: 0.40, r: -0.10, y: 0.66 },
-    corner: { w: 0.84, r: -0.18, y: -0.09, h: 0.37 },
+    // turned so its tail runs along the top, not down into the words
+    corner: { w: 0.56, r: -0.16, y: -0.07, rot: 18 },
     bank: { w: 1.70, x: -0.35, b: -0.07, h: 0.38 }
   },
   wide: {
@@ -78,9 +80,10 @@ void main(){
   gl_FragColor = vec4(ink*(0.95 + 0.08*m), 1.0);
 }`;
 
-const SPRITE_V = `attribute vec2 a; uniform vec4 uRect; uniform vec2 uRes; varying vec2 vUv;
+const SPRITE_V = `attribute vec2 a; uniform vec4 uRect; uniform vec2 uRes; uniform float uRot; varying vec2 vUv;
 void main(){
-  vec2 c = a*0.5 + 0.5; vec2 p = uRect.xy + c*uRect.zw;
+  vec2 c = a*0.5 + 0.5; float cs = cos(uRot), sn = sin(uRot);
+  vec2 p = uRect.xy + 0.5*uRect.zw + mat2(cs, sn, -sn, cs)*((c - 0.5)*uRect.zw);
   gl_Position = vec4(p.x/uRes.x*2.0 - 1.0, 1.0 - p.y/uRes.y*2.0, 0.0, 1.0); vUv = c;
 }`;
 
@@ -90,12 +93,12 @@ void main(){ gl_FragColor = texture2D(uT, vUv)*uA; }`;
 
 const COMPOSITE = `precision highp float;
 uniform vec2 uRes; uniform sampler2D uScene; uniform sampler2D uPaper; uniform vec2 uPaperFit;
-uniform vec4 uPill; uniform float uClip; uniform float uDpr; uniform vec4 uBand;
+uniform vec4 uPill; uniform float uDpr; uniform vec4 uBand;
 float sdBox(vec2 p, vec2 b){ vec2 d = abs(p) - b; return length(max(d, 0.0)) + min(max(d.x, d.y), 0.0); }
 vec3 scene(vec2 p){ return texture2D(uScene, vec2(p.x, uRes.y - p.y)/uRes).rgb; }
 vec3 glass(vec3 col, vec2 p){
   vec2 hb = uPill.zw; float rr = hb.y;
-  if (rr < 1.0 || p.y < uClip) return col;
+  if (rr < 1.0) return col;
   vec2 lp = p - uPill.xy;
   float sd = sdBox(lp, hb - vec2(rr)) - rr;
   if (sd > 0.0) return col*(1.0 - 0.14*exp(-sd/(10.0*uDpr))*smoothstep(-rr*0.6, rr*1.2, lp.y));
@@ -159,13 +162,7 @@ export default class InkSky {
 
     window.addEventListener('resize', () => this.resize());
     new IntersectionObserver(([entry]) => { this.inView = entry.isIntersecting; }).observe(this.intro);
-    // Bring ScrollTrigger up to this frame's scroll first, so the hero words
-    // (moved by GSAP, see InkStory) and the glass drawn here move together.
-    this.tick = (time) => {
-      if (!this.inView) return;
-      ScrollTrigger.update();
-      this.render(time);
-    };
+    this.tick = (time) => { if (this.inView) this.render(time); };
     gsap.ticker.add(this.tick);
   }
 
@@ -188,8 +185,8 @@ export default class InkSky {
       return { p, u };
     };
     this.pGround = program(VERT, GROUND_F, ['uRes', 'uTop', 'uBottom']);
-    this.pSprite = program(SPRITE_V, SPRITE_F, ['uRect', 'uRes', 'uT', 'uA']);
-    this.pComp = program(VERT, COMPOSITE, ['uRes', 'uScene', 'uPaper', 'uPaperFit', 'uPill', 'uClip', 'uDpr', 'uBand']);
+    this.pSprite = program(SPRITE_V, SPRITE_F, ['uRect', 'uRes', 'uT', 'uA', 'uRot']);
+    this.pComp = program(VERT, COMPOSITE, ['uRes', 'uScene', 'uPaper', 'uPaperFit', 'uPill', 'uDpr', 'uBand']);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]), gl.STATIC_DRAW);
@@ -264,7 +261,7 @@ export default class InkSky {
     const h = w / T.aspect;
     const x = g.r !== undefined ? this.vw - w - g.r * this.vw : g.x * this.vw;
     const y = g.b !== undefined ? this.vh - h - g.b * this.vh : g.y * this.vh;
-    return { x, y, w, h };
+    return { x, y, w, h, rot: (g.rot || 0) * Math.PI / 180 };
   }
 
   render(time) {
@@ -297,10 +294,12 @@ export default class InkSky {
       const h = r.h * st.s;
       const x = r.x + (r.w - w) / 2 + st.x + drift;
       const y = r.y + (r.h - h) / 2 + st.y;
-      if (y > this.vh || y + h < 0 || x > this.vw || x + w < 0) continue;
+      const rot = r.rot || 0;
+      if (!rot && (y > this.vh || y + h < 0 || x > this.vw || x + w < 0)) continue;
       gl.bindTexture(gl.TEXTURE_2D, T.t);
       gl.uniform1f(this.pSprite.u.uA, st.a);
       gl.uniform4f(this.pSprite.u.uRect, x * dpr, y * dpr, w * dpr, h * dpr);
+      gl.uniform1f(this.pSprite.u.uRot, rot);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
     }
     gl.disable(gl.BLEND);
@@ -322,21 +321,50 @@ export default class InkSky {
     gl.uniform1f(this.pComp.u.uDpr, dpr);
     gl.uniform4f(this.pComp.u.uBand, ...SKY.band, SKY.bandAmount);
 
-    let pill = [0, 0, 0, 0];
-    let clip = 0;
-    const cta = this.cta;
-    if (cta && cta.dataset.glass === 'sky' && cta.style.visibility === 'visible') {
-      const box = this.canvas.getBoundingClientRect();
-      const b = cta.getBoundingClientRect();
-      pill = [(b.left - box.left + b.width / 2) * dpr, (b.top - box.top + b.height / 2) * dpr, (b.width / 2) * dpr, (b.height / 2) * dpr];
-      // follow the entrance wipe: the clip-path's top edge, as a % of the pill
-      const m = /polygon\(\S+\s+(-?[\d.]+)%/.exec(cta.style.clipPath || '');
-      const top = m ? Math.max(0, parseFloat(m[1])) / 100 : 0;
-      clip = (b.top - box.top + b.height * top) * dpr;
+
+    // The glass: drawn into its own patch of the sky, copied into a canvas
+    // inside the button, then the sky is drawn whole without it. The button
+    // scrolls natively with its label, so the two can't come apart on a
+    // phone (drawn in this canvas, the glass trailed the label by a frame).
+    // The bent sky inside may trail a frame instead, which no one can see.
+    const patch = this.glassPatch();
+    if (patch) {
+      const [x, y, w, h] = patch;
+      gl.enable(gl.SCISSOR_TEST);
+      gl.scissor(x, H - y - h, w, h);
+      gl.uniform4f(this.pComp.u.uPill, x + w / 2, y + h / 2, w / 2, h / 2);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+      gl.disable(gl.SCISSOR_TEST);
+      this.glassCtx.drawImage(this.canvas, x, y, w, h, 0, 0, w, h);
     }
-    gl.uniform4fv(this.pComp.u.uPill, pill);
-    gl.uniform1f(this.pComp.u.uClip, clip);
+    gl.uniform4f(this.pComp.u.uPill, 0, 0, 0, 0);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
     gl.activeTexture(gl.TEXTURE0);
+  }
+
+  // The button's place in canvas px, once its glass is on and it's on
+  // screen; makes the button's glass canvas the first time.
+  glassPatch() {
+    const cta = this.cta;
+    if (!cta || cta.dataset.glass !== 'sky' || cta.style.visibility !== 'visible') return null;
+    const box = this.canvas.getBoundingClientRect();
+    const b = cta.getBoundingClientRect();
+    if (b.bottom <= box.top || b.top >= box.bottom) return null;
+    if (!this.glassCtx) {
+      const c = document.createElement('canvas');
+      c.className = 'hero__cta-glass';
+      c.setAttribute('aria-hidden', 'true');
+      cta.prepend(c);
+      this.glassCtx = c.getContext('2d');
+    }
+    const d = this.dpr;
+    const w = Math.round(b.width * d);
+    const h = Math.round(b.height * d);
+    const c = this.glassCtx.canvas;
+    if (c.width !== w || c.height !== h) {
+      c.width = w;
+      c.height = h;
+    }
+    return [Math.round((b.left - box.left) * d), Math.round((b.top - box.top) * d), w, h];
   }
 }

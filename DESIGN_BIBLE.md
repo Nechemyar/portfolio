@@ -202,7 +202,7 @@ Layers (back → front):
 - **Title** (`.hero__title`, `h1`, Satoshi 400): `$fs-hero-title` (5.0625 × nav
   label, ~80px at 1440) and `$fs-hero-title-mobile` (3.375 ×, ~44px at 390),
   `line-height: 0.98`, `letter-spacing: -0.045em`, centred, `max-width: 13ch`.
-  Copy: *"AI can't build trust."* BrandelLuchador is not used in the hero; it
+  Copy: *"Building what AI can't."* BrandelLuchador is not used in the hero; it
   stays in the menu.
 - **CTA slot** (`.hero__cta-slot`): under the title, empty for now (glass CTA
   being designed). Anything placed in it wipes up in the entrance.

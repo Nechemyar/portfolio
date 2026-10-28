@@ -55,14 +55,13 @@
   color: $c-ink;
 }
 
-/* The stage: one tile per project, the phone rising out of its bottom edge
-   and cropped by it (Apple's App Store pages show phones this way). No
-   shadow; the frame is Apple's own iPhone 17 Pro artwork. */
+/* The stage: one square-cornered tile per project with the whole phone
+   standing in the middle of it. No shadow; the frame is Apple's own
+   iPhone 17 Pro artwork. */
 .work__stage {
   position: relative;
   overflow: hidden;
   aspect-ratio: 4 / 5;
-  border-radius: $r-xl;
   /* The hero's sky, cut into a tile, with the same washi grain over it. */
   background: linear-gradient(180deg, $c-sky, $c-sky-pale);
   isolation: isolate;
@@ -81,10 +80,10 @@
 .work__phone {
   position: absolute;
   left: 50%;
-  top: 13%;
-  width: 64%;
+  top: 50%;
+  height: 84%;
   aspect-ratio: 703 / 1411;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   z-index: 1;
 }
 

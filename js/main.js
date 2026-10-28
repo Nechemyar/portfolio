@@ -16,6 +16,7 @@ import WorkSection from './modules/WorkSection.js';
 import ArchSlider from './modules/ArchSlider.js';
 import BlurQuality from './modules/BlurQuality.js';
 import HeroReel from './modules/HeroReel.js';
+import SumiGlass from './modules/SumiGlass.js';
 import TrustPanel from './modules/TrustPanel.js';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -31,6 +32,7 @@ const workSection = new WorkSection();
 new ArchSlider();
 new BlurQuality();
 new HeroReel();
+new SumiGlass();
 new TrustPanel();
 
 // Hidden start states for the elements the hero entrance wipes in
@@ -99,7 +101,8 @@ new Loader(() => {
   const slotted = document.querySelectorAll('.hero__cta-slot > *');
   if (slotted.length) {
     gsap.set(slotted, { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)', y: 40 });
-    tl.to(slotted, { clipPath: wipeIn, y: 0, duration: 1.2 }, 'title+=0.6');
+    // clearProps: once in, drop the clip so the CTA's glass shadow isn't cut square at its sides
+    tl.to(slotted, { clipPath: wipeIn, y: 0, duration: 1.2, clearProps: 'clipPath' }, 'title+=0.6');
   }
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {

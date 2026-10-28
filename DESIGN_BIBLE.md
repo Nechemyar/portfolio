@@ -204,12 +204,23 @@ Layers (back → front):
   `line-height: 0.98`, `letter-spacing: -0.045em`, centred, `max-width: 13ch`.
   Copy: *"Building what AI can't."* BrandelLuchador is not used in the hero; it
   stays in the menu.
-- **CTA slot** (`.hero__cta-slot`): under the title, empty for now (glass CTA
-  being designed). Anything placed in it wipes up in the entrance.
+- **CTA** (`.hero__cta` in `.hero__cta-slot`, 2026-10-28): "Book a free call ↗"
+  as a muted liquid glass pill under the title, quieter than the rust buttons
+  (premium sites keep a hero CTA but tone it down). Nav-label type (700,
+  uppercase, +0.06em), height `max(44px, 3.375 × nav label)`, milky white tint
+  so ink text reads over any footage. `js/modules/SumiGlass.js` picks the
+  renderer: Chromium gets SVG refraction via backdrop-filter
+  (`js/vendor/liquid-glass-web`, MIT); Safari, Firefox and iOS Chrome get
+  `VideoGlass.js`, a small WebGL canvas inside the button that refracts the
+  reel behind it, and it drops back to the CSS frost if its first 60 frames run
+  over 4 ms. Until the reel has sources those browsers keep the frost.
+  Reduced transparency gets a solid pill. Research and benchmarks: the Hero
+  Glass Lab artifact and `/mnt/project-files/sumi/hero-glass/`. It wipes up in
+  the entrance like anything in the slot.
 - **Bottom row** (`.hero__base`): mirrors the nav's height and gutter. Left: one
   line at nav size, weight 400, `$c-text-secondary`. Right: "See the work ↓" at
-  nav-label style. Booking is not in the hero; the fixed nav CONTACT covers it and
-  the big booking moment comes after the work section.
+  nav-label style. The glass CTA above is the hero's only booking prompt; the
+  big booking moment still comes after the work section.
 
 Entrance (in `js/main.js`): the frame builds first and the title lands last.
 Nav wipes up (1.2s), bottom row wipes up (+0.15s), then the title: GSAP

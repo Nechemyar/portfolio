@@ -277,27 +277,46 @@
   }
 }
 
-/* --- Reel: the footage in a frame of printed clouds ---
-   A ring of woodblock clouds (painted with Codex, like the sky) with the
-   reel masked into its window: tall on phones with the portrait cut, wide
-   on desktop. No card edge, no shadow (a scroll prop read as fake). It
-   peeks out from under the near clouds at the bottom of the first screen;
-   they part as it scrolls up, and it holds while the sky moves round it.
-   Thin side margins (8px on phones). Swap a frame by changing --frame. */
+/* --- Reel: the footage in a thin ring of printed clouds ---
+   A string of woodblock cloud curls (painted with Codex, like the sky)
+   round the footage, thin all the way round. The ring art is refitted to
+   the video's own shape (1:2.06 on phones for the 1:2.17 phone cut, 5:3 on
+   desktop for 16:9), so the footage only tucks a few px under the curls.
+   Gold by default so it reads as a frame, not more weather; --frame swaps
+   it (.reel--rose, .reel--sky). No card edge, no shadow. It peeks at the
+   bottom of the first screen and holds while the sky moves round it. */
 
 .reel {
   --reel-top: calc(#{$fs-nav} * 5);   /* clears the menu bar once held */
-  --reel-peek: 30svh;                 /* the frame's top, under the clouds */
+  --reel-peek: 30svh;                 /* the frame's top on the first screen */
   --reel-edge: clamp(8px, 1vw, 16px); /* side margin */
-  --frame: url('/ink/frames/F3a.webp');
-  --frame-mask: url('/ink/frames/F3a-mask.png');
+  --card-w: min(calc(100vw - var(--reel-edge) * 2), calc((100svh - var(--reel-top) - var(--reel-edge)) * 1024 / 2110));
+  --ring-in: 0.05;                    /* footage inset, share of card width */
+  --frame: url('/ink/frames/thin/ring-phone-gold.webp');
   height: 180vh;
   height: 180svh;
   margin-top: calc(-1 * (var(--reel-peek) + var(--reel-top)));
 
   @media (min-width: 760px) {
-    --frame: url('/ink/frames/F4b.webp');
-    --frame-mask: url('/ink/frames/F4b-mask.png');
+    --card-w: min(calc(100vw - var(--reel-edge) * 2), calc((100svh - var(--reel-top) - var(--reel-edge)) * 1536 / 920));
+    --ring-in: 0.03;
+    --frame: url('/ink/frames/thin/ring-wide-gold.webp');
+  }
+}
+
+.reel--rose {
+  --frame: url('/ink/frames/thin/ring-phone-rose.webp');
+
+  @media (min-width: 760px) {
+    --frame: url('/ink/frames/thin/ring-wide-rose.webp');
+  }
+}
+
+.reel--sky {
+  --frame: url('/ink/frames/thin/ring-phone-sky.webp');
+
+  @media (min-width: 760px) {
+    --frame: url('/ink/frames/thin/ring-wide-sky.webp');
   }
 }
 
@@ -314,24 +333,23 @@
 
 .reel__card {
   position: relative;
-  width: min(calc(100vw - var(--reel-edge) * 2), calc((100svh - var(--reel-top) - var(--reel-edge)) * 2 / 3));
-  aspect-ratio: 2 / 3;
+  width: var(--card-w);
+  aspect-ratio: 1024 / 2110;
   transform-origin: 50% 0;
   will-change: transform;
 
   @media (min-width: 760px) {
-    width: min(calc(100vw - var(--reel-edge) * 2), calc((100svh - var(--reel-top) - var(--reel-edge)) * 3 / 2));
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 1536 / 920;
   }
 }
 
-/* the footage, cut to the frame's window */
+/* the footage, its edges just under the curls */
 .reel__window {
   position: absolute;
-  inset: 0;
+  inset: calc(var(--card-w) * var(--ring-in));
+  overflow: hidden;
+  border-radius: calc(var(--card-w) * 0.02);
   background: rgba($c-indigo-deep, 0.25);
-  -webkit-mask: var(--frame-mask) 0 0 / 100% 100% no-repeat;
-  mask: var(--frame-mask) 0 0 / 100% 100% no-repeat;
 }
 
 .reel__frame {
@@ -380,8 +398,7 @@
     position: relative;
     inset: auto;
     aspect-ratio: 1 / 2;
-    -webkit-mask: none;
-    mask: none;
+    border-radius: 0;
 
     @media (min-width: 760px) {
       aspect-ratio: 16 / 9;

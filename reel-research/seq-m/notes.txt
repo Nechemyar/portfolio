@@ -1,0 +1,82 @@
+Mobile reel image-sequence takes (captured 2026-10-29, scripts/capture-m.mjs + takes-m.mjs in sumi-reel)
+=======================================================================================================
+
+Format: 1206x2622 (402x874 CSS at deviceScaleFactor 3), 30 fps, H.264 CRF 16, yuv420p.
+Context: isMobile, hasTouch, iPhone Safari user agent (iOS 18.5).
+No cursor or finger is drawn. <take>.cursor.json has per-frame {f, x, y, down, scrollY} in CSS px
+(multiply by 3 for frame pixels), plus "marks" (the action times listed below) and "input": "touch".
+
+How it was captured (same method as the desktop takes in ../seq/notes.txt):
+- Playwright's fake clock, paused; every frame steps exactly 1/30 s. Every CSS animation,
+  transition and element.animate() is paused and seeked to virtual time.
+- Taps are REAL touch: CDP Input.dispatchTouchEvent touchStart, 3 held frames (down=true), touchEnd,
+  so the browser synthesises the click itself. The slider drag is a real touch drag (touchMove stream).
+  The press-and-hold is a real held touch.
+- Between touches the log has an eased pointer path (slight arc, at most 70 CSS px per frame,
+  0.15-0.45 s depending on distance) so an arrow or touch dot can be drawn travelling.
+- Swipe-scrolls are programmatic eased scrolls (ease-out, like a light fling); the logged finger
+  is down and moves 1:1 with the content for the first 45-50% of the swipe, then lifts. A real touch
+  fling runs on the compositor's wall clock and would break the frame-exact timing.
+- Each take starts with 0.3 s of still frames. The gap after a reaction settles before the next input
+  is about 0.4 s. Every take was checked frame by frame on contact sheets (every 3rd frame).
+
+1. jsense-modes.mp4 (8.27 s). jsense.org.uk, home page, accessibility widget
+   0.00  still (hero: "Navigating the SEND journey, together")
+   0.70  tap the round blue accessibility button (bottom right). The bottom sheet slides up
+         over ~85% of the screen in about 0.2 s; the page behind dims.
+   1.97  tap Reading font -> Atkinson Hyperlegible (the whole sheet's type changes; subtle)
+   2.73  tap Reading font again -> OpenDyslexic (big, wide letterforms everywhere)
+   3.70  tap High Contrast: the sheet goes white with heavy black outlines on every card
+   4.90  tap Dark Contrast: everything flips to near-black with blue outlines (biggest flip)
+   6.27  tap the X: the sheet closes and the whole page shows in dark contrast + OpenDyslexic
+         (pink headline on black, yellow button). Holds to 8.27.
+   SURPRISING: on phones the panel is a bottom sheet, so the mode changes show mostly ON the sheet;
+   the payoff of seeing the page itself transformed comes when it closes at 6.27.
+   High Contrast must come BEFORE Dark Contrast: after Dark, a High Contrast tap only outlines
+   one card (barely visible), which is what the first attempt did.
+
+2. choice-calc.mp4 (7.77 s). choiceinventory.co.uk/pricing, calculator iframe
+   0.00  still, pre-scrolled so "Instant Quote" sits at the top and the bedrooms slider is in view
+   0.87  touch the bedrooms thumb (Studio) and drag to 4 (real touch drag, 1.0 s). The badge counts
+         Studio -> 1 -> 2 -> 3 -> 4 Bedrooms, and the "Estimated total" bar slides up from the
+         bottom of the screen and rolls £144 -> £168 -> £186 during the drag.
+   2.93  tap Furnished (-> £216)
+   3.63  short swipe up (129 px): Check-in was hidden behind the price bar
+   4.63  tap Check-in (-> £258)
+   5.63  tap Additional rooms: the quantity strip opens under it (-> £270)
+   6.53  tap + on the room counter, 1 -> 2 (-> £282, the same end value as the desktop take)
+   7.77  end
+   SURPRISING: the calculator's own result column is hidden on phones (display:none under 900 px);
+   the total lives in a separate "Estimated total" bar on the parent page that only slides up after
+   the first change. It covers the bottom ~90 px, so anything under it must be swiped clear first.
+   In the first attempt the Check-in tap landed on that bar and changed nothing.
+
+3. clinical-team.mp4 (4.20 s). clinicalassessments.co.uk/team/ (Meet The Team)
+   0.00  still: "Meet The Team" heading and Dr. Yehuda Marshall's card
+   0.50  swipe up 646 px (0.9 s). Dr. Ruth M. Deutsch's card glides up into place (Elementor fadeInUp)
+   2.47  tap See Profile on her card
+   2.60  her profile page is on screen ("Back to team", name, large arched photo, bio). Holds to 4.20.
+   The cards below the fold were re-armed to their pre-reveal state with an IntersectionObserver
+   (same trick as the desktop take), so the glide plays when they enter the view. The animation is
+   the site's own CSS; only the trigger moment is ours.
+   The network wait for the profile page is not captured (frames resume once it has loaded), so the
+   cut from team to profile is instant. Its link is href="#" and navigates by script.
+   The mobile menu was considered: it is a plain fade-in list with the hamburger turning into an X,
+   which reads weaker than the profile transition.
+
+4. settle-paid.mp4 (7.77 s). settle.nechemyar.workers.dev/?demo, phone layout
+   The phone layout has no Pending / Agreed pills (that is desktop only). It shows "9 things to do"
+   as a horizontal row of cards, then grouped lists (Overdue, Your turn, Coming up) and a tab bar.
+   0.00  still, dashboard ("9 things to do")
+   0.77  swipe the to-do cards left 208 px so "£1,880 to Tom / 1 day overdue" leads
+   1.83  tap Open on that card. The 4 Lordship Park case page opens with the street photo
+   2.00  the "Due to Tom £1,880" gauge draws segment by segment (~0.9 s), stepper below
+   3.43  press and hold Mark Paid on the sticky red bar at the bottom ("Press and hold").
+         The hold fill sweeps across the button (~0.9 s), then the red card morphs to full screen
+         and the tint fades to purple.
+   5.07  released once "Marked as paid" exists. The winged bill flies in, then the title,
+         "£1,880 is on its way to Tom", the Tom Reid row and Done rise in. A "Saved" pill appears
+         at the top. Holds to 7.77 with the bill flapping.
+
+Requests: nothing was submitted, booked or sent. Settle's demo fires POST /api/suggest (its own
+reply-suggestion endpoint) when the case loads; Clinical fires Google Analytics page_view POSTs.

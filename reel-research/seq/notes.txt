@@ -89,3 +89,14 @@ Side effects: none. Nothing was submitted, booked or sent. Settle ?demo makes it
 POST /api/suggest calls on load (AI reply suggestions, the same as in the earlier takes),
 and clinicalassessments sends Google Analytics beacons. Each take used a fresh browser
 context, so the demo state starts clean every time.
+
+5. jsense-modes.mp4 (8.43 s, captured 2026-10-29). jsense.org.uk, 1440x900 at DPR 2, real mouse.
+   Captured with scripts/capture-m.mjs in desktop mode (same seeker; 0.3 s still start).
+   0.00  still
+   0.87  click the accessibility button in the header: the side panel opens on the right
+   2.03  Reading font -> Atkinson Hyperlegible (subtle)
+   2.80  Reading font -> OpenDyslexic (the page headline and body change behind the panel)
+   3.77  High Contrast (white, heavy outlines)
+   4.97  Dark Contrast (the whole page flips to near-black)
+   6.33  close the panel: the page in dark contrast + OpenDyslexic. Holds to 8.43.
+   These are the real transitions, replacing the swapped stills.

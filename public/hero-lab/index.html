@@ -67,6 +67,11 @@ h1{font-size:var(--s-head);font-weight:var(--head-w);line-height:.98;letter-spac
 .btn{height:var(--pill-h);padding:0 var(--pill-px);display:inline-flex;align-items:center;gap:.6em;border-radius:8px;background:var(--ink);color:var(--white);
   font-size:var(--m);font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;flex-shrink:0}
 .btn svg{width:.9em;height:.9em}
+.down{font-size:var(--m);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:.5em;min-height:44px;flex-shrink:0}
+.down svg{width:1em;height:1em}
+.hero .btn{display:none}
+.hero.with-btn .btn{display:inline-flex}
+.hero.with-btn .down{display:none}
 @media (hover:hover){ .btn:hover{background:var(--rust)} }
 .cta-rust .btn{background:var(--rust)}
 @media (hover:hover){ .cta-rust .btn:hover{background:var(--rust-hover)} }
@@ -114,8 +119,10 @@ h1{font-size:var(--s-head);font-weight:var(--head-w);line-height:.98;letter-spac
 
   <div class="base">
     <p id="sub" style="position:relative">Websites for businesses that give a damn. Designed and hand-coded by me.<span class="pin" style="right:-26px;top:-6px">3</span></p>
+    <a class="down" href="#notes" style="position:relative">See the work
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><line x1="12" y1="4" x2="12" y2="19"/><polyline points="6 13 12 19 18 13"/></svg><span class="pin" style="left:-30px;top:-6px">4</span></a>
     <a class="btn" href="#" style="position:relative">Book a free call
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg><span class="pin" style="left:-30px;top:-6px">4</span></a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
   </div>
   <span class="pin" style="left:var(--nav-px);top:calc(var(--nav-h) - 8px)">5</span>
 </section>
@@ -136,9 +143,11 @@ h1{font-size:var(--s-head);font-weight:var(--head-w);line-height:.98;letter-spac
       <p>The headline is a hook, so this line says the service in plain words. NN/g's first homepage guideline is a tagline that says what the company does. Their research also shows that defining yourself by a technology ("powered by AI") doesn't tell people what they get, and "What AI can't build" has the same problem without this line beside it.</p>
       <p>Left side because attention leans left: NN/g measured about 80% of viewing time on the left half of the page. Set at the menu size (1m), weight 500, held to 36 characters so it breaks into two short lines.</p>
       <p class="src"><a href="https://www.nngroup.com/articles/top-ten-guidelines-for-homepage-usability/">NN/g, homepage guidelines</a> · <a href="https://www.nngroup.com/articles/powered-by-ai-is-not-a-value-proposition/">NN/g, "Powered by AI"</a> · <a href="https://www.nngroup.com/articles/horizontal-attention-leans-left/">NN/g, attention leans left</a></p></div></li>
-    <li><span class="n">4</span><div><h3>Bottom right: the one action</h3></div><div>
-      <p>Book a free call, built exactly like the nav pill: same height (38 to 48px), padding and label. That clears Apple's 44pt and Material's 48dp touch targets at desktop sizes. Bottom right is where people finish reading a screen, so the action sits where the eye ends up. Rust fill because it's the only filled thing on the screen.</p>
-      <p class="src"><a href="https://www.nngroup.com/articles/top-ten-guidelines-for-homepage-usability/">NN/g, clear starting points for the top tasks</a></p></div></li>
+    <li><span class="n">4</span><div><h3>Bottom right: see the work, not book a call</h3></div><div>
+      <p>No booking button in the hero. Someone paying £2k+ for a website wants to see your work before they talk to you, and pushing a booking button at them first jumps that step. NN/g watched this happen with "Get Started" buttons: people clicked them before they understood the offer, or stopped looking for information because the button made them think there wasn't any. The MarketingExperiments test that moved a CTA below the fold and added more explanation got 74% more conversions. Their speaker Michael Aagaard's point was that a CTA belongs at the right moment in the visitor's thinking. No fixed rule decides it.</p>
+      <p>Booking is still one tap away: CONTACT in the nav stays fixed on every screen, top right, already above the fold. The big Book a call moment comes straight after the work section, when people have just seen proof.</p>
+      <p>"See the work ↓" also helps with the full-screen problem in note 5: it tells people the page carries on. Same size and weight as the nav labels. Use the bar to compare it with the old button.</p>
+      <p class="src"><a href="https://www.nngroup.com/articles/get-started/">NN/g, "Get Started" stops users</a> · <a href="https://marketingexperiments.com/value-proposition/call-to-action-location">MarketingExperiments, CTA location</a> · <a href="https://www.nngroup.com/articles/scrolling-and-attention/">NN/g, scrolling and attention</a></p></div></li>
     <li><span class="n">5</span><div><h3>Mirrored top and bottom bars</h3></div><div>
       <p>The bottom row is the same height and side gutter as the nav, so the screen has a frame: two bars at the edges and one headline in the middle. That's the visual balance you asked for. Light on top (MENU, logo, CONTACT), light on the bottom (one line, one button), and nothing between them but the video and the headline.</p>
       <p>Full screen does risk a "false floor" where people think the page ends there, which NN/g warns about. Having real content pinned to the bottom edge helps, and the work section should start straight after with no gap. They found 57% of viewing time goes to the first screen and 74% to the first two, so the second screen still matters.</p>
@@ -153,7 +162,7 @@ h1{font-size:var(--s-head);font-weight:var(--head-w);line-height:.98;letter-spac
 <div class="lab" role="toolbar" aria-label="Lab options">
   <b>Line</b><div class="g" id="lines"></div>
   <b>Weight</b><div class="g" id="weights"></div>
-  <b>CTA</b><div class="g"><button id="cRust" aria-pressed="true">Rust</button><button id="cInk" aria-pressed="false">Ink</button></div>
+  <b>Bottom right</b><div class="g"><button id="cDown" aria-pressed="true">See the work</button><button id="cBtn" aria-pressed="false">Book button</button></div>
   <button id="why" aria-pressed="false">Why</button>
 </div>
 
@@ -173,7 +182,7 @@ function group(el,items,on){items.forEach((t,i)=>{const b=document.createElement
 group($('#lines'),['A','B','C','D','E'],i=>{head.innerHTML=lines[i][0]+pin;sub.innerHTML=lines[i][1]+subPin});
 group($('#weights'),['500','700','900'],i=>document.documentElement.style.setProperty('--head-w',[500,700,900][i]));
 const pair=(a,b,fa,fb)=>{a.onclick=()=>{a.setAttribute('aria-pressed','true');b.setAttribute('aria-pressed','false');fa()};b.onclick=()=>{b.setAttribute('aria-pressed','true');a.setAttribute('aria-pressed','false');fb()}};
-pair($('#cRust'),$('#cInk'),()=>hero.classList.add('cta-rust'),()=>hero.classList.remove('cta-rust'));
+pair($('#cDown'),$('#cBtn'),()=>hero.classList.remove('with-btn'),()=>hero.classList.add('with-btn'));
 $('#why').onclick=e=>{const on=document.body.classList.toggle('why-on');e.target.setAttribute('aria-pressed',on)};
 </script>
 </body>

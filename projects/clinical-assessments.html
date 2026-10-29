@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Clinical Assessments — Sumi Studios case study</title>
-  <meta name="description" content="A bespoke psychological assessments site, designed and built by Sumi Studios. PageSpeed 90+, two-week build." />
+  <title>Clinical Assessments | Sumi Studios</title>
+  <meta name="description" content="How I designed and built the site for Clinical Assessments, a team of psychologists and therapists for children and adults." />
   <link rel="canonical" href="https://nechemya.com/projects/clinical-assessments.html" />
 
   <link rel="icon" href="/favicon.ico" sizes="48x48" />
@@ -13,43 +13,54 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" />
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" /></noscript>
 
   <link rel="stylesheet" href="../scss/main.scss" />
+  <!-- Arriving from the previous case's tile: hold the title back until the
+       move picks up (CaseTransition.js). -->
+  <script>try{if(sessionStorage.getItem('sumi:case-arrive')==='clinical')document.documentElement.classList.add('case-arriving')}catch(e){}</script>
 </head>
 
-<body class="project-page project-page--clinical">
+<body class="case-page">
 
-  <!-- NAV -->
-  <header class="nav is-ready" id="nav">
+  <header class="nav" id="nav">
     <div class="nav__blur" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
     <div class="nav__inner">
-      <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="nav__cta nav__cta--left">Book a free call</a>
-      <a href="../index.html" class="nav__logo" aria-label="Sumi Studios home">
+      <a href="../index.html#contact" class="nav__cta nav__cta--right">Contact</a>
+      <a href="/" class="nav__logo" aria-label="Sumi Studios home">
         <img class="nav__logo-mark" src="../assets/images/colbbord.svg" alt="" />
         <span class="nav__logo-wordmark">
           <span class="nav__logo-wordmark-line">SUMI</span>
           <span class="nav__logo-wordmark-sub">STUDIOS</span>
         </span>
-        <img class="nav__logo-svg" src="../assets/images/Wordmark.svg" alt="SUMI Studios" />
+        <img class="nav__logo-svg" src="../assets/images/wordmarknew.svg" alt="SUMI Studios" />
       </a>
       <div class="nav__desktop-wrapper">
         <button class="nav__menu-btn" id="menu-toggle" aria-label="Open menu">
-          <span class="nav__menu-label">MENU</span>
-          <span class="nav__menu-icon">
-            <img class="nav__menu-cross" src="../assets/images/Cross.svg" alt="" />
-            <span class="nav__menu-lines" aria-hidden="true">
-              <span class="nav__menu-line nav__menu-line--top"></span>
-              <span class="nav__menu-line nav__menu-line--bottom"></span>
+          <span class="nav__menu-label">
+            <span class="nav__menu-bracket nav__menu-bracket--left">(</span>
+            <span class="nav__menu-letters-wrap">
+              <span class="nav__menu-word nav__menu-word--open">
+                <span class="nav__menu-letter">M</span>
+                <span class="nav__menu-letter">E</span>
+                <span class="nav__menu-letter">N</span>
+                <span class="nav__menu-letter">U</span>
+              </span>
+              <span class="nav__menu-word nav__menu-word--close">
+                <span class="nav__menu-letter">C</span>
+                <span class="nav__menu-letter">L</span>
+                <span class="nav__menu-letter">O</span>
+                <span class="nav__menu-letter">S</span>
+                <span class="nav__menu-letter">E</span>
+              </span>
             </span>
+            <span class="nav__menu-bracket nav__menu-bracket--right">)</span>
           </span>
         </button>
         <div class="nav__desktop-links">
-          <a href="../index.html#bento">Work</a>
+          <a href="../index.html#work">Work</a>
           <a href="../index.html#services">Services</a>
           <a href="../index.html#pricing">Pricing</a>
           <a href="../index.html#faq">FAQ</a>
@@ -60,65 +71,83 @@
   </header>
 
   <!-- MOBILE MENU -->
-  <div class="menu-overlay" id="menu-overlay"></div>
-  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
-    <button id="mobile-menu-close-pill" class="mobile-menu__close-pill" aria-label="Close menu"></button>
-    <div class="mobile-menu__content">
-      <ul class="mobile-menu__nav">
-        <li><a href="../index.html#bento" class="mobile-menu__link menu-item">Work</a></li>
-        <li><a href="../index.html#services" class="mobile-menu__link menu-item">Services</a></li>
-        <li><a href="../index.html#pricing" class="mobile-menu__link menu-item">Pricing</a></li>
-        <li><a href="../index.html#faq" class="mobile-menu__link menu-item">FAQ</a></li>
-        <li><a href="../index.html#contact" class="mobile-menu__link menu-item">Contact</a></li>
-      </ul>
-      <div class="mobile-menu__actions">
-        <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer" class="mobile-menu__cta menu-item">Book a free call</a>
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Navigation">
+    <div class="mobile-menu__card-wrap" id="mobile-menu-card-wrap">
+      <div class="mobile-menu__card" id="mobile-menu-card">
+        
+        <div class="mobile-menu__center-wrap">
+          <ul class="mobile-menu__nav">
+            <li class="mobile-menu__nav-item"><a href="../index.html#work" class="mobile-menu__link menu-item"><span class="mobile-menu__link-text">Work</span></a></li>
+            <li class="mobile-menu__nav-item"><a href="../index.html#how-it-works" class="mobile-menu__link menu-item"><span class="mobile-menu__link-text">Process</span></a></li>
+            <li class="mobile-menu__nav-item"><a href="../index.html#pricing" class="mobile-menu__link menu-item"><span class="mobile-menu__link-text">Pricing</span></a></li>
+            <li class="mobile-menu__nav-item"><a href="../index.html#contact" class="mobile-menu__link menu-item"><span class="mobile-menu__link-text">Contact</span></a></li>
+          </ul>
+        </div>
+
+        <div class="mobile-menu__footer">
+          <a href="mailto:hello@sumistudios.com" class="mobile-menu__email menu-item">hello@sumistudios.com</a>
+          <a href="https://api.whatsapp.com/send/?phone=972585152321&text=Hi%20Nechemya%2C%20I%27d%20like%20to%20discuss%20a%20project.&type=phone_number" target="_blank" rel="noopener noreferrer" class="mobile-menu__wa menu-item">WhatsApp</a>
+        </div>
+
       </div>
     </div>
   </nav>
 
-  <main class="project-page__main">
-    <section class="project-hero" data-nav-theme="light" id="project-hero">
-      <a href="../index.html#bento" class="project-hero__back">← All work</a>
-      <span class="project-hero__eyebrow">Case study · 2025</span>
-      <h1 class="project-hero__title">Clinical Assessments</h1>
-      <p class="project-hero__sub">A calm, considered editorial site for a psychology practice — built to earn trust before the first call.</p>
-      <div class="project-hero__meta">
-        <div><span>Client</span> Clinical Assessments Ltd</div>
-        <div><span>Scope</span> Brand site, design + build</div>
-        <div><span>Stack</span> Hand-coded · Vite</div>
-        <div><span>Timeline</span> 2 weeks</div>
+
+  <!-- The case. The homepage lifts this <main> into its case layer when a
+       work tile is tapped (CaseTransition.js), so it must stand on its own. -->
+  <main class="case" data-case="clinical">
+    <section class="case__hero" data-nav-theme="dark">
+      <div class="case__hero-in">
+        <a class="case__back" href="../index.html#work">&larr; All work</a>
+        <h1 class="case__title"><span class="case__ln"><span>Clinical</span></span> <span class="case__ln"><span>Assessments</span></span></h1>
+        <p class="case__lead">A team of psychologists and therapists, and a site that has to put a worried parent at ease.</p>
+        <div class="case__slot"><div class="work__phone"><video class="work__screen" muted loop playsinline preload="auto" poster="/work/clinical-m.webp" aria-label="Clinical Assessments website on an iPhone"><source src="/work/clinical-m.webm" type="video/webm" /><source src="/work/clinical-m.mp4" type="video/mp4" /></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
       </div>
-      <a href="#" class="project-hero__cta" target="_blank" rel="noopener noreferrer">Visit the live site →</a>
     </section>
 
-    <section class="project-shot" data-nav-theme="light">
-      <img src="../assets/images/project-clinical.webp" alt="Clinical Assessments homepage" loading="lazy" decoding="async" width="1280" height="800" />
-    </section>
+    <div class="case__sheet" data-nav-theme="light">
+      <div class="case__facts"><span>Client <b>Dr Yehuda Marshall</b></span><span>Clinical Assessments Ltd</span><span>Time <b>2 weeks</b></span><span>Design and build</span><a class="case__live" href="https://clinicalassessments.co.uk" target="_blank" rel="noopener noreferrer">clinicalassessments.co.uk <span aria-hidden="true">&#8599;</span></a></div>
 
-    <section class="project-brief" data-nav-theme="light">
-      <h2>The brief.</h2>
-      <p>Clinical Assessments came in with a templated site that treated a serious practice like any other service business — stock imagery, generic copy, and a contact form buried three clicks deep. Parents considering an assessment for their child were bouncing before they got to the practitioner's name.</p>
-      <p>We rebuilt from scratch: a calm editorial structure, considered typography, real photography of the practice, and a contact flow that puts the practitioner first. Every component built for speed and accessibility, PageSpeed 90+ across mobile and desktop.</p>
-    </section>
+      <div class="case__story">
+        <div class="case__tile case__stick" aria-hidden="true"><div class="work__phone"><video class="work__screen case__pinned" muted loop playsinline preload="none" poster="/work/clinical-m.webp" src="/work/clinical-m.mp4" aria-label=""></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
+        <div class="case__beats">
+            <section class="case__beat" data-clip="clinical-m">
+              <div class="case__tile"><div class="work__phone"><video class="work__screen" muted loop playsinline preload="none" poster="/work/clinical-m.webp" src="/work/clinical-m.mp4" aria-label="Clinical Assessments on an iPhone"></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
+              <h2 class="case__h2">One line, one button.</h2>
+              <p class="case__p">The first screen says what the practice does, for children and adults, and gives one way in: &ldquo;Let&rsquo;s talk&rdquo;.</p>
+            </section>
+            <section class="case__beat" data-clip="clinical-process-m">
+              <div class="case__tile"><div class="work__phone"><video class="work__screen" muted loop playsinline preload="none" poster="/work/clinical-process-m.webp" src="/work/clinical-process-m.mp4" aria-label="Clinical Assessments on an iPhone"></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
+              <h2 class="case__h2">Four steps, before anyone picks up the phone.</h2>
+              <p class="case__p">An online screen, a plan made for your child, the assessment, then a plan for what comes after. Parents can see the whole road before they start.</p>
+            </section>
+            <section class="case__beat" data-clip="clinical-adhd-m">
+              <div class="case__tile"><div class="work__phone"><video class="work__screen" muted loop playsinline preload="none" poster="/work/clinical-adhd-m.webp" src="/work/clinical-adhd-m.mp4" aria-label="Clinical Assessments on an iPhone"></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
+              <h2 class="case__h2">Every assessment gets its own page.</h2>
+              <p class="case__p">ADHD, autism, IQ, academic ability and more. A parent searching for one thing lands on exactly that page.</p>
+            </section>
+        </div>
+      </div>
 
-    <section class="project-next" data-nav-theme="light">
-      <a href="choice-inventory.html" class="project-next__link">
-        <span class="project-next__label">Next project</span>
-        <span class="project-next__title">Choice Inventory →</span>
+        <figure class="case__quote">
+          <blockquote>&ldquo;Nechemya understood exactly what I needed and translated it into a brand and website that elevated my entire practice.&rdquo;</blockquote>
+          <figcaption class="case__who"><img src="/work/yehuda.webp" alt="" loading="lazy" /><div>Dr Yehuda Marshall<span>Clinical Assessments Ltd</span></div></figcaption>
+        </figure>
+      <a class="case__next" href="jsense.html" data-case-link="jsense">
+        <div class="case__tile"><div class="work__phone"><video class="work__screen" muted loop playsinline preload="none" poster="/work/jsense-m.webp" aria-label="JSense website on an iPhone"><source src="/work/jsense-m.webm" type="video/webm" /><source src="/work/jsense-m.mp4" type="video/mp4" /></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
+        <div class="case__next-row"><span>Next</span><b>JSense &rarr;</b></div>
       </a>
-    </section>
+
+      <div class="case__end">
+        <p>Got something AI can&rsquo;t build?</p>
+        <a class="case__live" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer">Book a free call <span aria-hidden="true">&#8599;</span></a>
+      </div>
+      <footer class="case__foot"><span>&copy; 2026 Sumi Studios</span><a href="mailto:hello@sumistudios.com">hello@sumistudios.com</a></footer>
+    </div>
   </main>
 
-  <footer class="footer">
-    <div class="footer__inner">
-      <span class="footer__copy">© 2025 nechemya</span>
-      <div class="footer__links">
-        <a href="../index.html#contact">Get in touch</a>
-      </div>
-    </div>
-  </footer>
+  <script type="module" src="../js/case-page.js"></script>
 
-  <script type="module" src="../js/project-page.js"></script>
 </body>
 </html>

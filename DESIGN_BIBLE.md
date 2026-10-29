@@ -335,6 +335,18 @@ The last screen of the intro sits on the sky, centred, with no eyebrow label.
   (`TrustPanel.js`).
 - The clouds close in round it as it arrives.
 
+### 7.2 Case studies and the tap-to-open move (2026-10-29)
+
+Layout B, picked by Nechemya: a full-screen sky hero (white title, one lead line, the phone below it), a facts row with the live-site button, then the story beside the phone (desktop: one sticky phone tile whose clip changes per part, `.case__beat[data-clip]`; phone: each part has its own tile), an optional numbers band on the sky, the client's quote, the next project as a tile, a call to action. Pages: `projects/*.html`, styles `_case.scss`, behaviour `CaseView.js`.
+
+The move (`CaseTransition.js`), after Likely Story's Barba setup:
+- The case page is fetched when a finger or pointer lands on a tile, and every case is fetched once the work section is near.
+- Tap: the tile is lifted to `position: fixed` (a same-size gap stays behind) and grows to the viewport in 0.9s `power3.inOut`; the phone stays centred, grows to the hero size (`.case__slot`) and keeps playing.
+- With the screen covered, the case's `<main>` is mounted in `.case-layer` over the homepage (homepage scroll and sky stay alive, Lenis stopped), the playing phone is moved into the hero slot, it eases down 0.85s while the title words rise in their masks (0.9s `power4.out`, 0.08s stagger).
+- Back / All work: the layer scrolls to the top, the title drops, the phone recentres, and the tile shrinks back into its card.
+- On a case page itself, the next tile grows to the screen and the browser loads the next page, which picks up the move from `sessionStorage['sumi:case-arrive']`.
+- No JS: the tiles are plain links. Reduced motion: the same steps at 30x speed.
+
 ## 8. Navigation
 
 - Fixed, `z-index: 1200` (above the menu overlay so logo + button stay visible).

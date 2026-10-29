@@ -1,0 +1,424 @@
+@use '../base/tokens' as *;
+
+/* Case study page, layout B: the sky hero the work tile opens into, then the
+   story told beside the phone. The same markup runs as its own page and
+   inside the homepage's case layer (CaseTransition.js), so nothing here may
+   depend on body classes. Sizes step off the nav label like the hero. */
+
+.case {
+  position: relative;
+  background: #fff;
+  color: $c-ink;
+  font-family: $font-body;
+
+  /* The blocky display face is for the menu only. */
+  h1, h2, h3 {
+    font-family: $font-body;
+    text-transform: none;
+  }
+}
+
+/* ── Hero: the expanded work tile ── */
+.case__hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: var(--case-vh, 100svh);
+  overflow: hidden;
+  isolation: isolate;
+  color: $c-sky-type;
+  /* The gradient ends one screen down so it matches the tile it grew from. */
+  background: linear-gradient(180deg, $c-sky, $c-sky-pale var(--case-vh, 100vh), $c-sky-pale);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: var(--case-vh, 100vh);
+    background: url('/ink/washi.jpg') center / cover;
+    mix-blend-mode: multiply;
+    opacity: 0.25;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* While the tile is still flying underneath, the hero is see-through. */
+  &.is-clear {
+    background: transparent;
+    &::before { opacity: 0; }
+  }
+}
+
+.case__hero-in {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(#{$fs-nav} * 1.25);
+  padding: calc(#{$fs-nav} * 6.5) $page-padding $space-48;
+  text-align: center;
+}
+
+.case__back {
+  align-self: flex-start;
+  color: rgba($c-sky-type, 0.92);
+  font-size: $fs-nav;
+  font-weight: 500;
+  text-decoration: none;
+  text-shadow: 0 1px 14px $c-sky-shade;
+
+  @media (hover: hover) {
+    &:hover { text-decoration: underline; text-underline-offset: 4px; }
+  }
+}
+
+.case__title {
+  margin: 0;
+  color: $c-sky-type;
+  font-size: $fs-hero-title-mobile;
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  text-shadow: 0 1px 16px $c-sky-shade;
+
+  @media (min-width: 641px) { font-size: $fs-hero-title; }
+}
+
+/* Each word rises inside its own mask. */
+.case__ln {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+  vertical-align: top;
+
+  > span { display: inline-block; }
+}
+
+.case__lead {
+  margin: 0;
+  max-width: 32ch;
+  color: rgba($c-sky-type, 0.92);
+  font-size: calc(#{$fs-nav} * 1.375);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  text-shadow: 0 1px 14px $c-sky-shade;
+
+  @media (min-width: 641px) { font-size: calc(#{$fs-nav} * 1.625); }
+}
+
+/* The phone the tile carried in. CaseTransition measures this box. */
+.case__slot {
+  position: relative;
+  width: min(64vw, 330px);
+  aspect-ratio: 703 / 1411;
+  margin-top: $space-16;
+
+  > .work__phone {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+  }
+}
+
+/* ── Facts under the hero ── */
+.case__facts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: $space-12 $space-32;
+  padding: $space-32 $page-padding;
+  border-bottom: 1px solid $c-border;
+  font-size: $fs-sm;
+  color: $c-text-secondary;
+
+  b { font-weight: 500; color: $c-ink; }
+}
+
+.case__live {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-8;
+  padding: 0.6rem 1rem;
+  border-radius: $r-full;
+  background: $c-ink;
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+
+  @media (hover: hover) {
+    &:hover { background: $c-charcoal; }
+  }
+}
+
+/* ── Story beside the phone ── */
+.case__story {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 $page-padding;
+
+  @media (min-width: 900px) {
+    display: grid;
+    grid-template-columns: 5fr 6fr;
+    gap: $space-64;
+    align-items: start;
+  }
+}
+
+/* Square-cornered sky tile, same as the homepage work cards. */
+.case__tile {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: linear-gradient(180deg, $c-sky, $c-sky-pale);
+  isolation: isolate;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('/ink/washi.jpg') center / cover;
+    mix-blend-mode: multiply;
+    opacity: 0.25;
+    pointer-events: none;
+  }
+}
+
+/* Desktop: one phone stays pinned and changes screen per part. */
+.case__stick {
+  display: none;
+
+  @media (min-width: 900px) {
+    display: block;
+    position: sticky;
+    top: calc(50vh - min(42vh, 26vw));
+    height: min(84vh, 52vw);
+    aspect-ratio: auto;
+  }
+}
+
+.case__beat {
+  display: flex;
+  flex-direction: column;
+  gap: $space-16;
+  padding: $space-48 0;
+  border-bottom: 1px solid $c-border;
+
+  &:last-child { border-bottom: 0; }
+
+  @media (min-width: 900px) {
+    min-height: 78vh;
+    justify-content: center;
+    padding: 0;
+
+    .case__tile { display: none; }
+  }
+}
+
+.case__beat .case__tile { margin-bottom: $space-8; }
+
+.case__h2 {
+  margin: 0;
+  max-width: 16ch;
+  font-size: $fs-2xl;
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.case__p {
+  margin: 0;
+  max-width: 46ch;
+  font-size: $fs-md;
+  line-height: 1.5;
+  color: $c-text-secondary;
+}
+
+/* ── Numbers, on the sky ── */
+.case__results {
+  margin-top: $space-64;
+  padding: $space-96 $page-padding;
+  color: $c-sky-type;
+
+  .case__h2 { color: $c-sky-type; text-shadow: 0 1px 16px $c-sky-shade; max-width: none; }
+}
+
+.case__results-in {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: $space-48;
+}
+
+.case__stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-32 $space-24;
+
+  @media (min-width: 900px) { grid-template-columns: repeat(4, 1fr); }
+}
+
+.case__stat {
+  b {
+    display: block;
+    font-size: $fs-3xl;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  span {
+    display: block;
+    margin-top: $space-12;
+    max-width: 22ch;
+    font-size: $fs-sm;
+    color: rgba($c-sky-type, 0.88);
+  }
+}
+
+.case__src {
+  margin: 0;
+  font-size: $fs-xs;
+  color: rgba($c-sky-type, 0.85);
+}
+
+/* ── Quote ── */
+.case__quote {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-32;
+  margin: 0;
+  padding: $space-96 $page-padding;
+  text-align: center;
+
+  blockquote {
+    margin: 0;
+    max-width: 26ch;
+    font-size: $fs-2xl;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+  }
+}
+
+.case__who {
+  display: flex;
+  align-items: center;
+  gap: $space-12;
+  text-align: left;
+  font-size: $fs-sm;
+
+  img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+  span { display: block; color: $c-text-secondary; }
+}
+
+/* ── Next project: the tile that opens the next case ── */
+.case__next {
+  display: block;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 $page-padding;
+  color: $c-ink;
+  text-decoration: none;
+
+  .case__tile { aspect-ratio: 4 / 3; }
+
+  .work__phone {
+    top: auto;
+    bottom: -38%;
+    height: 96%;
+    transform: translateX(-50%);
+  }
+
+  @media (min-width: 900px) {
+    .case__tile { aspect-ratio: 21 / 8; }
+  }
+}
+
+.case__next-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: $space-16;
+  padding: $space-16 0;
+  border-bottom: 1px solid $c-border;
+  font-size: $fs-sm;
+  color: $c-text-secondary;
+
+  b {
+    font-size: $fs-xl;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: $c-ink;
+
+    @media (min-width: 641px) { font-size: $fs-2xl; }
+  }
+}
+
+@media (hover: hover) {
+  .case__next:hover .case__next-row b { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 2px; }
+}
+
+/* ── End ── */
+.case__end {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: $space-24;
+  padding: $space-64 $page-padding $space-96;
+
+  p { margin: 0; font-size: $fs-xl; letter-spacing: -0.02em; max-width: 24ch; }
+}
+
+.case__foot {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: $space-8;
+  padding: $space-24 $page-padding;
+  border-top: 1px solid $c-border;
+  font-size: $fs-xs;
+  color: $c-text-secondary;
+
+  a { color: inherit; }
+}
+
+/* ── The layer the homepage opens a case in ── */
+.case-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1100; /* under the nav (1200) and the menu (1150) */
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* A tile in flight, lifted out of the page. */
+.case-fly {
+  position: fixed !important;
+  margin: 0 !important;
+  aspect-ratio: auto !important;
+  z-index: 1099;
+}
+
+/* While a case is arriving (or leaving), the tile flying underneath shows
+   through and the content waits under the fold. */
+.case.is-arriving { background: transparent; }
+.case.is-arriving .case__sheet { visibility: hidden; }
+
+/* Set in <head> when this page is arriving from the previous case's tile, so
+   the title never flashes before the move picks it up. */
+.case-arriving .case__ln > span { transform: translateY(110%); }
+.case-arriving .case__back,
+.case-arriving .case__lead { opacity: 0; }

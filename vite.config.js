@@ -12,6 +12,7 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         clinicalAssessments: resolve(__dirname, 'projects/clinical-assessments.html'),
         choiceInventory: resolve(__dirname, 'projects/choice-inventory.html'),
+        jsense: resolve(__dirname, 'projects/jsense.html'),
       },
     },
   },

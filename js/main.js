@@ -21,6 +21,7 @@ import SumiGlass from './modules/SumiGlass.js';
 import TrustPanel from './modules/TrustPanel.js';
 import InkSky from './modules/InkSky.js';
 import InkStory from './modules/InkStory.js';
+import CaseTransition from './modules/CaseTransition.js';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -40,6 +41,7 @@ const inkSky = new InkSky();
 const inkStory = new InkStory(inkSky);
 const sumiGlass = new SumiGlass(inkSky);
 new TrustPanel();
+new CaseTransition({ mode: 'home', smoothScroll });
 
 // Hidden start states for the elements the hero entrance wipes in
 const wipeElements = [

@@ -2,13 +2,13 @@
 // InkStory — the intro told as one scroll
 // ——————————————————————————————————————————————
 // .intro is three sections over the sticky InkSky canvas: the hero (100svh),
-// the reel (180svh, pulled up so its card peeks under the hero, then held by
+// the reel (130svh, pulled up so its card peeks under the hero, then held by
 // CSS sticky) and the trust line (100svh). One scrubbed timeline spans the
-// intro, measured in svh of scroll (about 257 in all) so every beat lands on
+// intro, measured in svh of scroll (about 207 in all) so every beat lands on
 // its section at any screen size:
 //   0–100    the clouds part round the rising card
 //   0–77     the reel card rises from under the hero and opens out a touch
-//   170–257  the clouds close back in and the sun sets,
+//   120–207  the clouds close back in and the sun sets,
 //            arriving as the trust line reaches the middle
 // The sky moves by tweening InkSky.state (drawn in WebGL, no DOM paint); the
 // card moves by scale only.
@@ -46,7 +46,7 @@ export default class InkStory {
         defaults: { ease: 'none' },
         scrollTrigger: { trigger: this.intro, start: 'top top', end: 'bottom bottom', scrub: 0.6, invalidateOnRefresh: true }
       });
-      tl.set({}, {}, 257);
+      tl.set({}, {}, 207);
 
       // 1. the clouds part
       tl.to(s.corner, { x: () => vw() * 0.32, y: () => -vh() * 0.3, duration: 100 }, 0)
@@ -60,9 +60,9 @@ export default class InkStory {
       tl.fromTo(this.card, { scale: from }, { scale: 1, duration: 77, ease: 'power1.out' }, 0);
 
       // 3. the clouds close in and the sun sets
-      tl.to(s.wisp, { x: () => -vw() * 0.04, y: () => vh() * (phone ? 0.36 : 0.24), duration: 87 }, 170)
-        .to(s.corner, { x: () => vw() * 0.14, y: () => -vh() * 0.1, duration: 87 }, 170)
-        .to(s.sun, { x: 0, y: () => vh() * 0.95, s: 1.12, duration: 87 }, 170);
+      tl.to(s.wisp, { x: () => -vw() * 0.04, y: () => vh() * (phone ? 0.36 : 0.24), duration: 87 }, 120)
+        .to(s.corner, { x: () => vw() * 0.14, y: () => -vh() * 0.1, duration: 87 }, 120)
+        .to(s.sun, { x: 0, y: () => vh() * 0.95, s: 1.12, duration: 87 }, 120);
     });
   }
 

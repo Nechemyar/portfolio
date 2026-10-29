@@ -303,8 +303,12 @@
   --ring-in: 0;                       /* footage inset, share of card width (0: no frame) */
   --frame: none;
   --reel-from: 1;                     /* phones: full width from the start (he found the margins too big) */
-  height: 180vh;
-  height: 180svh;
+  /* the card holds at full size for 30svh of scroll (130 - 100): one flick.
+     It held for 80svh and felt stuck ("why isn't it scrolling"); pinned
+     sections with nothing changing should let go within about a third of
+     a screen. */
+  height: 130vh;
+  height: 130svh;
   margin-top: calc(-1 * (var(--reel-peek) + var(--reel-top)));
 
   @media (min-width: 760px) {

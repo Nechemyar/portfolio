@@ -235,13 +235,13 @@ the sky showing round them.
 
 **The story** (`js/modules/InkStory.js`)
 One scrubbed GSAP timeline (`scrub: 0.6`) runs from the top of the intro to its
-bottom, measured in svh of scroll (about 257 in all) so every beat lands on
+bottom, measured in svh of scroll (about 207 in all) so every beat lands on
 its section:
 - **0–100:** the clouds part. The corner goes up and right, the wisp goes out
   to the left, and the sun slides left.
 - **0–77:** the reel card rises from under the hero and opens out a touch
   (scale only).
-- **170–257:** the clouds close back in and the sun sets,
+- **120–207:** the clouds close back in and the sun sets,
   arriving as the trust line reaches the middle.
 
 The sky moves by tweening `InkSky.state`, so nothing in the DOM repaints.

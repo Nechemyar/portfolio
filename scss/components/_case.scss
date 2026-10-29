@@ -620,9 +620,14 @@ main.case > .case__hero { padding-top: 0; }
 .cs__next-wrap { padding-bottom: $space-96; }
 
 .case__next {
+  /* The card is as tall as its words plus a fixed room for the phone, so
+     bigger text (Android's text size setting, long names) pushes the phone
+     down instead of under the button. */
+  --room: clamp(14rem, 60vw, 19rem);
+  --ph: calc(var(--room) / 0.6); /* the phone shows its top 60% */
   position: relative;
-  display: block;
-  aspect-ratio: 3 / 4;
+  display: flex;
+  flex-direction: column;
   color: var(--tone-ink);
   text-decoration: none;
 
@@ -632,23 +637,22 @@ main.case > .case__hero { padding-top: 0; }
     aspect-ratio: auto;
   }
 
-  /* The phone peeks up from the bottom, clear of the words above it. */
-  .work__phone {
-    top: auto;
-    bottom: -22%;
-    height: 50%;
-    transform: translateX(-50%);
+  &::after {
+    content: '';
+    flex: none;
+    height: calc(var(--room) + #{$space-32});
   }
 
-  /* Small phones wrap the words onto more lines: a taller card keeps the
-     phone clear of the button. */
-  @media (max-width: 399px) { aspect-ratio: 2 / 3; }
-  @media (min-width: 900px) { aspect-ratio: 3 / 2; }
+  .work__phone {
+    top: auto;
+    bottom: calc(var(--room) - var(--ph));
+    height: var(--ph);
+    transform: translateX(-50%);
+  }
 }
 
 .case__next-copy {
-  position: absolute;
-  inset: 0 0 auto;
+  position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;

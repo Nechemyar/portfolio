@@ -180,16 +180,25 @@ export default class CaseView {
       // Dock once the hero's pill has gone off the top, and step aside
       // again when the next case comes up: that card is the way on, and
       // the pill would sit over it and the footer.
-      const end = this.root.querySelector('.cs__next-wrap');
       const pastTop = top ? top.getBoundingClientRect().bottom < 0 : true;
-      const atEnd = end ? end.getBoundingClientRect().top < window.innerHeight * 0.85 : false;
-      const want = pastTop && !atEnd;
+      const want = pastTop && !this.atEnd;
       if (want !== this.docked) {
         if (want) this.showDock(); else this.hideDock();
       }
       if (this.docked) theme();
     };
     this.onScroll = () => { if (!tick) tick = requestAnimationFrame(update); };
+    // The end of the case is watched on its own, so the pill leaves even
+    // when a fling lands there without a scroll frame to catch it.
+    const end = this.root.querySelector('.cs__next-wrap');
+    if (end && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver(([e]) => {
+        this.atEnd = e.isIntersecting || e.boundingClientRect.top < 0;
+        this.onScroll();
+      }, { rootMargin: '0px 0px -15% 0px' });
+      io.observe(end);
+      this.observers.push(io);
+    }
     this.scroller.addEventListener('scroll', this.onScroll, { passive: true });
     window.addEventListener('resize', this.onScroll);
     this.dockGlass?.ready?.then(this.onScroll);

@@ -148,3 +148,10 @@ new Loader(() => {
     tl.progress(1);
   }
 });
+
+// Restored from the browser's cache after a case study's All work: nothing
+// loaded, so the skip-the-loader note isn't needed any more.
+window.addEventListener('pageshow', (e) => {
+  if (!e.persisted) return;
+  try { sessionStorage.removeItem('sumi:skip-loader'); } catch (err) { /* private mode */ }
+});

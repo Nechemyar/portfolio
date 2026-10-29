@@ -88,22 +88,31 @@ export default class PillGlass {
     gl.uniform3fv(this.u.uBottom, BOTTOM);
     gl.uniform1i(this.u.uPaper, 0);
 
-    this.ready = loadPaper().then((img) => {
-      const tex = gl.createTexture();
+    // Ready at once: drawn over plain sky first, so the pill never shows
+    // as anything but glass. The washi joins when it has loaded.
+    const tex = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]));
+    this.paperSize = [1, 1];
+    el.prepend(canvas);
+    el.classList.add('is-gl');
+    this.ok = true;
+    this.ready = Promise.resolve();
+
+    loadPaper().then((img) => {
+      if (!img || gl.isContextLost()) return;
       gl.bindTexture(gl.TEXTURE_2D, tex);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      if (img) gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
-      else gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]));
-      this.paperSize = img ? [img.naturalWidth, img.naturalHeight] : [1, 1];
-      el.prepend(canvas);
-      el.classList.add('is-gl');
-      this.ok = true;
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+      this.paperSize = [img.naturalWidth, img.naturalHeight];
+      this.onPaper?.();
     });
   }
 
+  // Set onPaper to redraw once the washi arrives.
   // Draw the glass over the sky box `sky` (a DOMRect of the element that
   // paints the gradient behind the pill).
   draw(sky) {

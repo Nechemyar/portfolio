@@ -22,6 +22,8 @@ import gsap from 'gsap';
 import CaseView from './CaseView.js';
 
 const ARRIVE_KEY = 'sumi:case-arrive';
+// Read by the homepage's head script and Loader: skip the first-visit loader.
+const SKIP_LOADER_KEY = 'sumi:skip-loader';
 const EASE = 'power3.inOut';
 const GROW = 0.9;
 
@@ -272,6 +274,8 @@ export default class CaseTransition {
     this.layer.style.visibility = '';
     this.layer.appendChild(main);
     this.layer.scrollTop = 0;
+    // Set up now, so the pill arrives already drawn as glass.
+    this.view = new CaseView(main, this.layer);
     document.title = doc.title;
     gsap.set(f.stage, { zIndex: 1099 });
     this.setNav('dark', true);
@@ -290,7 +294,7 @@ export default class CaseTransition {
       this.land(f);
       gsap.set([phone, sky], { clearProps: 'all' });
       gsap.set(main.querySelectorAll('.case__ln > span, .case__back--top, .case__lead'), { clearProps: 'all' });
-      this.view = new CaseView(main, this.layer);
+      this.view?.drawTop?.();
       this.current = key;
       this.busy = false;
     });
@@ -438,6 +442,12 @@ export default class CaseTransition {
 
     this.prefetchOn(this.main, 'a[data-case-link]');
     this.main.addEventListener('click', (e) => {
+      const back = e.target.closest('.case__back');
+      if (back && !modified(e)) {
+        e.preventDefault();
+        this.backHome(back.href);
+        return;
+      }
       const a = e.target.closest('a[data-case-link]');
       if (!a || modified(e)) return;
       e.preventDefault();
@@ -456,6 +466,20 @@ export default class CaseTransition {
       this.busy = false;
       this.smooth?.start();
     });
+  }
+
+  // All work from a case page. Straight from the homepage: step back, and the
+  // browser restores it as it was. Either way the homepage is told not to play
+  // its first-visit loader again, in case it has to load fresh.
+  backHome(href) {
+    let fromHome = false;
+    try {
+      const ref = new URL(document.referrer);
+      fromHome = ref.origin === location.origin && /\/(index\.html)?$/.test(ref.pathname);
+    } catch (e) { /* no referrer */ }
+    try { sessionStorage.setItem(SKIP_LOADER_KEY, '1'); } catch (e) { /* private mode */ }
+    if (fromHome && history.length > 1) history.back();
+    else location.assign(href);
   }
 
   arriveOnLoad() {

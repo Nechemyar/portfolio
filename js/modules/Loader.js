@@ -17,6 +17,15 @@ export default class Loader {
   }
 
   init() {
+    // Back from a case study: the visitor has seen the loader already. The
+    // head script has hidden it before first paint; go straight to the page.
+    if (document.documentElement.classList.contains('skip-loader')) {
+      try { sessionStorage.removeItem('sumi:skip-loader'); } catch (e) { /* private mode */ }
+      document.getElementById('loader')?.remove();
+      document.documentElement.classList.remove('skip-loader');
+      requestAnimationFrame(() => this.onComplete?.());
+      return;
+    }
     document.body.style.overflow = 'hidden';
 
     // Lock the start state IMMEDIATELY (before any paint) so there's never a

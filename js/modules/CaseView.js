@@ -33,6 +33,7 @@ export default class CaseView {
       const g = new PillGlass(top);
       // The pill moves with the sky, so one draw holds until a resize.
       this.drawTop = () => { this.topDrawn = !!heroSky && g.draw(heroSky.getBoundingClientRect()); };
+      g.onPaper = this.drawTop;
       g.ready?.then(this.drawTop);
       window.addEventListener('resize', this.drawTop);
     }
@@ -56,6 +57,8 @@ export default class CaseView {
         this.dockGlass.draw(sky.getBoundingClientRect());
       }
     };
+
+    if (this.dockGlass) this.dockGlass.onPaper = () => { if (this.docked) theme(); };
 
     let tick = 0;
     const update = () => {

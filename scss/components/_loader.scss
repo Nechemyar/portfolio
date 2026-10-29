@@ -12,6 +12,9 @@
   background: transparent;
 }
 
+/* Back from a case study: no loader (the class is set in <head>). */
+.skip-loader .loader { display: none; }
+
 /* The red panel itself: a full-screen SVG whose path is the rust fill.
    Animating the path's top/bottom edges up = the visible "circular wipe". */
 .loader__wipe {

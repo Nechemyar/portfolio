@@ -176,7 +176,7 @@ export default class CaseTransition {
   // Phase two: the phone eases down into the hero and the title rises in.
   arrive(main, phone, fromY) {
     const words = main.querySelectorAll('.case__ln > span');
-    const bits = main.querySelectorAll('.case__back, .case__lead');
+    const bits = main.querySelectorAll('.case__back--top, .case__lead');
     const tl = gsap.timeline();
     tl.fromTo(phone, { y: fromY }, { y: 0, duration: 0.85, ease: EASE }, 0)
       .fromTo(words, { yPercent: 110, y: 0 }, { yPercent: 0, duration: 0.9, ease: 'power4.out', stagger: 0.08 }, 0.32)
@@ -289,7 +289,7 @@ export default class CaseTransition {
       main.classList.remove('is-arriving');
       this.land(f);
       gsap.set([phone, sky], { clearProps: 'all' });
-      gsap.set(main.querySelectorAll('.case__ln > span, .case__back, .case__lead'), { clearProps: 'all' });
+      gsap.set(main.querySelectorAll('.case__ln > span, .case__back--top, .case__lead'), { clearProps: 'all' });
       this.view = new CaseView(main, this.layer);
       this.current = key;
       this.busy = false;
@@ -359,11 +359,16 @@ export default class CaseTransition {
     const phone = slot.querySelector('.work__phone');
     const target = this.cardStage(key);
 
-    // Deep in the story there is no hero to fold back into, and scrolling
-    // all the way up flickers past every section. So the case fades away
-    // over the full-screen tile instead, the phone fades in at its centre,
-    // and the tile shrinks back into its card.
-    if (this.layer.scrollTop > 40) return this.closeFromStory(key, main, phone, target);
+    // Back to the top of the case first, so the hero is where it started.
+    // The docked pill drops away as it goes; the hero brings its own.
+    if (this.layer.scrollTop > 0) {
+      this.view?.hideDock(true);
+      const s = { y: this.layer.scrollTop };
+      await gsap.to(s, {
+        y: 0, duration: Math.min(1.1, 0.45 + s.y / 6000), ease: 'power3.inOut',
+        onUpdate: () => { this.layer.scrollTop = s.y; },
+      });
+    }
 
     this.view?.destroy();
     this.view = null;
@@ -395,56 +400,13 @@ export default class CaseTransition {
     const tl = gsap.timeline();
     tl.to(sky, { autoAlpha: 0, duration: 0.3, ease: 'power1.in' }, 0)
       .to(main.querySelectorAll('.case__ln > span'), { yPercent: 110, duration: 0.45, ease: 'power3.in', stagger: 0.04 }, 0)
-      .to(main.querySelectorAll('.case__back, .case__lead'), { autoAlpha: 0, y: -10, duration: 0.3, ease: 'power2.in' }, 0)
+      .to(main.querySelectorAll('.case__back--top, .case__lead'), { autoAlpha: 0, y: -10, duration: 0.3, ease: 'power2.in' }, 0)
       .to(phone, { y: 0, duration: 0.6, ease: EASE }, 0.1)
       .add(() => {
         this.layer.style.visibility = 'hidden';
         this.setNav('light', false);
       }, 0.55)
       .add(this.flyTo(f, tr, 0.85), 0.55);
-    if (reduce()) tl.timeScale(30);
-    await tl;
-
-    main.remove();
-    this.layer.remove();
-    this.layer = null;
-    target.appendChild(phone);
-    gsap.set(phone, { clearProps: 'all' });
-    this.land(f);
-    document.title = this.homeTitle;
-    this.smooth?.start();
-    this.current = null;
-    this.busy = false;
-  }
-
-  async closeFromStory(key, main, phone, target) {
-    this.view?.destroy();
-    this.view = null;
-    const H = window.innerHeight;
-    const tr0 = rect(target);
-    if (tr0.bottom < 0 || tr0.top > H) {
-      const y = window.scrollY + tr0.top - (H - tr0.height) / 2;
-      if (this.smooth?.lenis) this.smooth.lenis.scrollTo(y, { immediate: true, force: true });
-      else window.scrollTo(0, y);
-    }
-
-    const spare = target.querySelector('.work__phone');
-    if (spare) spare.remove();
-    const f = this.lift(target, null, 1099);
-    const tr = f.r;
-    gsap.set(f.stage, { x: 0, y: 0, scaleX: 1, scaleY: 1 });
-    gsap.set(f.clip, { clipPath: inset({ left: 0, top: 0, right: f.W, bottom: f.H }, f.W, f.H) });
-    f.phone = phone;
-    f.clip.appendChild(phone);
-    this.placePhone(f, { left: f.left0, top: f.top0, width: f.w });
-    gsap.set(phone, { autoAlpha: 0 });
-    this.play(phone);
-
-    const tl = gsap.timeline();
-    tl.to(this.layer, { autoAlpha: 0, duration: 0.4, ease: 'power1.inOut' }, 0)
-      .to(phone, { autoAlpha: 1, duration: 0.4, ease: 'power1.out' }, 0.1)
-      .add(() => this.setNav('light', false), 0.45)
-      .add(this.flyTo(f, tr, 0.85), 0.45);
     if (reduce()) tl.timeScale(30);
     await tl;
 
@@ -503,7 +465,7 @@ export default class CaseTransition {
     const r = rect(slot);
     const fromY = (window.innerHeight - r.height) / 2 - r.top;
     this.arrive(this.main, phone, fromY).then(() => {
-      gsap.set(this.main.querySelectorAll('.case__ln > span, .case__back, .case__lead'), { clearProps: 'all' });
+      gsap.set(this.main.querySelectorAll('.case__ln > span, .case__back--top, .case__lead'), { clearProps: 'all' });
       gsap.set(phone, { clearProps: 'all' });
     });
   }

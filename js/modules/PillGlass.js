@@ -107,9 +107,10 @@ export default class PillGlass {
   // Draw the glass over the sky box `sky` (a DOMRect of the element that
   // paints the gradient behind the pill).
   draw(sky) {
-    if (!this.ok || !sky) return;
+    if (!this.ok || !sky || !sky.width) return false;
     const { gl, canvas, u } = this;
     const r = this.el.getBoundingClientRect();
+    if (!r.width) return false;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const w = Math.round(r.width * dpr);
     const h = Math.round(r.height * dpr);
@@ -124,5 +125,6 @@ export default class PillGlass {
     const s = Math.max(sky.width / pw, sky.height / ph);
     gl.uniform2f(u.uPaperFit, sky.width / (pw * s), sky.height / (ph * s));
     gl.drawArrays(gl.TRIANGLES, 0, 3);
+    return true;
   }
 }

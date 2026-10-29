@@ -20,79 +20,83 @@ export default class CaseView {
     this.initPinned();
   }
 
-  // The back pill: glass like the hero CTA, at the top until you scroll,
-  // then at the bottom. Its label goes ink over the white sheet.
+  // The back pills, glass like the hero CTA. One opens the hero and scrolls
+  // away with it; once it's gone, the dock rises from the bottom edge and
+  // stays in thumb reach. Its label goes ink over the white sheet.
   initBack() {
-    const el = this.root.querySelector('.case__back');
-    if (!el) return;
-    this.back = el;
-    if (!window.matchMedia('(prefers-reduced-transparency: reduce)').matches) {
-      this.glass = new PillGlass(el);
+    const top = this.root.querySelector('.case__back--top');
+    const dock = this.root.querySelector('.case__back--dock');
+    const glassy = !window.matchMedia('(prefers-reduced-transparency: reduce)').matches;
+    const heroSky = this.root.querySelector('.case__hero > .case__sky');
+
+    if (top && glassy) {
+      const g = new PillGlass(top);
+      // The pill moves with the sky, so one draw holds until a resize.
+      this.drawTop = () => { this.topDrawn = !!heroSky && g.draw(heroSky.getBoundingClientRect()); };
+      g.ready?.then(this.drawTop);
+      window.addEventListener('resize', this.drawTop);
     }
+    if (!dock) return;
+    this.dock = dock;
+    this.dockGlass = glassy ? new PillGlass(dock) : null;
+    this.docked = false;
     const sections = [...this.root.querySelectorAll('[data-nav-theme]')];
-    const title = this.root.querySelector('.case__title');
-    const logo = document.querySelector('.nav__logo');
-    let atBottom = null;
-    let tick = 0;
 
-    // At the top the pill sits halfway between the logo and the title.
-    const placeTop = () => {
-      if (!title || !logo) return;
-      const nb = logo.getBoundingClientRect().bottom;
-      const tt = title.getBoundingClientRect().top;
-      const h = el.offsetHeight;
-      el.style.top = `${Math.max(nb + 8, (nb + tt) / 2 - h / 2)}px`;
-    };
-
-    // Ink frost over the white sheet; glass over the sky, drawn over the
-    // sky box behind it.
     const theme = () => {
-      const r = el.getBoundingClientRect();
+      const r = dock.getBoundingClientRect();
       const y = r.top + r.height / 2;
-      let hit = null;
-      sections.forEach((s) => {
+      const hit = sections.find((s) => {
         const b = s.getBoundingClientRect();
-        if (b.top <= y && b.bottom > y) hit = s;
+        return b.top <= y && b.bottom > y;
       });
       const light = hit?.dataset.navTheme === 'light';
-      el.classList.toggle('is-light', light);
-      if (!light && hit && this.glass) {
+      dock.classList.toggle('is-light', light);
+      if (!light && hit && this.dockGlass) {
         const sky = hit.querySelector(':scope > .case__sky') || hit;
-        this.glass.draw(sky.getBoundingClientRect());
+        this.dockGlass.draw(sky.getBoundingClientRect());
       }
     };
 
+    let tick = 0;
     const update = () => {
       tick = 0;
-      const y = this.scroller === window ? window.scrollY : this.scroller.scrollTop;
-      const bottom = y > 40;
-      if (!bottom) placeTop();
-      if (bottom !== atBottom) {
-        const first = atBottom === null;
-        atBottom = bottom;
-        if (first || reduce()) {
-          el.classList.toggle('is-bottom', bottom);
-          if (bottom) el.style.top = '';
-        } else {
-          // Leave one edge, arrive at the other: no trip across the page.
-          gsap.to(el, {
-            autoAlpha: 0, y: bottom ? -12 : 12, duration: 0.18, ease: 'power1.in', overwrite: true,
-            onComplete: () => {
-              el.classList.toggle('is-bottom', bottom);
-              if (bottom) el.style.top = ''; else placeTop();
-              theme();
-              gsap.fromTo(el, { autoAlpha: 0, y: bottom ? 16 : -16 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: 'power2.out' });
-            },
-          });
-        }
+      if (this.drawTop && !this.topDrawn) this.drawTop();
+      if (this.dockLocked) return;
+      // Dock once the hero's pill has gone off the top.
+      const want = top ? top.getBoundingClientRect().bottom < 0 : true;
+      if (want !== this.docked) {
+        if (want) this.showDock(); else this.hideDock();
       }
-      theme();
+      if (this.docked) theme();
     };
     this.onScroll = () => { if (!tick) tick = requestAnimationFrame(update); };
     this.scroller.addEventListener('scroll', this.onScroll, { passive: true });
     window.addEventListener('resize', this.onScroll);
-    this.glass?.ready?.then(() => this.onScroll());
+    this.dockGlass?.ready?.then(this.onScroll);
     update();
+  }
+
+  dockOffset() {
+    return this.dock.offsetHeight + 40;
+  }
+
+  showDock() {
+    if (!this.dock) return;
+    this.docked = true;
+    gsap.fromTo(this.dock,
+      { autoAlpha: 1, y: this.dockOffset() },
+      { y: 0, duration: reduce() ? 0 : 0.55, ease: 'power3.out', overwrite: true });
+  }
+
+  // `lock` keeps it down for good (the case is closing).
+  hideDock(lock = false) {
+    if (lock) this.dockLocked = true;
+    if (!this.dock || !this.docked) return;
+    this.docked = false;
+    gsap.to(this.dock, {
+      y: this.dockOffset(), duration: reduce() ? 0 : 0.3, ease: 'power2.in', overwrite: true,
+      onComplete: () => gsap.set(this.dock, { autoAlpha: 0 }),
+    });
   }
 
   initClips() {
@@ -147,6 +151,7 @@ export default class CaseView {
       this.scroller.removeEventListener('scroll', this.onScroll);
       window.removeEventListener('resize', this.onScroll);
     }
+    if (this.drawTop) window.removeEventListener('resize', this.drawTop);
     this.observers.forEach((io) => io.disconnect());
     this.observers = [];
     if (this.root) gsap.killTweensOf(this.root.querySelectorAll('.case__pinned'));

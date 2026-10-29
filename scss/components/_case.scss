@@ -28,6 +28,9 @@
   color: $c-sky-type;
 }
 
+// The homepage's mobile section padding doesn't apply: the hero sets its own.
+main.case > .case__hero { padding-top: 0; }
+
 /* The sky sits on its own layer so the move can fade it in over the tile
    that grew underneath. One gradient over the whole hero: no seam. */
 .case__sky {
@@ -61,13 +64,7 @@
    top, centred under the logo; once you scroll it leaves the top and
    settles at the bottom in thumb reach. Never travels across the page. */
 .case__back {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: calc(#{$fs-nav} * 4.75);
-  z-index: 5;
-  width: fit-content;
-  margin: 0 auto;
+  position: relative;
   isolation: isolate;
   display: inline-flex;
   align-items: center;
@@ -107,9 +104,24 @@
   > span, > svg { position: relative; z-index: 2; }
   > svg { width: 0.95em; height: 0.95em; flex-shrink: 0; }
 
-  &.is-bottom {
-    top: auto;
+  /* In the hero, halfway between the logo and the title. It scrolls away
+     with the page like anything else, so it never jumps or doubles. */
+  &--top {
+    margin-bottom: calc(#{$fs-nav} * 3.25);
+    @media (min-width: 641px) { margin-bottom: calc(#{$fs-nav} * 2.75); }
+  }
+
+  /* Once that one has scrolled away, this one rises from the bottom edge
+     into thumb reach (CaseView moves it with GSAP). */
+  &--dock {
+    position: fixed;
+    left: 0;
+    right: 0;
     bottom: calc(#{$space-16} + env(safe-area-inset-bottom, 0px));
+    z-index: 5;
+    width: fit-content;
+    margin: 0 auto;
+    visibility: hidden;
   }
 
   /* Over the white sheet the label turns ink and the glass frosts up, so it
@@ -153,11 +165,10 @@
   }
 }
 
-/* The title sits below the back pill. */
+/* The back pill opens the hero, the title follows. */
 .case__hero-in {
-  padding-top: calc(#{$fs-nav} * 10);
-  // room for the pill to sit centred between the logo and the title
-  @media (min-width: 641px) { padding-top: calc(#{$fs-nav} * 17); }
+  padding-top: calc(#{$fs-nav} * 9);
+  @media (min-width: 641px) { padding-top: calc(#{$fs-nav} * 9.75); }
 }
 
 /* A short, quiet line naming each part of the story. */
@@ -529,5 +540,5 @@
 /* Set in <head> when this page is arriving from the previous case's tile, so
    the title never flashes before the move picks it up. */
 .case-arriving .case__ln > span { transform: translateY(110%); }
-.case-arriving .case__back,
+.case-arriving .case__back--top,
 .case-arriving .case__lead { opacity: 0; }

@@ -291,16 +291,24 @@
   --reel-peek: 34svh;                 /* a third of the first screen: enough to show it
                                          carries on (NN/g, illusion of completeness), with
                                          clear air under the button */
-  --reel-edge: clamp(8px, 1vw, 16px); /* side margin */
-  --card-w: min(calc(100vw - var(--reel-edge) * 2), calc((100svh - var(--reel-top) - var(--reel-edge)) * 9 / 16));
+  --reel-edge: 6px;                   /* side margin: phones run the card nearly edge to edge */
+  /* Phones: the card is always full width. When the screen is too short for
+     a whole 9:16 card it gets a little shorter instead (down to 9:15) and the
+     video trims top and bottom only, never the sides. The phone reel keeps
+     everything that matters inside that 9:15 band. Only very short phones,
+     where even 9:15 won't fit, narrow the card. */
+  --card-h-max: calc(100svh - var(--reel-top) - var(--reel-edge));
+  --card-w: min(calc(100vw - var(--reel-edge) * 2), calc(var(--card-h-max) * 9 / 15));
+  --card-h: min(calc(var(--card-w) * 16 / 9), var(--card-h-max));
   --ring-in: 0;                       /* footage inset, share of card width (0: no frame) */
   --frame: none;
-  --reel-from: 0.96;                  /* starts nearly full width, opens out the last bit as it rises */
+  --reel-from: 1;                     /* phones: full width from the start (he found the margins too big) */
   height: 180vh;
   height: 180svh;
   margin-top: calc(-1 * (var(--reel-peek) + var(--reel-top)));
 
   @media (min-width: 760px) {
+    --reel-edge: clamp(8px, 1vw, 16px);
     --reel-from: 0.9;
     --card-w: min(calc(100vw - var(--reel-edge) * 2), calc((100svh - var(--reel-top) - var(--reel-edge)) * 1536 / 920));
     --reel-peek: 34svh;
@@ -348,7 +356,7 @@
 .reel__card {
   position: relative;
   width: var(--card-w);
-  aspect-ratio: 9 / 16;
+  height: var(--card-h);
   transform: scale(var(--reel-from)); /* InkStory scrubs it to 1; set here so it never jumps */
   transform-origin: 50% 0;
   will-change: transform;
@@ -358,6 +366,7 @@
   }
 
   @media (min-width: 760px) {
+    height: auto;
     aspect-ratio: 1536 / 920;
   }
 }
@@ -367,7 +376,7 @@
   position: absolute;
   inset: calc(var(--card-w) * var(--ring-in));
   overflow: hidden;
-  border-radius: clamp(14px, calc(var(--card-w) * 0.02), 24px);
+  border-radius: clamp(12px, calc(var(--card-w) * 0.02), 24px);
   /* the reel's first frame, so the card is solid from the first paint and
      the video takes over with no pop */
   background: $c-indigo-deep url('/reel/poster-m.webp') center / cover no-repeat;
@@ -408,6 +417,7 @@
     display: flex;
     flex-direction: column;
     width: min(calc(100vw - var(--reel-edge) * 2), calc((100svh - var(--reel-top) - var(--reel-edge) * 4 - var(--wood) * 2 - var(--mat) - var(--cap)) / 2 + var(--wood) * 2 + var(--mat) * 2));
+    height: auto;
     aspect-ratio: auto;
     padding: var(--mat) var(--mat) 0;
     border: var(--wood) solid #b8894c;

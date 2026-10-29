@@ -276,7 +276,11 @@ clouds, then near clouds, 1.1s each, 0.14s stagger) while the nav builds.
 - **Sources.** Phones get `reel-m` (9:16, 720x1280). Wide screens get `reel.webm`
   (1200px and up) or `reel-720` (16:9). Each has a poster (`poster-m.webp`,
   `poster.webp`) that is its exact first frame, so the card is solid from the
-  first paint.
+  first paint. On phones the card runs 6px from each edge, full width from the
+  start, and the phone reel never zooms past the site's full width (it only pans
+  up and down), so no site is cut at the sides. If a phone is too short for a
+  whole 9:16 card, the card gets shorter (down to 9:15) and the video trims
+  top and bottom only.
 - **Loading.** `HeroReel.js` loads the video after the loader, fades it in and
   pauses it off screen.
 - **Pause.** A pause button sits at the bottom of the held card (WCAG 2.2.2).

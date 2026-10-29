@@ -636,10 +636,13 @@ main.case > .case__hero { padding-top: 0; }
   .work__phone {
     top: auto;
     bottom: -22%;
-    height: 54%;
+    height: 50%;
     transform: translateX(-50%);
   }
 
+  /* Small phones wrap the words onto more lines: a taller card keeps the
+     phone clear of the button. */
+  @media (max-width: 399px) { aspect-ratio: 2 / 3; }
   @media (min-width: 900px) { aspect-ratio: 3 / 2; }
 }
 
@@ -675,6 +678,8 @@ main.case > .case__hero { padding-top: 0; }
     font-size: $fs-md;
     line-height: 1.45;
   }
+
+  .cs__btn { margin-top: $space-8; }
 }
 
 .case__foot {

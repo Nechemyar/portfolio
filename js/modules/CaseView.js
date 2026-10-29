@@ -140,6 +140,7 @@ export default class CaseView {
 
     if (top && glassy) {
       const g = new PillGlass(top);
+      this.topGlass = g;
       g.setSky(skyTop, skyBot);
       // The pill moves with the sky, so one draw holds until a resize.
       this.drawTop = () => { this.topDrawn = !!heroSky && g.draw(heroSky.getBoundingClientRect()); };
@@ -234,13 +235,22 @@ export default class CaseView {
     this.observers.push(io);
   }
 
-  destroy() {
+  // The pills' GPU contexts. Closing keeps them until the hero has gone, so
+  // the pill doesn't drop to frost as it fades.
+  releaseGlass() {
+    this.topGlass?.destroy();
+    this.dockGlass?.destroy();
+    this.topGlass = this.dockGlass = null;
+  }
+
+  destroy({ keepGlass = false } = {}) {
     if (this.onScroll) {
       this.scroller.removeEventListener('scroll', this.onScroll);
       window.removeEventListener('resize', this.onScroll);
     }
     if (this.drawTop) window.removeEventListener('resize', this.drawTop);
     document.documentElement.style.removeProperty('--nav-scrim');
+    if (!keepGlass) this.releaseGlass();
     this.observers.forEach((io) => io.disconnect());
     this.observers = [];
     this.motion.forEach((tw) => { tw.scrollTrigger?.kill(); tw.kill(); });

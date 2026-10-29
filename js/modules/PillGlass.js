@@ -125,6 +125,20 @@ export default class PillGlass {
     this.gl.uniform3fv(this.u.uBottom, hex(bottom));
   }
 
+  // Give the GPU context back. Browsers keep only a handful of WebGL
+  // contexts alive (fewer on phones) and drop the oldest when a new one goes
+  // over, which was the homepage's sky: open a case, then the next, then go
+  // back, and the sky came back as a broken canvas. Every pill a case makes
+  // is released here when the case goes.
+  destroy() {
+    this.onPaper = null;
+    if (this.gl && !this.gl.isContextLost()) this.gl.getExtension('WEBGL_lose_context')?.loseContext();
+    this.canvas?.remove();
+    this.el.classList.remove('is-gl');
+    this.ok = false;
+    this.gl = null;
+  }
+
   // Set onPaper to redraw once the washi arrives.
   // Draw the glass over the sky box `sky` (a DOMRect of the element that
   // paints the gradient behind the pill).

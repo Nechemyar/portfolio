@@ -390,7 +390,8 @@ export default class CaseTransition {
       });
     }
 
-    this.view?.destroy();
+    const closing = this.view;
+    closing?.destroy({ keepGlass: true });
     this.view = null;
     this.setNav(main.querySelector('.case__hero')?.dataset.navTheme || 'dark', true);
     const H = window.innerHeight;
@@ -430,6 +431,7 @@ export default class CaseTransition {
     if (reduce()) tl.timeScale(30);
     await tl;
 
+    closing?.releaseGlass();
     main.remove();
     this.layer.remove();
     this.layer = null;

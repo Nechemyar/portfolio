@@ -34,6 +34,8 @@ const keyFromPath = (path) => {
   return m ? m[1] : null;
 };
 const inset = (r, W, H) => `inset(${r.top}px ${W - r.right}px ${H - r.bottom}px ${r.left}px)`;
+// Light tiles (Clinical's white) carry the dark nav; the rest the light one.
+const toneTheme = (el) => (el?.closest?.('[data-tone]')?.dataset.tone === 'clinical' ? 'light' : 'dark');
 const modified = (e) => e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey;
 
 export default class CaseTransition {
@@ -281,7 +283,7 @@ export default class CaseTransition {
     this.view = new CaseView(main, this.layer);
     document.title = doc.title;
     gsap.set(f.stage, { zIndex: 1099 });
-    this.setNav('dark', true);
+    this.setNav(main.querySelector('.case__hero')?.dataset.navTheme || 'dark', true);
 
     slot.appendChild(phone);
     gsap.set(phone, { clearProps: 'all' });
@@ -298,6 +300,7 @@ export default class CaseTransition {
       gsap.set([phone, sky], { clearProps: 'all' });
       gsap.set(main.querySelectorAll('.case__ln > span, .case__back--top, .case__lead'), { clearProps: 'all' });
       this.view?.drawTop?.();
+      this.view?.refresh();
       if (push) history.pushState({ sumiCase: true }, '', href);
       this.current = key;
       this.busy = false;
@@ -324,10 +327,15 @@ export default class CaseTransition {
     const next = e.target.closest('a[data-case-link]');
     if (next) {
       e.preventDefault();
-      if (this.busy) return;
+      if (this.busy || this.preparing) return;
       const href = next.href;
-      history.replaceState(history.state, '', href);
-      this.openHome(next.querySelector('.case__tile'), href, true);
+      this.load(href).catch(() => {});
+      this.preparing = true;
+      (this.view?.prepareNext() || Promise.resolve()).then(() => {
+        this.preparing = false;
+        history.replaceState(history.state, '', href);
+        this.openHome(next.querySelector('.case__tile'), href, true);
+      });
       return;
     }
     if (e.target.closest('.case__back')) {
@@ -384,7 +392,7 @@ export default class CaseTransition {
 
     this.view?.destroy();
     this.view = null;
-    this.setNav('dark', true);
+    this.setNav(main.querySelector('.case__hero')?.dataset.navTheme || 'dark', true);
     const H = window.innerHeight;
 
     // If this case was reached through "Next", bring its card into view.
@@ -447,6 +455,7 @@ export default class CaseTransition {
       this.arriveOnLoad();
     }
     document.documentElement.classList.remove('case-arriving');
+    document.documentElement.style.background = '';
 
     this.prefetchOn(this.main, 'a[data-case-link]');
     this.main.addEventListener('click', (e) => {
@@ -504,13 +513,15 @@ export default class CaseTransition {
 
   async flyToNext(a) {
     this.busy = true;
+    this.load(a.href).catch(() => {});
+    await this.view?.prepareNext();
     this.smooth?.stop();
     const stage = a.querySelector('.case__tile');
     const phone = stage.querySelector('.work__phone');
     this.play(phone);
     const f = this.lift(stage, phone, 1099);
     this.flying = f;
-    this.setNav('dark', true);
+    this.setNav(toneTheme(stage), true);
     await Promise.all([this.flyTo(f).then(), this.load(a.href).catch(() => {})]);
     sessionStorage.setItem(ARRIVE_KEY, a.dataset.caseLink);
     location.assign(a.href);

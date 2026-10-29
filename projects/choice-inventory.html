@@ -17,10 +17,12 @@
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" /></noscript>
 
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500&amp;family=Questrial&amp;family=Lexend+Deca:wght@500&amp;text=Aa&amp;display=swap" media="print" onload="this.media='all'" />
   <link rel="stylesheet" href="../scss/main.scss" />
   <!-- Arriving from the previous case's tile: hold the title back until the
-       move picks up (CaseTransition.js). -->
-  <script>try{if(sessionStorage.getItem('sumi:case-arrive')==='choice')document.documentElement.classList.add('case-arriving')}catch(e){}</script>
+       move picks up (CaseTransition.js), on the tile's colour so the load
+       never flashes white. -->
+  <script>try{if(sessionStorage.getItem('sumi:case-arrive')==='choice'){document.documentElement.classList.add('case-arriving');document.documentElement.style.background='#ec7516'}}catch(e){}</script>
 </head>
 
 <body class="case-page">
@@ -94,9 +96,10 @@
   </nav>
 
 
+
   <!-- The case. The homepage lifts this <main> into its case layer when a
        work tile is tapped (CaseTransition.js), so it must stand on its own. -->
-  <main class="case" data-case="choice">
+  <main class="case" data-case="choice" data-tone="choice">
     <section class="case__hero" data-nav-theme="dark">
       <div class="case__sky" aria-hidden="true"></div>
       <div class="case__hero-in">
@@ -108,52 +111,72 @@
     </section>
 
     <div class="case__sheet" data-nav-theme="light">
-      <div class="case__facts"><span>Client <b>Raffy Rosenzweig</b></span><span>London</span><span>Time <b>2 weeks</b></span><span>Design, build, instant quote</span><a class="case__live" href="https://choiceinventory.co.uk" target="_blank" rel="noopener noreferrer">choiceinventory.co.uk <span aria-hidden="true">&#8599;</span></a></div>
+      <section class="cs cs--first">
+        <p class="cs__body js-fill">Raffy runs inventory checks for letting agents, landlords and tenants across London. His prices depend on the size of the place and the extras, so every new client had to message him and wait for a number. I built a site that shows the price straight away, then hands people to Raffy on WhatsApp.</p>
+        <dl class="cs__facts"><div><dt class="cs__label">(Client)</dt><dd>Raffy Rosenzweig<br />London</dd></div><div><dt class="cs__label">(Time)</dt><dd>2 weeks</dd></div><div><dt class="cs__label">(Built)</dt><dd>Design, build<br />Instant quote</dd></div><div><dt class="cs__label">(Live)</dt><dd><a href="https://choiceinventory.co.uk" target="_blank" rel="noopener noreferrer">choiceinventory.co.uk</a></dd></div></dl>
+      </section>
 
-      <div class="case__story">
-        <div class="case__tile case__stick" aria-hidden="true"><div class="work__phone"><video class="work__screen case__pinned" muted loop playsinline preload="none" poster="/work/choice-about-m.webp" src="/work/choice-about-m.mp4" aria-label=""></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
-        <div class="case__beats">
-            <section class="case__beat" data-clip="choice-about-m">
-              <div class="case__tile"><div class="work__phone"><video class="work__screen" muted loop playsinline preload="none" poster="/work/choice-about-m.webp" src="/work/choice-about-m.mp4" aria-label="Choice Inventory on an iPhone"></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
-              <p class="case__kicker">The problem</p>
-              <h2 class="case__h2">Every enquiry started with &ldquo;how much?&rdquo;</h2>
-              <p class="case__p">The price depends on the size of the property and the extras, so nobody could see one without messaging Raffy and waiting for a reply. Plenty of people never asked.</p>
-            </section>
-            <section class="case__beat" data-clip="choice-pricing-m">
-              <div class="case__tile"><div class="work__phone"><video class="work__screen" muted loop playsinline preload="none" poster="/work/choice-pricing-m.webp" src="/work/choice-pricing-m.mp4" aria-label="Choice Inventory on an iPhone"></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
-              <p class="case__kicker">What I built</p>
-              <h2 class="case__h2">A quote that works itself out</h2>
-              <p class="case__p">Set the number of bedrooms, tick any extras, and the price appears with VAT already in. No form, no waiting.</p>
-            </section>
-            <section class="case__beat" data-clip="choice-services-m">
-              <div class="case__tile"><div class="work__phone"><video class="work__screen" muted loop playsinline preload="none" poster="/work/choice-services-m.webp" src="/work/choice-services-m.mp4" aria-label="Choice Inventory on an iPhone"></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
-              
-              <h2 class="case__h2">Then one tap to book</h2>
-              <p class="case__p">Once they&rsquo;ve seen the price, a button opens a WhatsApp chat with Raffy. That&rsquo;s where his clients already talk to him, so it felt natural.</p>
-            </section>
+      <section class="cs">
+        <figure class="cs__shot js-wipe"><img src="/work/case/choice-01.webp" alt="Choice Inventory on a phone" loading="lazy" /></figure>
+      </section>
+
+      <section class="cs">
+        <p class="cs__label">(The problem)</p>
+        <p class="cs__body js-fill">Nobody could see a price without messaging Raffy and waiting for an answer. Plenty of people never asked, and went with whoever showed a number first.</p>
+        <div class="cs__collage">
+          <figure class="cs__shot cs__shot--a js-wipe" data-speed="0.92"><img src="/work/case/choice-03.webp" alt="Choice Inventory on a laptop" loading="lazy" /></figure>
+          <figure class="cs__shot cs__shot--b js-wipe" data-speed="1.18"><img src="/work/case/choice-02.webp" alt="Two phones showing Choice Inventory" loading="lazy" /></figure>
         </div>
+      </section>
+
+      <div class="cs cs__statement">
+        <div class="cs__dots" aria-hidden="true"><b></b><b></b></div>
+        <p class="js-rise">A price in seconds, then one tap to Raffy.</p>
+        <div class="cs__dots" aria-hidden="true"><b></b><b></b></div>
       </div>
 
-        <section class="case__results case__tile" data-nav-theme="dark">
-          <div class="case__results-in">
-            <h2 class="case__h2">What changed</h2>
-            <div class="case__stats"><div class="case__stat"><b>1,008</b><span>reports done in 2025</span></div><div class="case__stat"><b>+112%</b><span>on the year before</span></div><div class="case__stat"><b>5.0</b><span>Google rating</span></div><div class="case__stat"><b>2 wks</b><span>from first call to launch</span></div></div>
-            <p class="case__src">Numbers from Choice&rsquo;s own site.</p>
+      <section class="cs">
+        <p class="cs__label">(What I built)</p>
+        <p class="cs__body js-fill">Set the bedrooms, tick any extras, and the price shows up with VAT already in. One button opens a WhatsApp chat with Raffy, where his clients already talk to him.</p>
+        <div class="cs__system js-wipe" data-tone-panel>
+          <div class="cs__system-top"><span>(Design system)</span><span>DM Sans</span></div>
+          <div class="cs__system-logo"><img src="/work/case/choice-logo.png" alt="Choice Inventory logo" loading="lazy" /></div>
+          <div class="cs__system-foot">
+            <div class="cs__spec"><span class="cs__aa cs__aa--dm">Aa</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 2.5 1 3 .8 3.6.8.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg></div>
+            <div class="cs__swatches"><span class="cs__sw"><i style="background:#f28c21"></i>Orange</span><span class="cs__sw"><i style="background:#1d1e20"></i>Night</span><span class="cs__sw"><i style="background:#ffffff"></i>White</span><span class="cs__sw"><i style="background:#8c8c8c"></i>Stone</span></div>
           </div>
-        </section>
-        <figure class="case__quote">
-          <blockquote>&ldquo;Fast, responsive, and actually listened. The site has been pulling in leads from day one, exactly what I asked for.&rdquo;</blockquote>
-          <figcaption class="case__who"><img src="/work/raffy-choice.webp" alt="" loading="lazy" /><div>Raffy Rosenzweig<span>Founder, Choice Inventory</span></div></figcaption>
-        </figure>
-      <a class="case__next" href="clinical-assessments.html" data-case-link="clinical">
-        <div class="case__tile"><div class="work__phone"><video class="work__screen" muted loop playsinline preload="none" poster="/work/clinical-m.webp" aria-label="Clinical Assessments website on an iPhone"><source src="/work/clinical-m.webm" type="video/webm" /><source src="/work/clinical-m.mp4" type="video/mp4" /></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
-        <div class="case__next-row"><span>Next</span><b>Clinical Assessments &rarr;</b></div>
-      </a>
+        </div>
+        <figure class="cs__shot js-wipe"><img src="/work/case/choice-04.webp" alt="Choice Inventory, styled with things from their world" loading="lazy" /></figure>
+      </section>
 
-      <div class="case__end">
-        <p>Have a project in mind?</p>
-        <a class="case__live" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer">Book a free call <span aria-hidden="true">&#8599;</span></a>
+      <section class="cs">
+        <p class="cs__label">(What changed)</p>
+        <div class="cs__stats"><div><b data-count="1,008">1,008</b><span>Reports in 2025</span></div><div><b data-count="+112%">+112%</b><span>On the year before</span></div><div><b data-count="5.0">5.0</b><span>Google rating</span></div></div><p class="cs__cap">(Numbers from Choice&rsquo;s own site)</p>
+      </section>
+      <section class="cs">
+        <figure class="cs__quote">
+          <div class="cs__shot cs__face js-wipe"><img src="/work/raffy-choice.webp" alt="Raffy Rosenzweig, founder" loading="lazy" /></div>
+          <blockquote class="js-fill">&ldquo;Fast, responsive, and actually listened. The site has been pulling in leads from day one.&rdquo;</blockquote>
+          <figcaption class="cs__label">Raffy Rosenzweig, founder</figcaption>
+        </figure>
+      </section>
+      <div class="cs cs__cta">
+        <p class="cs__big">Have a project in mind?</p>
+        <a class="cs__btn" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer">Book a free call</a>
       </div>
+
+      <div class="cs cs__next-wrap">
+        <a class="case__next" href="clinical-assessments.html" data-case-link="clinical">
+          <div class="case__tile" data-tone="clinical"><div class="work__phone"><video class="work__screen" muted loop playsinline preload="none" poster="/work/clinical-m.webp" aria-label="Clinical Assessments website on an iPhone"><source src="/work/clinical-m.webm" type="video/webm" /><source src="/work/clinical-m.mp4" type="video/mp4" /></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
+          <div class="case__next-copy" data-tone="clinical">
+            <p class="cs__label">(Next case)</p>
+            <h2>Clinical Assessments</h2>
+            <p>Psychologists whose visitors arrive worried.</p>
+            <span class="cs__btn">View next</span>
+          </div>
+        </a>
+      </div>
+
       <footer class="case__foot"><span>&copy; 2026 Sumi Studios</span><a href="mailto:hello@sumistudios.com">hello@sumistudios.com</a></footer>
     </div>
 

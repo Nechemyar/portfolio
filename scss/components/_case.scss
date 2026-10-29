@@ -7,8 +7,8 @@
 
 .case {
   position: relative;
-  background: #fff;
-  color: $c-ink;
+  background: var(--tone-page, #fff);
+  color: var(--tone-text, #{$c-ink});
   font-family: $font-body;
 
   /* The blocky display face is for the menu only. */
@@ -25,7 +25,7 @@
   min-height: 100svh;
   overflow: hidden;
   isolation: isolate;
-  color: $c-sky-type;
+  color: var(--tone-ink);
 }
 
 // The homepage's mobile section padding doesn't apply: the hero sets its own.
@@ -37,7 +37,7 @@ main.case > .case__hero { padding-top: 0; }
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(180deg, $c-sky, $c-sky-pale);
+  background: linear-gradient(180deg, var(--tone-top), var(--tone-bot));
 
   &::before {
     content: '';
@@ -72,13 +72,13 @@ main.case > .case__hero { padding-top: 0; }
   height: max(44px, calc(#{$fs-nav} * 3.375));
   padding: 0 calc(#{$fs-nav} * 1.5);
   border-radius: $r-full;
-  color: $c-sky-type;
+  color: var(--tone-ink);
   font-size: $fs-nav;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   text-decoration: none;
-  text-shadow: 0 1px 8px $c-sky-shade;
+  text-shadow: 0 1px 8px var(--tone-shade);
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
   // Until (or without) the WebGL glass: a quiet light frost close to it.
@@ -183,7 +183,7 @@ main.case > .case__hero { padding-top: 0; }
 
 .case__title {
   margin: 0;
-  color: $c-sky-type;
+  color: var(--tone-ink);
   font-size: $fs-hero-title-mobile;
   font-weight: 400;
   line-height: 0.98;
@@ -206,7 +206,7 @@ main.case > .case__hero { padding-top: 0; }
 .case__lead {
   margin: 0;
   max-width: 32ch;
-  color: rgba($c-sky-type, 0.92);
+  color: var(--tone-ink);
   font-size: calc(#{$fs-nav} * 1.375);
   line-height: 1.3;
   letter-spacing: -0.01em;
@@ -230,57 +230,377 @@ main.case > .case__hero { padding-top: 0; }
   }
 }
 
-/* ── Facts under the hero ── */
-.case__facts {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: $space-12 $space-32;
-  padding: $space-32 $page-padding;
-  border-bottom: 1px solid $c-border;
-  font-size: $fs-sm;
-  color: $c-text-secondary;
-
-  b { font-weight: 500; color: $c-ink; }
+/* ── Project tones ──
+   Each project owns one colour, taken from the client's own brand: its work
+   tile, the case hero and the next-case card all paint it, so opening a case
+   is the tile growing. The case body sits on a pale tint of it. */
+[data-tone] {
+  --tone-top: #{$c-sky};
+  --tone-bot: #{$c-sky-pale};
+  --tone-ink: #{$c-sky-type};
+  --tone-shade: #{$c-sky-shade};
+  --tone-page: #fff;
+  --tone-text: #{$c-ink};
+  --tone-soft: #{$c-text-secondary};
+  --tone-rule: rgba(26, 26, 26, 0.16);
+  --tone-panel: #{$c-ink};
+  --tone-panel-ink: #fff;
 }
 
-.case__live {
-  display: inline-flex;
+[data-tone='choice'] {
+  --tone-top: #ec7516;
+  --tone-bot: #ffb35e;
+  --tone-shade: rgba(122, 52, 0, 0.35);
+  --tone-page: #fff1e3;
+  --tone-text: #1d1e20;
+  --tone-soft: #8a5a2e;
+  --tone-rule: rgba(29, 30, 32, 0.16);
+  --tone-panel: #1d1e20;
+}
+
+/* White, like their own site. A hairline keeps the tile off the white page. */
+.work__stage[data-tone='clinical'],
+.case__tile[data-tone='clinical'] { box-shadow: inset 0 0 0 1px rgba(18, 18, 18, 0.07); }
+
+[data-tone='clinical'] {
+  --tone-top: #ffffff;
+  --tone-bot: #e7e4dd;
+  --tone-ink: #121212;
+  --tone-shade: transparent;
+  --tone-page: #f7f6f3;
+  --tone-text: #121212;
+  --tone-soft: #77736b;
+  --tone-rule: rgba(18, 18, 18, 0.14);
+  --tone-panel: #121212;
+  --tone-panel-ink: #f2efe9;
+}
+
+[data-tone='jsense'] {
+  --tone-top: #5a1f45;
+  --tone-bot: #b0538a;
+  --tone-shade: rgba(50, 10, 35, 0.4);
+  --tone-page: #f8eef4;
+  --tone-text: #2a1022;
+  --tone-soft: #8a4f72;
+  --tone-rule: rgba(42, 16, 34, 0.16);
+  --tone-panel: #f4f4f4;
+  --tone-panel-ink: #2a1022;
+}
+
+/* ── The case body: one gutter, four text sizes, one weight, two gaps ──
+   label: the nav label size, in brackets like (MENU)
+   body:  $fs-md, every paragraph
+   big:   $fs-xl, the statement, quote and CTA line
+   title: the hero title size, for numbers and the next case
+   Sections are $space-96 apart ($space-128 on desktop); inside a section
+   things are $space-48 apart, images $space-16. */
+.case__sheet {
+  background: var(--tone-page);
+  color: var(--tone-text);
+}
+
+.cs {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: $space-96 $page-padding 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: $space-48;
+
+  @media (min-width: 900px) { padding-top: $space-128; }
+}
+
+/* The paragraph comes straight after the phone, under the hero's fold. */
+.cs--first { padding-top: calc(#{$space-96} + #{$space-32}); }
+
+.cs__label {
+  margin: 0 0 calc(#{$space-24} - #{$space-48});
+  font-size: $fs-nav;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tone-soft);
+}
+
+.cs__body {
+  margin: 0;
+  max-width: 34ch;
+  font-size: $fs-md;
+  font-weight: 400;
+  line-height: 1.5;
+  text-wrap: pretty;
+
+  @media (min-width: 641px) { max-width: 40ch; }
+}
+
+.cs__big,
+.cs__statement p,
+.cs__quote blockquote {
+  margin: 0;
+  font-size: $fs-xl;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.cs__cap {
+  margin: calc(#{$space-12} - #{$space-48}) 0 0;
+  font-size: $fs-nav;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tone-soft);
+}
+
+/* Facts, set like a credits list: label over value, two columns. */
+.cs__facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $space-32 $space-16;
+  margin: 0;
+
+  .cs__label { margin: 0 0 $space-8; }
+
+  dd {
+    margin: 0;
+    font-size: $fs-md;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+
+  a {
+    color: inherit;
+    text-underline-offset: 0.25em;
+    text-decoration-thickness: 1px;
+  }
+}
+
+/* Studio shots: square-cornered, inside the gutters. */
+.cs__shot {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: var(--tone-bot);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+/* Laptop big on the left, the two phones overlapping lower on the right. */
+.cs__collage {
+  position: relative;
+  aspect-ratio: 10 / 11;
+
+  .cs__shot { position: absolute; }
+  .cs__shot--a { left: 0; top: 0; width: 72%; }
+  .cs__shot--b {
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    box-shadow: 0 30px 50px -28px rgba(0, 0, 0, 0.45);
+  }
+}
+
+.cs__statement {
+  align-items: center;
+  gap: $space-32;
+  padding-top: calc(#{$space-96} + #{$space-48});
+  text-align: center;
+
+  p { max-width: 18ch; }
+}
+
+.cs__dots {
+  display: flex;
+  justify-content: center;
+  gap: 8.75rem;
+
+  b {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+}
+
+/* Words rise inside their own masks (CaseView). */
+.cs__w {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+  vertical-align: top;
+
+  > span { display: inline-block; }
+}
+
+/* The client's own design system, drawn from their site. */
+.cs__system {
+  aspect-ratio: 4 / 5;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: $space-16;
+  padding: $space-24;
+  background: var(--tone-panel);
+  color: var(--tone-panel-ink);
+}
+
+.cs__system-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: $fs-nav;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.cs__system-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+
+  img {
+    max-width: 60%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+}
+
+.cs__boxword {
+  padding: $space-12 $space-16;
+  border: 2px solid currentColor;
+  font-family: Questrial, $font-body;
+  font-size: $fs-md;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cs__spec {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  svg { width: 2.5rem; height: 2.5rem; }
+}
+
+.cs__aa {
+  font-size: $fs-3xl;
+  line-height: 1;
+
+  &--dm { font-family: 'DM Sans', $font-body; font-weight: 500; }
+  &--questrial { font-family: Questrial, $font-body; }
+  &--lexend { font-family: 'Lexend Deca', $font-body; font-weight: 500; }
+}
+
+.cs__swatches {
+  display: flex;
+  justify-content: space-between;
+  gap: $space-8;
+  margin-top: $space-16;
+}
+
+.cs__sw {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   gap: $space-8;
-  padding: 0.6rem 1rem;
+  font-size: $fs-xs;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  i {
+    display: block;
+    width: clamp(2.75rem, 12vw, 4rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgba(128, 128, 128, 0.4);
+  }
+}
+
+/* Numbers in rows, label on the right. */
+.cs__stats {
+  border-top: 1px solid currentColor;
+
+  > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: $space-16;
+    padding: $space-16 0;
+    border-bottom: 1px solid var(--tone-rule);
+  }
+
+  b {
+    font-size: $fs-hero-title-mobile;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.035em;
+    font-variant-numeric: tabular-nums;
+
+    @media (min-width: 641px) { font-size: $fs-hero-title; }
+  }
+
+  span {
+    font-size: $fs-nav;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--tone-soft);
+    text-align: right;
+  }
+}
+
+.cs__quote {
+  display: flex;
+  flex-direction: column;
+  gap: $space-24;
+  margin: 0;
+
+  .cs__face { width: 58%; }
+  blockquote { margin-top: $space-8; }
+  figcaption { margin: 0; }
+}
+
+.cs__cta {
+  align-items: center;
+  gap: $space-24;
+  text-align: center;
+}
+
+/* Outlined pill, the same proportions as the All work pill. */
+.cs__btn {
+  display: inline-flex;
+  align-items: center;
+  height: max(44px, calc(#{$fs-nav} * 3.375));
+  padding: 0 calc(#{$fs-nav} * 1.75);
+  border: 1px solid currentColor;
   border-radius: $r-full;
-  background: $c-ink;
-  color: #fff;
+  color: inherit;
+  font-size: $fs-nav;
   font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   text-decoration: none;
 
   @media (hover: hover) {
-    &:hover { background: $c-charcoal; }
+    &:hover { background: rgba(128, 128, 128, 0.14); }
   }
 }
 
-/* ── Story beside the phone ── */
-.case__story {
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 0 $page-padding;
-
-  @media (min-width: 900px) {
-    display: grid;
-    grid-template-columns: 5fr 6fr;
-    gap: $space-64;
-    align-items: start;
-  }
-}
-
-/* Square-cornered sky tile, same as the homepage work cards. */
+/* Square-cornered tile in the project's colour, like the homepage cards. */
 .case__tile {
   position: relative;
   overflow: hidden;
   aspect-ratio: 4 / 5;
-  background: linear-gradient(180deg, $c-sky, $c-sky-pale);
+  background: linear-gradient(180deg, var(--tone-top), var(--tone-bot));
   isolation: isolate;
 
   &::before {
@@ -294,197 +614,68 @@ main.case > .case__hero { padding-top: 0; }
   }
 }
 
-/* Desktop: one phone stays pinned and changes screen per part. */
-.case__stick {
-  display: none;
+/* ── Next case: the next project's tile, inside the gutters. It widens to
+   the edges as it comes up (CaseView); tapping it grows it into that
+   case's hero (CaseTransition). ── */
+.cs__next-wrap { padding-bottom: $space-96; }
 
-  @media (min-width: 900px) {
-    display: block;
-    position: sticky;
-    top: calc(50vh - min(42vh, 26vw));
-    height: min(84vh, 52vw);
-    aspect-ratio: auto;
-  }
-}
-
-.case__beat {
-  display: flex;
-  flex-direction: column;
-  gap: $space-16;
-  padding: $space-48 0;
-  border-bottom: 1px solid $c-border;
-
-  &:last-child { border-bottom: 0; }
-
-  @media (min-width: 900px) {
-    min-height: 78vh;
-    justify-content: center;
-    padding: 0;
-
-    .case__tile { display: none; }
-  }
-}
-
-.case__beat .case__tile { margin-bottom: $space-8; }
-
-.case__h2 {
-  margin: 0;
-  max-width: 16ch;
-  font-size: $fs-2xl;
-  font-weight: 500;
-  line-height: 1.02;
-  letter-spacing: -0.04em;
-}
-
-.case__p {
-  margin: 0;
-  max-width: 46ch;
-  font-size: $fs-md;
-  line-height: 1.5;
-  color: $c-text-secondary;
-}
-
-/* ── Numbers, on the sky ── */
-.case__results {
-  margin-top: $space-64;
-  padding: $space-96 $page-padding;
-  color: $c-sky-type;
-
-  .case__h2 { color: $c-sky-type; text-shadow: 0 1px 16px $c-sky-shade; max-width: none; }
-}
-
-.case__results-in {
-  max-width: 1240px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: $space-48;
-}
-
-.case__stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: $space-32 $space-24;
-
-  @media (min-width: 900px) { grid-template-columns: repeat(4, 1fr); }
-}
-
-.case__stat {
-  b {
-    display: block;
-    font-size: $fs-3xl;
-    font-weight: 500;
-    line-height: 1;
-    letter-spacing: -0.04em;
-    font-variant-numeric: tabular-nums;
-  }
-
-  span {
-    display: block;
-    margin-top: $space-12;
-    max-width: 22ch;
-    font-size: $fs-sm;
-    color: rgba($c-sky-type, 0.88);
-  }
-}
-
-.case__src {
-  margin: 0;
-  font-size: $fs-xs;
-  color: rgba($c-sky-type, 0.85);
-}
-
-/* ── Quote ── */
-.case__quote {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: $space-32;
-  margin: 0;
-  padding: $space-96 $page-padding;
-  text-align: center;
-
-  blockquote {
-    margin: 0;
-    max-width: 26ch;
-    font-size: $fs-2xl;
-    font-weight: 400;
-    line-height: 1.15;
-    letter-spacing: -0.03em;
-  }
-}
-
-.case__who {
-  display: flex;
-  align-items: center;
-  gap: $space-12;
-  text-align: left;
-  font-size: $fs-sm;
-
-  img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
-  span { display: block; color: $c-text-secondary; }
-}
-
-/* ── Next project: the tile that opens the next case ── */
 .case__next {
+  position: relative;
   display: block;
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 0 $page-padding;
-  color: $c-ink;
+  aspect-ratio: 4 / 5;
+  color: var(--tone-ink);
   text-decoration: none;
 
-  .case__tile { aspect-ratio: 4 / 3; }
+  > .case__tile {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
+  }
 
   .work__phone {
     top: auto;
-    bottom: -38%;
-    height: 96%;
+    bottom: -26%;
+    height: 68%;
     transform: translateX(-50%);
   }
 
-  @media (min-width: 900px) {
-    .case__tile { aspect-ratio: 21 / 8; }
-  }
+  @media (min-width: 900px) { aspect-ratio: 3 / 2; }
 }
 
-.case__next-row {
+.case__next-copy {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 2;
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: $space-16;
-  padding: $space-16 0;
-  border-bottom: 1px solid $c-border;
-  font-size: $fs-sm;
-  color: $c-text-secondary;
-
-  b {
-    font-size: $fs-xl;
-    font-weight: 500;
-    line-height: 1;
-    letter-spacing: -0.04em;
-    color: $c-ink;
-
-    @media (min-width: 641px) { font-size: $fs-2xl; }
-  }
-}
-
-@media (hover: hover) {
-  .case__next:hover .case__next-row b { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 2px; }
-}
-
-/* ── End ── */
-.case__end {
-  max-width: 1240px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  gap: $space-24;
-  padding: $space-64 $page-padding $space-96;
+  gap: $space-12;
+  padding: $space-48 $page-padding 0;
+  text-align: center;
+  color: var(--tone-ink);
+  pointer-events: none;
 
-  p { margin: 0; font-size: $fs-xl; letter-spacing: -0.02em; max-width: 24ch; }
+  .cs__label { margin: 0; color: inherit; opacity: 0.85; }
+
+  h2 {
+    margin: 0;
+    font-size: $fs-hero-title-mobile;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+
+    @media (min-width: 641px) { font-size: $fs-hero-title; }
+  }
+
+  p:not(.cs__label) {
+    margin: 0;
+    max-width: 26ch;
+    font-size: $fs-md;
+    line-height: 1.45;
+  }
+
+  .cs__btn { margin-top: $space-12; }
 }
 
 .case__foot {
@@ -544,3 +735,10 @@ main.case > .case__hero { padding-top: 0; }
 .case-arriving .case__ln > span { transform: translateY(110%); }
 .case-arriving .case__back--top,
 .case-arriving .case__lead { opacity: 0; }
+
+/* Clinical's hero is white: the glass needs a hairline to hold its shape. */
+.case[data-tone='clinical'] .case__back--top.is-gl:not(.is-light) {
+  outline: 1px solid rgba(18, 18, 18, 0.12);
+  outline-offset: -1px;
+  box-shadow: 0 10px 24px -14px rgba(0, 0, 0, 0.25);
+}

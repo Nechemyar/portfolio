@@ -17,10 +17,12 @@
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" /></noscript>
 
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500&amp;family=Questrial&amp;family=Lexend+Deca:wght@500&amp;text=Aa&amp;display=swap" media="print" onload="this.media='all'" />
   <link rel="stylesheet" href="../scss/main.scss" />
   <!-- Arriving from the previous case's tile: hold the title back until the
-       move picks up (CaseTransition.js). -->
-  <script>try{if(sessionStorage.getItem('sumi:case-arrive')==='jsense')document.documentElement.classList.add('case-arriving')}catch(e){}</script>
+       move picks up (CaseTransition.js), on the tile's colour so the load
+       never flashes white. -->
+  <script>try{if(sessionStorage.getItem('sumi:case-arrive')==='jsense'){document.documentElement.classList.add('case-arriving');document.documentElement.style.background='#5a1f45'}}catch(e){}</script>
 </head>
 
 <body class="case-page">
@@ -94,9 +96,10 @@
   </nav>
 
 
+
   <!-- The case. The homepage lifts this <main> into its case layer when a
        work tile is tapped (CaseTransition.js), so it must stand on its own. -->
-  <main class="case" data-case="jsense">
+  <main class="case" data-case="jsense" data-tone="jsense">
     <section class="case__hero" data-nav-theme="dark">
       <div class="case__sky" aria-hidden="true"></div>
       <div class="case__hero-in">
@@ -108,41 +111,69 @@
     </section>
 
     <div class="case__sheet" data-nav-theme="light">
-      <div class="case__facts"><span>Client <b>JSense</b></span><span>Greater Manchester</span><span>Standard <b>WCAG 2.2 AA</b></span><span>Type <b>Lexend</b></span><span>Design system, design and build</span><a class="case__live" href="https://jsense.org.uk" target="_blank" rel="noopener noreferrer">jsense.org.uk <span aria-hidden="true">&#8599;</span></a></div>
+      <section class="cs cs--first">
+        <p class="cs__body js-fill">JSense supports the families of Jewish children and young people with special educational needs across Greater Manchester. A lot of the people they help live with disability every day, so the site had to be easy for anyone to read, find their way around and use.</p>
+        <dl class="cs__facts"><div><dt class="cs__label">(Client)</dt><dd>JSense<br />Greater Manchester</dd></div><div><dt class="cs__label">(Standard)</dt><dd>WCAG 2.2 AA</dd></div><div><dt class="cs__label">(Built)</dt><dd>Design system<br />Design, build</dd></div><div><dt class="cs__label">(Live)</dt><dd><a href="https://jsense.org.uk" target="_blank" rel="noopener noreferrer">jsense.org.uk</a></dd></div></dl>
+      </section>
 
-      <div class="case__story">
-        <div class="case__tile case__stick" aria-hidden="true"><div class="work__phone"><video class="work__screen case__pinned" muted loop playsinline preload="none" poster="/work/jsense-m.webp" src="/work/jsense-m.mp4" aria-label=""></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
-        <div class="case__beats">
-            <section class="case__beat" data-clip="jsense-m">
-              <div class="case__tile"><div class="work__phone"><video class="work__screen" muted loop playsinline preload="none" poster="/work/jsense-m.webp" src="/work/jsense-m.mp4" aria-label="JSense on an iPhone"></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
-              <p class="case__kicker">The problem</p>
-              <h2 class="case__h2">The old site shut people out</h2>
-              <p class="case__p">JSense works with families who live with disability every day, and their old site was hard to read and hard to find your way around. For this charity, that was the one thing it couldn&rsquo;t be.</p>
-            </section>
-            <section class="case__beat" data-clip="jsense-advocacy-m">
-              <div class="case__tile"><div class="work__phone"><video class="work__screen" muted loop playsinline preload="none" poster="/work/jsense-advocacy-m.webp" src="/work/jsense-advocacy-m.mp4" aria-label="JSense on an iPhone"></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
-              <p class="case__kicker">What I built</p>
-              <h2 class="case__h2">A design system built for access, from the ground up</h2>
-              <p class="case__p">Every colour, size and component was chosen with accessibility first, not checked at the end. The type is Lexend, a typeface designed to make reading easier, and every colour pair passes the contrast standard.</p>
-            </section>
-            <section class="case__beat" data-clip="jsense-services-m">
-              <div class="case__tile"><div class="work__phone"><video class="work__screen" muted loop playsinline preload="none" poster="/work/jsense-services-m.webp" src="/work/jsense-services-m.mp4" aria-label="JSense on an iPhone"></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
-              
-              <h2 class="case__h2">Meets WCAG 2.2 AA</h2>
-              <p class="case__p">The site works with a keyboard alone, reads in a sensible order on a screen reader, and is tested in light, dark and high contrast. A button on every page lets you make text bigger or change the contrast.</p>
-            </section>
+      <section class="cs">
+        <figure class="cs__shot js-wipe"><img src="/work/case/jsense-01.webp" alt="JSense on a phone" loading="lazy" /></figure>
+      </section>
+
+      <section class="cs">
+        <p class="cs__label">(The problem)</p>
+        <p class="cs__body js-fill">The old site was hard to read and hard to find your way around. For a charity that works with disability, that was the one thing it couldn&rsquo;t be.</p>
+        <div class="cs__collage">
+          <figure class="cs__shot cs__shot--a js-wipe" data-speed="0.92"><img src="/work/case/jsense-03.webp" alt="JSense on a laptop" loading="lazy" /></figure>
+          <figure class="cs__shot cs__shot--b js-wipe" data-speed="1.18"><img src="/work/case/jsense-02.webp" alt="Two phones showing JSense" loading="lazy" /></figure>
         </div>
+      </section>
+
+      <section class="cs">
+        <figure class="cs__shot js-wipe" style="aspect-ratio:15 / 8"><img src="/work/case/jsense-art.webp" alt="The road illustration from their homepage" loading="lazy" /></figure>
+        <p class="cs__cap">(The road illustration from their homepage)</p>
+      </section>
+      <div class="cs cs__statement">
+        <div class="cs__dots" aria-hidden="true"><b></b><b></b></div>
+        <p class="js-rise">Built for access from the first colour.</p>
+        <div class="cs__dots" aria-hidden="true"><b></b><b></b></div>
       </div>
 
-      <a class="case__next" href="choice-inventory.html" data-case-link="choice">
-        <div class="case__tile"><div class="work__phone"><video class="work__screen" muted loop playsinline preload="none" poster="/work/choice-m.webp" aria-label="Choice Inventory website on an iPhone"><source src="/work/choice-m.webm" type="video/webm" /><source src="/work/choice-m.mp4" type="video/mp4" /></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
-        <div class="case__next-row"><span>Next</span><b>Choice Inventory &rarr;</b></div>
-      </a>
+      <section class="cs">
+        <p class="cs__label">(What I built)</p>
+        <p class="cs__body js-fill">Every colour, size and component was picked with access in mind, not checked at the end. The type is Lexend, made to be easier to read. The site works by keyboard alone, and a button on every page makes text bigger or changes the contrast.</p>
+        <div class="cs__system js-wipe" data-tone-panel>
+          <div class="cs__system-top"><span>(Design system)</span><span>Lexend Deca</span></div>
+          <div class="cs__system-logo"><img src="/work/case/jsense-logo.svg" alt="JSense logo" loading="lazy" /></div>
+          <div class="cs__system-foot">
+            <div class="cs__spec"><span class="cs__aa cs__aa--lexend">Aa</span></div>
+            <div class="cs__swatches"><span class="cs__sw"><i style="background:#90376b"></i>Grape</span><span class="cs__sw"><i style="background:#f5821f"></i>Sun</span><span class="cs__sw"><i style="background:#518b5d"></i>Leaf</span><span class="cs__sw"><i style="background:#2a1022"></i>Ink</span></div>
+          </div>
+        </div>
+        <figure class="cs__shot js-wipe"><img src="/work/case/jsense-04.webp" alt="JSense, styled with things from their world" loading="lazy" /></figure>
+      </section>
 
-      <div class="case__end">
-        <p>Have a project in mind?</p>
-        <a class="case__live" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer">Book a free call <span aria-hidden="true">&#8599;</span></a>
+      <section class="cs">
+        <p class="cs__label">(What changed)</p>
+        <div class="cs__stats"><div><b data-count="AA">AA</b><span>WCAG 2.2, every page</span></div><div><b data-count="3">3</b><span>Contrast modes tested</span></div><div><b data-count="0">0</b><span>Mouse needed</span></div></div>
+      </section>
+      <div class="cs cs__cta">
+        <p class="cs__big">Have a project in mind?</p>
+        <a class="cs__btn" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer">Book a free call</a>
       </div>
+
+      <div class="cs cs__next-wrap">
+        <a class="case__next" href="choice-inventory.html" data-case-link="choice">
+          <div class="case__tile" data-tone="choice"><div class="work__phone"><video class="work__screen" muted loop playsinline preload="none" poster="/work/choice-m.webp" aria-label="Choice Inventory website on an iPhone"><source src="/work/choice-m.webm" type="video/webm" /><source src="/work/choice-m.mp4" type="video/mp4" /></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
+          <div class="case__next-copy" data-tone="choice">
+            <p class="cs__label">(Next case)</p>
+            <h2>Choice Inventory</h2>
+            <p>Landlords wanted a price before they&rsquo;d call.</p>
+            <span class="cs__btn">View next</span>
+          </div>
+        </a>
+      </div>
+
       <footer class="case__foot"><span>&copy; 2026 Sumi Studios</span><a href="mailto:hello@sumistudios.com">hello@sumistudios.com</a></footer>
     </div>
 

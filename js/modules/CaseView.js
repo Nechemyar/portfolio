@@ -1,9 +1,11 @@
-// CaseView — the moving parts of one case study (layout B). Phones play only
-// while on screen, and on desktop the pinned phone takes the screen of
-// whichever part of the story sits in the middle of the view. Runs on the
-// case page itself and inside the homepage's case layer, so it only ever
-// looks inside the <main class="case"> it was given.
+// CaseView — the moving parts of one case study. Phones play only while on
+// screen; paragraphs fill in word by word as you read down, shots wipe up
+// into place, the collage drifts at two speeds, the statement rises word by
+// word and the next case widens to the edges (after Our Revolution's case
+// pages). Runs on the case page itself and inside the homepage's case
+// layer, so it only ever looks inside the <main class="case"> it was given.
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import PillGlass from './PillGlass.js';
 
 const reduce = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -13,11 +15,112 @@ export default class CaseView {
     this.root = root;
     this.scroller = scroller;
     this.observers = [];
+    this.motion = [];
     if (!root) return;
     this.initBack();
+    this.initMotion();
     if (!('IntersectionObserver' in window)) return;
     this.initClips();
-    this.initPinned();
+  }
+
+  // ScrollTrigger options against this view's scroller.
+  st(vars) {
+    return this.scroller === window ? vars : { ...vars, scroller: this.scroller };
+  }
+
+  words(el, masked) {
+    const list = el.textContent.trim().split(/\s+/);
+    el.innerHTML = list.map((w) => (masked ? `<span class="cs__w"><span>${w}</span></span>` : `<span>${w}</span>`)).join(' ');
+    return el.querySelectorAll(masked ? '.cs__w > span' : 'span');
+  }
+
+  initMotion() {
+    if (reduce()) return;
+    const r = this.root;
+    const add = (tw) => { this.motion.push(tw); return tw; };
+
+    // Read-along: each paragraph starts faint and fills in as it passes.
+    r.querySelectorAll('.js-fill').forEach((p) => {
+      add(gsap.fromTo(this.words(p, false), { opacity: 0.18 }, {
+        opacity: 1, ease: 'none', stagger: 0.1,
+        scrollTrigger: this.st({ trigger: p, start: 'top 88%', end: 'bottom 58%', scrub: true }),
+      }));
+    });
+
+    // Shots wipe up out of their own box, the picture settling inside.
+    r.querySelectorAll('.js-wipe').forEach((el) => {
+      const img = el.querySelector(':scope > img');
+      const tl = gsap.timeline({ scrollTrigger: this.st({ trigger: el, start: 'top 92%', once: true }) });
+      tl.fromTo(el, { clipPath: 'inset(22% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'expo.out' }, 0);
+      if (!el.hasAttribute('data-speed')) tl.fromTo(el, { y: 60 }, { y: 0, duration: 1.2, ease: 'expo.out' }, 0);
+      if (img) tl.fromTo(img, { scale: 1.18 }, { scale: 1, duration: 1.4, ease: 'expo.out' }, 0);
+      add(tl);
+    });
+
+    // Collage: the two shots drift at different speeds.
+    r.querySelectorAll('[data-speed]').forEach((el) => {
+      const d = (parseFloat(el.dataset.speed) - 1) * 160;
+      add(gsap.fromTo(el, { y: d }, {
+        y: -d, ease: 'none',
+        scrollTrigger: this.st({ trigger: el.parentNode, start: 'top bottom', end: 'bottom top', scrub: true }),
+      }));
+    });
+
+    // The statement's words rise in their masks; its dots part.
+    r.querySelectorAll('.js-rise').forEach((p) => {
+      add(gsap.fromTo(this.words(p, true), { yPercent: 110 }, {
+        yPercent: 0, duration: 1, ease: 'power4.out', stagger: 0.06,
+        scrollTrigger: this.st({ trigger: p, start: 'top 85%', once: true }),
+      }));
+    });
+    r.querySelectorAll('.cs__dots').forEach((d) => {
+      add(gsap.fromTo(d, { gap: '1.25rem' }, {
+        gap: '8.75rem', ease: 'none',
+        scrollTrigger: this.st({ trigger: d, start: 'top 95%', end: 'top 60%', scrub: true }),
+      }));
+    });
+
+    // Numbers count up once.
+    r.querySelectorAll('[data-count]').forEach((el) => {
+      const raw = el.dataset.count;
+      const m = raw.match(/[\d.,]+/);
+      if (!m) return;
+      const num = parseFloat(m[0].replace(/,/g, ''));
+      const dec = (m[0].split('.')[1] || '').length;
+      const o = { v: 0 };
+      add(gsap.to(o, {
+        v: num, duration: 1.4, ease: 'power3.out',
+        scrollTrigger: this.st({ trigger: el, start: 'top 90%', once: true }),
+        onUpdate: () => { el.textContent = raw.replace(m[0], o.v.toLocaleString('en-GB', { minimumFractionDigits: dec, maximumFractionDigits: dec })); },
+      }));
+    });
+
+    // The next case widens to the gutters' edges as it comes up.
+    const next = r.querySelector('.case__next');
+    if (next) {
+      this.nextGrow = add(gsap.fromTo(next, { clipPath: 'inset(6% 7% 0% 7%)' }, {
+        clipPath: 'inset(0% 0% 0% 0%)', ease: 'none',
+        scrollTrigger: this.st({ trigger: next, start: 'top bottom', end: 'top 30%', scrub: true }),
+      }));
+    }
+  }
+
+  // Before the next tile flies: open it out fully and let its words go, so
+  // the tile that lifts off is exactly the one on screen.
+  prepareNext() {
+    const next = this.root?.querySelector('.case__next');
+    if (!next) return Promise.resolve();
+    this.nextGrow?.scrollTrigger?.kill();
+    this.nextGrow?.kill();
+    const d = reduce() ? 0 : 0.3;
+    return gsap.timeline()
+      .to(next, { clipPath: 'inset(0% 0% 0% 0%)', duration: d, ease: 'power2.out' }, 0)
+      .to(next.querySelector('.case__next-copy'), { autoAlpha: 0, y: -8, duration: d, ease: 'power2.in' }, 0)
+      .then();
+  }
+
+  refresh() {
+    this.motion.forEach((tw) => tw.scrollTrigger?.refresh());
   }
 
   // The back pills, glass like the hero CTA. One opens the hero and scrolls
@@ -29,8 +132,13 @@ export default class CaseView {
     const glassy = !window.matchMedia('(prefers-reduced-transparency: reduce)').matches;
     const heroSky = this.root.querySelector('.case__hero > .case__sky');
 
+    const tone = getComputedStyle(this.root);
+    const skyTop = tone.getPropertyValue('--tone-top');
+    const skyBot = tone.getPropertyValue('--tone-bot');
+
     if (top && glassy) {
       const g = new PillGlass(top);
+      g.setSky(skyTop, skyBot);
       // The pill moves with the sky, so one draw holds until a resize.
       this.drawTop = () => { this.topDrawn = !!heroSky && g.draw(heroSky.getBoundingClientRect()); };
       g.onPaper = this.drawTop;
@@ -40,6 +148,7 @@ export default class CaseView {
     if (!dock) return;
     this.dock = dock;
     this.dockGlass = glassy ? new PillGlass(dock) : null;
+    this.dockGlass?.setSky(skyTop, skyBot);
     this.docked = false;
     const sections = [...this.root.querySelectorAll('[data-nav-theme]')];
 
@@ -118,37 +227,6 @@ export default class CaseView {
     this.observers.push(io);
   }
 
-  initPinned() {
-    const pinned = this.root.querySelector('.case__pinned');
-    const beats = this.root.querySelectorAll('.case__beat[data-clip]');
-    if (!pinned || !beats.length) return;
-
-    let current = beats[0].dataset.clip;
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(({ target, isIntersecting }) => {
-        if (!isIntersecting) return;
-        const clip = target.dataset.clip;
-        if (clip === current) return;
-        current = clip;
-        // Fade the screen out, change the clip, fade it back in.
-        gsap.to(pinned, {
-          opacity: 0,
-          duration: reduce() ? 0 : 0.2,
-          ease: 'power1.out',
-          overwrite: true,
-          onComplete: () => {
-            pinned.poster = `/work/${clip}.webp`;
-            pinned.src = `/work/${clip}.mp4`;
-            if (!reduce()) pinned.play().catch(() => {});
-            gsap.to(pinned, { opacity: 1, duration: reduce() ? 0 : 0.3, ease: 'power1.out' });
-          },
-        });
-      });
-    }, { rootMargin: '-45% 0px -45% 0px' });
-    beats.forEach((b) => io.observe(b));
-    this.observers.push(io);
-  }
-
   destroy() {
     if (this.onScroll) {
       this.scroller.removeEventListener('scroll', this.onScroll);
@@ -157,6 +235,7 @@ export default class CaseView {
     if (this.drawTop) window.removeEventListener('resize', this.drawTop);
     this.observers.forEach((io) => io.disconnect());
     this.observers = [];
-    if (this.root) gsap.killTweensOf(this.root.querySelectorAll('.case__pinned'));
+    this.motion.forEach((tw) => { tw.scrollTrigger?.kill(); tw.kill(); });
+    this.motion = [];
   }
 }

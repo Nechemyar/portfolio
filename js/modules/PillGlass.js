@@ -44,7 +44,12 @@ void main(){
   gl_FragColor = vec4(g*a, a);
 }`;
 
-const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
+const hex = (h) => {
+  let s = h.trim().slice(1);
+  if (s.length === 3) s = s.replace(/./g, '$&$&');
+  return [0, 2, 4].map((i) => parseInt(s.slice(i, i + 2), 16) / 255);
+};
+const isHex = (h) => /^\s*#([0-9a-f]{3}|[0-9a-f]{6})\s*$/i.test(h || '');
 const TOP = hex('#4a86c3');
 const BOTTOM = hex('#9ec6e4');
 
@@ -110,6 +115,14 @@ export default class PillGlass {
       this.paperSize = [img.naturalWidth, img.naturalHeight];
       this.onPaper?.();
     });
+  }
+
+  // The sky's two colours, when it isn't the homepage blue: each case
+  // paints its project's own gradient (--tone-top / --tone-bot).
+  setSky(top, bottom) {
+    if (!this.ok || !isHex(top) || !isHex(bottom)) return;
+    this.gl.uniform3fv(this.u.uTop, hex(top));
+    this.gl.uniform3fv(this.u.uBottom, hex(bottom));
   }
 
   // Set onPaper to redraw once the washi arrives.

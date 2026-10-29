@@ -62,8 +62,9 @@
   position: relative;
   overflow: hidden;
   aspect-ratio: 4 / 5;
-  /* The hero's sky, cut into a tile, with the same washi grain over it. */
-  background: linear-gradient(180deg, $c-sky, $c-sky-pale);
+  /* The project's own colour (tones in _case.scss), with the washi grain
+     over it. The case hero paints the same gradient. */
+  background: linear-gradient(180deg, var(--tone-top, #{$c-sky}), var(--tone-bot, #{$c-sky-pale}));
   isolation: isolate;
 
   &::before {

@@ -33,6 +33,8 @@
 
 
   <!-- CSS -->
+  <!-- Client brand faces, only the letters "Aa", for the case design-system panels. -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500&amp;family=Questrial&amp;family=Lexend+Deca:wght@500&amp;text=Aa&amp;display=swap" media="print" onload="this.media='all'" />
   <link rel="stylesheet" href="scss/main.scss" />
 
   <script type="application/ld+json">
@@ -201,7 +203,7 @@
              while it's on screen. -->
         <div class="work__cards">
           <a class="work__card work__card--choice" href="projects/choice-inventory.html" data-case-link="choice">
-            <div class="work__stage">
+            <div class="work__stage" data-tone="choice">
               <div class="work__phone">
                 <video class="work__screen" muted loop playsinline preload="none" poster="/work/choice-m.webp" aria-label="Choice Inventory website on an iPhone">
                   <source src="/work/choice-m.webm" type="video/webm" />
@@ -216,7 +218,7 @@
             </div>
           </a>
           <a class="work__card work__card--clinical" href="projects/clinical-assessments.html" data-case-link="clinical">
-            <div class="work__stage">
+            <div class="work__stage" data-tone="clinical">
               <div class="work__phone">
                 <video class="work__screen" muted loop playsinline preload="none" poster="/work/clinical-m.webp" aria-label="Clinical Assessments website on an iPhone">
                   <source src="/work/clinical-m.webm" type="video/webm" />
@@ -231,7 +233,7 @@
             </div>
           </a>
           <a class="work__card work__card--jsense" href="projects/jsense.html" data-case-link="jsense">
-            <div class="work__stage">
+            <div class="work__stage" data-tone="jsense">
               <div class="work__phone">
                 <video class="work__screen" muted loop playsinline preload="none" poster="/work/jsense-m.webp" aria-label="JSense website on an iPhone">
                   <source src="/work/jsense-m.webm" type="video/webm" />

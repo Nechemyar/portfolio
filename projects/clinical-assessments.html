@@ -17,10 +17,12 @@
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" /></noscript>
 
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500&amp;family=Questrial&amp;family=Lexend+Deca:wght@500&amp;text=Aa&amp;display=swap" media="print" onload="this.media='all'" />
   <link rel="stylesheet" href="../scss/main.scss" />
   <!-- Arriving from the previous case's tile: hold the title back until the
-       move picks up (CaseTransition.js). -->
-  <script>try{if(sessionStorage.getItem('sumi:case-arrive')==='clinical')document.documentElement.classList.add('case-arriving')}catch(e){}</script>
+       move picks up (CaseTransition.js), on the tile's colour so the load
+       never flashes white. -->
+  <script>try{if(sessionStorage.getItem('sumi:case-arrive')==='clinical'){document.documentElement.classList.add('case-arriving');document.documentElement.style.background='#ffffff'}}catch(e){}</script>
 </head>
 
 <body class="case-page">
@@ -94,10 +96,11 @@
   </nav>
 
 
+
   <!-- The case. The homepage lifts this <main> into its case layer when a
        work tile is tapped (CaseTransition.js), so it must stand on its own. -->
-  <main class="case" data-case="clinical">
-    <section class="case__hero" data-nav-theme="dark">
+  <main class="case" data-case="clinical" data-tone="clinical">
+    <section class="case__hero" data-nav-theme="light">
       <div class="case__sky" aria-hidden="true"></div>
       <div class="case__hero-in">
         <a class="case__back case__back--top" href="../index.html#work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg><span>All work</span></a>
@@ -108,45 +111,72 @@
     </section>
 
     <div class="case__sheet" data-nav-theme="light">
-      <div class="case__facts"><span>Client <b>Dr Yehuda Marshall</b></span><span>Clinical Assessments Ltd</span><span>Time <b>2 weeks</b></span><span>Design and build</span><a class="case__live" href="https://clinicalassessments.co.uk" target="_blank" rel="noopener noreferrer">clinicalassessments.co.uk <span aria-hidden="true">&#8599;</span></a></div>
+      <section class="cs cs--first">
+        <p class="cs__body js-fill">Dr Yehuda Marshall and his team assess children and adults for ADHD, autism and learning needs. Most people who find the site are anxious parents. Before they pick up the phone, they want to know who they&rsquo;ll be talking to and what happens next.</p>
+        <dl class="cs__facts"><div><dt class="cs__label">(Client)</dt><dd>Dr Yehuda Marshall<br />Clinical Assessments Ltd</dd></div><div><dt class="cs__label">(Time)</dt><dd>2 weeks</dd></div><div><dt class="cs__label">(Built)</dt><dd>Design, build</dd></div><div><dt class="cs__label">(Live)</dt><dd><a href="https://clinicalassessments.co.uk" target="_blank" rel="noopener noreferrer">clinicalassessments.co.uk</a></dd></div></dl>
+      </section>
 
-      <div class="case__story">
-        <div class="case__tile case__stick" aria-hidden="true"><div class="work__phone"><video class="work__screen case__pinned" muted loop playsinline preload="none" poster="/work/clinical-m.webp" src="/work/clinical-m.mp4" aria-label=""></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
-        <div class="case__beats">
-            <section class="case__beat" data-clip="clinical-m">
-              <div class="case__tile"><div class="work__phone"><video class="work__screen" muted loop playsinline preload="none" poster="/work/clinical-m.webp" src="/work/clinical-m.mp4" aria-label="Clinical Assessments on an iPhone"></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
-              <p class="case__kicker">The problem</p>
-              <h2 class="case__h2">Anxious parents, a site that didn&rsquo;t help</h2>
-              <p class="case__p">Parents come here with a lot of questions and not much patience. The old site looked like any other service business and hid the contact form, so people left before they knew who they&rsquo;d be talking to.</p>
-            </section>
-            <section class="case__beat" data-clip="clinical-process-m">
-              <div class="case__tile"><div class="work__phone"><video class="work__screen" muted loop playsinline preload="none" poster="/work/clinical-process-m.webp" src="/work/clinical-process-m.mp4" aria-label="Clinical Assessments on an iPhone"></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
-              <p class="case__kicker">What I built</p>
-              <h2 class="case__h2">The whole process before the first call</h2>
-              <p class="case__p">Four steps, from an online screening form to a plan for afterwards, set out on one page. Parents know what they&rsquo;re signing up for, and the way to get in touch is on every screen.</p>
-            </section>
-            <section class="case__beat" data-clip="clinical-adhd-m">
-              <div class="case__tile"><div class="work__phone"><video class="work__screen" muted loop playsinline preload="none" poster="/work/clinical-adhd-m.webp" src="/work/clinical-adhd-m.mp4" aria-label="Clinical Assessments on an iPhone"></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
-              
-              <h2 class="case__h2">A page for each assessment</h2>
-              <p class="case__p">ADHD, autism, IQ testing and the rest each have their own page, so someone searching for an ADHD assessment lands on exactly that.</p>
-            </section>
+      <section class="cs">
+        <figure class="cs__shot js-wipe"><img src="/work/case/clinical-01.webp" alt="Clinical Assessments on a phone" loading="lazy" /></figure>
+      </section>
+
+      <section class="cs">
+        <p class="cs__label">(The problem)</p>
+        <p class="cs__body js-fill">Parents come here with a lot of questions and not much patience. The old site looked like any other service business and hid the contact form, so people left before they knew who they&rsquo;d be talking to.</p>
+        <div class="cs__collage">
+          <figure class="cs__shot cs__shot--a js-wipe" data-speed="0.92"><img src="/work/case/clinical-03.webp" alt="Clinical Assessments on a laptop" loading="lazy" /></figure>
+          <figure class="cs__shot cs__shot--b js-wipe" data-speed="1.18"><img src="/work/case/clinical-02.webp" alt="Two phones showing Clinical Assessments" loading="lazy" /></figure>
         </div>
+      </section>
+
+      <section class="cs">
+        <figure class="cs__shot js-wipe" style="aspect-ratio:4 / 5"><img src="/work/case/clinical-art.webp" alt="Their own illustration, kept at the heart of the site" loading="lazy" /></figure>
+        <p class="cs__cap">(Their own illustration, kept at the heart of the site)</p>
+      </section>
+      <div class="cs cs__statement">
+        <div class="cs__dots" aria-hidden="true"><b></b><b></b></div>
+        <p class="js-rise">The whole process, before the first call.</p>
+        <div class="cs__dots" aria-hidden="true"><b></b><b></b></div>
       </div>
 
-        <figure class="case__quote">
-          <blockquote>&ldquo;Nechemya understood exactly what I needed and translated it into a brand and website that elevated my entire practice.&rdquo;</blockquote>
-          <figcaption class="case__who"><img src="/work/yehuda.webp" alt="" loading="lazy" /><div>Dr Yehuda Marshall<span>Clinical Assessments Ltd</span></div></figcaption>
+      <section class="cs">
+        <p class="cs__label">(What I built)</p>
+        <p class="cs__body js-fill">Four steps, from an online screening form to a plan for afterwards, set out on one page. ADHD, autism and IQ testing each get their own page, and the way to get in touch is on every screen.</p>
+        <div class="cs__system js-wipe" data-tone-panel>
+          <div class="cs__system-top"><span>(Design system)</span><span>Questrial</span></div>
+          <div class="cs__system-logo"><span class="cs__boxword">Clinical Assessments Limited</span></div>
+          <div class="cs__system-foot">
+            <div class="cs__spec"><span class="cs__aa cs__aa--questrial">Aa</span></div>
+            <div class="cs__swatches"><span class="cs__sw"><i style="background:#121212"></i>Ink</span><span class="cs__sw"><i style="background:#312b72"></i>Indigo</span><span class="cs__sw"><i style="background:#4a7973"></i>Sage</span><span class="cs__sw"><i style="background:#f5f5f5"></i>Paper</span></div>
+          </div>
+        </div>
+        <figure class="cs__shot js-wipe"><img src="/work/case/clinical-04.webp" alt="Clinical Assessments, styled with things from their world" loading="lazy" /></figure>
+      </section>
+
+      <section class="cs">
+        <figure class="cs__quote">
+          <div class="cs__shot cs__face js-wipe"><img src="/work/yehuda.webp" alt="Dr Yehuda Marshall, Clinical Assessments" loading="lazy" /></div>
+          <blockquote class="js-fill">&ldquo;Nechemya understood exactly what I needed and translated it into a brand and website that elevated my entire practice.&rdquo;</blockquote>
+          <figcaption class="cs__label">Dr Yehuda Marshall, Clinical Assessments</figcaption>
         </figure>
-      <a class="case__next" href="jsense.html" data-case-link="jsense">
-        <div class="case__tile"><div class="work__phone"><video class="work__screen" muted loop playsinline preload="none" poster="/work/jsense-m.webp" aria-label="JSense website on an iPhone"><source src="/work/jsense-m.webm" type="video/webm" /><source src="/work/jsense-m.mp4" type="video/mp4" /></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
-        <div class="case__next-row"><span>Next</span><b>JSense &rarr;</b></div>
-      </a>
-
-      <div class="case__end">
-        <p>Have a project in mind?</p>
-        <a class="case__live" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer">Book a free call <span aria-hidden="true">&#8599;</span></a>
+      </section>
+      <div class="cs cs__cta">
+        <p class="cs__big">Have a project in mind?</p>
+        <a class="cs__btn" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0dWDFd30RVmih9MA7otu1QMKaP1laeDB4l_YCSESpu26jVLOFjXGoo76achW7MVIK4mwAJaZXI?gv=true" target="_blank" rel="noopener noreferrer">Book a free call</a>
       </div>
+
+      <div class="cs cs__next-wrap">
+        <a class="case__next" href="jsense.html" data-case-link="jsense">
+          <div class="case__tile" data-tone="jsense"><div class="work__phone"><video class="work__screen" muted loop playsinline preload="none" poster="/work/jsense-m.webp" aria-label="JSense website on an iPhone"><source src="/work/jsense-m.webm" type="video/webm" /><source src="/work/jsense-m.mp4" type="video/mp4" /></video><img class="work__frame" src="/work/iphone17pro-silver.webp" alt="" aria-hidden="true" /></div></div>
+          <div class="case__next-copy" data-tone="jsense">
+            <p class="cs__label">(Next case)</p>
+            <h2>JSense</h2>
+            <p>A Manchester charity whose site had to work for everyone.</p>
+            <span class="cs__btn">View next</span>
+          </div>
+        </a>
+      </div>
+
       <footer class="case__foot"><span>&copy; 2026 Sumi Studios</span><a href="mailto:hello@sumistudios.com">hello@sumistudios.com</a></footer>
     </div>
 

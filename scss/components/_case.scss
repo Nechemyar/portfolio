@@ -622,7 +622,7 @@ main.case > .case__hero { padding-top: 0; }
 .case__next {
   position: relative;
   display: block;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 3 / 4;
   color: var(--tone-ink);
   text-decoration: none;
 
@@ -632,10 +632,11 @@ main.case > .case__hero { padding-top: 0; }
     aspect-ratio: auto;
   }
 
+  /* The phone peeks up from the bottom, clear of the words above it. */
   .work__phone {
     top: auto;
-    bottom: -26%;
-    height: 68%;
+    bottom: -22%;
+    height: 54%;
     transform: translateX(-50%);
   }
 
@@ -674,8 +675,6 @@ main.case > .case__hero { padding-top: 0; }
     font-size: $fs-md;
     line-height: 1.45;
   }
-
-  .cs__btn { margin-top: $space-12; }
 }
 
 .case__foot {

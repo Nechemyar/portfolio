@@ -99,7 +99,14 @@
    once the trust sheet reaches the nav. */
 .nav__blur {
   transition: opacity 0.4s ease;
+  /* On a case page the sheet's own colour fades in behind the blur
+     (CaseView sets --nav-scrim), so what scrolls under the logo melts away
+     instead of showing through as a ghost. Unset everywhere else. */
+  background: linear-gradient(to bottom, var(--nav-scrim, transparent) 40%, transparent);
 }
+
+/* Not over a coloured hero, though. */
+.nav.theme-dark .nav__blur { background: none; }
 
 .nav--clear .nav__blur {
   opacity: 0;

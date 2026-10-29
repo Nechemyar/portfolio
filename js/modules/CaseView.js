@@ -133,6 +133,8 @@ export default class CaseView {
     const heroSky = this.root.querySelector('.case__hero > .case__sky');
 
     const tone = getComputedStyle(this.root);
+    const page = tone.getPropertyValue('--tone-page').trim();
+    if (page) document.documentElement.style.setProperty('--nav-scrim', page);
     const skyTop = tone.getPropertyValue('--tone-top');
     const skyBot = tone.getPropertyValue('--tone-bot');
 
@@ -174,8 +176,13 @@ export default class CaseView {
       tick = 0;
       if (this.drawTop && !this.topDrawn) this.drawTop();
       if (this.dockLocked) return;
-      // Dock once the hero's pill has gone off the top.
-      const want = top ? top.getBoundingClientRect().bottom < 0 : true;
+      // Dock once the hero's pill has gone off the top, and step aside
+      // again when the next case comes up: that card is the way on, and
+      // the pill would sit over it and the footer.
+      const end = this.root.querySelector('.cs__next-wrap');
+      const pastTop = top ? top.getBoundingClientRect().bottom < 0 : true;
+      const atEnd = end ? end.getBoundingClientRect().top < window.innerHeight * 0.85 : false;
+      const want = pastTop && !atEnd;
       if (want !== this.docked) {
         if (want) this.showDock(); else this.hideDock();
       }
@@ -233,6 +240,7 @@ export default class CaseView {
       window.removeEventListener('resize', this.onScroll);
     }
     if (this.drawTop) window.removeEventListener('resize', this.drawTop);
+    document.documentElement.style.removeProperty('--nav-scrim');
     this.observers.forEach((io) => io.disconnect());
     this.observers = [];
     this.motion.forEach((tw) => { tw.scrollTrigger?.kill(); tw.kill(); });

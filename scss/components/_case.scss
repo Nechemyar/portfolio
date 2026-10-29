@@ -57,7 +57,7 @@
 }
 
 /* Back to the work: the same glass pill as the hero's "Book a free call"
-   (frost here, refracting glass in Chromium via CaseView). It starts at the
+   (drawn by PillGlass with the same WebGL glass as the homepage). It starts at the
    top, centred under the logo; once you scroll it leaves the top and
    settles at the bottom in thumb reach. Never travels across the page. */
 .case__back {
@@ -124,17 +124,26 @@
       0 10px 30px -14px rgba(0, 0, 0, 0.3);
   }
 
-  /* Chromium glass took over: drop the frost (but keep it over white). */
-  &.lg-host:not(.is-light) {
-    --lg-tint: rgba(255, 255, 255, 0.05);
+  /* The WebGL glass (PillGlass) took over: drop the frost so only its
+     glass shows, as on the hero CTA. Over white it hides again. */
+  > .case__back-glass {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  &.is-gl:not(.is-light) {
     background: none;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
     box-shadow: 0 10px 24px -12px rgba($c-indigo-deep, 0.45);
     &::before { display: none; }
   }
-  &.lg-host.is-light .lg-layer,
-  &.lg-host.is-light .lg-sheen { display: none; }
+
+  &.is-light > .case__back-glass { display: none; }
 
   @media (prefers-reduced-transparency: reduce) {
     background: rgba($c-ink, 0.9);
@@ -145,7 +154,11 @@
 }
 
 /* The title sits below the back pill. */
-.case__hero-in { padding-top: calc(#{$fs-nav} * 10); }
+.case__hero-in {
+  padding-top: calc(#{$fs-nav} * 10);
+  // room for the pill to sit centred between the logo and the title
+  @media (min-width: 641px) { padding-top: calc(#{$fs-nav} * 17); }
+}
 
 /* A short, quiet line naming each part of the story. */
 .case__kicker {

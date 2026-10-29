@@ -359,14 +359,11 @@ export default class CaseTransition {
     const phone = slot.querySelector('.work__phone');
     const target = this.cardStage(key);
 
-    // Back to the top of the case first, so the hero is where it started.
-    if (this.layer.scrollTop > 0) {
-      const s = { y: this.layer.scrollTop };
-      await gsap.to(s, {
-        y: 0, duration: Math.min(0.7, 0.25 + s.y / 4000), ease: 'power2.inOut',
-        onUpdate: () => { this.layer.scrollTop = s.y; },
-      });
-    }
+    // Deep in the story there is no hero to fold back into, and scrolling
+    // all the way up flickers past every section. So the case fades away
+    // over the full-screen tile instead, the phone fades in at its centre,
+    // and the tile shrinks back into its card.
+    if (this.layer.scrollTop > 40) return this.closeFromStory(key, main, phone, target);
 
     this.view?.destroy();
     this.view = null;
@@ -405,6 +402,49 @@ export default class CaseTransition {
         this.setNav('light', false);
       }, 0.55)
       .add(this.flyTo(f, tr, 0.85), 0.55);
+    if (reduce()) tl.timeScale(30);
+    await tl;
+
+    main.remove();
+    this.layer.remove();
+    this.layer = null;
+    target.appendChild(phone);
+    gsap.set(phone, { clearProps: 'all' });
+    this.land(f);
+    document.title = this.homeTitle;
+    this.smooth?.start();
+    this.current = null;
+    this.busy = false;
+  }
+
+  async closeFromStory(key, main, phone, target) {
+    this.view?.destroy();
+    this.view = null;
+    const H = window.innerHeight;
+    const tr0 = rect(target);
+    if (tr0.bottom < 0 || tr0.top > H) {
+      const y = window.scrollY + tr0.top - (H - tr0.height) / 2;
+      if (this.smooth?.lenis) this.smooth.lenis.scrollTo(y, { immediate: true, force: true });
+      else window.scrollTo(0, y);
+    }
+
+    const spare = target.querySelector('.work__phone');
+    if (spare) spare.remove();
+    const f = this.lift(target, null, 1099);
+    const tr = f.r;
+    gsap.set(f.stage, { x: 0, y: 0, scaleX: 1, scaleY: 1 });
+    gsap.set(f.clip, { clipPath: inset({ left: 0, top: 0, right: f.W, bottom: f.H }, f.W, f.H) });
+    f.phone = phone;
+    f.clip.appendChild(phone);
+    this.placePhone(f, { left: f.left0, top: f.top0, width: f.w });
+    gsap.set(phone, { autoAlpha: 0 });
+    this.play(phone);
+
+    const tl = gsap.timeline();
+    tl.to(this.layer, { autoAlpha: 0, duration: 0.4, ease: 'power1.inOut' }, 0)
+      .to(phone, { autoAlpha: 1, duration: 0.4, ease: 'power1.out' }, 0.1)
+      .add(() => this.setNav('light', false), 0.45)
+      .add(this.flyTo(f, tr, 0.85), 0.45);
     if (reduce()) tl.timeScale(30);
     await tl;
 

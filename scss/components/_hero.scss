@@ -36,6 +36,12 @@
   margin-bottom: -100lvh;
 }
 
+/* The WebGL context was taken away: hide the canvas (Chrome draws a broken
+   placeholder over white) so the gradient above shows until it's rebuilt. */
+.intro.gl-lost .intro__sky {
+  visibility: hidden;
+}
+
 /* The white sections slide on like a sheet with rounded corners, the sky
    showing round them. */
 .intro + section {

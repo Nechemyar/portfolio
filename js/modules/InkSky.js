@@ -140,25 +140,71 @@ export default class InkSky {
     ORDER.forEach((k) => { this.state[k] = { x: 0, y: 0, s: 1, a: 0 }; });
     if (!this.intro || !this.canvas) return;
 
-    const gl = this.canvas.getContext('webgl', { alpha: false, antialias: false, premultipliedAlpha: false });
+    const gl = this.context();
     if (!gl) {
       this.intro.classList.add('no-gl');
       return;
     }
-    this.gl = gl;
     this.ok = true;
     this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    this.tex = {};
     this.inView = true;
 
-    this.build();
-    this.ready = this.load();
-    this.resize();
+    this.ready = this.setup(gl);
 
-    window.addEventListener('resize', () => this.resize());
+    window.addEventListener('resize', () => { if (!this.lost) this.resize(); });
     new IntersectionObserver(([entry]) => { this.inView = entry.isIntersecting; }).observe(this.intro);
-    this.tick = (time) => { if (this.inView) this.render(time); };
+    this.tick = (time) => { if (this.inView && !this.lost) this.render(time); };
     gsap.ticker.add(this.tick);
+  }
+
+  // The browser can take the context away at any time (low memory, a GPU
+  // reset, or too many WebGL contexts open, which dropped the sky after a
+  // few case pages). While it's gone the canvas hides, so the CSS sky
+  // gradient on .intro shows with the words on it instead of a broken
+  // canvas on white. preventDefault asks for it back; if the browser doesn't
+  // give it back, a fresh canvas takes over.
+  context() {
+    this.canvas.addEventListener('webglcontextlost', (e) => {
+      e.preventDefault();
+      this.lost = true;
+      this.intro.classList.add('gl-lost');
+      clearTimeout(this.reviveTimer);
+      this.reviveTimer = setTimeout(() => this.revive(), 1200);
+    });
+    this.canvas.addEventListener('webglcontextrestored', () => {
+      clearTimeout(this.reviveTimer);
+      this.setup(this.gl);
+    });
+    return this.canvas.getContext('webgl', { alpha: false, antialias: false, premultipliedAlpha: false });
+  }
+
+  revive() {
+    if (!this.lost) return;
+    if (document.hidden) {
+      document.addEventListener('visibilitychange', () => this.revive(), { once: true });
+      return;
+    }
+    const fresh = this.canvas.cloneNode(false);
+    this.canvas.replaceWith(fresh);
+    this.canvas = fresh;
+    const gl = this.context();
+    if (gl) this.setup(gl);
+  }
+
+  // Everything that lives on the GPU, made again from scratch after a loss.
+  setup(gl) {
+    this.gl = gl;
+    this.tex = {};
+    this.fbo = this.fboTex = null;
+    this.W = this.H = 0;
+    this.build();
+    const loaded = this.load();
+    this.resize();
+    return loaded.then(() => {
+      if (gl.isContextLost()) return;
+      this.lost = false;
+      this.intro.classList.remove('gl-lost');
+    });
   }
 
   build() {

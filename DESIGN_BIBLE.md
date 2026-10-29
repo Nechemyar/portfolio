@@ -232,6 +232,10 @@ the sky showing round them.
   reduced motion.
 - **DPR.** Capped at 1.5 on phones and 2 on wide screens.
 - **No WebGL.** The CSS sky gradient shows and the CTA keeps its frost.
+- **Context lost.** If the browser takes the WebGL context away (low memory,
+  GPU reset, too many contexts), the canvas hides (`.intro.gl-lost`) so the
+  CSS gradient shows, then the sky rebuilds itself: on the browser's restore,
+  or on a fresh canvas after 1.2s if no restore comes.
 
 **The story** (`js/modules/InkStory.js`)
 One scrubbed GSAP timeline (`scrub: 0.6`) runs from the top of the intro to its

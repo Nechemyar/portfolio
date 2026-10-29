@@ -200,15 +200,18 @@ export default class CaseTransition {
       if (!a || e.defaultPrevented || modified(e)) return;
       e.preventDefault();
       if (this.busy) return;
-      const href = a.href; // resolve before the URL changes
       history.scrollRestoration = 'manual';
-      history.pushState({ sumiCase: true }, '', href);
-      this.openHome(a.querySelector('.work__stage'), href, false);
+      // The URL changes once the case covers the screen (see openHome), so
+      // the snapshot a back swipe slides in is the case's hero, not the
+      // homepage. The swipe then lands on the hero and folds it home.
+      this.openHome(a.querySelector('.work__stage'), a.href, false, true);
     });
 
-    window.addEventListener('popstate', () => {
+    window.addEventListener('popstate', (e) => {
       const key = keyFromPath(location.pathname);
-      if (this.current && !key) this.closeHome();
+      // hasUAVisualTransition: the browser already slid its snapshot (the
+      // hero) in, so jump to the hero instead of scrolling up to it.
+      if (this.current && !key) this.closeHome({ jump: !!e.hasUAVisualTransition });
       else if (key && !this.current) {
         const a = this.cards.querySelector(`a[href$="${key}.html"]`);
         if (a) this.openHome(a.querySelector('.work__stage'), a.href, false);
@@ -231,7 +234,7 @@ export default class CaseTransition {
     return this.cards.querySelector(`a[href$="${key}.html"] .work__stage`);
   }
 
-  async openHome(stage, href, fromLayer) {
+  async openHome(stage, href, fromLayer, push = false) {
     if (this.busy || !stage) return;
     this.busy = true;
     const docP = this.load(href);
@@ -295,6 +298,7 @@ export default class CaseTransition {
       gsap.set([phone, sky], { clearProps: 'all' });
       gsap.set(main.querySelectorAll('.case__ln > span, .case__back--top, .case__lead'), { clearProps: 'all' });
       this.view?.drawTop?.();
+      if (push) history.pushState({ sumiCase: true }, '', href);
       this.current = key;
       this.busy = false;
     });
@@ -353,7 +357,7 @@ export default class CaseTransition {
     });
   }
 
-  async closeHome() {
+  async closeHome({ jump = false } = {}) {
     if (this.busy || !this.current || !this.layer) return;
     this.busy = true;
     const key = this.current;
@@ -365,7 +369,11 @@ export default class CaseTransition {
 
     // Back to the top of the case first, so the hero is where it started.
     // The docked pill drops away as it goes; the hero brings its own.
-    if (this.layer.scrollTop > 0) {
+    if (jump) {
+      this.view?.hideDock(true);
+      if (this.view?.dock) gsap.set(this.view.dock, { autoAlpha: 0, overwrite: true });
+      this.layer.scrollTop = 0;
+    } else if (this.layer.scrollTop > 0) {
       this.view?.hideDock(true);
       const s = { y: this.layer.scrollTop };
       await gsap.to(s, {

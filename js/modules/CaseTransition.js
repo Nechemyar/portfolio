@@ -6,6 +6,11 @@
 // it in reverse into the same tile. Likely Story does the same with Barba;
 // this is the small version of that idea.
 //
+// The move is transforms only: the tile is drawn at full screen and scaled
+// down to the card, the phone is drawn at its hero size and scaled down to
+// the card's phone, and both scale back up. Nothing is laid out per frame,
+// so the edges stay clean.
+//
 // Two modes:
 //  - 'home': the case is mounted in a fixed layer over the homepage, so the
 //    homepage (its sky, its scroll position) stays alive underneath.
@@ -18,6 +23,7 @@ import CaseView from './CaseView.js';
 
 const ARRIVE_KEY = 'sumi:case-arrive';
 const EASE = 'power3.inOut';
+const GROW = 0.9;
 
 const reduce = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const rect = (el) => el.getBoundingClientRect();
@@ -25,6 +31,8 @@ const keyFromPath = (path) => {
   const m = path.match(/projects\/([a-z-]+)\.html/);
   return m ? m[1] : null;
 };
+const inset = (r, W, H) => `inset(${r.top}px ${W - r.right}px ${H - r.bottom}px ${r.left}px)`;
+const modified = (e) => e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey;
 
 export default class CaseTransition {
   constructor({ mode = 'home', smoothScroll = null, nav = document.getElementById('nav') } = {}) {
@@ -65,10 +73,6 @@ export default class CaseTransition {
     root.addEventListener('focusin', warm);
   }
 
-  setVh() {
-    document.documentElement.style.setProperty('--case-vh', `${window.innerHeight}px`);
-  }
-
   // The hero phone's box comes from CSS (.case__slot), so measure a probe.
   slotSize() {
     const probe = document.createElement('div');
@@ -78,36 +82,6 @@ export default class CaseTransition {
     const { width, height } = rect(probe);
     probe.remove();
     return { w: width, h: height };
-  }
-
-  // Take a tile out of the page into a fixed box over the same spot, leaving
-  // a gap the same size so nothing reflows.
-  lift(stage, z) {
-    const r = rect(stage);
-    const gap = document.createElement('div');
-    gap.style.cssText = `width:${r.width}px;height:${r.height}px;flex:none`;
-    stage.parentNode.insertBefore(gap, stage);
-    stage._gap = gap;
-    document.body.appendChild(stage);
-    stage.classList.add('case-fly');
-    gsap.set(stage, { left: r.left, top: r.top, width: r.width, height: r.height, zIndex: z });
-    return r;
-  }
-
-  land(stage) {
-    if (stage._gap) {
-      stage._gap.parentNode.replaceChild(stage, stage._gap);
-      stage._gap = null;
-    }
-    stage.classList.remove('case-fly');
-    gsap.set(stage, { clearProps: 'all' });
-  }
-
-  pin(phone, r, box) {
-    gsap.set(phone, {
-      position: 'absolute', margin: 0, xPercent: 0, yPercent: 0, x: 0, y: 0,
-      left: r.left - box.left, top: r.top - box.top, width: r.width, height: r.height,
-    });
   }
 
   play(phone) {
@@ -122,17 +96,81 @@ export default class CaseTransition {
     this.nav.classList.toggle('nav--clear', !!clear);
   }
 
-  // Phase one: the tile grows to the viewport, the phone stays centred and
-  // grows to its hero size.
-  grow(stage, phone) {
+  // Lift a tile and its phone out of the page. The tile becomes a
+  // full-screen box scaled down onto the card; the phone sits at its hero
+  // size in the middle of the screen, scaled down onto its place in the
+  // card, inside a full-screen box clipped to the tile. A gap the size of
+  // the card stays behind so nothing reflows.
+  lift(stage, phone, z = 1099) {
     const W = window.innerWidth;
     const H = window.innerHeight;
     const { w, h } = this.slotSize();
-    const tl = gsap.timeline();
-    tl.to(stage, { left: 0, top: 0, width: W, height: H, duration: 0.9, ease: EASE }, 0)
-      .to(phone, { left: (W - w) / 2, top: (H - h) / 2, width: w, height: h, duration: 0.9, ease: EASE }, 0);
+    const r = rect(stage);
+    const pr = phone ? rect(phone) : null;
+    const left0 = (W - w) / 2;
+    const top0 = (H - h) / 2;
+
+    const gap = document.createElement('div');
+    gap.style.cssText = `width:${r.width}px;height:${r.height}px;flex:none`;
+    stage.parentNode.insertBefore(gap, stage);
+    document.body.appendChild(stage);
+    stage.classList.add('case-fly');
+    gsap.set(stage, {
+      left: 0, top: 0, width: W, height: H, zIndex: z, transformOrigin: '0 0',
+      x: r.left, y: r.top, scaleX: r.width / W, scaleY: r.height / H,
+    });
+
+    const clip = document.createElement('div');
+    clip.className = 'case-fly-clip';
+    clip.style.zIndex = z + 2;
+    gsap.set(clip, { clipPath: inset(r, W, H) });
+    document.body.appendChild(clip);
+
+    const f = { stage, phone, clip, gap, W, H, w, h, left0, top0, r };
+    if (phone) {
+      clip.appendChild(phone);
+      this.placePhone(f, pr);
+    }
+    return f;
+  }
+
+  // Draw the phone at hero size in the middle, transformed onto a box.
+  placePhone(f, box) {
+    gsap.set(f.phone, {
+      position: 'absolute', margin: 0, left: f.left0, top: f.top0, width: f.w, height: f.h,
+      transformOrigin: '0 0', xPercent: 0, yPercent: 0,
+      x: box.left - f.left0, y: box.top - f.top0, scale: box.width / f.w,
+    });
+  }
+
+  // Tween the flight onto a target box (full screen when none is given).
+  flyTo(f, box, duration = GROW) {
+    const { W, H } = f;
+    const b = box || { left: 0, top: 0, width: W, height: H, right: W, bottom: H };
+    const tl = gsap.timeline({ defaults: { duration, ease: EASE } });
+    tl.to(f.stage, { x: b.left, y: b.top, scaleX: b.width / W, scaleY: b.height / H }, 0)
+      .to(f.clip, { clipPath: inset(b, W, H) }, 0);
+    if (f.phone) {
+      if (box) {
+        // The card's phone: 84% of the tile's height, centred.
+        const th = b.height * 0.84;
+        const tw = th * 703 / 1411;
+        tl.to(f.phone, { x: b.left + (b.width - tw) / 2 - f.left0, y: b.top + (b.height - th) / 2 - f.top0, scale: tw / f.w }, 0);
+      } else {
+        tl.to(f.phone, { x: 0, y: 0, scale: 1 }, 0);
+      }
+    }
     if (reduce()) tl.timeScale(30);
     return tl;
+  }
+
+  // Put the tile back in its gap (or drop it if its gap has gone).
+  land(f) {
+    if (f.gap.isConnected) f.gap.parentNode.replaceChild(f.stage, f.gap);
+    else f.stage.remove();
+    f.stage.classList.remove('case-fly');
+    gsap.set(f.stage, { clearProps: 'all' });
+    f.clip.remove();
   }
 
   // Phase two: the phone eases down into the hero and the title rises in.
@@ -157,7 +195,7 @@ export default class CaseTransition {
     this.prefetchOn(this.cards, 'a[data-case-link]');
     this.cards.addEventListener('click', (e) => {
       const a = e.target.closest('a[data-case-link]');
-      if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if (!a || e.defaultPrevented || modified(e)) return;
       e.preventDefault();
       if (this.busy) return;
       const href = a.href; // resolve before the URL changes
@@ -194,21 +232,16 @@ export default class CaseTransition {
   async openHome(stage, href, fromLayer) {
     if (this.busy || !stage) return;
     this.busy = true;
-    this.setVh();
     const docP = this.load(href);
     const phone = stage.querySelector('.work__phone');
     this.play(phone);
     if (!fromLayer) this.smooth?.stop();
 
-    const pr = rect(phone);
-    const r = this.lift(stage, fromLayer ? 1101 : 1099);
-    this.pin(phone, pr, r);
-    const H = window.innerHeight;
-    const { h } = this.slotSize();
+    const f = this.lift(stage, phone, fromLayer ? 1101 : 1099);
 
     let doc;
     try {
-      [, doc] = await Promise.all([this.grow(stage, phone).then(), docP]);
+      [, doc] = await Promise.all([this.flyTo(f).then(), docP]);
     } catch (err) {
       location.href = href; // fall back to a normal page load
       return;
@@ -220,6 +253,9 @@ export default class CaseTransition {
     if (!this.layer) {
       this.layer = document.createElement('div');
       this.layer.className = 'case-layer';
+      // Lenis is stopped while a case is open and would otherwise swallow
+      // the wheel and touch events that scroll this layer.
+      this.layer.setAttribute('data-lenis-prevent', '');
       this.layer.addEventListener('click', (e) => this.onLayerClick(e));
       this.layer.addEventListener('scroll', () => this.onLayerScroll(), { passive: true });
       this.prefetchOn(this.layer, 'a[data-case-link]');
@@ -229,27 +265,30 @@ export default class CaseTransition {
 
     const main = document.importNode(src, true);
     const slot = main.querySelector('.case__slot');
+    const sky = main.querySelector('.case__sky');
     slot.replaceChildren();
     main.classList.add('is-arriving');
-    main.querySelector('.case__hero').classList.add('is-clear');
+    gsap.set(sky, { autoAlpha: 0 });
     this.layer.style.visibility = '';
     this.layer.appendChild(main);
     this.layer.scrollTop = 0;
     document.title = doc.title;
-    gsap.set(stage, { zIndex: 1099 });
+    gsap.set(f.stage, { zIndex: 1099 });
     this.setNav('dark', true);
 
     slot.appendChild(phone);
     gsap.set(phone, { clearProps: 'all' });
-    const fromY = (H - h) / 2 - rect(slot).top;
+    f.clip.remove();
+    const fromY = f.top0 - rect(slot).top;
     const key = keyFromPath(new URL(href).pathname);
 
-    this.arrive(main, phone, fromY).then(() => {
-      main.querySelector('.case__hero').classList.remove('is-clear');
+    const tl = this.arrive(main, phone, fromY);
+    // The hero's own sky fades in over the tile as the phone settles.
+    tl.to(sky, { autoAlpha: 1, duration: 0.35, ease: 'power1.out' }, 0.7);
+    tl.then(() => {
       main.classList.remove('is-arriving');
-      if (stage.closest('.work__card') || stage._gap?.closest('.work__card')) this.land(stage);
-      else stage.remove();
-      gsap.set(phone, { clearProps: 'all' });
+      this.land(f);
+      gsap.set([phone, sky], { clearProps: 'all' });
       gsap.set(main.querySelectorAll('.case__ln > span, .case__back, .case__lead'), { clearProps: 'all' });
       this.view = new CaseView(main);
       this.current = key;
@@ -273,7 +312,7 @@ export default class CaseTransition {
   }
 
   onLayerClick(e) {
-    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (modified(e)) return;
     const next = e.target.closest('a[data-case-link]');
     if (next) {
       e.preventDefault();
@@ -316,6 +355,7 @@ export default class CaseTransition {
     const key = this.current;
     const main = this.layer.querySelector('main.case');
     const slot = main.querySelector('.case__slot');
+    const sky = main.querySelector('.case__sky');
     const phone = slot.querySelector('.work__phone');
     const target = this.cardStage(key);
 
@@ -328,13 +368,10 @@ export default class CaseTransition {
       });
     }
 
-    this.setVh();
-    const W = window.innerWidth;
-    const H = window.innerHeight;
-    const sr = rect(slot);
     this.view?.destroy();
     this.view = null;
     this.setNav('dark', true);
+    const H = window.innerHeight;
 
     // If this case was reached through "Next", bring its card into view.
     const tr0 = rect(target);
@@ -344,35 +381,39 @@ export default class CaseTransition {
       else window.scrollTo(0, y);
     }
 
+    // The card's tile goes full screen behind the hero, and the hero phone
+    // moves into the flight exactly where it sits now.
     const spare = target.querySelector('.work__phone');
-    const tr = this.lift(target, 1099);
-    gsap.set(target, { left: 0, top: 0, width: W, height: H });
     if (spare) spare.remove();
-    target.appendChild(phone);
-    this.pin(phone, sr, { left: 0, top: 0 });
-    main.querySelector('.case__hero').classList.add('is-clear');
+    const sr = rect(slot);
+    const f = this.lift(target, null, 1099);
+    const tr = f.r;
+    gsap.set(f.stage, { x: 0, y: 0, scaleX: 1, scaleY: 1 });
+    gsap.set(f.clip, { clipPath: inset({ left: 0, top: 0, right: f.W, bottom: f.H }, f.W, f.H) });
+    f.phone = phone;
+    f.clip.appendChild(phone);
+    this.placePhone(f, sr);
     main.classList.add('is-arriving');
 
-    const th = tr.height * 0.84;
-    const tw = th * 703 / 1411;
     const tl = gsap.timeline();
-    tl.to(main.querySelectorAll('.case__ln > span'), { yPercent: 110, duration: 0.45, ease: 'power3.in', stagger: 0.04 }, 0)
+    tl.to(sky, { autoAlpha: 0, duration: 0.3, ease: 'power1.in' }, 0)
+      .to(main.querySelectorAll('.case__ln > span'), { yPercent: 110, duration: 0.45, ease: 'power3.in', stagger: 0.04 }, 0)
       .to(main.querySelectorAll('.case__back, .case__lead'), { autoAlpha: 0, y: -10, duration: 0.3, ease: 'power2.in' }, 0)
-      .to(phone, { top: (H - sr.height) / 2, duration: 0.6, ease: EASE }, 0.1)
+      .to(phone, { y: 0, duration: 0.6, ease: EASE }, 0.1)
       .add(() => {
         this.layer.style.visibility = 'hidden';
         this.setNav('light', false);
       }, 0.55)
-      .to(target, { left: tr.left, top: tr.top, width: tr.width, height: tr.height, duration: 0.85, ease: EASE }, 0.55)
-      .to(phone, { left: (tr.width - tw) / 2, top: (tr.height - th) / 2, width: tw, height: th, duration: 0.85, ease: EASE }, 0.55);
+      .add(this.flyTo(f, tr, 0.85), 0.55);
     if (reduce()) tl.timeScale(30);
     await tl;
 
     main.remove();
     this.layer.remove();
     this.layer = null;
-    this.land(target);
+    target.appendChild(phone);
     gsap.set(phone, { clearProps: 'all' });
+    this.land(f);
     document.title = this.homeTitle;
     this.smooth?.start();
     this.current = null;
@@ -396,7 +437,7 @@ export default class CaseTransition {
     this.prefetchOn(this.main, 'a[data-case-link]');
     this.main.addEventListener('click', (e) => {
       const a = e.target.closest('a[data-case-link]');
-      if (!a || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if (!a || modified(e)) return;
       e.preventDefault();
       if (this.busy) return;
       this.flyToNext(a);
@@ -405,9 +446,10 @@ export default class CaseTransition {
     // Coming back to this page from the browser's cache: put the tile back.
     window.addEventListener('pageshow', (e) => {
       if (!e.persisted || !this.flying) return;
-      const { stage, phone } = this.flying;
-      this.land(stage);
-      gsap.set(phone, { clearProps: 'all' });
+      const f = this.flying;
+      f.stage.appendChild(f.phone);
+      gsap.set(f.phone, { clearProps: 'all' });
+      this.land(f);
       this.flying = null;
       this.busy = false;
       this.smooth?.start();
@@ -415,12 +457,11 @@ export default class CaseTransition {
   }
 
   arriveOnLoad() {
-    this.setVh();
     const slot = this.main.querySelector('.case__slot');
     const phone = slot?.querySelector('.work__phone');
     if (!phone) return;
-    const H = window.innerHeight;
-    const fromY = (H - rect(slot).height) / 2 - rect(slot).top;
+    const r = rect(slot);
+    const fromY = (window.innerHeight - r.height) / 2 - r.top;
     this.arrive(this.main, phone, fromY).then(() => {
       gsap.set(this.main.querySelectorAll('.case__ln > span, .case__back, .case__lead'), { clearProps: 'all' });
       gsap.set(phone, { clearProps: 'all' });
@@ -429,17 +470,14 @@ export default class CaseTransition {
 
   async flyToNext(a) {
     this.busy = true;
-    this.setVh();
     this.smooth?.stop();
     const stage = a.querySelector('.case__tile');
     const phone = stage.querySelector('.work__phone');
     this.play(phone);
-    const pr = rect(phone);
-    const r = this.lift(stage, 1099);
-    this.pin(phone, pr, r);
-    this.flying = { stage, phone };
+    const f = this.lift(stage, phone, 1099);
+    this.flying = f;
     this.setNav('dark', true);
-    await Promise.all([this.grow(stage, phone).then(), this.load(a.href).catch(() => {})]);
+    await Promise.all([this.flyTo(f).then(), this.load(a.href).catch(() => {})]);
     sessionStorage.setItem(ARRIVE_KEY, a.dataset.caseLink);
     location.assign(a.href);
   }

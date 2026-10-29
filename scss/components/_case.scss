@@ -22,29 +22,28 @@
 .case__hero {
   position: relative;
   min-height: 100vh;
-  min-height: var(--case-vh, 100svh);
+  min-height: 100svh;
   overflow: hidden;
   isolation: isolate;
   color: $c-sky-type;
-  /* The gradient ends one screen down so it matches the tile it grew from. */
-  background: linear-gradient(180deg, $c-sky, $c-sky-pale var(--case-vh, 100vh), $c-sky-pale);
+}
+
+/* The sky sits on its own layer so the move can fade it in over the tile
+   that grew underneath. One gradient over the whole hero: no seam. */
+.case__sky {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, $c-sky, $c-sky-pale);
 
   &::before {
     content: '';
     position: absolute;
-    inset: 0 0 auto;
-    height: var(--case-vh, 100vh);
+    inset: 0;
     background: url('/ink/washi.jpg') center / cover;
     mix-blend-mode: multiply;
     opacity: 0.25;
     pointer-events: none;
-    z-index: -1;
-  }
-
-  /* While the tile is still flying underneath, the hero is see-through. */
-  &.is-clear {
-    background: transparent;
-    &::before { opacity: 0; }
   }
 }
 
@@ -53,20 +52,40 @@
   flex-direction: column;
   align-items: center;
   gap: calc(#{$fs-nav} * 1.25);
-  padding: calc(#{$fs-nav} * 6.5) $page-padding $space-48;
+  padding: calc(#{$fs-nav} * 7.5) $page-padding $space-48;
   text-align: center;
 }
 
+/* Back to the work: one centred glass pill in thumb reach, the same on the
+   sky and on the white sheet. Sized like the nav labels. */
 .case__back {
-  align-self: flex-start;
-  color: rgba($c-sky-type, 0.92);
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(#{$space-16} + env(safe-area-inset-bottom, 0px));
+  z-index: 5;
+  width: fit-content;
+  margin: 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-8;
+  min-height: 44px;
+  padding: 0 1.15rem;
+  border-radius: $r-full;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(26, 26, 26, 0.08);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  backdrop-filter: blur(14px) saturate(1.4);
+  color: $c-ink;
   font-size: $fs-nav;
   font-weight: 500;
+  letter-spacing: 0.01em;
   text-decoration: none;
-  text-shadow: 0 1px 14px $c-sky-shade;
+
+  svg { width: 1em; height: 1em; flex: none; }
 
   @media (hover: hover) {
-    &:hover { text-decoration: underline; text-underline-offset: 4px; }
+    &:hover { background: #fff; }
   }
 }
 
@@ -77,7 +96,6 @@
   font-weight: 400;
   line-height: 0.98;
   letter-spacing: -0.045em;
-  text-shadow: 0 1px 16px $c-sky-shade;
 
   @media (min-width: 641px) { font-size: $fs-hero-title; }
 }
@@ -100,7 +118,6 @@
   font-size: calc(#{$fs-nav} * 1.375);
   line-height: 1.3;
   letter-spacing: -0.01em;
-  text-shadow: 0 1px 14px $c-sky-shade;
 
   @media (min-width: 641px) { font-size: calc(#{$fs-nav} * 1.625); }
 }
@@ -385,7 +402,8 @@
   flex-wrap: wrap;
   justify-content: space-between;
   gap: $space-8;
-  padding: $space-24 $page-padding;
+  /* Room under the fixed back pill. */
+  padding: $space-24 $page-padding calc(#{$space-96} + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid $c-border;
   font-size: $fs-xs;
   color: $c-text-secondary;
@@ -404,12 +422,24 @@
   -webkit-overflow-scrolling: touch;
 }
 
-/* A tile in flight, lifted out of the page. */
+/* A tile in flight, lifted out of the page. It is drawn at full screen
+   and scaled down to the card, so the move is transforms only. */
 .case-fly {
   position: fixed !important;
   margin: 0 !important;
   aspect-ratio: auto !important;
   z-index: 1099;
+  will-change: transform;
+}
+
+/* The flying phone rides in its own full-screen box, clipped to the tile. */
+.case-fly-clip {
+  position: fixed;
+  inset: 0;
+  z-index: 1101;
+  pointer-events: none;
+
+  > .work__phone { will-change: transform; }
 }
 
 /* While a case is arriving (or leaving), the tile flying underneath shows

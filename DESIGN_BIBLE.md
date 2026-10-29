@@ -346,7 +346,9 @@ Layout B, picked by Nechemya: a full-screen sky hero (white title, one lead line
 
 The move (`CaseTransition.js`), after Likely Story's Barba setup:
 - The case page is fetched when a finger or pointer lands on a tile, and every case is fetched once the work section is near.
-- Tap: the tile is lifted to `position: fixed` (a same-size gap stays behind) and grows to the viewport in 0.9s `power3.inOut`; the phone stays centred, grows to the hero size (`.case__slot`) and keeps playing.
+- Tap: the tile is lifted to `position: fixed` (a same-size gap stays behind), drawn at full screen and scaled down onto the card, then scaled up to the viewport in 0.9s `power3.inOut`. The phone is drawn at hero size (`.case__slot`) inside a full-screen box clipped to the tile, scaled down onto the card's phone, and scales up as the tile grows. Transforms and clip-path only, never left/top/width/height, so the edges stay clean. It keeps playing throughout.
+- The hero's sky is its own layer (`.case__sky`, one gradient over the whole hero) and fades in over the grown tile at the end.
+- Back is one centred glass pill fixed at the bottom (thumb reach), sized like the nav labels. The case layer carries `data-lenis-prevent`, because Lenis is stopped while a case is open and would otherwise swallow its scroll.
 - With the screen covered, the case's `<main>` is mounted in `.case-layer` over the homepage (homepage scroll and sky stay alive, Lenis stopped), the playing phone is moved into the hero slot, it eases down 0.85s while the title words rise in their masks (0.9s `power4.out`, 0.08s stagger).
 - Back / All work: the layer scrolls to the top, the title drops, the phone recentres, and the tile shrinks back into its card.
 - On a case page itself, the next tile grows to the screen and the browser loads the next page, which picks up the move from `sessionStorage['sumi:case-arrive']`.

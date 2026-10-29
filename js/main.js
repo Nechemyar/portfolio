@@ -50,6 +50,10 @@ const wipeElements = [
   '.nav__desktop-wrapper'
 ];
 gsap.set(wipeElements, { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)', y: 40 });
+// The reel card comes in last; its first frame is already painted, so it is
+// hidden only by a clip until its turn (no see-through state)
+const reelWindow = document.querySelector('.reel__window');
+if (reelWindow) gsap.set(reelWindow, { clipPath: 'inset(100% 0% 0% 0%)', y: 60, scale: 0.96, transformOrigin: '50% 100%' });
 /* .nav__logo is NOT wiped in — the loader's SUMI wordmark morphs directly
    onto it, so it must sit stationary at its resting position for a seamless
    handoff when the loader fades out. */
@@ -117,6 +121,26 @@ new Loader(() => {
       glassReady.then(() => gsap.set(slotted, { clipPath: 'none', y: 0 }));
     } else {
       tl.call(() => glassReady.then(ctaIn), null, 'title+=1.4');
+    }
+  }
+
+  // 5. The reel last, as the button settles: it rises out of the sky and opens
+  //    out, and the video starts from its first frame as it does (HeroReel).
+  //    Scrolling before then brings it straight in.
+  if (reelWindow) {
+    const reelIn = () => {
+      if (reelWindow.dataset.in) return;
+      reelWindow.dataset.in = '1';
+      document.dispatchEvent(new CustomEvent('reel:in'));
+      gsap.to(reelWindow, { clipPath: 'inset(0% 0% 0% 0%)', y: 0, scale: 1, duration: 1.2, ease: 'expo.out', clearProps: 'clipPath,transform' });
+    };
+    if (reduced) {
+      gsap.set(reelWindow, { clearProps: 'clipPath,transform' });
+      reelWindow.dataset.in = '1';
+      document.dispatchEvent(new CustomEvent('reel:in'));
+    } else {
+      tl.call(reelIn, null, 'title+=1.55');
+      window.addEventListener('scroll', reelIn, { once: true, passive: true });
     }
   }
 

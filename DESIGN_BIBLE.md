@@ -281,8 +281,13 @@ clouds, then near clouds, 1.1s each, 0.14s stagger) while the nav builds.
   up and down), so no site is cut at the sides. If a phone is too short for a
   whole 9:16 card, the card gets shorter (down to 9:15) and the video trims
   top and bottom only.
-- **Loading.** `HeroReel.js` loads the video after the loader, fades it in and
-  pauses it off screen.
+- **Entrance.** The reel comes in last, as the button settles: its window
+  wipes up from the bottom while it rises 60px and opens from 0.96 (1.2s,
+  expo.out, main.js). The first frame is already painted underneath, so it is
+  never see-through. Scrolling early brings it straight in.
+- **Loading.** `HeroReel.js` loads the video after the loader, starts it from
+  its first frame when the card makes its entrance (`reel:in`), and pauses it
+  off screen.
 - **Pause.** A pause button sits at the bottom of the held card (WCAG 2.2.2).
 
 Both reels are seamless loops of the real sites (Choice, Clinical, JSense,

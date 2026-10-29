@@ -3,7 +3,8 @@
 // ——————————————————————————————————————————————
 // The <video> ships with <source data-src> children and preload="none", so
 // nothing downloads during first paint. Sources are attached once the loader
-// hands off (hero:ready), the video fades in when it can play, and it pauses
+// hands off (hero:ready), it starts when the card makes its entrance (reel:in),
+// the video fades in when it can play, and it pauses
 // whenever it is off screen. Reduced-motion and Save-Data visitors keep the
 // empty card.
 
@@ -23,6 +24,12 @@ export default class HeroReel {
     this.sources = sources;
     this.userPaused = false;
     this.inView = true;
+    // the video waits for the card's entrance (main.js fires reel:in), then plays from its first frame
+    this.revealed = !!document.querySelector('.reel__window[data-in]');
+    document.addEventListener('reel:in', () => {
+      this.revealed = true;
+      this.sync();
+    }, { once: true });
 
     if (document.documentElement.classList.contains('js-loaded')) {
       this.load();
@@ -59,7 +66,7 @@ export default class HeroReel {
   }
 
   sync() {
-    if (this.inView && !this.userPaused) {
+    if (this.revealed && this.inView && !this.userPaused) {
       this.video.play().catch(() => {});
     } else {
       this.video.pause();

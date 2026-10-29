@@ -56,37 +56,103 @@
   text-align: center;
 }
 
-/* Back to the work: one centred glass pill in thumb reach, the same on the
-   sky and on the white sheet. Sized like the nav labels. */
+/* Back to the work: the same glass pill as the hero's "Book a free call"
+   (frost here, refracting glass in Chromium via CaseView). It starts at the
+   top, centred under the logo; once you scroll it leaves the top and
+   settles at the bottom in thumb reach. Never travels across the page. */
 .case__back {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: calc(#{$space-16} + env(safe-area-inset-bottom, 0px));
+  top: calc(#{$fs-nav} * 4.75);
   z-index: 5;
   width: fit-content;
   margin: 0 auto;
+  isolation: isolate;
   display: inline-flex;
   align-items: center;
-  gap: $space-8;
-  min-height: 44px;
-  padding: 0 1.15rem;
+  gap: 0.65em;
+  height: max(44px, calc(#{$fs-nav} * 3.375));
+  padding: 0 calc(#{$fs-nav} * 1.5);
   border-radius: $r-full;
-  background: rgba(255, 255, 255, 0.78);
-  border: 1px solid rgba(26, 26, 26, 0.08);
-  -webkit-backdrop-filter: blur(14px) saturate(1.4);
-  backdrop-filter: blur(14px) saturate(1.4);
-  color: $c-ink;
+  color: $c-sky-type;
   font-size: $fs-nav;
-  font-weight: 500;
-  letter-spacing: 0.01em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   text-decoration: none;
+  text-shadow: 0 1px 8px $c-sky-shade;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  background: rgba(255, 255, 255, 0.06);
+  -webkit-backdrop-filter: blur(8px) saturate(170%) brightness(1.15);
+  backdrop-filter: blur(8px) saturate(170%) brightness(1.15);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.22),
+    0 10px 30px -12px rgba(0, 0, 0, 0.35);
 
-  svg { width: 1em; height: 1em; flex: none; }
-
-  @media (hover: hover) {
-    &:hover { background: #fff; }
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    z-index: 1;
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 52%);
+    opacity: 0.5;
+    pointer-events: none;
   }
+
+  > span, > svg { position: relative; z-index: 2; }
+  > svg { width: 0.95em; height: 0.95em; flex-shrink: 0; }
+
+  &.is-bottom {
+    top: auto;
+    bottom: calc(#{$space-16} + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Over the white sheet the label turns ink and the glass frosts up, so it
+     still reads. */
+  &.is-light {
+    color: $c-ink;
+    text-shadow: none;
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.8),
+      inset 0 0 0 1px rgba(26, 26, 26, 0.08),
+      0 10px 30px -14px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Chromium glass took over: drop the frost (but keep it over white). */
+  &.lg-host:not(.is-light) {
+    --lg-tint: rgba(255, 255, 255, 0.05);
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: 0 10px 24px -12px rgba($c-indigo-deep, 0.45);
+    &::before { display: none; }
+  }
+  &.lg-host.is-light .lg-layer,
+  &.lg-host.is-light .lg-sheen { display: none; }
+
+  @media (prefers-reduced-transparency: reduce) {
+    background: rgba($c-ink, 0.9);
+    color: #fff;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* The title sits below the back pill. */
+.case__hero-in { padding-top: calc(#{$fs-nav} * 10); }
+
+/* A short, quiet line naming each part of the story. */
+.case__kicker {
+  margin: 0;
+  font-size: $fs-md;
+  font-weight: 500;
+  color: $c-text-tertiary;
 }
 
 .case__title {

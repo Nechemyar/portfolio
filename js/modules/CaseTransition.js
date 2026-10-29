@@ -290,7 +290,7 @@ export default class CaseTransition {
       this.land(f);
       gsap.set([phone, sky], { clearProps: 'all' });
       gsap.set(main.querySelectorAll('.case__ln > span, .case__back, .case__lead'), { clearProps: 'all' });
-      this.view = new CaseView(main);
+      this.view = new CaseView(main, this.layer);
       this.current = key;
       this.busy = false;
     });

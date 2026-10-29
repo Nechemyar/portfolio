@@ -1,0 +1,15 @@
+{
+  "source": "https://jsense.org.uk (CSS tokens, OKLCH converted to hex; logo SVG fills)",
+  "backdrop": "#90376B",
+  "colors": {
+    "grape": "#90376B",
+    "grape-oklch": "oklch(47.7% 0.134 347)",
+    "grape-dark": "#6B224D",
+    "grape-band": "#AE4883",
+    "logo-plum": "#8B2C6A",
+    "logo-orange": "#F5821F",
+    "logo-green": "#518B5D",
+    "sun": "#F5BA14",
+    "ink": "#2C252B"
+  }
+}

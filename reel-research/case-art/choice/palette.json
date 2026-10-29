@@ -1,0 +1,10 @@
+{
+  "source": "https://choiceinventory.co.uk (logo PNG + computed CSS)",
+  "backdrop": "#F28C21",
+  "colors": {
+    "brand-orange": "#F28C21",
+    "ink": "#1D1E20",
+    "white": "#FFFFFF",
+    "grey": "#8C8C8C"
+  }
+}

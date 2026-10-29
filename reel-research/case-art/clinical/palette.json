@@ -1,0 +1,12 @@
+{
+  "source": "https://clinicalassessments.co.uk (computed CSS, Astra/Elementor globals)",
+  "backdrop": "#F4F4F2 (white chosen; black alt #0E0E10)",
+  "colors": {
+    "indigo": "#312B72",
+    "teal": "#4A7973",
+    "teal-dark": "#426A65",
+    "ink": "#121212",
+    "grey": "#6D7882",
+    "off-white": "#F5F5F5"
+  }
+}

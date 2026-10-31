@@ -34,14 +34,18 @@ void main(){
   vec3 g = vec3(scene(c0 + n*k).r, scene(c0 + n*k*0.88).g, scene(c0 + n*k*0.76).b);
   g = mix(g, vec3(1.0), 0.10)*1.06;
   g += 0.05*smoothstep(rr, -rr, lp.y);
-  float rim = exp(-depth/(1.0*uDpr)), bev = exp(-depth/(6.0*uDpr));
+  // Outside the pill depth goes negative and exp() blows up to inf, which
+  // times a zero alpha is NaN: stray black and blue dots round the edge,
+  // plain to see on a white sky. Hold depth at zero there and clamp.
+  float d0 = max(depth, 0.0);
+  float rim = exp(-d0/(1.0*uDpr)), bev = exp(-d0/(6.0*uDpr));
   vec2 L = normalize(vec2(-0.5, -0.87));
   float l1 = max(0.0, dot(n, L)), l2 = max(0.0, dot(n, -L)), side = 1.0 - abs(dot(n, L));
   g += vec3(1.0)*rim*(0.95*pow(l1, 2.2) + 0.45*pow(l2, 3.0));
   g += vec3(1.0)*bev*(0.14*pow(l1, 1.5) + 0.05*pow(l2, 2.0));
   g *= 1.0 - 0.10*bev*side;
   float a = smoothstep(0.8*uDpr, -0.8*uDpr, sd);
-  gl_FragColor = vec4(g*a, a);
+  gl_FragColor = vec4(clamp(g, 0.0, 1.0)*a, a);
 }`;
 
 const hex = (h) => {

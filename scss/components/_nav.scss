@@ -10,42 +10,17 @@
   padding: clamp(0.55rem, 1vw, 0.85rem) clamp(1rem, 3.5vw, 2.5rem);
 }
 
-/* No blur behind the bar (he asked for it gone; the stacked backdrop
-   filters were also the main cost on his laptop and glitched on Windows GPUs).
-   Instead a plain band of the section's own colour sits behind the bar, so
-   whatever scrolls under the logo melts into the background. Over the sky
-   there is no band: the hero and trust words fade out before they reach it. */
+/* Nothing behind the bar, on any page: no blur, no band. He wants the
+   header floating over the page, with every section designed so the logo
+   and links stay readable (the nav theme switches per section). */
 .nav__blur {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 120px;
-  z-index: 0;
-  pointer-events: none;
+  display: none;
 }
 
 /* Nav inner content must sit above the ::before blur layer */
 .nav__inner {
   position: relative;
   z-index: 1;
-}
-
-/* The band takes the colour of the section under the bar (NavTheme sets
-   --nav-bg from its data-bg; a case page sets --nav-scrim). Over the sky it
-   is off (.nav--clear). */
-.nav__blur {
-  transition: opacity 0.4s ease;
-  background: linear-gradient(to bottom, var(--nav-scrim, var(--nav-bg, transparent)) 60%, transparent);
-}
-
-.nav--clear .nav__blur {
-  opacity: 0;
-}
-
-/* The menu's own overlay covers the bar */
-html.menu-open .nav__blur {
-  display: none;
 }
 
 /* Single nav colour system */

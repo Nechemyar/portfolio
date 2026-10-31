@@ -1,4 +1,5 @@
 import gsap from 'gsap';
+import fontsReady from './fontsReady.js';
 
 export default class Loader {
   constructor(onComplete) {
@@ -23,7 +24,7 @@ export default class Loader {
       try { sessionStorage.removeItem('sumi:skip-loader'); } catch (e) { /* private mode */ }
       document.getElementById('loader')?.remove();
       document.documentElement.classList.remove('skip-loader');
-      requestAnimationFrame(() => this.onComplete?.());
+      fontsReady(1500).then(() => requestAnimationFrame(() => this.onComplete?.()));
       return;
     }
     document.body.style.overflow = 'hidden';
@@ -49,6 +50,9 @@ export default class Loader {
       ? Promise.resolve()
       : new Promise(res => { this.wordmark.onload = res; this.wordmark.onerror = res; });
 
+    // The fonts load while the logo shows; the timeline holds before the
+    // morph until they're in, so the page under the panel is final.
+    this.fonts = fontsReady();
     ready.then(() => requestAnimationFrame(() => this._buildTimeline()));
   }
 
@@ -74,6 +78,8 @@ export default class Loader {
       })
       // 2 — hold so the logo reads
       .to({}, { duration: 0.5 })
+      // 2a — and, on a slow connection, until Satoshi is in (usually instant)
+      .addPause('+=0', () => this.fonts.then(() => tl.resume()))
       // 3 — measure the nav logo, anchor the morph point
       .add(() => this._measureMorph())
       .addLabel('morph')

@@ -123,7 +123,9 @@ short stagger. The post-loader hero sequence is the gold standard — simple,
 clear, and beautiful. Reuse it; do not invent new entrance styles per section.
 
 ### 6.1 Loader → hero handoff (the approved timing)
-1. `Loader` runs, then fires its completion callback.
+1. `Loader` runs, then fires its completion callback. It holds after the
+   logo reads until Satoshi is loaded (`fontsReady.js`, capped at 4s), so the
+   page under the red panel is already in its final font and line breaks.
 2. The callback splits the hero pitch heading into lines, sets `js-loaded`,
    marks the nav ready, and dispatches `hero:ready`.
 3. A single GSAP timeline plays the entrance (see 6.2). The overlapping,
@@ -197,7 +199,9 @@ references: the "Sumi Ink Clouds" artifact, with a copy in
 
 **Structure** (`.intro`, three sections):
 - `.hero` (100svh)
-- `.reel` (130svh, its scroll held by CSS sticky for 30svh)
+- `.reel` (130svh, its scroll held by CSS sticky for 30svh; no permanent
+  `will-change` on `.reel__card`: in Edge's software compositor it blanks the
+  sky canvas in a box around the card)
 - `.trust` (100svh)
 
 All three are `data-nav-theme="dark"` (white nav). There is no blur behind

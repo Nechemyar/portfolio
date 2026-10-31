@@ -369,7 +369,9 @@
   height: var(--card-h);
   transform: scale(var(--reel-from)); /* InkStory scrubs it to 1; set here so it never jumps */
   transform-origin: 50% 0;
-  will-change: transform;
+  /* No will-change here: a permanent layer on the card blanks the sky canvas
+     in a box around it in Edge's software compositor (no working GPU driver).
+     GSAP promotes it while the scrub runs anyway. */
 
   @media (prefers-reduced-motion: reduce) {
     transform: none;

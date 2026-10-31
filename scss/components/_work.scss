@@ -101,15 +101,17 @@
   border-radius: 14.2% / 6.55%;
   background: var(--sb, #{$c-stage});
   container-type: inline-size;
+  --pt: calc(100cqw / 402); // PhoneScale.js sets it in px where cqw is missing
+  isolation: isolate;
 }
 
 /* The site starts under the status bar, as Safari shows it. */
 .work__screen {
   position: absolute;
   left: 0;
-  top: calc(62 * 100cqw / 402);
+  top: calc(62 * var(--pt));
   width: 100%;
-  height: calc(100% - 62 * 100cqw / 402);
+  height: calc(100% - 62 * var(--pt));
   object-fit: cover;
   object-position: top;
   background: $c-stage;
@@ -121,7 +123,6 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  --pt: calc(100cqw / 402);
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', $font-body;
 }
 

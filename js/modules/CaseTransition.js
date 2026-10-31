@@ -20,6 +20,7 @@
 // Without JavaScript every tile is still a plain link.
 import gsap from 'gsap';
 import CaseView from './CaseView.js';
+import fitPhones from './PhoneScale.js';
 
 const ARRIVE_KEY = 'sumi:case-arrive';
 // Read by the homepage's head script and Loader: skip the first-visit loader.
@@ -46,6 +47,7 @@ export default class CaseTransition {
     this.cache = new Map();
     this.busy = false;
     this.layer = null;
+    fitPhones(document);
     this.view = null;
     this.current = null; // path key of the open case (home mode)
 
@@ -278,6 +280,7 @@ export default class CaseTransition {
     gsap.set(sky, { autoAlpha: 0 });
     this.layer.style.visibility = '';
     this.layer.appendChild(main);
+    fitPhones(main);
     this.layer.scrollTop = 0;
     // Set up now, so the pill arrives already drawn as glass.
     this.view = new CaseView(main, this.layer);

@@ -10,83 +10,19 @@
   padding: clamp(0.55rem, 1vw, 0.85rem) clamp(1rem, 3.5vw, 2.5rem);
 }
 
-/* Progressive blur behind the bar. Four stacked layers, each masked to a
-   shorter band, so the blur is strongest at the very top and eases to zero
-   with no visible edge or tint as content scrolls underneath.
-
-   Each layer is only as tall as the band its mask leaves visible. Blur cost
-   scales with the area being filtered, so trimming the invisible part of
-   each layer makes the same picture cheaper to paint. The mask stops are
-   rescaled so every layer fades out at exactly the same pixel as before. */
+/* No blur behind the bar (he asked for it gone; the stacked backdrop
+   filters were also the main cost on his laptop and glitched on Windows GPUs).
+   Instead a plain band of the section's own colour sits behind the bar, so
+   whatever scrolls under the logo melts into the background. Over the sky
+   there is no band: the hero and trust words fade out before they reach it. */
 .nav__blur {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 130px;
+  height: 120px;
   z-index: 0;
   pointer-events: none;
-
-  i {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    display: block;
-  }
-
-  i:nth-child(1) {
-    height: 130px;
-    -webkit-backdrop-filter: blur(1px);
-    backdrop-filter: blur(1px);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
-  }
-  i:nth-child(2) {
-    height: 98px; /* 75% of 130 */
-    -webkit-backdrop-filter: blur(3px);
-    backdrop-filter: blur(3px);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 53%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 53%, transparent 100%);
-  }
-  i:nth-child(3) {
-    height: 72px; /* 55% of 130 */
-    -webkit-backdrop-filter: blur(7px);
-    backdrop-filter: blur(7px);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%);
-  }
-  i:nth-child(4) {
-    height: 46px; /* 35% of 130 */
-    -webkit-backdrop-filter: blur(14px);
-    backdrop-filter: blur(14px);
-    mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
-  }
-}
-
-/* Lighter tier, switched on by BlurQuality.js only when the machine can't
-   keep up with the four-layer stack. Fewer layers is the big saving: every
-   backdrop-filter is its own offscreen pass over what's behind it. */
-.nav__blur--lite {
-  i:nth-child(1),
-  i:nth-child(3) {
-    display: none;
-  }
-  i:nth-child(2) {
-    height: 104px;
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%);
-  }
-  i:nth-child(4) {
-    height: 56px;
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 10%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 10%, transparent 100%);
-  }
 }
 
 /* Nav inner content must sit above the ::before blur layer */
@@ -95,24 +31,19 @@
   z-index: 1;
 }
 
-/* Over the hero reel the bar has no blur (NavTheme.js); it fades back in
-   once the trust sheet reaches the nav. */
+/* The band takes the colour of the section under the bar (NavTheme sets
+   --nav-bg from its data-bg; a case page sets --nav-scrim). Over the sky it
+   is off (.nav--clear). */
 .nav__blur {
   transition: opacity 0.4s ease;
-  /* On a case page the sheet's own colour fades in behind the blur
-     (CaseView sets --nav-scrim), so what scrolls under the logo melts away
-     instead of showing through as a ghost. Unset everywhere else. */
-  background: linear-gradient(to bottom, var(--nav-scrim, transparent) 72%, transparent);
+  background: linear-gradient(to bottom, var(--nav-scrim, var(--nav-bg, transparent)) 60%, transparent);
 }
-
-/* Not over a coloured hero, though. */
-.nav.theme-dark .nav__blur { background: none; }
 
 .nav--clear .nav__blur {
   opacity: 0;
 }
 
-/* Kill frosted glass when menu is open — full white overlay handles the bg */
+/* The menu's own overlay covers the bar */
 html.menu-open .nav__blur {
   display: none;
 }

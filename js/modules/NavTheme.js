@@ -34,6 +34,11 @@ export default class NavTheme {
     this.nav.classList.remove('theme-dark', 'theme-light');
     this.nav.classList.add(`theme-${theme}`);
     // No blur over the sky: the bar floats on the print.
-    if (section) this.nav.classList.toggle('nav--clear', !!section.closest('.intro'));
+    if (section) {
+      this.nav.classList.toggle('nav--clear', !!section.closest('.intro'));
+      // the band behind the bar takes the section's own colour
+      if (section.dataset.bg) this.nav.style.setProperty('--nav-bg', section.dataset.bg);
+      else this.nav.style.removeProperty('--nav-bg');
+    }
   }
 }

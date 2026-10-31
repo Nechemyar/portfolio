@@ -197,11 +197,16 @@ references: the "Sumi Ink Clouds" artifact, with a copy in
 
 **Structure** (`.intro`, three sections):
 - `.hero` (100svh)
-- `.reel` (270svh, its scroll held by CSS sticky)
+- `.reel` (130svh, its scroll held by CSS sticky for 30svh)
 - `.trust` (100svh)
 
-All three are `data-nav-theme="dark"` (white nav), and the nav's top blur is
-hidden over the whole intro (`.nav--clear`, set in `NavTheme.js`). The next
+All three are `data-nav-theme="dark"` (white nav). There is no blur behind
+the nav anywhere (he had it removed 2026-10-31; it was also the main lag and
+a smearing glitch on Windows GPUs). Elsewhere a plain band of the section's
+own colour (`data-bg`, set as `--nav-bg` by `NavTheme.js`) sits behind the bar
+so what scrolls under the logo melts away. Over the intro the band is off
+(`.nav--clear`) and the hero and trust words fade out as their top nears the
+bar (`InkStory.clearUnderLogo`), so the white SUMI never sits on white text. The next
 section slides on like a sheet: `-$r-xl` margin and `$r-xl` top corners, with
 the sky showing round them.
 

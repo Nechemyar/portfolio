@@ -26,6 +26,21 @@ export default class InkStory {
     if (!this.intro || !this.card) return;
 
     this.build();
+    this.clearUnderLogo();
+  }
+
+  // There is no blur or band behind the nav over the sky, so the words get
+  // out of the logo's way instead: each block fades as its top nears the bar.
+  clearUnderLogo() {
+    ['.hero__center', '.trust__inner'].forEach((sel) => {
+      const el = document.querySelector(sel);
+      if (!el) return;
+      gsap.fromTo(el, { opacity: 1 }, {
+        opacity: 0,
+        ease: 'none',
+        scrollTrigger: { trigger: el, start: 'top 150px', end: 'top 60px', scrub: true }
+      });
+    });
   }
 
   build() {

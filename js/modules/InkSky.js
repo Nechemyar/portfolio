@@ -97,7 +97,7 @@ vec3 glass(vec3 col, vec2 p){
   vec2 lp = p - uPill.xy;
   float sd = sdBox(lp, hb - vec2(rr)) - rr;
   if (sd > 0.0) return col*(1.0 - 0.14*exp(-sd/(10.0*uDpr))*smoothstep(-rr*0.6, rr*1.2, lp.y));
-  float depth = -sd;
+  float depth = max(-sd, 0.0);
   vec2 cp = vec2(clamp(lp.x, -(hb.x - rr), hb.x - rr), 0.0);
   vec2 n = lp - cp; float nl = length(n); n = nl > 0.001 ? n/nl : vec2(0.0, 1.0);
   float e = 1.0 - clamp(depth/(rr*0.95), 0.0, 1.0); e = e*e;
@@ -112,7 +112,8 @@ vec3 glass(vec3 col, vec2 p){
   g += vec3(1.0)*rim*(0.95*pow(l1, 2.2) + 0.45*pow(l2, 3.0));
   g += vec3(1.0)*bev*(0.14*pow(l1, 1.5) + 0.05*pow(l2, 2.0));
   g *= 1.0 - 0.10*bev*side;
-  return mix(col, g, smoothstep(0.8*uDpr, -0.8*uDpr, sd));
+  // clamped like PillGlass (f1839f7): an inf or NaN here shows as dark blocks on some GPUs
+  return mix(col, clamp(g, 0.0, 1.0), smoothstep(0.8*uDpr, -0.8*uDpr, sd));
 }
 void main(){
   vec2 p = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y);
@@ -124,7 +125,7 @@ void main(){
   vec2 puv = (gl_FragCoord.xy/uRes - 0.5)*uPaperFit + 0.5;
   col *= mix(vec3(1.0), texture2D(uPaper, puv).rgb, 0.24);
   float g = fract(sin(dot(p, vec2(12.9898, 78.233)))*43758.5453);
-  gl_FragColor = vec4(col + (g - 0.5)*0.035, 1.0);
+  gl_FragColor = vec4(clamp(col + (g - 0.5)*0.035, 0.0, 1.0), 1.0);
 }`;
 
 export default class InkSky {
@@ -161,29 +162,33 @@ export default class InkSky {
   // reset, or too many WebGL contexts open, which dropped the sky after a
   // few case pages). While it's gone the canvas hides, so the CSS sky
   // gradient on .intro shows with the words on it instead of a broken
-  // canvas on white. preventDefault asks for it back; if the browser doesn't
-  // give it back, a fresh canvas takes over.
+  // canvas on white. preventDefault asks for it back, and the sky rebuilds
+  // when the browser says so. Only if no restore comes at all does one fresh
+  // canvas get a single try; a GPU that keeps failing is left alone on the
+  // gradient (fighting it made Windows GPUs smear the page).
   context() {
     this.canvas.addEventListener('webglcontextlost', (e) => {
       e.preventDefault();
       this.lost = true;
+      this.losses = (this.losses || 0) + 1;
       this.intro.classList.add('gl-lost');
       clearTimeout(this.reviveTimer);
-      this.reviveTimer = setTimeout(() => this.revive(), 1200);
+      if (!this.revived && this.losses < 3) this.reviveTimer = setTimeout(() => this.revive(), 4000);
     });
     this.canvas.addEventListener('webglcontextrestored', () => {
       clearTimeout(this.reviveTimer);
-      this.setup(this.gl);
+      if (this.losses < 3) this.setup(this.gl);
     });
     return this.canvas.getContext('webgl', { alpha: false, antialias: false, premultipliedAlpha: false });
   }
 
   revive() {
-    if (!this.lost) return;
+    if (!this.lost || this.revived) return;
     if (document.hidden) {
       document.addEventListener('visibilitychange', () => this.revive(), { once: true });
       return;
     }
+    this.revived = true;
     const fresh = this.canvas.cloneNode(false);
     this.canvas.replaceWith(fresh);
     this.canvas = fresh;

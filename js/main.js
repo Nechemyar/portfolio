@@ -15,7 +15,6 @@ import Loader from './modules/Loader.js';
 import WorkSection from './modules/WorkSection.js';
 import WorkClips from './modules/WorkClips.js';
 import ArchSlider from './modules/ArchSlider.js';
-import BlurQuality from './modules/BlurQuality.js';
 import HeroReel from './modules/HeroReel.js';
 import SumiGlass from './modules/SumiGlass.js';
 import TrustPanel from './modules/TrustPanel.js';
@@ -35,7 +34,6 @@ const faq = new Faq();
 const workSection = new WorkSection();
 new WorkClips();
 new ArchSlider();
-new BlurQuality();
 new HeroReel();
 const inkSky = new InkSky();
 const inkStory = new InkStory(inkSky);
@@ -141,6 +139,7 @@ new Loader(() => {
     } else {
       tl.call(reelIn, null, 'title+=1.55');
       window.addEventListener('scroll', reelIn, { once: true, passive: true });
+      setTimeout(reelIn, 6000); // never left hidden if the timeline stalls
     }
   }
 

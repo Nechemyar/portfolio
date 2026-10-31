@@ -1,0 +1,93 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,500;14..32,600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #333; }
+  .scene { position: relative; width: 1200px; height: 1500px; overflow: hidden; }
+  .paper { position: absolute; inset: 0; }
+  .paper::after { content: ''; position: absolute; inset: 0; background: url(washi.jpg) center/cover; mix-blend-mode: multiply; opacity: var(--grain, .16); }
+  .light { position: absolute; inset: 0; pointer-events: none; }
+  /* a phone lying on the paper: the wrapper holds the world-space shadow,
+     the inner box rotates */
+  .ph { position: absolute; width: var(--w); aspect-ratio: 1350 / 2760; }
+  .ph .shadow { position: absolute; inset: 0; filter: var(--shadow); }
+  .ph .rot { position: absolute; inset: 0; transform: rotate(var(--r, 0deg)); transform-origin: 50% 50%; }
+  .ph .frame { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  /* the screen, in bezel pixels scaled by --k */
+  .scr { position: absolute; left: calc(70 / 1350 * 100%); top: calc(67 / 2760 * 100%); width: calc(1210 / 1350 * 100%); height: calc(2626 / 2760 * 100%);
+    overflow: hidden; -webkit-mask: url(hole-crop.png) 0 0 / 100% 100%; mask: url(hole-crop.png) 0 0 / 100% 100%; container-type: inline-size; }
+  /* 1pt = 100cqw / 402 */
+  .scr .page { position: absolute; left: 0; top: calc(62 * 100cqw / 402); width: 100%; display: block; }
+  .scr .sb { position: absolute; left: 0; top: 0; width: 100%; height: calc(62 * 100cqw / 402); }
+  .scr .sb::after { content: ''; position: absolute; left: 0; right: 0; top: 100%; height: calc(14 * 100cqw / 402); background: linear-gradient(var(--sbc), transparent); opacity: .85; }
+  .scr .time { position: absolute; left: calc(52 * 100cqw / 402); top: calc(32 * 100cqw / 402); transform: translate(-50%, -50%);
+    font: 600 calc(17 * 100cqw / 402)/1 Inter, system-ui, sans-serif; letter-spacing: -0.01em; color: var(--ink); }
+  .scr .icons { position: absolute; right: calc(28 * 100cqw / 402); top: calc(32 * 100cqw / 402); transform: translateY(-50%); display: flex; gap: calc(6 * 100cqw / 402); align-items: center; color: var(--ink); }
+  .scr .icons svg { display: block; height: calc(12.5 * 100cqw / 402); width: auto; }
+  .scr .icons svg.bat { height: calc(13 * 100cqw / 402); }
+  /* iOS 26 Safari, compact tab bar: back, address, more, in Liquid Glass */
+  .scr .fade { position: absolute; left: 0; right: 0; bottom: 0; height: calc(96 * 100cqw / 402);
+    -webkit-backdrop-filter: blur(calc(1.6 * 100cqw / 402)); backdrop-filter: blur(calc(1.6 * 100cqw / 402));
+    -webkit-mask: linear-gradient(transparent, #000 85%); mask: linear-gradient(transparent, #000 85%); }
+  .scr .bar { position: absolute; left: calc(16 * 100cqw / 402); right: calc(16 * 100cqw / 402); bottom: calc(28 * 100cqw / 402);
+    display: flex; gap: calc(8 * 100cqw / 402); align-items: center; height: calc(50 * 100cqw / 402); }
+  .glass { position: relative; height: 100%; border-radius: 999px; background: rgba(250, 250, 252, .62);
+    -webkit-backdrop-filter: blur(calc(10 * 100cqw / 402)) saturate(1.6); backdrop-filter: blur(calc(10 * 100cqw / 402)) saturate(1.6);
+    box-shadow: 0 calc(4 * 100cqw / 402) calc(18 * 100cqw / 402) rgba(0,0,0,.14), inset 0 0 0 calc(.6 * 100cqw / 402) rgba(255,255,255,.75), inset 0 calc(1 * 100cqw / 402) calc(1 * 100cqw / 402) rgba(255,255,255,.9);
+    display: flex; align-items: center; justify-content: center; color: #1c1c1e; }
+  .glass.round { width: calc(50 * 100cqw / 402); flex: none; }
+  .glass.addr { flex: 1; font: 500 calc(15.5 * 100cqw / 402)/1 Inter, system-ui, sans-serif; letter-spacing: -0.01em; justify-content: space-between; padding: 0 calc(16 * 100cqw / 402); }
+  .glass svg { display: block; width: calc(20 * 100cqw / 402); height: calc(20 * 100cqw / 402); }
+  .glass.addr svg { width: calc(17 * 100cqw / 402); height: calc(17 * 100cqw / 402); opacity: .85; }
+  .scr .home { position: absolute; left: 50%; bottom: calc(8 * 100cqw / 402); width: calc(134 * 100cqw / 402); height: calc(5 * 100cqw / 402); transform: translateX(-50%); border-radius: 9px; background: #111; }
+</style></head>
+<body>
+<div id="out"></div>
+<template id="phoneT">
+  <div class="ph"><div class="shadow"><div class="rot">
+    <div class="scr">
+      <img class="page">
+      <div class="sb"><span class="time">9:41</span>
+        <span class="icons">
+          <svg viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx=".7"/><rect x="5" y="5.5" width="3" height="6.5" rx=".7"/><rect x="10" y="3" width="3" height="9" rx=".7"/><rect x="15" y="0" width="3" height="12" rx=".7"/></svg>
+          <svg viewBox="0 0 16 12" fill="currentColor"><path d="M8 2.6c2.3 0 4.4.9 6 2.4l1.1-1.1A10 10 0 0 0 8 1 10 10 0 0 0 .9 3.9L2 5a8.6 8.6 0 0 1 6-2.4z"/><path d="M8 6c1.4 0 2.6.5 3.6 1.4l1.1-1.1A6.8 6.8 0 0 0 8 4.4c-1.8 0-3.5.7-4.7 1.9l1.1 1.1C5.4 6.5 6.6 6 8 6z"/><path d="M8 9.3c.6 0 1.1.2 1.5.6L8 11.5 6.5 9.9c.4-.4.9-.6 1.5-.6z"/></svg>
+          <svg class="bat" viewBox="0 0 27 13" fill="none"><rect x=".5" y=".5" width="23" height="12" rx="3.6" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="20" height="9" rx="2.2" fill="currentColor"/><path d="M25 4.5v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2z" fill="currentColor" opacity=".45"/></svg>
+        </span></div>
+      <div class="fade"></div>
+      <div class="bar">
+        <div class="glass round"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 3.5 6 10l6.5 6.5"/></svg></div>
+        <div class="glass addr">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="3.5" width="14" height="13" rx="3"/><path d="M6.5 8h7M6.5 11h7M6.5 14h4"/></svg>
+          <span class="host"></span>
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 10a5.5 5.5 0 1 1-1.8-4.1"/><path d="M14.2 2.8v3.5h-3.5"/></svg>
+        </div>
+        <div class="glass round"><svg viewBox="0 0 20 20" fill="currentColor"><circle cx="4.5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15.5" cy="10" r="1.6"/></svg></div>
+      </div>
+      <div class="home"></div>
+    </div>
+    <img class="frame" src="frame.png">
+  </div></div></div>
+</template>
+<script>
+function lum(hex) { const n = parseInt(hex.slice(1), 16); const r = n >> 16, g = (n >> 8) & 255, b = n & 255; return (0.299 * r + 0.587 * g + 0.114 * b) / 255; }
+window.scene = function (cfg) {
+  const out = document.getElementById('out'); out.innerHTML = '';
+  const s = document.createElement('div'); s.className = 'scene';
+  s.innerHTML = `<div class="paper" style="background:${cfg.bg};--grain:${cfg.grain ?? .16}"></div><div class="light" style="background:${cfg.light}"></div>`;
+  for (const p of cfg.phones) {
+    const el = document.getElementById('phoneT').content.firstElementChild.cloneNode(true);
+    el.style.cssText = `--w:${p.w}px;left:${p.x}px;top:${p.y}px;--r:${p.r}deg;--shadow:${cfg.shadow};z-index:${p.z || 1}`;
+    el.querySelector('.page').src = `cap/${p.page}.png`;
+    const sbc = p.sb; el.querySelector('.scr').style.setProperty('--sbc', sbc);
+    el.querySelector('.sb').style.background = sbc;
+    el.querySelector('.scr').style.setProperty('--ink', lum(sbc) > 0.6 ? '#000' : '#fff');
+    el.querySelector('.host').textContent = p.host;
+    s.appendChild(el);
+  }
+  out.appendChild(s);
+  return Promise.all([...s.querySelectorAll('img')].map((i) => i.decode().catch(() => {}))).then(() => document.fonts.ready);
+};
+</script>
+</body></html>

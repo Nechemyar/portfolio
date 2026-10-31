@@ -89,17 +89,136 @@
 }
 
 /* The screen cut-out in the frame artwork, measured from Apple's PNG:
-   x 100-1305 of 1406, y 101-2720 of 2822. */
-.work__screen {
+   x 100-1305 of 1406, y 101-2720 of 2822. The display is a 402pt-wide
+   iPhone screen, so 1pt = 100cqw / 402. */
+.work__display {
   position: absolute;
   left: 7.11%;
   top: 3.58%;
   width: 85.78%;
   height: 92.84%;
+  overflow: hidden;
+  border-radius: 14.2% / 6.55%;
+  background: var(--sb, #{$c-stage});
+  container-type: inline-size;
+}
+
+/* The site starts under the status bar, as Safari shows it. */
+.work__screen {
+  position: absolute;
+  left: 0;
+  top: calc(62 * 100cqw / 402);
+  width: 100%;
+  height: calc(100% - 62 * 100cqw / 402);
   object-fit: cover;
   object-position: top;
-  border-radius: 14.2% / 6.55%;
   background: $c-stage;
+}
+
+/* iOS 26 Safari over the site: the status bar clear of the Dynamic Island,
+   and the compact tab bar (back, address, more) in glass at the bottom. */
+.ios {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  --pt: calc(100cqw / 402);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', $font-body;
+}
+
+.ios__sb {
+  position: absolute;
+  inset: 0 0 auto;
+  height: calc(62 * var(--pt));
+  color: var(--sb-ink, #000);
+
+  // the soft edge where the page slides under the bar
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 100% 0 auto;
+    height: calc(12 * var(--pt));
+    background: linear-gradient(var(--sb, #fff), transparent);
+    opacity: 0.8;
+  }
+}
+
+.ios__time {
+  position: absolute;
+  left: calc(52 * var(--pt));
+  top: calc(32 * var(--pt));
+  transform: translate(-50%, -50%);
+  font-size: calc(17 * var(--pt));
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.ios__icons {
+  position: absolute;
+  right: calc(28 * var(--pt));
+  top: calc(32 * var(--pt));
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: calc(6 * var(--pt));
+
+  svg { display: block; height: calc(12.5 * var(--pt)); width: auto; }
+  .ios__bat { height: calc(13 * var(--pt)); }
+}
+
+.ios__bar {
+  position: absolute;
+  left: calc(16 * var(--pt));
+  right: calc(16 * var(--pt));
+  bottom: calc(28 * var(--pt));
+  height: calc(50 * var(--pt));
+  display: flex;
+  align-items: center;
+  gap: calc(8 * var(--pt));
+}
+
+.ios__glass {
+  height: 100%;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1c1c1e;
+  background: rgba(250, 250, 252, 0.72);
+  -webkit-backdrop-filter: blur(8px) saturate(1.6);
+  backdrop-filter: blur(8px) saturate(1.6);
+  box-shadow:
+    0 calc(4 * var(--pt)) calc(18 * var(--pt)) rgba(0, 0, 0, 0.14),
+    inset 0 0 0 calc(0.6 * var(--pt)) rgba(255, 255, 255, 0.75);
+
+  svg { display: block; width: calc(20 * var(--pt)); height: calc(20 * var(--pt)); }
+}
+
+.ios__btn { flex: none; width: calc(50 * var(--pt)); }
+
+.ios__addr {
+  flex: 1;
+  justify-content: space-between;
+  padding: 0 calc(16 * var(--pt));
+  font-size: calc(15.5 * var(--pt));
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  gap: calc(8 * var(--pt));
+
+  span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; text-align: center; }
+  svg { flex: none; width: calc(17 * var(--pt)); height: calc(17 * var(--pt)); opacity: 0.85; }
+}
+
+.ios__home {
+  position: absolute;
+  left: 50%;
+  bottom: calc(8 * var(--pt));
+  width: calc(134 * var(--pt));
+  height: calc(5 * var(--pt));
+  transform: translateX(-50%);
+  border-radius: 9px;
+  background: #111;
 }
 
 .work__frame {

@@ -100,7 +100,6 @@
   overflow: hidden;
   border-radius: 14.2% / 6.55%;
   background: var(--sb, #{$c-stage});
-  transition: background-color 0.2s linear;
   container-type: inline-size;
   --pt: calc(100cqw / 402); // PhoneScale.js sets it in px where cqw is missing
   isolation: isolate;
@@ -110,9 +109,9 @@
 .work__screen {
   position: absolute;
   left: 0;
-  top: calc(62 * var(--pt));
+  top: calc(62 * var(--pt) - 1px); // tucked a pixel under the status bar: no seam
   width: 100%;
-  height: calc(100% - 62 * var(--pt));
+  height: calc(100% - 62 * var(--pt) + 1px);
   object-fit: cover;
   object-position: top;
   background: $c-stage;
@@ -132,7 +131,6 @@
   inset: 0 0 auto;
   height: calc(62 * var(--pt));
   color: var(--sb-ink, #000);
-  transition: color 0.2s linear;
 }
 
 .ios__time {

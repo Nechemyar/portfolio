@@ -10,5 +10,5 @@ SITE={'choice':('#343231','#fff','choiceinventory.co.uk'),'clinical':('#ffffff',
 def ios(clip):
     sb,ink,host=SITE[clip.split('-')[0]]
     chrome=(f'<div class="ios" aria-hidden="true"><div class="ios__sb"><span class="ios__time">9:41</span><span class="ios__icons">{SIG}{WIFI}{BAT}</span></div>'
-            f'<div class="ios__bar"><span class="ios__glass ios__btn">{BACK}</span><span class="ios__glass ios__addr">{PAGE}<span>{host}</span>{RELOAD}</span><span class="ios__glass ios__btn">{MORE}</span></div><span class="ios__home"></span></div>')
+            f'<div class="ios__bar"><span class="ios__glass ios__btn">{BACK}</span><span class="ios__glass ios__addr">{PAGE}<span>{host}</span>{RELOAD}</span><span class="ios__glass ios__btn">{MORE}</span></div><span class="ios__glass ios__mini">{host}</span><span class="ios__home"></span></div>')
     return f' style="--sb:{sb};--sb-ink:{ink}"', chrome

@@ -100,6 +100,7 @@
   overflow: hidden;
   border-radius: 14.2% / 6.55%;
   background: var(--sb, #{$c-stage});
+  transition: background-color 0.2s linear;
   container-type: inline-size;
   --pt: calc(100cqw / 402); // PhoneScale.js sets it in px where cqw is missing
   isolation: isolate;
@@ -131,16 +132,7 @@
   inset: 0 0 auto;
   height: calc(62 * var(--pt));
   color: var(--sb-ink, #000);
-
-  // the soft edge where the page slides under the bar
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 100% 0 auto;
-    height: calc(12 * var(--pt));
-    background: linear-gradient(var(--sb, #fff), transparent);
-    opacity: 0.8;
-  }
+  transition: color 0.2s linear;
 }
 
 .ios__time {
@@ -209,6 +201,30 @@
 
   span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; text-align: center; }
   svg { flex: none; width: calc(17 * var(--pt)); height: calc(17 * var(--pt)); opacity: 0.85; }
+}
+
+.ios__bar { transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1); transform-origin: 50% 100%; }
+
+/* Scrolling down, Safari folds the bar into a small pill with the address. */
+.ios__mini {
+  position: absolute;
+  left: 50%;
+  bottom: calc(26 * var(--pt));
+  height: calc(30 * var(--pt));
+  padding: 0 calc(14 * var(--pt));
+  font-size: calc(12.5 * var(--pt));
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-50%) scale(1.4);
+  transform-origin: 50% 100%;
+  transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.work__phone.is-scrolling {
+  .ios__bar { opacity: 0; transform: scale(0.7); }
+  .ios__mini { opacity: 1; transform: translateX(-50%) scale(1); }
 }
 
 .ios__home {

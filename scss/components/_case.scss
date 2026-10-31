@@ -709,8 +709,14 @@ main.case > .case__hero { padding-top: 0; }
   z-index: 1100; /* under the nav (1200) and the menu (1150) */
   overflow-x: hidden;
   overflow-y: auto;
-  overscroll-behavior: contain;
+  /* none, not contain: no rubber band either. The layer has no fill of
+     its own (the open move needs it clear), so a bounce past the footer
+     showed the homepage through the gap. */
+  overscroll-behavior: none;
   -webkit-overflow-scrolling: touch;
+
+  // and if a browser bounces anyway, the page colour runs on below
+  > main.case { box-shadow: 0 60vh 0 0 var(--tone-page, #fff); }
 }
 
 /* A tile in flight, lifted out of the page. It is drawn at full screen

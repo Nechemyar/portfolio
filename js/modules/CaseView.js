@@ -133,8 +133,6 @@ export default class CaseView {
     const heroSky = this.root.querySelector('.case__hero > .case__sky');
 
     const tone = getComputedStyle(this.root);
-    const page = tone.getPropertyValue('--tone-page').trim();
-    if (page) document.documentElement.style.setProperty('--nav-scrim', page);
     const skyTop = tone.getPropertyValue('--tone-top');
     const skyBot = tone.getPropertyValue('--tone-bot');
 
@@ -258,7 +256,6 @@ export default class CaseView {
       window.removeEventListener('resize', this.onScroll);
     }
     if (this.drawTop) window.removeEventListener('resize', this.drawTop);
-    document.documentElement.style.removeProperty('--nav-scrim');
     if (!keepGlass) this.releaseGlass();
     this.observers.forEach((io) => io.disconnect());
     this.observers = [];

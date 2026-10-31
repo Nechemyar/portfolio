@@ -179,7 +179,11 @@ export default class InkSky {
       clearTimeout(this.reviveTimer);
       if (this.losses < 3) this.setup(this.gl);
     });
-    return this.canvas.getContext('webgl', { alpha: false, antialias: false, premultipliedAlpha: false });
+    // alpha: true even though every pixel is opaque. An opaque full-screen
+    // WebGL canvas gets put on its own hardware plane under the page on
+    // Windows (an "underlay"); on his laptop that left trails of everything
+    // that moved over it. A canvas with alpha stays in normal composition.
+    return this.canvas.getContext('webgl', { alpha: true, antialias: false, premultipliedAlpha: true });
   }
 
   revive() {

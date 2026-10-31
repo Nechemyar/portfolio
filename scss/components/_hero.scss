@@ -504,7 +504,9 @@
 }
 
 .hero__video.is-playing {
-  opacity: 1;
+  /* not quite 1: keeps the video out of a hardware overlay plane, which on
+     some Windows GPUs left trails of the reel as the page scrolled */
+  opacity: 0.999;
 }
 
 /* WCAG 2.2.2: a way to pause motion that runs longer than 5 seconds. */

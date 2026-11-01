@@ -10,7 +10,6 @@ import Menu from './modules/Menu.js';
 import ScrollReveal from './modules/ScrollReveal.js';
 import HeroScroll from './modules/HeroScroll.js';
 import NavTheme from './modules/NavTheme.js';
-import Faq from './modules/Faq.js';
 import Loader from './modules/Loader.js';
 import WorkSection from './modules/WorkSection.js';
 import WorkClips from './modules/WorkClips.js';
@@ -21,6 +20,7 @@ import TrustPanel from './modules/TrustPanel.js';
 import InkSky from './modules/InkSky.js';
 import InkStory from './modules/InkStory.js';
 import CaseTransition from './modules/CaseTransition.js';
+import initDay from './modules/SumiDay.js';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -30,7 +30,6 @@ const menu = new Menu();
 const scrollReveal = new ScrollReveal();
 const heroScroll = new HeroScroll();
 const navTheme = new NavTheme();
-const faq = new Faq();
 const workSection = new WorkSection();
 new WorkClips();
 new ArchSlider();
@@ -39,6 +38,7 @@ const inkSky = new InkSky();
 const inkStory = new InkStory(inkSky);
 const sumiGlass = new SumiGlass(inkSky);
 new TrustPanel();
+initDay(); // after the intro's triggers, so its pins measure below them
 new CaseTransition({ mode: 'home', smoothScroll });
 
 // Hidden start states for the elements the hero entrance wipes in

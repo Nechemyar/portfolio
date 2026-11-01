@@ -1,11 +1,9 @@
 // ——————————————————————————————————————————————
-// Whole-page draft (flow.html): everything after Work stays in the hero's
-// world. Satoshi 400, tight tracking, white on the printed sky, washi in the
-// paper, one red sun that keeps travelling down the page (js/flow.js).
-// Three looks on <html>: .look-sky, .look-washi, .look-indigo.
-// No CSS transitions on anything GSAP moves.
+// The day: everything after Work stays in the hero's world (SumiDay.js).
+// Satoshi 400, tight tracking, white on the printed sky, one red sun that
+// keeps travelling down the page. No CSS transitions on anything GSAP moves.
 // ——————————————————————————————————————————————
-@use 'base/tokens' as *;
+@use '../base/tokens' as *;
 
 $wash: url('/ink/washi.jpg');
 
@@ -14,60 +12,46 @@ $wash: url('/ink/washi.jpg');
   --f-soft: rgba(255, 255, 255, 0.72);
   --f-line: rgba(255, 255, 255, 0.55);
   --f-shade: 0 1px 16px #{$c-sky-shade};
-  --f-sky-top: #{$c-sky};
-  --f-sky-bot: #{$c-sky-pale};
-  --f-sheet: transparent;
-}
-.look-washi {
-  --f-type: #{$c-indigo-deep};
-  --f-soft: rgba(15, 45, 77, 0.72);
-  --f-line: rgba(15, 45, 77, 0.45);
-  --f-shade: none;
-  --f-sheet: #f4ecdb;
-}
-.look-indigo {
-  --f-type: #{$c-washi};
-  --f-soft: rgba(243, 234, 211, 0.72);
-  --f-line: rgba(243, 234, 211, 0.4);
-  --f-shade: none;
 }
 
 /* ---------- the sky and the sun ---------- */
 // The intro and Work are opaque, so this only shows once Work has passed.
-// js/flow.js moves the colours as the day goes on.
-.fsky {
+// Washi is baked into each layer (background-blend-mode), so scrolling only
+// ever changes the evening layer's opacity: nothing repaints.
+.day-sky {
   position: fixed;
   inset: 0;
   z-index: -2;
-  background: linear-gradient(var(--f-sky-top), var(--f-sky-bot));
   pointer-events: none;
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: $wash center / cover;
-    mix-blend-mode: multiply;
-    opacity: 0.55;
-  }
+  background: $wash center / cover, linear-gradient($c-sky, $c-sky-pale);
+  background-blend-mode: multiply, normal;
 }
-// behind the words on the sky; printed onto the paper in the washi look
-.fsun {
-  position: fixed;
+.day-sky__eve {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: $wash center / cover, linear-gradient(#3a6aa3, #e2c9b0);
+  background-blend-mode: multiply, normal;
+  will-change: opacity;
+}
+// One sun in the page (the browser scrolls it) and a fixed twin for the
+// pinned scenes; SumiDay.js shows one at a time.
+.day-sun {
+  position: absolute;
   left: 0;
   top: 0;
   width: 100px;
   height: 100px;
   z-index: -1;
-  opacity: 0;
+  visibility: hidden;
   pointer-events: none;
   will-change: transform;
   transform-origin: 0 0;
+
+  &--pin { position: fixed; }
+  &.is-front { z-index: 3; }
 }
-.look-washi .fsun { z-index: 3; mix-blend-mode: multiply; }
-// over open sky it goes back behind the clouds, unprinted
-.look-washi .fsun.is-sky { z-index: -1; mix-blend-mode: normal; }
-// where the sun goes; js/flow.js reads their boxes
+// where the sun goes; SumiDay.js reads their boxes
 .sun-at {
   position: absolute;
   display: block;
@@ -107,30 +91,11 @@ main > section.fa, main > section.ff, main > section.fc,
   text-shadow: var(--f-shade);
 }
 
-// a printed sheet in the washi look; nothing in the others
 .fsheet {
   position: relative;
   padding: $space-96 $page-padding $space-96;
   max-width: 760px;
   margin: 0 auto;
-}
-.look-washi .fsheet {
-  background: var(--f-sheet);
-  margin: $space-48 12px;
-  max-width: none;
-  border-radius: 6px;
-  isolation: isolate;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    border-radius: inherit;
-    background: $wash center / cover;
-    mix-blend-mode: multiply;
-    opacity: 0.6;
-  }
 }
 
 .fcloud {
@@ -205,11 +170,6 @@ main > section.fa, main > section.ff, main > section.fc,
   font-size: $fs-sm;
   letter-spacing: 0.06em;
   color: var(--f-soft);
-}
-.look-washi .fq__stage {
-  inset: $space-48 12px;
-  background: var(--f-sheet);
-  border-radius: 6px;
 }
 
 /* ---------- pricing: price and date ---------- */
@@ -338,16 +298,9 @@ main > section.fa, main > section.ff, main > section.fc,
   height: 10px;
   border-radius: 50%;
   border: 1px solid var(--f-type);
-  background: var(--f-sky-top);
+  background: $c-sky;
 }
-.look-washi .fr__dot { background: var(--f-sheet); }
 .fr__wk { font-size: $fs-sm; letter-spacing: 0.06em; color: var(--f-soft); }
-.look-washi .fr__stage {
-  inset: $space-48 12px;
-  background: var(--f-sheet);
-  border-radius: 6px;
-  overflow: hidden;
-}
 
 /* ---------- about: one sentence with pictures ---------- */
 .fa {
@@ -361,7 +314,6 @@ main > section.fa, main > section.ff, main > section.fc,
   align-items: center;
   padding: 0 $page-padding;
 }
-.look-washi .fa__stage { inset: $space-48 12px; background: var(--f-sheet); border-radius: 6px; }
 .fa__line {
   margin: 0 auto;
   max-width: 16ch;
@@ -582,42 +534,8 @@ main > section.fa, main > section.ff, main > section.fc,
   a { color: inherit; font-weight: 500; }
 }
 
-/* ---------- look switcher (draft only) ---------- */
-.flook {
-  position: fixed;
-  margin: 0;
-  left: 50%;
-  bottom: 14px;
-  z-index: 50;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  padding: 4px;
-  border-radius: $r-full;
-  background: rgba(15, 45, 77, 0.88);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 500;
-
-  span { padding: 0 8px 0 10px; opacity: 0.6; }
-  a {
-    min-height: 36px;
-    display: grid;
-    place-items: center;
-    padding: 0 12px;
-    border-radius: $r-full;
-    color: #fff;
-    text-decoration: none;
-  }
-}
-.look-sky .flook [data-look='sky'],
-.look-washi .flook [data-look='washi'],
-.look-indigo .flook [data-look='indigo'] { background: #fff; color: $c-indigo-deep; }
 
 // the sun waits behind the bottom of the Work sheet, about where the hero
 // left it, then comes out from under the arch
 .sun-at--work { left: 11vw; bottom: 0; width: 27vw; height: 27vw; max-width: 160px; max-height: 160px; }
 
-// the sun steps in front when it sits on a line or in the sea
-.fsun.is-front { z-index: 3; }

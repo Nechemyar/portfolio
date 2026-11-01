@@ -13,6 +13,7 @@ export default defineConfig({
         clinicalAssessments: resolve(__dirname, 'projects/clinical-assessments.html'),
         choiceInventory: resolve(__dirname, 'projects/choice-inventory.html'),
         jsense: resolve(__dirname, 'projects/jsense.html'),
+        flow: resolve(__dirname, 'flow.html'),
       },
     },
   },

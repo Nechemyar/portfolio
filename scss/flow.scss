@@ -1,0 +1,623 @@
+// ——————————————————————————————————————————————
+// Whole-page draft (flow.html): everything after Work stays in the hero's
+// world. Satoshi 400, tight tracking, white on the printed sky, washi in the
+// paper, one red sun that keeps travelling down the page (js/flow.js).
+// Three looks on <html>: .look-sky, .look-washi, .look-indigo.
+// No CSS transitions on anything GSAP moves.
+// ——————————————————————————————————————————————
+@use 'base/tokens' as *;
+
+$wash: url('/ink/washi.jpg');
+
+:root {
+  --f-type: #{$c-sky-type};
+  --f-soft: rgba(255, 255, 255, 0.72);
+  --f-line: rgba(255, 255, 255, 0.55);
+  --f-shade: 0 1px 16px #{$c-sky-shade};
+  --f-sky-top: #{$c-sky};
+  --f-sky-bot: #{$c-sky-pale};
+  --f-sheet: transparent;
+}
+.look-washi {
+  --f-type: #{$c-indigo-deep};
+  --f-soft: rgba(15, 45, 77, 0.72);
+  --f-line: rgba(15, 45, 77, 0.45);
+  --f-shade: none;
+  --f-sheet: #f4ecdb;
+}
+.look-indigo {
+  --f-type: #{$c-washi};
+  --f-soft: rgba(243, 234, 211, 0.72);
+  --f-line: rgba(243, 234, 211, 0.4);
+  --f-shade: none;
+}
+
+/* ---------- the sky and the sun ---------- */
+// The intro and Work are opaque, so this only shows once Work has passed.
+// js/flow.js moves the colours as the day goes on.
+.fsky {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: linear-gradient(var(--f-sky-top), var(--f-sky-bot));
+  pointer-events: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: $wash center / cover;
+    mix-blend-mode: multiply;
+    opacity: 0.55;
+  }
+}
+// behind the words on the sky; printed onto the paper in the washi look
+.fsun {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100px;
+  height: 100px;
+  z-index: -1;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform;
+  transform-origin: 0 0;
+}
+.look-washi .fsun { z-index: 3; mix-blend-mode: multiply; }
+// over open sky it goes back behind the clouds, unprinted
+.look-washi .fsun.is-sky { z-index: -1; mix-blend-mode: normal; }
+// where the sun goes; js/flow.js reads their boxes
+.sun-at {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+// (pinned sections get wrapped in a pin-spacer, so no child combinators)
+main > section.fq, main > section.fp, main > section.fr,
+main > section.fa, main > section.ff, main > section.fc,
+.fq, .fp, .fr, .fa, .ff, .fc {
+  padding-top: 0;
+  background: transparent;
+  color: var(--f-type);
+}
+
+/* shared type, on the hero's scale: the nav label times 1.5 steps */
+.ftitle {
+  margin: 0;
+  font-family: $font-body;
+  text-transform: none;
+  font-size: $fs-hero-title-mobile;
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  text-shadow: var(--f-shade);
+  text-align: center;
+
+  @media (min-width: 760px) { font-size: calc(#{$fs-nav} * 4.5); }
+}
+.flead {
+  margin: $space-16 auto 0;
+  max-width: 28ch;
+  text-align: center;
+  font-size: $fs-md;
+  line-height: 1.4;
+  color: var(--f-soft);
+  text-shadow: var(--f-shade);
+}
+
+// a printed sheet in the washi look; nothing in the others
+.fsheet {
+  position: relative;
+  padding: $space-96 $page-padding $space-96;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.look-washi .fsheet {
+  background: var(--f-sheet);
+  margin: $space-48 12px;
+  max-width: none;
+  border-radius: 6px;
+  isolation: isolate;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: $wash center / cover;
+    mix-blend-mode: multiply;
+    opacity: 0.6;
+  }
+}
+
+.fcloud {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  height: auto;
+}
+.fcloud--p {
+  width: 62vw;
+  max-width: 520px;
+  right: -14vw;
+  top: -6vw;
+  z-index: 1;
+}
+
+/* ---------- testimonials: read along ---------- */
+.fq {
+  position: relative;
+  height: 100svh;
+}
+.fq__stage {
+  position: absolute;
+  inset: 0;
+}
+.sun-at--q1 { width: 62vw; height: 62vw; max-width: 380px; max-height: 380px; left: 50%; top: 50%; transform: translate(-50%, -88%); }
+.sun-at--q2 { width: 46vw; height: 46vw; max-width: 300px; max-height: 300px; left: 26%; top: 50%; transform: translate(-50%, -100%); }
+.fq__item {
+  position: absolute;
+  left: $page-padding;
+  right: $page-padding;
+  top: 50%;
+  margin: 0 auto;
+  max-width: 22ch;
+  transform: translateY(-50%);
+  text-align: center;
+  font-size: calc(#{$fs-nav} * 2.25);
+
+  @media (min-width: 760px) { font-size: calc(#{$fs-nav} * 3.375); }
+}
+.fq__quote {
+  margin: 0;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  text-shadow: var(--f-shade);
+
+  .w { opacity: 0.28; }
+}
+.fq__who {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-12;
+  margin-top: $space-32;
+  font-size: $fs-base;
+  line-height: 1.3;
+  text-align: left;
+  color: var(--f-soft);
+  text-shadow: var(--f-shade);
+
+  img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+  b { display: block; color: var(--f-type); font-weight: 500; }
+}
+.fq__count {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: $space-32;
+  margin: 0;
+  text-align: center;
+  font-size: $fs-sm;
+  letter-spacing: 0.06em;
+  color: var(--f-soft);
+}
+.look-washi .fq__stage {
+  inset: $space-48 12px;
+  background: var(--f-sheet);
+  border-radius: 6px;
+}
+
+/* ---------- pricing: price and date ---------- */
+.fp { position: relative; }
+.fp__rows { margin-top: $space-48; }
+.fp__row {
+  position: relative;
+  padding: $space-24 0 $space-32;
+}
+.fp__rule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: var(--f-line);
+  transform-origin: 0 50%;
+}
+.sun-at--p1 { left: -6px; top: -14px; width: 28px; height: 28px; }
+.sun-at--p2 { right: -6px; top: -14px; width: 28px; height: 28px; }
+.fp__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: $space-12;
+  font-size: $fs-base;
+}
+.fp__name { font-weight: 500; }
+.fp__when { color: var(--f-soft); }
+.fp__price {
+  margin-top: $space-8;
+  font-size: calc(#{$fs-hero-title-mobile} * 1.35);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+  text-shadow: var(--f-shade);
+  display: flex;
+  align-items: flex-start;
+  overflow: hidden;
+  height: 1em;
+
+  .col { display: flex; flex-direction: column; }
+  .col span, .st { display: block; height: 1em; }
+}
+.fp__price--word { font-size: calc(#{$fs-hero-title-mobile} * 1.1); }
+.fp__what {
+  margin: $space-12 0 0;
+  max-width: 36ch;
+  font-size: $fs-base;
+  line-height: 1.5;
+  color: var(--f-soft);
+  text-shadow: var(--f-shade);
+}
+
+/* ---------- process: the month on a line ---------- */
+.fr {
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+}
+.fr__stage { position: absolute; inset: 0; }
+.fr__title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 18svh;
+}
+.fr__line {
+  position: absolute;
+  left: $page-padding;
+  right: $page-padding;
+  top: 44svh;
+  height: 1px;
+  background: var(--f-line);
+}
+.fr__fill {
+  position: absolute;
+  inset: 0;
+  background: var(--f-type);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+}
+.sun-at--r1 { left: -20px; top: -20px; width: 40px; height: 40px; }
+.sun-at--r2 { right: -20px; top: -20px; width: 40px; height: 40px; }
+.fr__track {
+  position: absolute;
+  left: 0;
+  top: 44svh;
+  display: flex;
+  margin: 0;
+  padding: 0 0 0 $page-padding;
+  list-style: none;
+  will-change: transform;
+}
+.fr__stop {
+  position: relative;
+  flex: none;
+  width: min(78vw, 420px);
+  padding: $space-32 $space-32 0 0;
+
+  h3 {
+    margin: $space-8 0 0;
+    font-family: $font-body;
+    text-transform: none;
+    font-size: calc(#{$fs-hero-title-mobile} * 0.9);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.045em;
+    text-shadow: var(--f-shade);
+  }
+  p {
+    margin: $space-12 0 0;
+    max-width: 30ch;
+    font-size: $fs-base;
+    line-height: 1.5;
+    color: var(--f-soft);
+    text-shadow: var(--f-shade);
+  }
+}
+.fr__dot {
+  position: absolute;
+  left: 0;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid var(--f-type);
+  background: var(--f-sky-top);
+}
+.look-washi .fr__dot { background: var(--f-sheet); }
+.fr__wk { font-size: $fs-sm; letter-spacing: 0.06em; color: var(--f-soft); }
+.look-washi .fr__stage {
+  inset: $space-48 12px;
+  background: var(--f-sheet);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* ---------- about: one sentence with pictures ---------- */
+.fa {
+  position: relative;
+  height: 100svh;
+}
+.fa__stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 $page-padding;
+}
+.look-washi .fa__stage { inset: $space-48 12px; background: var(--f-sheet); border-radius: 6px; }
+.fa__line {
+  margin: 0 auto;
+  max-width: 16ch;
+  font-size: calc(#{$fs-nav} * 2.625);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.04em;
+  text-align: center;
+  text-shadow: var(--f-shade);
+
+  @media (min-width: 760px) { font-size: calc(#{$fs-nav} * 4); }
+  .w { opacity: 0.28; }
+}
+.fa__pill {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  top: -0.06em;
+  width: 0;
+  height: 0.95em;
+  margin: 0 0.04em;
+  border-radius: $r-full;
+  overflow: hidden;
+  font-style: normal;
+
+  img, > span:not(.sun-at) {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 2.3em;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+.fa__pill--me > span {
+  width: 100% !important;
+  display: grid;
+  place-items: center;
+  background: $c-stage;
+  color: rgba(15, 45, 77, 0.5);
+  font-size: 0.24em;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-shadow: none;
+}
+// the sea at evening; the sun sets into it
+.fa__pill--sea { background: linear-gradient(#f2c6a0, #e9a98a 48%, $c-indigo 52%, $c-indigo-deep); }
+.sun-at--a1 { left: calc(1.15em - 0.24em); top: 0.22em; width: 0.48em; height: 0.48em; }
+
+/* ---------- faq: big list ---------- */
+.ff .ftitle { position: relative; display: inline-block; }
+.ff .fsheet { text-align: center; }
+.sun-at--f1 { right: -0.34em; bottom: 0.1em; width: 0.22em; height: 0.22em; }
+.ff__list { margin-top: $space-48; text-align: left; }
+.ff__item { position: relative; }
+.ff__rule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: var(--f-line);
+  transform-origin: 0 50%;
+}
+.ff__q {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: flex-start;
+  gap: $space-16;
+  padding: $space-24 0;
+  background: none;
+  border: 0;
+  color: inherit;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+
+  b {
+    flex: 1;
+    font-size: $fs-lg;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    text-shadow: var(--f-shade);
+  }
+}
+.ff__plus {
+  position: relative;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  margin-top: -2px;
+  border-radius: 50%;
+  border: 1px solid var(--f-line);
+
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 12px;
+    height: 1.5px;
+    margin: -0.75px 0 0 -6px;
+    background: var(--f-type);
+  }
+  &::after { transform: rotate(90deg); }
+}
+.ff__a {
+  height: 0;
+  overflow: hidden;
+
+  p {
+    margin: 0;
+    padding: 0 $space-48 $space-24 0;
+    font-size: $fs-base;
+    line-height: 1.55;
+    color: var(--f-soft);
+    text-shadow: var(--f-shade);
+  }
+}
+.ff__more {
+  margin: $space-32 0 0;
+  font-size: $fs-base;
+  color: var(--f-soft);
+
+  a {
+    color: var(--f-type);
+    text-decoration: underline;
+    text-decoration-color: $c-rust;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+}
+@media (hover: hover) {
+  .ff__more a:hover { text-decoration-thickness: 3px; }
+}
+
+/* ---------- close: back to the sky ---------- */
+.fc {
+  position: relative;
+  min-height: 112svh;
+  overflow: hidden;
+  isolation: isolate;
+  color: $c-sky-type !important;
+  --f-shade: 0 1px 16px #{$c-sky-shade};
+}
+.sun-at--c1 { left: 50%; top: 30svh; width: 34vw; height: 34vw; max-width: 200px; max-height: 200px; transform: translateX(-50%); }
+.fcloud--c1 { width: 70vw; max-width: 560px; right: -22vw; top: 40svh; z-index: 1; transform: rotate(18deg); }
+.fcloud--c2 { width: 74vw; max-width: 600px; left: -16vw; top: 52svh; z-index: 1; }
+.fc__inner {
+  position: relative;
+  z-index: 2;
+  min-height: 112svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18svh $page-padding $space-32;
+  text-align: center;
+}
+.fc__title {
+  margin: 0;
+  font-family: $font-body;
+  text-transform: none;
+  max-width: 12ch;
+  font-size: $fs-hero-title-mobile;
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  text-shadow: var(--f-shade);
+
+  @media (min-width: 760px) { font-size: $fs-hero-title; }
+}
+.fc__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: $space-8;
+  margin: auto 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding: 0.55em 1em;
+    border-radius: $r-full;
+    font-size: $fs-sm;
+    font-weight: 500;
+    color: $c-indigo-deep;
+    background: rgba(243, 234, 211, 0.92);
+  }
+}
+.fc__cta {
+  display: inline-flex;
+  align-items: center;
+  height: max(44px, calc(#{$fs-nav} * 3.375));
+  margin-top: $space-24;
+  padding: 0 calc(#{$fs-nav} * 1.5);
+  border-radius: $r-full;
+  color: $c-indigo-deep;
+  font-size: $fs-nav;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: rgba(243, 234, 211, 0.62);
+  -webkit-backdrop-filter: blur(8px) saturate(170%) brightness(1.15);
+  backdrop-filter: blur(8px) saturate(170%) brightness(1.15);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.7), 0 8px 24px -10px rgba(15, 45, 77, 0.45);
+}
+.fc__foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: $space-8 $space-24;
+  margin-top: $space-64;
+  font-size: $fs-sm;
+  color: $c-indigo-deep;
+
+  a { color: inherit; font-weight: 500; }
+}
+
+/* ---------- look switcher (draft only) ---------- */
+.flook {
+  position: fixed;
+  margin: 0;
+  left: 50%;
+  bottom: 14px;
+  z-index: 50;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border-radius: $r-full;
+  background: rgba(15, 45, 77, 0.88);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+
+  span { padding: 0 8px 0 10px; opacity: 0.6; }
+  a {
+    min-height: 36px;
+    display: grid;
+    place-items: center;
+    padding: 0 12px;
+    border-radius: $r-full;
+    color: #fff;
+    text-decoration: none;
+  }
+}
+.look-sky .flook [data-look='sky'],
+.look-washi .flook [data-look='washi'],
+.look-indigo .flook [data-look='indigo'] { background: #fff; color: $c-indigo-deep; }
+
+// the sun waits behind the bottom of the Work sheet, about where the hero
+// left it, then comes out from under the arch
+.sun-at--work { left: 11vw; bottom: 0; width: 27vw; height: 27vw; max-width: 160px; max-height: 160px; }
+
+// the sun steps in front when it sits on a line or in the sea
+.fsun.is-front { z-index: 3; }

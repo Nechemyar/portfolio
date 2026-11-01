@@ -173,7 +173,7 @@ main > section.fa, main > section.ff, main > section.fc,
 }
 
 /* ---------- pricing: price and date ---------- */
-.fp { position: relative; }
+.fp { position: relative; overflow-x: clip; }
 .fp__rows { margin-top: $space-48; }
 .fp__row {
   position: relative;

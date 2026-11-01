@@ -108,12 +108,16 @@ const pins = {};
     });
     n.replaceWith(f);
   });
-  if (reduce) { gsap.set($$('.w', p), { opacity: 1 }); gsap.set($$('.fa__pill', p), { width: '2.3em' }); return; }
+  // the pictures keep their room in the line from the start and open with a
+  // clip, so the sentence never reflows (and the sun's spot in the sea holds still)
+  const shut = 'inset(0% 50% 0% 50% round 999px)', open = 'inset(0% 0% 0% 0% round 999px)';
+  if (reduce) { gsap.set($$('.w', p), { opacity: 1 }); return; }
+  gsap.set($$('.fa__pill', p), { clipPath: shut });
   const tl = gsap.timeline({ scrollTrigger: { trigger: s, pin: true, start: 'top top', end: '+=170%', scrub: 0.5 } });
   pins.a = tl.scrollTrigger;
   [...p.children].forEach((el) => {
     if (el.classList.contains('w')) tl.to(el, { opacity: 1, duration: 0.12, ease: 'none' });
-    else { if (el.classList.contains('fa__pill--sea')) tl.addLabel('sea'); tl.to(el, { width: '2.3em', duration: 0.5, ease: 'power3.out' }); }
+    else { if (el.classList.contains('fa__pill--sea')) tl.addLabel('sea'); tl.fromTo(el, { clipPath: shut }, { clipPath: open, duration: 0.5, ease: 'power3.out' }); }
   });
   tl.to({}, { duration: 0.6 });
   pins.aSea = () => tl.labels.sea / tl.duration();
@@ -196,16 +200,24 @@ const pins = {};
   // small suns sit on top of lines and in the sea; big ones glow behind the words
   const FRONT = new Set(['p1', 'p2', 'r1', 'r2', 'a1', 'f1']);
   let pos = [];
-  const measure = () => { pos = STOPS.map((o) => o.s()); };
+  let sy = window.scrollY; // the eased scroll the sun follows
+  const measure = () => { pos = STOPS.map((o) => o.s()); sy = window.scrollY; };
   ScrollTrigger.addEventListener('refresh', measure);
 
   const box = (el) => { const r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2, d: r.width }; };
   const ease = gsap.parseEase('sine.inOut');
   let shown = false;
-  const draw = () => {
+  // The pinned scenes follow the scroll with scrub 0.6, so the sun does too:
+  // it eases after the scroll instead of running ahead of the line it rides.
+  const draw = (time, dt) => {
     if (!pos.length) return;
-    const y = window.scrollY;
-    if (y < pos[0] - innerHeight) { if (shown) { gsap.set(sun, { opacity: 0 }); shown = false; } return; }
+    const target = window.scrollY;
+    sy += (target - sy) * (1 - Math.exp(-(dt || 16) / 180));
+    if (Math.abs(target - sy) < 0.5) sy = target;
+    const y = sy;
+    // out of sight (or a reload that lands mid-page): no easing in from afar
+    if (target < pos[0] - innerHeight) { sy = target; if (shown) { gsap.set(sun, { opacity: 0 }); shown = false; } return; }
+    if (!shown) sy = target;
     if (!shown) { gsap.set(sun, { opacity: 1 }); shown = true; }
     let i = 0;
     while (i < pos.length - 2 && y >= pos[i + 1]) i++;
@@ -213,13 +225,16 @@ const pins = {};
     const raw = (y - pos[i]) / Math.max(1, pos[i + 1] - pos[i]);
     const t = ease(Math.min(1, Math.max(0, raw)));
     // a little swing out to the side on the long drops, like something falling
-    const swing = Math.sin(Math.PI * t) * Math.min(innerWidth, 600) * 0.12 * (i % 2 ? 1 : -1);
+    const swing = Math.sin(Math.PI * t) * Math.min(innerWidth, 600) * 0.06 * (i % 2 ? 1 : -1);
     const d = a.d + (b.d - a.d) * t;
-    const x = a.x + (b.x - a.x) * t + (Math.abs(a.y - b.y) > innerHeight * 0.5 ? swing : 0);
+    let x = a.x + (b.x - a.x) * t + (Math.abs(a.y - b.y) > innerHeight * 0.5 ? swing : 0);
+    // never let it hang half off the screen on the way
+    if (t > 0.02 && t < 0.98) x = Math.min(innerWidth - d / 2 - 8, Math.max(d / 2 + 8, x));
     const yy = a.y + (b.y - a.y) * t;
     gsap.set(sun, { x: x - d / 2, y: yy - d / 2, scale: d / 100 });
     const near = STOPS[t < 0.5 ? i : i + 1].k;
-    sun.classList.toggle('is-front', FRONT.has(near));
+    // only step in front of the words once it's small, so it never pops over a line of text
+    sun.classList.toggle('is-front', FRONT.has(near) && d < 48);
     sun.classList.toggle('is-sky', near === 'c1' || near === 'work');
   };
   gsap.ticker.add(draw);

@@ -11,19 +11,30 @@
   padding-bottom: var(--arch-h);
 }
 
+/* Not the phone section padding (main.scss): .work__inner sets the space
+   above the tagline itself, so it can match the space below it. */
+.intro + .work {
+  padding-top: 0;
+}
+
 .work__inner {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
-  padding: clamp(7rem, 14vw, 11rem) $page-padding clamp(4rem, 8vw, 6rem);
-  gap: clamp(2.5rem, 6vw, 4rem);
+  /* the tagline sits in the middle of the white between the sky and the
+     first tile: the same space above and below it */
+  --tag-space: clamp(#{$space-96}, 9vw, #{$space-128});
+  --work-gap: clamp(2.5rem, 6vw, 4rem);
+  padding: var(--tag-space) $page-padding clamp(4rem, 8vw, 6rem);
+  gap: var(--work-gap);
 }
 
 /* ── Tagline ── */
 .work__tagline-clip {
   overflow: hidden;
+  margin-bottom: calc(var(--tag-space) - var(--work-gap));
 }
 
 .work__tagline {
